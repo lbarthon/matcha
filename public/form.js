@@ -1,3 +1,3 @@
-$(document).ready(function(){
+$(document).load(function(){
   $('select').formSelect();
 });
