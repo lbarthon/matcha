@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './materialize.css';
+import { Route, Link, Switch, Redirect } from 'react-router-dom'
+import Navbar from './components/Navbar';
+import Register from './components/Register';
+import Login from './components/Login';
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            lbarthon ur god
-          </p>
-        </header>
-      </div>
+      <React.Fragment>
+        <Navbar />
+        <div className="container">
+          <Switch>
+              <Route exact path="/" />
+              <Route path="/register" component={Register} />
+              <Route path="/login" component={Login} />
+          </Switch>
+        </div>
+      </React.Fragment>
     );
   }
 }
