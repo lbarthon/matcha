@@ -30,7 +30,7 @@ db_tools.connect_no_db((conn, err) => {
             Promise.all(promises)
             .then(() => exit("Setup ended correctly."))
             .catch(err => console.error(err))
-            .finally(() => process.exit(1));
+            .finally(() => process.exit(0));
         }, true);
     });
 }, true);
