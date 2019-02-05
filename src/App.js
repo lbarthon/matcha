@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './materialize.css';
-import { Route, Link, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import Navbar from './components/Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
