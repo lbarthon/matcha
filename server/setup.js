@@ -6,7 +6,6 @@ var queries = [
     email VARCHAR(255) NOT NULL,\
     pwd VARCHAR(128) NOT NULL,\
     first VARCHAR(128) NOT NULL,\
-    last VARCHAR(128) NOT NULL,\
     sex VARCHAR(10) NOT NULL,\
     wanted VARCHAR(10) NOT NULL,\
     conf_link VARCHAR(255),\
