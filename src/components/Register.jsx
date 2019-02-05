@@ -9,15 +9,38 @@ class Register extends Component {
     day: '',
     month: '',
     year: '',
+    genre: '',
+    wanted: '',
+    email: '',
+    password: '',
+    repassword: '',
+    description: '',
+    files: '',
+    type: ''
   }
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+
   handleSubmit = (e) => {
+    console.log(this.props.location = );
     e.preventDefault();
-    console.log(this.state);
+    console.log(JSON.stringify(this.state));
+    fetch('/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body: this.state
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          console.log(json);
+        });
+      }
+    });
   }
 
   render() {
@@ -54,17 +77,6 @@ class Register extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="input-field col s12">
-            <select>
-              <option value="" disabled selected>Choose your option</option>
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-              <option value="3">Option 3</option>
-            </select>
-            <label>Materialize Select</label>
-          </div>
-        </div>
-        <div className="row">
           <div className="input-field col s6">
             <div><label>Gender</label></div>
             <p>
@@ -84,13 +96,13 @@ class Register extends Component {
             <div><label>Looking</label></div>
             <p>
               <label>
-                <input name="lookingfor" type="radio"/>
+                <input name="wanted" type="radio"/>
                 <span>M</span>
               </label>
             </p>
             <p>
               <label>
-                <input name="lookingfor" type="radio" />
+                <input name="wanted" type="radio" />
                 <span>F</span>
               </label>
             </p>
@@ -99,25 +111,25 @@ class Register extends Component {
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">alternate_email</i>
-            <input name=""id="email" type="email" className="validate"/>
+            <input name=""id="email" type="email" className="validate" onChange={this.onChange}/>
             <label htmlFor="email">Email</label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s6">
             <i className="material-icons prefix">vpn_key</i>
-            <input name="password" id="password" type="password" className="validate"/>
+            <input name="password" id="password" type="password" className="validate" onChange={this.onChange} />
             <label htmlFor="password">Password</label>
           </div>
           <div className="input-field col s6">
-            <input name="repassword" id="repassword" type="password" className="validate"/>
+            <input name="repassword" id="repassword" type="password" className="validate" onChange={this.onChange} />
             <label htmlFor="repassword">Repeat password</label>
           </div>
         </div>
         <div className="file-field input-field">
           <div className="btn">
             <span>File</span>
-            <input type="file" multiple />
+            <input type="file" accept="image/*" multiple onChange={this.onChange} />
           </div>
           <div className="file-path-wrapper">
             <input className="file-path validate" type="text" placeholder="Upload one or more pictures" />
@@ -126,14 +138,14 @@ class Register extends Component {
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">mode_edit</i>
-            <textarea id="textarea1" className="materialize-textarea"></textarea>
+            <textarea name="description" id="textarea1" className="materialize-textarea" onChange={this.onChange}></textarea>
             <label htmlFor="textarea1">About you...<br/></label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">favorite</i>
-            <textarea id="textarea2" className="materialize-textarea"></textarea>
+            <textarea name="tags" id="textarea2" className="materialize-textarea" onChange={this.onChange}></textarea>
             <label htmlFor="textarea2">Tags<br/></label>
             <span className="helper-text" data-error="wrong" data-success="right">ex : bio geek piercing vegan ...</span>
           </div>
