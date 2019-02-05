@@ -1,32 +1,61 @@
 const mysql = require("mysql");
 const Emitter = require('./emitter.js');
-var conn = mysql.createConnection({
-    host     : '51.77.202.107',
-    port     : '3306',
-    user     : 'lbarthon',
-    password : '12345678'
-});
+var conn = null;
+var host = '51.77.202.107';
+var user = 'lbarthon';
+var password = '12345678';
+var database = 'Matcha';
 
-function connect() {
+function connect_no_db(callback, force) {
+    if (!conn || force) {
+        conn = mysql.createConnection({
+            host     : host,
+            user     : user,
+            password : password
+        });
+    }
     if (conn.state == "disconnected") {
         conn.connect(err => {
-            if (err) throw err;
-            Emitter.emit('dbConnectEvent');
+            Emitter.emit('dbConnectEvent', conn, err);
+            if (callback) {
+                callback(conn, err);
+            }
         });
     }
 }
 
-function end() {
-    if (conn.state == "authenticated") {
+function connect(callback, force) {
+    if (!conn || force) {
+        conn = mysql.createConnection({
+            host     : host,
+            user     : user,
+            password : password,
+            database : database
+        });
+    }
+    if (conn.state == "disconnected") {
+        conn.connect(err => {
+            Emitter.emit('dbConnectEvent', conn, err);
+            if (callback) {
+                callback(conn, err);
+            }
+        });
+    }
+}
+
+function end(callback) {
+    if (conn && conn.state == "authenticated") {
         conn.end(err => {
-            if (err) throw err;
-            Emitter.emit('dbCloseEvent');
+            Emitter.emit('dbCloseEvent', err);
+            if (callback) {
+                callback(conn, err);
+            }
         });
     }
 }
 
 module.exports = {
+    connect_no_db: connect_no_db,
     connect: connect,
     end: end,
-    conn: conn
 }
