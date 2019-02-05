@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class Login extends Component {
   render() {
-    return(
+    return (
       <form method="POST" class="col s12">
         <div class="row">
           <div class="input-field col s12">
