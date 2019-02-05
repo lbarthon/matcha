@@ -8,7 +8,7 @@ class Register extends Component {
           <div className="input-field col s12">
             <i class="material-icons prefix">person</i>
             <input name="username" id="last_name" type="text" className="validate"/>
-            <label for="last_name">First Name</label>
+            <label for="last_name">Name</label>
           </div>
         </div>
         <div className="row">
@@ -26,7 +26,7 @@ class Register extends Component {
           </div>
           <div className="input-field col s2">
             <input name="mounth" id="mounth" type="text" className="validate"/>
-            <label for="mounth">Mounth</label>
+            <label for="mounth">Month</label>
           </div>
           <div className="input-field col s8">
             <input name="year" id="year" type="text" className="validate"/>
