@@ -2,6 +2,7 @@
   "name": "matcha",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
     "bcrypt": "^3.0.3",
     "jquery": "^3.3.1",

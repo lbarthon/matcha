@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var user = require('./user/user.js')
 var db_tools = require('./database.js');
+var ret = {};
 
 db_tools.connect();
 
@@ -13,8 +14,9 @@ router.use(function timeLog (req, res, next) {
 
 router.get('/register', function (req, res) {
     user.register(req.body)
-    .then(() => console.log("success"))
-    .catch(err => console.log(err.message));
+    .then(() => ret["success"] = "Compte créé avec succès!")
+    .catch(err => ret["error"] = err.message);
+    res.status(200).send(JSON.stringify(ret));
 })
 
 module.exports = router;
