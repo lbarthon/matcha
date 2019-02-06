@@ -7,12 +7,12 @@ var ret = {};
 db_tools.connect();
 
 router.use(function timeLog (req, res, next) {
-    console.log('Handling request on ' + req.originalUrl + ' -- Actual time:', 
+    console.log('Handling request on ' + req.originalUrl + ' -- Actual time:',
         new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
     next();
 })
 
-router.get('/register', function (req, res) {
+router.post('/register', function (req, res) {
     user.register(req.body)
     .then(() => ret["success"] = "Compte créé avec succès!")
     .catch(err => ret["error"] = err.message);

@@ -7,8 +7,9 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 
 function register(infos) {
+  console.log(infos);
     return new Promise((resolve, reject) => {
-        if (infos.repassword != infos.password) {        
+        if (infos.repassword != infos.password) {
             return reject(new Error("Passwords does not match!"));
         }
         if (!String(infos.email).match(/[a-z\d]+\@[a-z\d]+\.[a-z]+/i)) {

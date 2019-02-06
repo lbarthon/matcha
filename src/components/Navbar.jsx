@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link, Switch } from 'react-router-dom'
-import Register from './Register';
-import Login from './Login';
+import { Link } from 'react-router-dom'
 
 class Navbar extends Component {
   render() {
