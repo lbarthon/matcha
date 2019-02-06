@@ -2,11 +2,7 @@
   "name": "matcha",
   "version": "0.1.0",
   "private": true,
-<<<<<<< HEAD
-  "proxy": "http://localhost:3001/",
-=======
   "proxy": "http://localhost:5000",
->>>>>>> 251189bdb52e518b773970d485ccf7be51e54dcd
   "dependencies": {
     "bcrypt": "^3.0.3",
     "jquery": "^3.3.1",
