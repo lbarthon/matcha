@@ -9,7 +9,7 @@ class Navbar extends Component {
       <header>
         <nav style={{ marginBottom:20 }}>
           <div className="nav-wrapper">
-            <a href="/" className="brand-logo"><i className="material-icons">insert_emoticon</i>Matcha</a>
+            <Link to="/" className="brand-logo"><i className="material-icons">insert_emoticon</i>Matcha</Link>
             <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               <li><Link to="/logout">Logout</Link></li>
