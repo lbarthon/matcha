@@ -18,14 +18,14 @@ fs.readFile("server/sql/dump.sql", (err, data) => {
                         });
                     });
                 });
-                Promise.all(promises)
-                .then(() => exit("Setup ended correctly."))
-                .catch(console.error)
-                .finally(() => process.exit(1));
-            }, true);
-        });
-    }, true);
-});
+            });
+            Promise.all(promises)
+            .then(() => exit("Setup ended correctly."))
+            .catch(err => console.error(err))
+            .finally(() => process.exit(0));
+        }, true);
+    });
+}, true);
 
 function exit(msg) {
     console.log("Process terminating.\n" + msg);
