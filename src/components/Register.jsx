@@ -14,13 +14,11 @@ class Register extends Component {
     email: '',
     password: '',
     repassword: '',
-    description: '',
-    files: '',
-    type: ''
+    description: ''
   }
 
   onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   parseForm = (form) => {
@@ -39,21 +37,22 @@ class Register extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.parseForm(this.state)
-    .then(result => {
-      console.log(result);
-      fetch('http://localhost:5000/api/register', {
+    .then(strForm => {
+      console.log(strForm);
+      fetch('/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
-        body: result
+        body: strForm
       })
       .then(response => {
-        if (response.ok) {
+        console.log('test');
+        /*if (response.ok) {
           response.json().then(json => {
             console.log(json);
           });
-        }
+        }*/
       });
     });
   }
@@ -108,7 +107,7 @@ class Register extends Component {
             </p>
           </div>
           <div className="input-field col s6">
-            <div><label>Looking</label></div>
+            <div><label>Looking for</label></div>
             <p>
               <label>
                 <input name="wanted" value="m" type="radio"/>
@@ -139,15 +138,6 @@ class Register extends Component {
           <div className="input-field col s6">
             <input name="repassword" id="repassword" type="password" className="validate" onChange={this.onChange} />
             <label htmlFor="repassword">Repeat password</label>
-          </div>
-        </div>
-        <div className="file-field input-field">
-          <div className="btn">
-            <span>File</span>
-            <input type="file" accept="image/*" multiple onChange={this.onChange} />
-          </div>
-          <div className="file-path-wrapper">
-            <input className="file-path validate" type="text" placeholder="Upload one or more pictures" />
           </div>
         </div>
         <div className="row">

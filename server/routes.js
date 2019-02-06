@@ -12,9 +12,15 @@ router.use(function timeLog (req, res, next) {
 })
 
 router.post('/register', function (req, res) {
+    var rep;
     user.register(req.body)
-    .then(() => console.log("success"))
-    .catch(err => console.log(err.message));
+    .then(() => {
+      rep = "kgefhjksad";
+    })
+    .catch(err => {
+      rep = err.message;
+    });
+    res.status(200).send(rep);
 })
 
 module.exports = router;
