@@ -19,9 +19,11 @@ function connect_no_db(callback, force) {
             Emitter.emit('dbConnectEvent', conn, err);
             if (callback) {
                 callback(conn, err);
+                return;
             }
         });
     }
+    callback(conn);
 }
 
 function connect(callback, force) {
