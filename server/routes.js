@@ -13,6 +13,7 @@ router.use(function timeLog (req, res, next) {
 })
 
 router.post('/register', function (req, res) {
+    ret['test'] = 'test';
     user.register(req.body)
     .then(() => ret["success"] = "Compte créé avec succès!")
     .catch(err => ret["error"] = err.message);

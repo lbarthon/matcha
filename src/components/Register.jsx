@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import parseForm from '../utils/parseForm';
 
 
 class Register extends Component {
@@ -10,35 +11,21 @@ class Register extends Component {
     month: '',
     year: '',
     genre: '',
-    wanted: '',
+    lookingFor: '',
     email: '',
     password: '',
     repassword: '',
     description: ''
   }
 
-  onChange = (e) => {
+  onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  parseForm = (form) => {
-    return new Promise(resolve => {
-      let newForm = [];
-      for (let key in form) {
-        let encodedKey = encodeURIComponent(key);
-        let encodedValue = encodeURIComponent(form[key]);
-        newForm.push(encodedKey + '=' + encodedValue);
-      }
-      let result = newForm.join('&')
-      resolve(result);
-    });
-  }
-
-  handleSubmit = (e) => {
+  handleSubmit = e => {
     e.preventDefault();
-    this.parseForm(this.state)
+    parseForm(this.state)
     .then(strForm => {
-      console.log(strForm);
       fetch('/api/register', {
         method: 'POST',
         headers: {
@@ -47,12 +34,11 @@ class Register extends Component {
         body: strForm
       })
       .then(response => {
-        console.log('test');
-        /*if (response.ok) {
+        if (response.ok) {
           response.json().then(json => {
             console.log(json);
           });
-        }*/
+        }
       });
     });
   }
@@ -60,7 +46,6 @@ class Register extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
-        <h1>{this.state.test}</h1>
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">person</i>
@@ -95,13 +80,13 @@ class Register extends Component {
             <div><label>Gender</label></div>
             <p>
               <label>
-                <input name="gender" value="m" type="radio" />
+                <input name="gender" value="m" type="radio" onChange={this.onChange}/>
                 <span>M</span>
               </label>
             </p>
             <p>
               <label>
-                <input name="gender" value="f" type="radio" />
+                <input name="gender" value="f" type="radio" onChange={this.onChange}/>
                 <span>F</span>
               </label>
             </p>
@@ -110,13 +95,13 @@ class Register extends Component {
             <div><label>Looking for</label></div>
             <p>
               <label>
-                <input name="wanted" value="m" type="radio"/>
+                <input name="lookingFor" value="m" type="radio" onChange={this.onChange}/>
                 <span>M</span>
               </label>
             </p>
             <p>
               <label>
-                <input name="wanted" value="f" type="radio" />
+                <input name="lookingFor" value="f" type="radio" onChange={this.onChange}/>
                 <span>F</span>
               </label>
             </p>
