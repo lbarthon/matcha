@@ -23,28 +23,32 @@ class Register extends Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  parseForm = (form, callback) => {
-    let newForm = [];
-    for (let key in form) {
-      let encodedKey = encodeURIComponent(key);
-      let encodedValue = encodeURIComponent(form[key]);
-      newForm.push(encodedKey + '=' + encodedValue);
-    }
-    let str = newForm.join('&')
-    callback(str);
+  parseForm = (form) => {
+    return new Promise(resolve => {
+      let newForm = [];
+      for (let key in form) {
+        let encodedKey = encodeURIComponent(key);
+        let encodedValue = encodeURIComponent(form[key]);
+        newForm.push(encodedKey + '=' + encodedValue);
+      }
+      let result = newForm.join('&')
+      resolve(result);
+    });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.parseForm(this.state, function(strForm) {
-      console.log(strForm)
-      fetch('/api/register', {
+    this.parseForm(this.state)
+    .then(result => {
+      console.log(result);
+      fetch('http://localhost:5000/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
-        body: strForm
-      }).then(response => {
+        body: result
+      })
+      .then(response => {
         if (response.ok) {
           response.json().then(json => {
             console.log(json);
