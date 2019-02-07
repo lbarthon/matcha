@@ -2,7 +2,6 @@ var express = require('express')
 var router = express.Router()
 var user = require('./user/user.js')
 var db_tools = require('./database.js');
-var ret = {};
 
 db_tools.connect();
 
@@ -13,11 +12,15 @@ router.use(function timeLog (req, res, next) {
 })
 
 router.post('/register', function (req, res) {
-    ret['test'] = 'test';
     user.register(req.body)
-    .then(() => ret["success"] = "Compte créé avec succès!")
-    .catch(err => ret["error"] = err.message);
-    res.status(200).send(JSON.stringify(ret));
+    .then(() => {
+        var ret = ["success", "Compte créé avec succès!"];
+        res.status(200).send(JSON.stringify(ret));
+    })
+    .catch(err => {
+        var ret = ["error", err.message];
+        res.status(200).send(JSON.stringify(ret));
+    });
 })
 
 module.exports = router;

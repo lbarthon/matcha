@@ -5,10 +5,13 @@
   "proxy": "http://localhost:5000",
   "dependencies": {
     "bcrypt": "^3.0.3",
+    "forever": "^0.15.3",
     "jquery": "^3.3.1",
     "mysql": "^2.16.0",
     "n": "^2.1.12",
+    "nodeidon": "0.0.3",
     "promise": "^8.0.2",
+    "randomstring": "^1.1.5",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
@@ -16,6 +19,7 @@
     "react-scripts": "2.1.3"
   },
   "scripts": {
+    "dev": "nodeidon -w server/server.js -d \"node server/server.js\" \"npm run start\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
