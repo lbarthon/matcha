@@ -4,7 +4,7 @@ import parseForm from '../utils/parseForm';
 class Login extends Component {
 
   state = {
-    email: '',
+    name: '',
     password: ''
   }
 
@@ -38,8 +38,8 @@ class Login extends Component {
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
           <div className="input-field col s12">
-            <input name="email" id="email" type="text" className="validate" onChange={this.onChange} />
-            <label htmlFor="email">Email</label>
+            <input name="name" id="name" type="text" className="validate" onChange={this.onChange} />
+            <label htmlFor="name">Username</label>
           </div>
         </div>
         <div className="row">

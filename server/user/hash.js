@@ -11,5 +11,6 @@ function create(str) {
 }
 
 module.exports = {
-    create : create
+    create  : create,
+    compare : bcrypt.compare
 }

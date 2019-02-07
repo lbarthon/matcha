@@ -11,10 +11,22 @@ router.use(function timeLog (req, res, next) {
     next();
 })
 
-router.post('/register', function (req, res) {
+router.post('/register', (req, res) => {
     user.register(req.body)
     .then(() => {
         var ret = ["success", "Compte créé avec succès!"];
+        res.status(200).send(JSON.stringify(ret));
+    })
+    .catch(err => {
+        var ret = ["error", err.message];
+        res.status(200).send(JSON.stringify(ret));
+    });
+})
+
+router.post('/login', (req, res) => {
+    user.login(req.body)
+    .then(() => {
+        var ret = ["success", "Login successfully!"];
         res.status(200).send(JSON.stringify(ret));
     })
     .catch(err => {

@@ -50,7 +50,7 @@ class Register extends Component {
           <div className="input-field col s12">
             <i className="material-icons prefix">person</i>
             <input name="name" id="last_name" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="last_name">Name</label>
+            <label htmlFor="last_name">Username</label>
           </div>
         </div>
         <div className="row">
