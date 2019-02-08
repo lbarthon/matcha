@@ -23,21 +23,27 @@ function register(infos) {
         } else if (!String(infos.email).match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
             reject(new Error("Email isn't valid!"));
         } else {
-
-            hash.create(infos.password).then(hashed => {
-                infos.password = hashed;
-                var conf_link = randomstring.generate(50);
-                conn.query("INSERT INTO users (username, email, pwd, \
-                    sex, wanted, conf_link) VALUES (?,?,?,?,?,?)",
-                    [infos.name, infos.email, infos.password, infos.genre, infos.lookingFor, conf_link], err => {
-                    if (err) {
-                        console.error(err);
-                        reject(new Error("Error registering your user."));
-                    } else {
-                        resolve();
-                    }
-                })
-            }).catch(reject);
+            utils.getIdFromEmail(infos.email).then(() => {
+                reject(new Error("A user already has this email!"));
+            }).catch(() => {
+                utils.getIdFromUsername(infos.name).then(() => {
+                    reject(new Error("A user already has this username!"));
+                }).catch(() => {
+                    hash.create(infos.password).then(hashed => {
+                        infos.password = hashed;
+                        var conf_link = randomstring.generate(50);
+                        conn.query("INSERT INTO users (username, email, pwd, \
+                            sex, wanted, conf_link) VALUES (?,?,?,?,?,?)",
+                            [infos.name, infos.email, infos.password, infos.genre, infos.lookingFor, conf_link], err => {
+                            if (err) {
+                                reject(new Error("Error registering your user."));
+                            } else {
+                                resolve();
+                            }
+                        })
+                    }).catch(reject);
+                });
+            });
         }
     });
 }

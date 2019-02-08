@@ -9,7 +9,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 function login(infos) {
     return new Promise((resolve, reject) => {
         if (infos.name == '') {
-            eject(new Error("Username can't be null!"));
+            reject(new Error("Username can't be null!"));
         } else if (infos.password == '') {
             reject(new Error("Password can't be null!"));
         } else {

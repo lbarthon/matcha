@@ -25,6 +25,27 @@ var getIdFromUsername = username => {
     })
 }
 
+var getIdFromEmail = email => {
+    return new Promise((resolve, reject) => {
+        if (conn) {
+            conn.query("SELECT id FROM users WHERE username=?", [email], (err, results) => {
+                if (err) {
+                    reject(new Error("Error querying database."));
+                } else {
+                    if (results.length == 0) {
+                        reject(new Error("Email not found"));
+                    } else {
+                        resolve(results[0].id);
+                    }
+                }
+            });
+        } else {
+            reject(new Error("Sql connection undefined!"));
+        }
+    })
+}
+
 module.exports = {
-    getIdFromUsername : getIdFromUsername
+    getIdFromUsername : getIdFromUsername,
+    getIdFromEmail    : getIdFromEmail
 }
