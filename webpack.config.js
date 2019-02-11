@@ -6,8 +6,8 @@ module.exports = {
 		App: './src/index.js'
 	},
 	output: {
-		path: path.resolve(__dirname, 'public/js'),
-		filename: 'bundle.js'
+		path: path.resolve(__dirname, 'public'),
+		filename: 'js/bundle.js'
 	},
 	resolve: {
 		extensions: ['.js', '.jsx']
