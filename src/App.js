@@ -4,21 +4,17 @@ import { Route, Switch } from 'react-router-dom'
 import Navbar from './components/Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
-
+//import { AlertProvider } from './utils/Alert';
+import { AlertContainer } from './utils/Alert';
 
 class App extends Component {
 
-  constructor() {
-    super();
-    localStorage.setItem('createAlert', this.createAlert);
+  componentWillMount() {
+    console.log('mount');
   }
 
-  state = {
-    alert: 'ok'
-  }
-
-  createAlert = (msg) => {
-    this.setState({ alert: msg });
+  componentDidUpdate() {
+    console.log('update');
   }
 
   render() {
@@ -26,10 +22,10 @@ class App extends Component {
       <React.Fragment>
         <Navbar />
         <div className="container">
-          <h3>{this.state.alert}</h3>
+          <AlertContainer />
           <Switch>
               <Route exact path="/" />
-              <Route path="/register" render={() => <Register createAlert={this.createAlert} />}/>
+              <Route path="/register" render={() => <Register />}/>
               <Route path="/login" component={Login} />
           </Switch>
         </div>
