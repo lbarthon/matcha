@@ -4,7 +4,7 @@ function create(str) {
     return new Promise((resolve, reject) => {
         bcrypt.hash(str, 10).then(hash => {
             resolve(hash);
-        }).catch(err => {
+        }).catch(() => {
             reject(new Error("Eror hashing the user password!"));
         })
     })
