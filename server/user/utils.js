@@ -28,7 +28,7 @@ var getIdFromUsername = username => {
 var getIdFromEmail = email => {
     return new Promise((resolve, reject) => {
         if (conn) {
-            conn.query("SELECT id FROM users WHERE username=?", [email], (err, results) => {
+            conn.query("SELECT id FROM users WHERE email=?", [email], (err, results) => {
                 if (err) {
                     reject(new Error("Error querying database."));
                 } else {

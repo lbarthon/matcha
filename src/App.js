@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import './materialize.css';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
-//import { AlertProvider } from './utils/Alert';
 import { AlertContainer } from './utils/Alert';
 
 class App extends Component {
