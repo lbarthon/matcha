@@ -1,11 +1,11 @@
-var emitter = require('../emitter.js');
+const emitter = require('../emitter');
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
-var getIdFromUsername = username => {
+const getIdFromUsername = username => {
     return new Promise((resolve, reject) => {
         if (conn) {
             conn.query("SELECT id FROM users WHERE username=?", [username], (err, results) => {
@@ -25,7 +25,7 @@ var getIdFromUsername = username => {
     })
 }
 
-var getIdFromEmail = email => {
+const getIdFromEmail = email => {
     return new Promise((resolve, reject) => {
         if (conn) {
             conn.query("SELECT id FROM users WHERE email=?", [email], (err, results) => {

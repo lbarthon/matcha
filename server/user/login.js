@@ -1,5 +1,7 @@
-var hash = require('./hash.js');
-var emitter = require('../emitter.js');
+const hash = require('./hash');
+const emitter = require('../emitter');
+const config = require('../config');
+const jwt = require('jsonwebtoken');
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
@@ -13,7 +15,7 @@ function login(infos) {
         } else if (infos.password == '') {
             reject(new Error("Password can't be null!"));
         } else {
-            conn.query("SELECT pwd FROM users WHERE username=?",
+            conn.query("SELECT id,pwd FROM users WHERE username=?",
                 [infos.name], (err, results) => {
                 if (err) {
                     reject(new Error("Error querying database."));
@@ -24,7 +26,11 @@ function login(infos) {
                             if (!res) {
                                 reject(new Error("Passwords does not match!"));
                             } else {
-                                resolve();
+                                const token = jwt.sign = jwt.sign({
+                                    id: results[0].id,
+                                    user: infos.name
+                                }, config.jwtSecret);
+                                resolve(token);
                             }
                         })
                         .catch(() => {

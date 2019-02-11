@@ -1,12 +1,12 @@
-const mysql = require("mysql");
-const Emitter = require('./emitter.js');
+const mysql = require('mysql');
+const Emitter = require('./emitter');
+const host = '51.77.202.107';
+const user = 'lbarthon';
+const password = '12345678';
+const database = 'Matcha';
 var conn = null;
-var host = '51.77.202.107';
-var user = 'lbarthon';
-var password = '12345678';
-var database = 'Matcha';
 
-function connect_no_db(callback, force) {
+const connect_no_db = (callback, force) => {
     if (!conn || force) {
         conn = mysql.createConnection({
             host     : host,
@@ -26,7 +26,7 @@ function connect_no_db(callback, force) {
     callback(conn);
 }
 
-function connect(callback, force) {
+const connect = (callback, force) => {
     if (!conn || force) {
         conn = mysql.createConnection({
             host     : host,
@@ -45,7 +45,7 @@ function connect(callback, force) {
     }
 }
 
-function end(callback) {
+const end = (callback) => {
     if (conn && conn.state == "authenticated") {
         conn.end(err => {
             Emitter.emit('dbCloseEvent', err);

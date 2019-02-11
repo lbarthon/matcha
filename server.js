@@ -1,5 +1,7 @@
 const express = require('express');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+const config = require('./server/config');
 
 const prod = (process.env.PROD == "true" || false);
 
@@ -7,19 +9,21 @@ const app = express();
 if (!prod) {
     const webpack = require('webpack');
     const webpackMiddleware = require('webpack-dev-middleware');
+    const webpackHotMiddleware = require('webpack-hot-middleware');
     const webpackConfig = require('./webpack.config.js');
     const compiler = webpack(webpackConfig);
-    const middleware = webpackMiddleware(compiler, {
+    app.use(webpackMiddleware(compiler, {
         serverSideRender: true,
         publicPath: webpackConfig.output.publicPath
-    });
-    app.use(middleware);
+    }));
+    app.use(webpackHotMiddleware(compiler));
 }
 const routes = require('./server/routes.js');
 const bodyParser = require('body-parser');
 
 const port = (process.env.PORT || 3000);
 
+app.use(cookieParser(config.jwtSecret));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

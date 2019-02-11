@@ -29,8 +29,10 @@
     "babel-preset-stage-0": "^6.24.1",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
     "history": "^4.7.2",
+    "jsonwebtoken": "^8.4.0",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.10",
     "randomstring": "^1.1.5",
@@ -41,7 +43,8 @@
     "react-router-dom": "^4.3.1",
     "react-stormpath": "^2.0.1",
     "webpack": "^4.29.3",
-    "webpack-dev-middleware": "^3.5.2"
+    "webpack-dev-middleware": "^3.5.2",
+    "webpack-hot-middleware": "^2.24.3"
   },
   "devDependencies": {
     "webpack-cli": "^3.2.3"

@@ -1,4 +1,4 @@
-var db_tools = require('./database.js');
+const db_tools = require('./database');
 const fs = require('fs');
 
 fs.readFile("server/sql/dump.sql", (err, data) => {
@@ -27,7 +27,7 @@ fs.readFile("server/sql/dump.sql", (err, data) => {
     });
 }, true);
 
-function exit(msg) {
+const exit = (msg) => {
     console.log("Process terminating.\n" + msg);
     process.exit(0);
 }

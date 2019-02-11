@@ -1,7 +1,7 @@
-var express = require('express')
-var router = express.Router()
-var user = require('./user/user.js')
-var db_tools = require('./database.js');
+const express = require('express');
+const router = express.Router();
+const user = require('./user/user');
+const db_tools = require('./database');
 
 db_tools.connect();
 
@@ -25,7 +25,8 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
     user.login(req.body)
-    .then(() => {
+    .then(token => {
+        res.cookie("jwtToken", token, { maxAge: 60 * 60 * 24 * 7 });
         var ret = ["success", "Login successfully!"];
         res.status(200).send(JSON.stringify(ret));
     })

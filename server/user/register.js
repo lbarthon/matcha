@@ -1,7 +1,7 @@
-var hash = require('./hash.js');
-var emitter = require('../emitter.js');
-var randomstring = require('randomstring');
-var utils = require('./utils.js');
+const hash = require('./hash');
+const emitter = require('../emitter');
+const utils = require('./utils');
+const randomstring = require('randomstring');
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
