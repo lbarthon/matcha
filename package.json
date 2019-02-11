@@ -2,10 +2,10 @@
   "name": "matcha",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack -d",
-    "dev": "npm run build && node server.js",
+    "dev": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -32,6 +32,7 @@
     "express": "^4.16.4",
     "history": "^4.7.2",
     "mysql": "^2.16.0",
+    "nodemon": "^1.18.10",
     "randomstring": "^1.1.5",
     "react": "^16.8.1",
     "react-document-title": "^2.0.3",
@@ -40,8 +41,7 @@
     "react-router-dom": "^4.3.1",
     "react-stormpath": "^2.0.1",
     "webpack": "^4.29.3",
-    "webpack-dev-middleware": "^3.5.2",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-middleware": "^3.5.2"
   },
   "devDependencies": {
     "webpack-cli": "^3.2.3"

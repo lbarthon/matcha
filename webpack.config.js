@@ -2,7 +2,9 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = {
-	entry: './src/index.js',
+	entry: {
+		App: './src/index.js'
+	},
 	output: {
 		path: path.resolve(__dirname, 'public/js'),
 		filename: 'bundle.js'
@@ -10,7 +12,6 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},
-	devtool: 'eval-source-map',
 	module: {
 		rules: [{
 			test: /\.jsx?$/,
@@ -18,6 +19,11 @@ module.exports = {
 			use: {
 				loader: 'babel-loader'
 			}
+		},
+		{
+			test: /\.css$/,
+			use: ["style-loader", "css-loader"]
 		}]
-	}
+	},
+	mode: 'production'
 }

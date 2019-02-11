@@ -1,39 +1,37 @@
-var express = require('express');
-var path = require('path');
+const express = require('express');
+const path = require('path');
 
-var webpack = require('webpack');
-var config = require('./webpack.config');
+const app = express();
+const webpack = require('webpack');
+const webpackMiddleware = require('webpack-dev-middleware');
+const webpackConfig = require('./webpack.config.js');
+const compiler = webpack(webpackConfig);
+const middleware = webpackMiddleware(compiler, {
+	serverSideRender: true,
+	publicPath: webpackConfig.output.publicPath
+});
 
-var app = express();
-var compiler = webpack(config);
+const routes = require('./server/routes.js');
+const bodyParser = require('body-parser');
 
-var routes = require('./server/routes.js');
-var bodyParser = require('body-parser');
+const port = 3000;
 
-var port = 3000;
-
-app.use(require('webpack-dev-middleware')(compiler, {
-	noInfo: true,
-	publicPath: config.output.publicPath
-}));
+app.use(middleware);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', routes);
 
-app.get('/css/*.css', (req, res) => {
-	res.sendFile(path.join(__dirname, 'public/', req.originalUrl));
-});
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
 
-app.get('/js/*.jsx?', (req, res) => {
-	res.sendFile(path.join(__dirname, 'public', req.originalUrl));
-})
+app.use('/css', express.static(path.join(__dirname, 'public/css')));
 
 app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.listen(port, () => {
-	console.log("API listening on port " + port + "!");
+app.listen(port, err => {
+    if (err) console.error(err);
+    console.log("App listening on port " + port + "!");
 })
