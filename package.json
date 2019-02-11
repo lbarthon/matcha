@@ -5,8 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack -d",
-    "dev": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "PROD=false node server.js",
+    "start": "npm run build && PROD=true node server.js"
   },
   "repository": {
     "type": "git",
