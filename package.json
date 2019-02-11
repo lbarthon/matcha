@@ -5,6 +5,7 @@
   "proxy": "http://localhost:5000",
   "dependencies": {
     "bcrypt": "^3.0.3",
+    "bootstrap-material-design": "^4.1.1",
     "forever": "^0.15.3",
     "jquery": "^3.3.1",
     "mysql": "^2.16.0",

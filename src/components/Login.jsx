@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
+import { notify } from '../utils/Alert';
 
 class Login extends Component {
 
   state = {
     name: '',
-    password: ''
+    password: '',
   }
 
   onChange = (e) => {
@@ -14,6 +15,7 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    notify('error', 'salut');
     parseForm(this.state)
     .then(strForm => {
       fetch('/api/login', {
