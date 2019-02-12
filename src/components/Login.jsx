@@ -5,8 +5,8 @@ import { notify } from '../utils/Alert';
 class Login extends Component {
 
   state = {
-    name: '',
-    password: '',
+    username: '',
+    pwd: '',
   }
 
   onChange = (e) => {
@@ -24,7 +24,11 @@ class Login extends Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            notify(json[0], json[1]);
+            if (json['error']) {
+              notify('error', json['error']);
+            } else if (json['success']) {
+              notify('success', json['success']);
+            }
           });
         } else {
           throw Error(response.statusText);
@@ -41,14 +45,14 @@ class Login extends Component {
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
           <div className="input-field col s12">
-            <input name="name" id="name" type="text" className="validate" onChange={this.onChange} />
-            <label htmlFor="name">Username</label>
+            <input name="username" id="username" type="text" className="validate" onChange={this.onChange} />
+            <label htmlFor="username">Username</label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s12">
-            <input name="password" id="password" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="password">Password</label>
+            <input name="pwd" id="pwd" type="password" className="validate" onChange={this.onChange} />
+            <label htmlFor="pwd">Password</label>
           </div>
         </div>
         <button className="btn waves-effect waves-light">Log In</button>

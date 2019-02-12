@@ -1,11 +1,16 @@
+const config = require('./server/config');
+const db_infos = require('./server/database');
 const express = require('express');
 const path = require('path');
-const cookieParser = require('cookie-parser');
-const config = require('./server/config');
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
+const bodyParser = require('body-parser');
 
 const prod = (process.env.PROD == "true" || false);
+const port = (process.env.PORT || 3000);
 
 const app = express();
+
 if (!prod) {
     const webpack = require('webpack');
     const webpackMiddleware = require('webpack-dev-middleware');
@@ -18,20 +23,35 @@ if (!prod) {
     }));
     app.use(webpackHotMiddleware(compiler));
 }
+
 const routes = require('./server/routes.js');
-const bodyParser = require('body-parser');
 
-const port = (process.env.PORT || 3000);
+var sqlOptions = {
+    host     : db_infos.db_host,
+    port     : 3306,
+    user     : db_infos.db_user,
+    password : db_infos.db_pwd,
+    database : db_infos.db_name
+}
+var sessionStore = new MySQLStore(sqlOptions)
 
-app.use(cookieParser(config.jwtSecret));
+app.set('trust proxy', 1);
+app.use(session({
+    secret: config.secret,
+    resave: true,
+    saveUninitialized: true,
+    store: sessionStore,
+    cookie: { 
+        maxAge: 60 * 60 * 24
+    }
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api', routes);
 
-app.use('/js', express.static(path.join(__dirname, 'public/js')));
-
-app.use('/css', express.static(path.join(__dirname, 'public/css')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));

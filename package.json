@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack -d",
-    "dev": "PROD=false node server.js",
+    "dev": "PROD=false ./node_modules/.bin/nodemon server.js",
     "start": "npm run build && PROD=true node server.js"
   },
   "repository": {
@@ -29,11 +29,11 @@
     "babel-preset-stage-0": "^6.24.1",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
-    "cookie-parser": "^1.4.3",
     "css-loader": "^2.1.0",
     "express": "^4.16.4",
+    "express-mysql-session": "^2.1.0",
+    "express-session": "^1.15.6",
     "history": "^4.7.2",
-    "jsonwebtoken": "^8.4.0",
     "mysql": "^2.16.0",
     "nodemon": "^1.18.10",
     "randomstring": "^1.1.5",

@@ -57,7 +57,11 @@ const end = (callback) => {
 }
 
 module.exports = {
-    connect_no_db: connect_no_db,
-    connect: connect,
-    end: end,
+    connect_no_db : connect_no_db,
+    connect       : connect,
+    end           : end,
+    db_name       : database,
+    db_host       : host,
+    db_pwd        : password,
+    db_user       : user
 }

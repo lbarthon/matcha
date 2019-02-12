@@ -43,9 +43,6 @@ class Alert extends React.Component {
   render() {
     const { type, text } = this.props;
     const { icon, color } = this.styles[type];
-    /* setTimeout(() => {
-      alert('coucou');
-    }, 3000); */
     return (
       <div className={'alert card-panel white ' + color + '-text'}>
         <i className="material-icons left">{icon}</i>

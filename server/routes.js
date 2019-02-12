@@ -3,37 +3,60 @@ const router = express.Router();
 const user = require('./user/user');
 const db_tools = require('./database');
 
+
 db_tools.connect();
 
-router.use(function timeLog (req, res, next) {
-    console.log('Handling request on ' + req.originalUrl + ' -- Actual time:',
-        new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
-    next();
-})
+router.use((req, res, next) => {
+    if (req.is('application/x-www-form-urlencoded') != null) {
+        console.log('Handling request on ', req.originalUrl, ' -- Actual time:',
+            new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
+        next();
+    } else {
+        res.redirect('/');
+    }
+});
 
 router.post('/register', (req, res) => {
     user.register(req.body)
     .then(() => {
-        var ret = ["success", "Compte créé avec succès!"];
-        res.status(200).send(JSON.stringify(ret));
+        res.status(200).json({ 'success' : 'register.success' });
     })
     .catch(err => {
-        var ret = ["error", err.message];
-        res.status(200).send(JSON.stringify(ret));
+        res.status(200).json({ 'error' : err.message });
     });
-})
+});
 
 router.post('/login', (req, res) => {
     user.login(req.body)
-    .then(token => {
-        res.cookie("jwtToken", token, { maxAge: 60 * 60 * 24 * 7 });
-        var ret = ["success", "Login successfully!"];
-        res.status(200).send(JSON.stringify(ret));
+    .then((arr) => {
+        req.session.username = arr[0];
+        req.session.uid = arr[1];
+        req.session.save();
+        res.status(200).json({ 'success' : 'login.success' });
     })
     .catch(err => {
-        var ret = ["error", err.message];
-        res.status(200).send(JSON.stringify(ret));
+        res.status(200).json({ 'error' : err.message });
     });
-})
+});
+
+router.post('/update', (req, res) => {
+    user.update(req.body)
+    .then(() => {
+        res.status(200).json({ 'success' : 'update.success' });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+});
+
+router.post('/logged', (req, res) => {
+    user.isLogged(req)
+    .then((username) => {
+        res.status(200).json({ "response" : username });
+    })
+    .catch(() => {
+        res.status(200).json({ "response" : false });
+    });
+});
 
 module.exports = router;

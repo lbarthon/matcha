@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-function create(str) {
+const create = (str) => {
     return new Promise((resolve, reject) => {
         bcrypt.hash(str, 10).then(hash => {
             resolve(hash);

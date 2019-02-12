@@ -6,7 +6,7 @@ import { notify } from '../utils/Alert';
 class Register extends Component {
 
   state = {
-    name: '',
+    username: '',
     location: '',
     day: '',
     month: '',
@@ -34,9 +34,11 @@ class Register extends Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            console.log(json);
-            notify(json[0], json[1]);
-            notify('success', 'test');
+            if (json['error']) {
+              notify('error', json['error']);
+            } else if (json['success']) {
+              notify('success', json['success']);
+            }
           });
         }
       });
@@ -49,8 +51,8 @@ class Register extends Component {
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">person</i>
-            <input name="name" id="last_name" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="last_name">Username</label>
+            <input name="username" id="username" type="text" className="validate" onChange={this.onChange}/>
+            <label htmlFor="username">Username</label>
           </div>
         </div>
         <div className="row">

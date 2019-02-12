@@ -24,3 +24,6 @@ yarn-error.log*
 
 #packages.json
 package*.json
+
+#build bundle
+*bundle.js
