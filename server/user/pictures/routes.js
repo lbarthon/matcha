@@ -10,24 +10,26 @@ router.use((req, res, next) => {
     }
 });
 
-router.post('/add', (req, res) => {
-    pictures.add(req.body, req.session.uid)
-    .then(() => {
-        res.status(200).json({ 'success' : 'picture.add.success' });
-    })
-    .catch(err => {
-        res.status(200).json({ 'error' : err.message });
-    });
-});
+// TODO -- TEST & DEBUG
 
-router.post('/remove', (req, res) => {
-    pictures.add(req.body, req.session.uid)
-    .then(() => {
-        res.status(200).json({ 'success' : 'picture.remove.success' });
-    })
-    .catch(err => {
-        res.status(200).json({ 'error' : err.message });
-    });
-});
+// router.post('/add', (req, res) => {
+//     pictures.add(req.body, req.session.uid)
+//     .then(() => {
+//         res.status(200).json({ 'success' : 'picture.add.success' });
+//     })
+//     .catch(err => {
+//         res.status(200).json({ 'error' : err.message });
+//     });
+// });
+
+// router.post('/remove', (req, res) => {
+//     pictures.add(req.body, req.session.uid)
+//     .then(() => {
+//         res.status(200).json({ 'success' : 'picture.remove.success' });
+//     })
+//     .catch(err => {
+//         res.status(200).json({ 'error' : err.message });
+//     });
+// });
 
 module.exports = router;
