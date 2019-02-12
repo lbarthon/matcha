@@ -25,6 +25,7 @@ const update = infos => {
             for (let key in good) {
                 updateCol(key ,filtered[key]);
             }
+            resolve();
         } else {
             reject(new Error("Sql connection undefined!"));
         }
