@@ -1,0 +1,22 @@
+{
+  "register.success": "Compte créé avec succès!",
+  "register.password.regex": "Votre mot de passe doit au moins contenir un chiffre, une minuscule, une majuscule et un caractère spécial!",
+  "register.repassword.diff": "Les deux mots de passe ne correspondent pas!",
+  "register.invalid.email": "Votre mail n'est pas valide!",
+  "register.email.took": "Cet email est déjà utilisé!",
+  "register.username.took": "Ce nom d'utilisateur est déjà utilisé!",
+  "hash.error": "Erreur lors de la gestion de votre mot de passe.",
+  "login.success": "Connection réussie!",
+  "login.password.diff": "Mot de passe incorrect!",
+  "update.success": "Vos informations ont été mises à jour.",
+  "logout.success": "Vous vous êtes bien déconnectés!",
+  "logout.error": "Erreur lors de la déconnection.",
+  "error.null.username": "Votre nom d'utilisateur ne peut pas être nul!",
+  "error.null.password": "Votre mot de passe ne peut pas être nul!",
+  "error.null.genders": "Les genres ne peuvent être nuls!",
+  "error.unknown.user": "Utilisateur inconnu!",
+  "error.unknown.email": "Mail inconnu!",
+  "error.sql.query": "Erreur lors de la requête à la base de données!",
+  "error.sql.undefined": "Erreur lors de la connection à la base de données!",
+  "error.sql.table.undefined": "Cette table n'existe pas!"
+}

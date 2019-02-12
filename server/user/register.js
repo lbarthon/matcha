@@ -13,23 +13,23 @@ const register = (infos) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.name == '') {
-                reject(new Error("username can't be null!"));
+                reject(new Error("error.null.username"));
             } else if (infos.password == '') {
-                reject(new Error("Password can't be null!"));
+                reject(new Error("error.null.password"));
             } else if (!String(infos.password).match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[^\w])(?=.{8,})/)) {
-                reject(new Error("Password must contain a lowercase letter, an uppercase letter, a digit and a special char!"));
+                reject(new Error("register.password.regex"));
             } else if (infos.gender == '' || infos.lookingFor == '') {
-                reject(new Error("Genders must be defined!"));
+                reject(new Error("error.null.genders"));
             } else if (infos.repassword != infos.password) {
-                reject(new Error("Passwords does not match!"));
+                reject(new Error("register.repassword.diff"));
             } else if (!String(infos.email).match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
-                reject(new Error("Email isn't valid!"));
+                reject(new Error("register.invalid.email"));
             } else {
                 utils.getIdFromEmail(infos.email).then(() => {
-                    reject(new Error("A user already has this email!"));
+                    reject(new Error("register.email.took"));
                 }).catch(() => {
                     utils.getIdFromUsername(infos.name).then(() => {
-                        reject(new Error("A user already has this username!"));
+                        reject(new Error("register.username.took"));
                     }).catch(() => {
                         hash.create(infos.password).then(hashed => {
                             infos.password = hashed;
@@ -38,7 +38,7 @@ const register = (infos) => {
                                 sex, wanted, conf_link) VALUES (?,?,?,?,?,?)",
                                 [infos.name, infos.email, infos.password, infos.genre, infos.lookingFor, conf_link], err => {
                                 if (err) {
-                                    reject(new Error("Error registering your user."));
+                                    reject(new Error("error.sql.query"));
                                 } else {
                                     resolve();
                                 }
@@ -48,7 +48,7 @@ const register = (infos) => {
                 });
             }
         } else {
-            reject(new Error("Sql connection undefined!"));
+            reject(new Error("error.sql.undefined"));
         }
     });
 }

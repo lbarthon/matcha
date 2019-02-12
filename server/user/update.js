@@ -27,7 +27,7 @@ const update = infos => {
             }
             resolve();
         } else {
-            reject(new Error("Sql connection undefined!"));
+            reject(new Error("error.sql.undefined"));
         }
     });
 }

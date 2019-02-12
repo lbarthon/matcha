@@ -12,17 +12,17 @@ const getIdFromUsername = username => {
         if (conn) {
             conn.query("SELECT id FROM users WHERE username=?", [username], (err, results) => {
                 if (err) {
-                    reject(new Error("Error querying database."));
+                    reject(new Error("error.sql.query"));
                 } else {
                     if (results.length == 0) {
-                        reject(new Error("User not found"));
+                        reject(new Error("error.unknown.user"));
                     } else {
                         resolve(results[0].id);
                     }
                 }
             });
         } else {
-            reject(new Error("Sql connection undefined!"));
+            reject(new Error("error.sql.undefined"));
         }
     });
 }
@@ -32,17 +32,17 @@ const getIdFromEmail = email => {
         if (conn) {
             conn.query("SELECT id FROM users WHERE email=?", [email], (err, results) => {
                 if (err) {
-                    reject(new Error("Error querying database."));
+                    reject(new Error("error.sql.query"));
                 } else {
                     if (results.length == 0) {
-                        reject(new Error("Email not found"));
+                        reject(new Error("error.unknown.email"));
                     } else {
                         resolve(results[0].id);
                     }
                 }
             });
         } else {
-            reject(new Error("Sql connection undefined!"));
+            reject(new Error("error.sql.undefined"));
         }
     });
 }
@@ -71,17 +71,17 @@ const getTableColumns = table => {
             conn.query("SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA=? AND TABLE_NAME=?",
                     [db_infos.db_name, table], (err, results) => {
                 if (err) {
-                    reject(new Error("Error querying database."));
+                    reject(new Error("error.sql.query"));
                 } else {
                     if (results.length == 0) {
-                        reject(new Error("Unknown table."));
+                        reject(new Error("error.sql.table.undefined"));
                     } else {
                         resolve(results);
                     }
                 }
             });
         } else {
-            reject(new Error("Sql connection undefined!"));
+            reject(new Error("error.sql.undefined"));
         }
     });
 }

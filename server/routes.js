@@ -12,7 +12,7 @@ router.use((req, res, next) => {
             new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
         next();
     } else {
-        res.redirect('/');
+        res.status(404).send('<h1 style="text-align: center>Error 404 - Page not found</h1>"')
     }
 });
 
@@ -49,13 +49,23 @@ router.post('/update', (req, res) => {
     });
 });
 
+router.post('/logout', (req, res) => {
+    user.logout(req)
+    .then(() => {
+        res.status(200).json({ 'success' : 'logout.success' });
+    })
+    .catch(() => {
+        res.status(200).json({ 'error' : 'logout.error' });
+    });
+});
+
 router.post('/logged', (req, res) => {
     user.isLogged(req)
     .then((username) => {
-        res.status(200).json({ "response" : username });
+        res.status(200).json({ 'response' : username });
     })
     .catch(() => {
-        res.status(200).json({ "response" : false });
+        res.status(200).json({ 'response' : false });
     });
 });
 

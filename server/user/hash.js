@@ -5,7 +5,7 @@ const create = (str) => {
         bcrypt.hash(str, 10).then(hash => {
             resolve(hash);
         }).catch(() => {
-            reject(new Error("Eror hashing the user password!"));
+            reject(new Error("hash.error"));
         })
     })
 }
