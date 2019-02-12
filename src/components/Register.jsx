@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
+import { notify } from '../utils/Alert';
 
 
 class Register extends Component {
@@ -24,8 +25,7 @@ class Register extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    parseForm(this.state)
-    .then(strForm => {
+    parseForm(this.state, strForm => {
       fetch('/api/register', {
         method: 'POST',
         headers: {
@@ -37,6 +37,8 @@ class Register extends Component {
         if (response.ok) {
           response.json().then(json => {
             console.log(json);
+            notify(json[0], json[1]);
+            notify('success', 'test');
           });
         }
       });

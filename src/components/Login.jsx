@@ -15,9 +15,7 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    notify('error', 'salut');
-    parseForm(this.state)
-    .then(strForm => {
+    parseForm(this.state, strForm => {
       fetch('/api/login', {
         method: 'POST',
         headers: {
@@ -28,9 +26,14 @@ class Login extends Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            console.log(json);
+            notify(json[0], json[1]);
           });
+        } else {
+          throw Error(response.statusText);
         }
+      })
+      .catch(error => {
+        console.log(error)
       });
     });
   }

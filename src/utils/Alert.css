@@ -1,0 +1,13 @@
+.alert {
+  padding: 10px 10px;
+  height: 56px;
+  line-height: 36px;
+}
+
+.alert button{
+  float: right;
+}
+
+.alert i {
+  margin-top: 6px;
+}
