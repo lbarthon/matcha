@@ -9,6 +9,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 
 const add = (infos, uid) => {
     return new Promise((resolve, reject) => {
+        // TODO -- DEBUG ÇA DOIT Être éclaté
         if (conn) {
             var b64str = infos.picture;
             var pic = Buffer.from(b64str, 'base64');
