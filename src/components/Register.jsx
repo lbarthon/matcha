@@ -28,9 +28,7 @@ class Register extends Component {
     parseForm(this.state, strForm => {
       fetch('/api/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
         body: strForm
       })
       .then(response => {
