@@ -10,6 +10,14 @@ conf_link VARCHAR(255),
 confirmed BIT DEFAULT 0
 );
 
+CREATE TABLE pictures (
+id INT(12) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+main BOOLEAN DEFAULT FALSE,
+`user_id` INT(10) UNSIGNED NOT NULL,
+picture VARCHAR(255) NOT NULL,
+FOREIGN KEY (`user_id`) REFERENCES users(id)
+)
+
 -- 
 -- Add other requests here. Requests must end with a ;
 -- 

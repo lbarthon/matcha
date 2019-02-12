@@ -18,5 +18,12 @@
   "error.unknown.email": "Mail inconnu!",
   "error.sql.query": "Erreur lors de la requête à la base de données!",
   "error.sql.undefined": "Erreur lors de la connection à la base de données!",
-  "error.sql.table.undefined": "Cette table n'existe pas!"
+  "error.sql.table.undefined": "Cette table n'existe pas!",
+  "error.forbidden.access": "Vous n'avez pas accès à cette page!",
+  "picture.add.success": "Photo ajoutée avec succès!",
+  "picture.remove.success": "Photo supprimée avec succès!",
+  "picture.error.write": "Erreur lors de l'enregistrement de votre photo!",
+  "picture.error.insert": "Erreur lors de l'insertion de la photo!",
+  "picture.error.remove": "Erreur lors de la suppression de votre photo!",
+  "picture.error.remove.none": "Erreur lors de la suppression de votre photo. Vous appartient-elle?"
 }

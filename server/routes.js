@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const user = require('./user/user');
 const db_tools = require('./database');
-
+const pictures_routes = require('./user/pictures/routes');
 
 db_tools.connect();
 
@@ -12,9 +12,11 @@ router.use((req, res, next) => {
             new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
         next();
     } else {
-        res.status(404).send('<h1 style="text-align: center>Error 404 - Page not found</h1>"')
+        res.status(404).send("<h1 style='text-align:center;'>Error 404 - Page not found</h1>")
     }
 });
+
+router.use('/pictures', pictures_routes);
 
 router.post('/register', (req, res) => {
     user.register(req.body)
@@ -40,7 +42,7 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/update', (req, res) => {
-    user.update(req.body)
+    user.update(req.body, req.session.uid)
     .then(() => {
         res.status(200).json({ 'success' : 'update.success' });
     })
