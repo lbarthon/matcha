@@ -32,6 +32,11 @@
   "password": "Mot de passe",
   "repassword": "Repetez votre mot de passe",
   "email" : "Email",
+  "nav": {
+    "logout": "Deconnexion",
+    "register": "S'inscrire",
+    "login": "Connexion"
+  },
   "login": {
     "btn": "Se connecter"
   },

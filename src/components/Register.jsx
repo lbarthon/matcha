@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
 import { notify } from '../utils/Alert';
+import { withLocalesHOC } from '../utils/Locales';
 
 
 class Register extends Component {
@@ -46,40 +47,41 @@ class Register extends Component {
   }
 
   render() {
+    const {locale} = this.props.locales;
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">person</i>
             <input name="username" id="username" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">{locale.username}</label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">location_city</i>
             <input name="location" id="location" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="location">Location</label>
+            <label htmlFor="location">{locale.register.location}</label>
           </div>
         </div>
-        <label>Birthdate</label>
+        <label>{locale.register.birthdate}</label>
         <div className="row">
           <div className="input-field col s2">
             <input name="day" id="day" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="day">Day</label>
+            <label htmlFor="day">{locale.register.day}</label>
           </div>
           <div className="input-field col s2">
             <input name="month" id="month" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="month">Month</label>
+            <label htmlFor="month">{locale.register.month}</label>
           </div>
           <div className="input-field col s8">
             <input name="year" id="year" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="year">Year</label>
+            <label htmlFor="year">{locale.register.year}</label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s6">
-            <div><label>Gender</label></div>
+            <div><label>{locale.register.gender}</label></div>
             <p>
               <label>
                 <input name="gender" value="m" type="radio" onChange={this.onChange}/>
@@ -94,7 +96,7 @@ class Register extends Component {
             </p>
           </div>
           <div className="input-field col s6">
-            <div><label>Looking for</label></div>
+            <div><label>{locale.register.lookingfor}</label></div>
             <p>
               <label>
                 <input name="lookingFor" value="m" type="radio" onChange={this.onChange}/>
@@ -113,39 +115,39 @@ class Register extends Component {
           <div className="input-field col s12">
             <i className="material-icons prefix">alternate_email</i>
             <input name="email" id="email" type="email" className="validate" onChange={this.onChange}/>
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">{locale.email}</label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s6">
             <i className="material-icons prefix">vpn_key</i>
             <input name="password" id="password" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">{locale.password}</label>
           </div>
           <div className="input-field col s6">
             <input name="repassword" id="repassword" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="repassword">Repeat password</label>
+            <label htmlFor="repassword">{locale.repassword}</label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">mode_edit</i>
             <textarea name="description" id="textarea1" className="materialize-textarea" onChange={this.onChange}></textarea>
-            <label htmlFor="textarea1">About you...<br/></label>
+            <label htmlFor="textarea1">{locale.register.about}<br/></label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">favorite</i>
             <textarea name="tags" id="textarea2" className="materialize-textarea" onChange={this.onChange}></textarea>
-            <label htmlFor="textarea2">Tags<br/></label>
+            <label htmlFor="textarea2">{locale.register.tags}<br/></label>
             <span className="helper-text" data-error="wrong" data-success="right">ex : bio geek piercing vegan ...</span>
           </div>
         </div>
-        <button className="btn waves-effect waves-light">Register</button>
+        <button className="btn waves-effect waves-light">{locale.register.btn}</button>
       </form>
     );
   }
 }
 
-export default Register;
+export default withLocalesHOC(Register);

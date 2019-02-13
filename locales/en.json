@@ -3,6 +3,11 @@
   "password": "Password",
   "repassword": "Repeat password",
   "email" : "Email",
+  "nav": {
+    "logout": "Logout",
+    "register": "Register",
+    "login": "Login"
+  },
   "login": {
     "btn": "Log in"
   },
