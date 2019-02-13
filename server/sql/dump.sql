@@ -7,7 +7,15 @@ pwd VARCHAR(128) NOT NULL,
 sex VARCHAR(10) NOT NULL,
 wanted VARCHAR(10) NOT NULL,
 conf_link VARCHAR(255),
-confirmed BIT DEFAULT 0
+confirmed BIT DEFAULT 0,
+perm_level BIT DEFAULT 0
+);
+
+CREATE TABLE resetpw (
+`date` INT(20) NOT NULL,
+link VARCHAR(255) NOT NULL,
+`user_id` INT(10) UNSIGNED NOT NULL,
+FOREIGN KEY (`user_id`) REFERENCES users(id)
 );
 
 CREATE TABLE pictures (

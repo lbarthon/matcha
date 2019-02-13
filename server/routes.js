@@ -3,6 +3,7 @@ const router = express.Router();
 const user = require('./user/user');
 const db_tools = require('./database');
 const pictures_routes = require('./user/pictures/routes');
+const lang_routes = require('./lang/routes');
 
 db_tools.connect();
 
@@ -17,6 +18,7 @@ router.use((req, res, next) => {
 });
 
 router.use('/pictures', pictures_routes);
+router.use('/lang', lang_routes);
 
 router.post('/register', (req, res) => {
     user.register(req.body)
