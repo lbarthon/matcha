@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { withLocalesHOC } from '../utils/Locales';
 
 class Navbar extends Component {
   render() {
+    const { locales } = this.props;
     return(
       <header>
         <nav style={{ marginBottom:20 }}>
@@ -13,6 +15,7 @@ class Navbar extends Component {
               <li><Link to="/logout">Logout</Link></li>
               <li><Link to="/register">Register</Link></li>
               <li><Link to="/login">Login</Link></li>
+              <li><a className="waves-effect waves-light btn" onClick={() => locales.toggleLanguage()}>{locales.text}</a></li>
             </ul>
           </div>
         </nav>
@@ -26,4 +29,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default withLocalesHOC(Navbar);

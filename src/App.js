@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
 import { AlertContainer, cleanAlerts } from './utils/Alert';
+import { LocalesProvider } from './utils/Locales';
 
 class App extends Component {
 
@@ -20,15 +21,17 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <Navbar />
-        <div className="container">
-          <AlertContainer />
-          <Switch>
-              <Route exact path="/" />
-              <Route path="/register" render={() => <Register />}/>
-              <Route path="/login" component={Login} />
-          </Switch>
-        </div>
+        <LocalesProvider>
+          <Navbar />
+          <div className="container">
+            <AlertContainer />
+            <Switch>
+                <Route exact path="/" />
+                <Route path="/register" render={() => <Register />}/>
+                <Route path="/login" component={Login} />
+            </Switch>
+          </div>
+        </LocalesProvider>
       </React.Fragment>
     );
   }

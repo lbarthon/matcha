@@ -25,5 +25,24 @@
   "picture.error.write": "Erreur lors de l'enregistrement de votre photo!",
   "picture.error.insert": "Erreur lors de l'insertion de la photo!",
   "picture.error.remove": "Erreur lors de la suppression de votre photo!",
-  "picture.error.remove.none": "Erreur lors de la suppression de votre photo. Vous appartient-elle?"
+  "picture.error.remove.none": "Erreur lors de la suppression de votre photo. Vous appartient-elle?",
+  "username": "Nom d'utilisateur",
+  "password": "Mot de passe",
+  "repassword": "Repetez votre mot de passe",
+  "email" : "Email",
+  "login": {
+    "btn": "Se connecter"
+  },
+  "register" : {
+    "location" : "Ville",
+    "birthdate" : "Date de naisance",
+    "day": "Jour",
+    "month": "Mois",
+    "year": "Annee",
+    "gender": "Genre",
+    "lookingfor": "Interesse(e) par",
+    "tags": "Centres d'interet",
+    "about": "A propos de vous...",
+    "btn": "S'inscrire"
+  }
 }

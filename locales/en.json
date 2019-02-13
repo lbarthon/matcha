@@ -1,0 +1,21 @@
+{
+  "username": "Username",
+  "password": "Password",
+  "repassword": "Repeat password",
+  "email" : "Email",
+  "login": {
+    "btn": "Log in"
+  },
+  "register" : {
+    "location" : "City",
+    "birthdate" : "Bithdate",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year",
+    "gender": "Gender",
+    "lookingfor": "Looking for",
+    "tags": "Tags",
+    "about": "About you...",
+    "btn": "Register"
+  }
+}

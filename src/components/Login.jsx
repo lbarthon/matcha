@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
 import { notify } from '../utils/Alert';
+import { withLocalesHOC } from '../utils/Locales';
 
 class Login extends Component {
 
@@ -15,6 +16,7 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log(this.props);
     parseForm(this.state, strForm => {
       fetch('/api/login', {
         method: 'POST',
@@ -41,24 +43,25 @@ class Login extends Component {
   }
 
   render() {
+    const {locale} = this.props.locales;
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
           <div className="input-field col s12">
             <input name="username" id="username" type="text" className="validate" onChange={this.onChange} />
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">{locale.username}</label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s12">
             <input name="pwd" id="pwd" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="pwd">Password</label>
+            <label htmlFor="pwd">{locale.password}</label>
           </div>
         </div>
-        <button className="btn waves-effect waves-light">Log In</button>
+        <button className="btn waves-effect waves-light">{locale.login.btn}</button>
       </form>
     );
   }
 }
 
-export default Login;
+export default withLocalesHOC(Login);
