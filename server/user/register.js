@@ -12,7 +12,7 @@ const register = (infos) => {
     utils.areInfosClean(infos, 'users');
     return new Promise((resolve, reject) => {
         if (conn) {
-            if (infos.name == '') {
+            if (infos.username == '') {
                 reject(new Error("error.null.username"));
             } else if (infos.password == '') {
                 reject(new Error("error.null.password"));
@@ -36,7 +36,7 @@ const register = (infos) => {
                             var conf_link = randomstring.generate(50);
                             conn.query("INSERT INTO users (username, email, pwd, \
                                 sex, wanted, conf_link) VALUES (?,?,?,?,?,?)",
-                                [infos.name, infos.email, infos.password, infos.genre, infos.lookingFor, conf_link], err => {
+                                [infos.username, infos.email, infos.password, infos.genre, infos.lookingFor, conf_link], err => {
                                 if (err) {
                                     reject(new Error("error.sql.query"));
                                 } else {

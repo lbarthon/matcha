@@ -32,4 +32,15 @@ router.use((req, res, next) => {
 //     });
 // });
 
+// router.post('/set_main', (req, res) => {
+//     pictures.set_main(req.body, req.session.uid)
+//     .then(() => {
+//         res.status(200).json({ 'success' : 'picture.set_main.success' });
+//     })
+//     .catch(err => {
+//         res.status(200).json({ 'error' : err.message });
+//     });
+// });
+
+
 module.exports = router;
