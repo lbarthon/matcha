@@ -7,9 +7,17 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 
 const updateCol = (col, value, uid) => {
-    conn.query("UPDATE users SET ?=? WHERE id=?", [col, value, uid], (err) => {
-        if (err) console.error(err);
-    });
+    if (key == "pwd") {
+        hash.create(infos.password).then(hashed => {
+            conn.query("UPDATE users SET ?=? WHERE id=?", [col, hashed, uid], (err) => {
+                if (err) console.error(err);
+            });
+        }).catch(() => {});
+    } else {
+        conn.query("UPDATE users SET ?=? WHERE id=?", [col, value, uid], (err) => {
+            if (err) console.error(err);
+        });
+    }
 }
 
 const update = (infos, uid) => {

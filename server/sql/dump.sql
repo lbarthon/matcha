@@ -16,7 +16,7 @@ main BOOLEAN DEFAULT FALSE,
 `user_id` INT(10) UNSIGNED NOT NULL,
 picture VARCHAR(255) NOT NULL,
 FOREIGN KEY (`user_id`) REFERENCES users(id)
-)
+);
 
 -- 
 -- Add other requests here. Requests must end with a ;
