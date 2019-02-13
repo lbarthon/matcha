@@ -12,35 +12,35 @@ const login = (infos) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.username == '') {
-                reject(new Error("error.null.username"));
+                reject(new Error("error_null_username"));
             } else if (infos.pwd == '') {
-                reject(new Error("error.null.password"));
+                reject(new Error("error_null_password"));
             } else {
                 conn.query("SELECT id,pwd FROM users WHERE username=?",
                     [infos.username], (err, results) => {
                     if (err) {
-                        reject(new Error("error.sql.query"));
+                        reject(new Error("error_sql_query"));
                     } else {
                         if (results.length != 0) {
                             hash.compare(infos.pwd, results[0].pwd)
                             .then(res => {
                                 if (!res) {
-                                    reject(new Error("login.password.diff"));
+                                    reject(new Error("login_password_diff"));
                                 } else {
                                     resolve([infos.username, results[0].id]);
                                 }
                             })
                             .catch(() => {
-                                reject(new Error("hash.error"))
+                                reject(new Error("hash_error"))
                             });
                         } else {
-                            reject(new Error("error.unknown.user"));
+                            reject(new Error("error_unknown_user"));
                         }
                     }
                 })
             }
         } else {
-            reject(new Error("error.sql.undefined"));
+            reject(new Error("error_sql_undefined"));
         }
     });
 }

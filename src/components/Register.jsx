@@ -25,6 +25,7 @@ class Register extends Component {
   }
 
   handleSubmit = e => {
+    const {locale} = this.props.locales;
     e.preventDefault();
     parseForm(this.state, strForm => {
       fetch('/api/register', {
@@ -36,9 +37,9 @@ class Register extends Component {
         if (response.ok) {
           response.json().then(json => {
             if (json['error']) {
-              notify('error', json['error']);
+              notify('error', locale.alert[json['error']]);
             } else if (json['success']) {
-              notify('success', json['success']);
+              notify('success', locale.alert[json['success']]);
             }
           });
         }

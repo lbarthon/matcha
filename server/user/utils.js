@@ -12,17 +12,17 @@ const getIdFromUsername = username => {
         if (conn) {
             conn.query("SELECT id FROM users WHERE username=?", [username], (err, results) => {
                 if (err) {
-                    reject(new Error("error.sql.query"));
+                    reject(new Error("error_sql_query"));
                 } else {
                     if (results.length == 0) {
-                        reject(new Error("error.unknown.user"));
+                        reject(new Error("error_unknown_user"));
                     } else {
                         resolve(results[0].id);
                     }
                 }
             });
         } else {
-            reject(new Error("error.sql.undefined"));
+            reject(new Error("error_sql_undefined"));
         }
     });
 }
@@ -32,17 +32,17 @@ const getIdFromEmail = email => {
         if (conn) {
             conn.query("SELECT id FROM users WHERE email=?", [email], (err, results) => {
                 if (err) {
-                    reject(new Error("error.sql.query"));
+                    reject(new Error("error_sql_query"));
                 } else {
                     if (results.length == 0) {
-                        reject(new Error("error.unknown.email"));
+                        reject(new Error("error_unknown_email"));
                     } else {
                         resolve(results[0].id);
                     }
                 }
             });
         } else {
-            reject(new Error("error.sql.undefined"));
+            reject(new Error("error_sql_undefined"));
         }
     });
 }
@@ -71,17 +71,17 @@ const getTableColumns = table => {
             conn.query("SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA=? AND TABLE_NAME=?",
                     [db_infos.db_name, table], (err, results) => {
                 if (err) {
-                    reject(new Error("error.sql.query"));
+                    reject(new Error("error_sql_query"));
                 } else {
                     if (results.length == 0) {
-                        reject(new Error("error.sql.table.undefined"));
+                        reject(new Error("error_sql_table_undefined"));
                     } else {
                         resolve(results);
                     }
                 }
             });
         } else {
-            reject(new Error("error.sql.undefined"));
+            reject(new Error("error_sql_undefined"));
         }
     });
 }
