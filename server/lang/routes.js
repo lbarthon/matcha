@@ -6,7 +6,7 @@ router.post('get', (req, res) => {
     res.send(200).json({ "lang" : lang });
 })
 
-router.post('get', (req, res) => {
+router.post('set', (req, res) => {
     req.session.lang = req.body.lang;
     lang = (req.session.lang || "fr");
     res.send(200).json({ "lang" : lang });
