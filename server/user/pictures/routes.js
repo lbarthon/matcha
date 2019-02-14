@@ -4,7 +4,7 @@ const pictures = require('./pictures');
 
 router.use((req, res, next) => {
     if (req.session.username == undefined || req.session.uid == undefined) {
-        res.status(200).json({ 'error' : 'error.forbidden.access' });
+        res.status(200).json({ 'error' : 'error_not_logged' });
     } else {
         next();
     }

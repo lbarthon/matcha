@@ -73,4 +73,14 @@ router.post('/logged', (req, res) => {
     });
 });
 
+router.post('/reset/ask', (req, res) => {
+    user.reset_ask(req)
+    .then(() => {
+        res.status(200).json({ 'response' : username });
+    })
+    .catch(() => {
+        res.status(200).json({ 'response' : false });
+    });
+});
+
 module.exports = router;

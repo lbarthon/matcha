@@ -7,17 +7,21 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 
 const updateCol = (col, value, uid) => {
-    if (key == "pwd") {
-        hash.create(infos.password).then(hashed => {
-            conn.query("UPDATE users SET ?=? WHERE id=?", [col, hashed, uid], (err) => {
-                if (err) console.error(err);
+    return new Promise((resolve, reject) => {
+        if (key == "pwd") {
+            hash.create(infos.password).then(hashed => {
+                conn.query("UPDATE users SET ?=? WHERE id=?", [col, hashed, uid], (err) => {
+                    if (err) reject(new Error("error.sql.query"));
+                    else resolve();
+                });
+            }).catch(reject);
+        } else {
+            conn.query("UPDATE users SET ?=? WHERE id=?", [col, value, uid], (err) => {
+                if (err) reject(new Error("error.sql.query"));
+                else resolve();
             });
-        }).catch(() => {});
-    } else {
-        conn.query("UPDATE users SET ?=? WHERE id=?", [col, value, uid], (err) => {
-            if (err) console.error(err);
-        });
-    }
+        }
+    });
 }
 
 const update = (infos, uid) => {
@@ -30,10 +34,10 @@ const update = (infos, uid) => {
                     filtered[key] = infos[key];
                 }
             }
-            for (let key in good) {
-                updateCol(key ,filtered[key], uid);
-            }
-            resolve();
+            var promises = good.map(key => { return updateCol(key ,filtered[key], uid); })
+            Promise.all(promises)
+            .then(resolve)
+            .catch(reject);
         } else {
             reject(new Error("error.sql.undefined"));
         }

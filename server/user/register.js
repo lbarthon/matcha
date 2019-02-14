@@ -33,7 +33,7 @@ const register = (infos) => {
                     }).catch(() => {
                         hash.create(infos.password).then(hashed => {
                             infos.password = hashed;
-                            var conf_link = randomstring.generate(50);
+                            var conf_link = randomstring.generate(80);
                             conn.query("INSERT INTO users (username, email, pwd, \
                                 sex, wanted, conf_link) VALUES (?,?,?,?,?,?)",
                                 [infos.username, infos.email, infos.password, infos.genre, infos.lookingFor, conf_link], err => {

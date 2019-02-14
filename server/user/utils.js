@@ -87,7 +87,6 @@ const getTableColumns = table => {
 }
 
 const areInfosClean = (infos, table) => {
-    if (prod) return;
     getTableColumns(table)
     .then((ret) => {
         ret = JSON.parse(JSON.stringify(ret));
@@ -98,7 +97,7 @@ const areInfosClean = (infos, table) => {
         var logged = 0;
         for (let key in infos) {
             if (!ret.includes(key)) {
-                if (logged < 3) {
+                if (!prod && logged < 3) {
                     console.log("Unknown database value for", key, ". This might be normal.");
                 }
                 logged++;
@@ -106,7 +105,7 @@ const areInfosClean = (infos, table) => {
                 good_vals.push(key);
             }
         }
-        if (logged > 3) {
+        if (!prod && logged > 3) {
             console.log("(", logged - 3, "more )")
         }
     }).catch(console.error)

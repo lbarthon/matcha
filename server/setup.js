@@ -10,7 +10,7 @@ fs.readFile("server/sql/dump.sql", (err, data) => {
             if (err) exit("Error creating database.");
             db_tools.connect((conn, err) => {
                 if (err) exit("Error connecting to database.");
-                var promises = queries.map((query) => {
+                var promises = queries.map(query => {
                     return new Promise((resolve, reject) => {
                         conn.query(query, err => {
                             if (err) return reject(err);
@@ -18,11 +18,11 @@ fs.readFile("server/sql/dump.sql", (err, data) => {
                         });
                     });
                 });
+                Promise.all(promises)
+                .then(() => exit("Setup ended correctly."))
+                .catch(console.error)
+                .finally(() => process.exit(0));
             });
-            Promise.all(promises)
-            .then(() => exit("Setup ended correctly."))
-            .catch(console.error)
-            .finally(() => process.exit(0));
         }, true);
     });
 }, true);
