@@ -23,7 +23,7 @@ router.use('/lang', lang_routes);
 router.post('/register', (req, res) => {
     user.register(req.body)
     .then(() => {
-        res.status(200).json({ 'success' : 'register.success' });
+        res.status(200).json({ 'success' : 'register.alert.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
@@ -36,7 +36,7 @@ router.post('/login', (req, res) => {
         req.session.username = arr[0];
         req.session.uid = arr[1];
         req.session.save();
-        res.status(200).json({ 'success' : 'login.success' });
+        res.status(200).json({ 'success' : 'login.alert.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
@@ -46,7 +46,7 @@ router.post('/login', (req, res) => {
 router.post('/update', (req, res) => {
     user.update(req.body, req.session.uid)
     .then(() => {
-        res.status(200).json({ 'success' : 'update.success' });
+        res.status(200).json({ 'success' : 'alert.update_success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
@@ -56,10 +56,10 @@ router.post('/update', (req, res) => {
 router.post('/logout', (req, res) => {
     user.logout(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'logout.success' });
+        res.status(200).json({ 'success' : 'alert.logout_success' });
     })
     .catch(() => {
-        res.status(200).json({ 'error' : 'logout.error' });
+        res.status(200).json({ 'error' : 'alert.logout_error' });
     });
 });
 
