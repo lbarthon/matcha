@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
-import { notify } from '../utils/Alert';
-import { withLocalesHOC } from '../utils/Locales';
+import { notify } from '../utils/alert';
+import { withLocalesHOC } from '../utils/locales';
 
 
 class Register extends Component {

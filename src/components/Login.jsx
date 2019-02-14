@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
-import { notify } from '../utils/Alert';
-import { withLocalesHOC, localIdParser } from '../utils/Locales';
+import { notify } from '../utils/alert';
+import { withLocalesHOC, localIdParser } from '../utils/locales';
 
 class Login extends Component {
 

@@ -3,19 +3,19 @@ import { Route, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
-import { AlertContainer, cleanAlerts } from './utils/Alert';
-import { LocalesProvider } from './utils/Locales';
+import { AlertContainer, cleanAlerts } from './utils/alert';
+import { LocalesProvider } from './utils/locales';
+import { withCurrentUserHOC } from './utils/currentUser'
 
 class App extends Component {
 
   componentWillMount() {
-    console.log('mount');
+    console.log(this.props);
   }
 
   componentWillUpdate() {
     // effacer toutes les alerts au changement de page
     cleanAlerts();
-    console.log('update');
   }
 
   render() {
@@ -37,4 +37,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withCurrentUserHOC(App);

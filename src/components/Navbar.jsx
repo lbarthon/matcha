@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { withLocalesHOC } from '../utils/Locales';
+import { withLocalesHOC } from '../utils/locales';
 
 class Navbar extends Component {
   render() {

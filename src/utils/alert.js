@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './Alert.css';
+import './alert.css';
 
 export const notify = (type, text) => {
   let container = document.getElementById('alert-container');

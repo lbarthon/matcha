@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
+import { CurrentUserProvider } from './utils/currentUser'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <CurrentUserProvider>
+      <App />
+    </CurrentUserProvider>
   </BrowserRouter>
   , document.getElementById('root')
 );
