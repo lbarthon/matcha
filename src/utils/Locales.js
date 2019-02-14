@@ -10,7 +10,8 @@ const locales = {
 export const LocalesContext = React.createContext({
   locale: [],
   text: '',
-  toggleLanguage : () => {}
+  toggleLanguage : () => {},
+  idParser : () => {}
 });
 
 export class LocalesProvider extends Component {
@@ -28,6 +29,16 @@ export class LocalesProvider extends Component {
           headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
           body: "lang=" + newLang
         })
+      },
+      idParser : (str) => {
+        console.log(str);
+        let tab = str.split('.');
+        let ret = this.state.locale;
+        tab.forEach(value => {
+          ret = ret[value];
+        });
+        console.log(ret);
+        return ret;
       }
     }
   }

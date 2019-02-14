@@ -12,9 +12,9 @@ const login = (infos) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.username == '') {
-                reject(new Error("error_null_username"));
+                reject(new Error("register.username_null"));
             } else if (infos.pwd == '') {
-                reject(new Error("error_null_password"));
+                reject(new Error("register.password_null"));
             } else {
                 conn.query("SELECT id,pwd FROM users WHERE username=?",
                     [infos.username], (err, results) => {
@@ -25,7 +25,7 @@ const login = (infos) => {
                             hash.compare(infos.pwd, results[0].pwd)
                             .then(res => {
                                 if (!res) {
-                                    reject(new Error("login_password_diff"));
+                                    reject(new Error("login.alert.password_diff"));
                                 } else {
                                     resolve([infos.username, results[0].id]);
                                 }
@@ -34,7 +34,7 @@ const login = (infos) => {
                                 reject(new Error("hash_error"))
                             });
                         } else {
-                            reject(new Error("error_unknown_user"));
+                            reject(new Error("login.alert.user_unknow"));
                         }
                     }
                 })

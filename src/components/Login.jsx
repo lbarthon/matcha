@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
 import { notify } from '../utils/Alert';
-import { withLocalesHOC } from '../utils/Locales';
+import { withLocalesHOC, localIdParser } from '../utils/Locales';
 
 class Login extends Component {
 
@@ -15,7 +15,7 @@ class Login extends Component {
   }
 
   handleSubmit = (e) => {
-    const {locale} = this.props.locales;
+    const { locales } = this.props;
     e.preventDefault();
     parseForm(this.state, strForm => {
       fetch('/api/login', {
@@ -27,9 +27,9 @@ class Login extends Component {
         if (response.ok) {
           response.json().then(json => {
             if (json['error']) {
-              notify('error', locale.alert[json['error']]);
+              notify('error', locales.idParser(json['error']));
             } else if (json['success']) {
-              notify('success', locale.alert[json['success']]);
+              notify('success', locales.idParser(json['success']));
             }
           });
         } else {
