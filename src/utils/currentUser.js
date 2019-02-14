@@ -19,11 +19,12 @@ export class CurrentUserProvider extends React.Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            this.setState({username: json['response']});
-            if (json['response'] !== false)
+            if (json['response'] !== false) {
+              this.setState({username: json['response']});
               this.setState({logged: 1});
-            else
+            } else {
               this.setState({logged: 0});
+            }
           })
         } else {
           throw Error(response.statusText);

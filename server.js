@@ -1,15 +1,16 @@
 const config = require('./server/config');
 const db_infos = require('./server/database');
 const express = require('express');
+const app = express();
 const path = require('path');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
+const ws = require('express-ws')(app);
 
 const prod = (process.env.PROD == "true" || false);
 const port = (process.env.PORT || 3000);
 
-const app = express();
 
 if (!prod) {
     const webpack = require('webpack');
@@ -48,6 +49,8 @@ app.use(session({
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.ws('/socket');
 
 app.use('/api', routes);
 

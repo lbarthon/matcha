@@ -42,7 +42,7 @@
   },
   "alert": {
     "update_success": "Vos informations ont été mises à jour",
-    "logout_success": "Vous vous êtes bien déconnectés !",
+    "logout_success": "Vous vous êtes bien déconnecté !",
     "logout_error": "Erreur lors de la déconnection",
     "error_unknown_email": "Mail inconnu !",
     "error_sql_query": "Erreur lors de la requête à la base de données !",
