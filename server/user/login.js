@@ -12,9 +12,9 @@ const login = (infos) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.username == '') {
-                reject(new Error("register.username_null"));
+                reject(new Error("register.alert.username_null"));
             } else if (infos.pwd == '') {
-                reject(new Error("register.password_null"));
+                reject(new Error("register.alert.password_null"));
             } else {
                 conn.query("SELECT id,pwd FROM users WHERE username=?",
                     [infos.username], (err, results) => {

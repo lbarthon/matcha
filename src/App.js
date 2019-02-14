@@ -10,10 +10,13 @@ import { withCurrentUserHOC } from './utils/currentUser'
 class App extends Component {
 
   componentWillMount() {
+    console.log('mount app');
+    this.props.currentUser.getCurrentUser();
     console.log(this.props);
   }
 
   componentWillUpdate() {
+    console.log('update app');
     // effacer toutes les alerts au changement de page
     cleanAlerts();
   }

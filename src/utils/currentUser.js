@@ -25,13 +25,14 @@ export class CurrentUserProvider extends React.Component {
             else
               this.setState({logged: 0});
           })
+        } else {
+          throw Error(response.statusText);
         }
       })
+      .catch(error => {
+        console.log(error);
+      });
     }
-  }
-
-  componentWillMount() {
-    this.state.getCurrentUser();
   }
 
   render() {

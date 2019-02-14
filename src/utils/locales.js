@@ -37,7 +37,7 @@ export class LocalesProvider extends Component {
         tab.forEach(value => {
           ret = ret[value];
         });
-        console.log(ret);
+        // debug :: console.log(ret);
         return ret;
       }
     }
