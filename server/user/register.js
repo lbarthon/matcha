@@ -40,6 +40,7 @@ const register = (infos) => {
                                 if (err) {
                                     reject(new Error("error.sql.query"));
                                 } else {
+                                    // TODO -- SEND MAILS
                                     resolve();
                                 }
                             })
