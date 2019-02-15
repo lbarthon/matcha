@@ -19,7 +19,7 @@ const login = (infos) => {
                 conn.query("SELECT id,pwd FROM users WHERE username=?",
                     [infos.username], (err, results) => {
                     if (err) {
-                        reject(new Error("error_sql_query"));
+                        reject(new Error("sql.alert.query"));
                     } else {
                         if (results.length != 0) {
                             hash.compare(infos.pwd, results[0].pwd)

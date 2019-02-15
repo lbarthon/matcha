@@ -2,15 +2,15 @@ import React from 'react';
 
 export const CurrentUserContext = React.createContext({
   username: '',
-  logged: '',
+  logged: false,
   getCurrentUser: () => {}
 });
 
 export class CurrentUserProvider extends React.Component {
 
   state = {
-    username: undefined,
-    logged: 0,
+    username: '',
+    logged: false,
     getCurrentUser: () => {
       fetch('/api/logged', {
         method: 'POST',
@@ -21,9 +21,9 @@ export class CurrentUserProvider extends React.Component {
           response.json().then(json => {
             if (json['response'] !== false) {
               this.setState({username: json['response']});
-              this.setState({logged: 1});
+              this.setState({logged: true});
             } else {
-              this.setState({logged: 0});
+              this.setState({logged: false});
             }
           })
         } else {
@@ -34,6 +34,10 @@ export class CurrentUserProvider extends React.Component {
         console.log(error);
       });
     }
+  }
+
+  componentWillMount() {
+    this.state.getCurrentUser();
   }
 
   render() {

@@ -13,23 +13,23 @@ const register = (infos) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.username == '') {
-                reject(new Error("error.null.username"));
+                reject(new Error("register.alert.username_null"));
             } else if (infos.password == '') {
-                reject(new Error("error.null.password"));
+                reject(new Error("register.alert.password_null"));
             } else if (!String(infos.password).match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[^\w])(?=.{8,})/)) {
-                reject(new Error("register.password.regex"));
+                reject(new Error("register.alert.password_regex"));
             } else if (infos.gender == '' || infos.lookingFor == '') {
-                reject(new Error("error.null.genders"));
+                reject(new Error("register.alert.genders_null"));
             } else if (infos.repassword != infos.password) {
-                reject(new Error("register.repassword.diff"));
+                reject(new Error("register.alert.password_diff"));
             } else if (!String(infos.email).match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
-                reject(new Error("register.invalid.email"));
+                reject(new Error("register.alert.email_invalid"));
             } else {
                 utils.getIdFromEmail(infos.email).then(() => {
-                    reject(new Error("register.email.took"));
+                    reject(new Error("register.alert.email_took"));
                 }).catch(() => {
                     utils.getIdFromUsername(infos.name).then(() => {
-                        reject(new Error("register.username.took"));
+                        reject(new Error("register.alert.username_took"));
                     }).catch(() => {
                         hash.create(infos.password).then(hashed => {
                             infos.password = hashed;
@@ -38,7 +38,7 @@ const register = (infos) => {
                                 sex, wanted, conf_link) VALUES (?,?,?,?,?,?)",
                                 [infos.username, infos.email, infos.password, infos.genre, infos.lookingFor, conf_link], err => {
                                 if (err) {
-                                    reject(new Error("error.sql.query"));
+                                    reject(new Error("sql.alert.query"));
                                 } else {
                                     // TODO -- SEND MAILS
                                     resolve();
@@ -49,7 +49,7 @@ const register = (infos) => {
                 });
             }
         } else {
-            reject(new Error("error.sql.undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }

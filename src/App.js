@@ -10,18 +10,17 @@ import { withCurrentUserHOC } from './utils/currentUser'
 class App extends Component {
 
   componentWillMount() {
-    console.log('mount app');
-    this.props.currentUser.getCurrentUser();
-    console.log(this.props);
+    console.log('APP mount');
   }
 
   componentWillUpdate() {
-    console.log('update app');
+    console.log('APP update');
     // effacer toutes les alerts au changement de page
     cleanAlerts();
   }
 
   render() {
+    console.log('APP render');
     return (
       <React.Fragment>
         <LocalesProvider>
