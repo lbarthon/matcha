@@ -12,6 +12,25 @@ class Navbar extends Component {
     console.log('update navbar');
   }
 
+  handleLogout = () => {
+    const { getCurrentUser } = this.props.currentUser;
+    fetch('api/logout', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
+    })
+    .then(response => {
+      if (response.ok) {
+        getCurrentUser();
+      } else {
+        throw Error(response.statusText);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    })
+
+  }
+
   render() {
     const { locales } = this.props;
     const { logged } = this.props.currentUser;
@@ -23,7 +42,7 @@ class Navbar extends Component {
             <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
             {logged === true &&
-              <li><Link to="/logout">{locales.locale.nav.logout}</Link></li>
+              <li><a onClick={this.handleLogout}>Logout</a></li>
             }
             {logged === false &&
               <React.Fragment>
