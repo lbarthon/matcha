@@ -11,7 +11,7 @@ export class CurrentUserProvider extends React.Component {
   state = {
     username: '',
     logged: false,
-    getCurrentUser: () => {
+    getCurrentUser: (callback) => {
       fetch('/api/logged', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
@@ -33,6 +33,8 @@ export class CurrentUserProvider extends React.Component {
       .catch(error => {
         console.log(error);
       });
+      if (callback)
+        callback();
     }
   }
 

@@ -5,7 +5,8 @@ import Register from './components/Register';
 import Login from './components/Login';
 import { AlertContainer, cleanAlerts } from './utils/alert';
 import { LocalesProvider } from './utils/locales';
-import { withCurrentUserHOC } from './utils/currentUser'
+import { withCurrentUserHOC } from './utils/currentUser';
+import PrivateRoute from './utils/PrivateRoute';
 
 class App extends Component {
 
@@ -16,10 +17,11 @@ class App extends Component {
   componentWillUpdate() {
     console.log('APP update');
     // effacer toutes les alerts au changement de page
-    cleanAlerts();
+    // cleanAlerts();
   }
 
   render() {
+    const { logged } = this.props.currentUser;
     console.log('APP render');
     return (
       <React.Fragment>
@@ -30,7 +32,7 @@ class App extends Component {
             <Switch>
                 <Route exact path="/" />
                 <Route path="/register" render={() => <Register />}/>
-                <Route path="/login" component={Login} />
+                <PrivateRoute canAccess={!logged} path="/login" component={Login} />
             </Switch>
           </div>
         </LocalesProvider>

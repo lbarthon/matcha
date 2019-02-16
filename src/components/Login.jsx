@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
 import { notify } from '../utils/alert';
-import { withLocalesHOC, localIdParser } from '../utils/locales';
+import { localIdParser } from '../utils/locales';
+import { withAllHOC } from '../utils/allHOC';
 
 class Login extends Component {
 
@@ -16,6 +17,8 @@ class Login extends Component {
 
   handleSubmit = (e) => {
     const { locales } = this.props;
+    const { getCurrentUser } = this.props.currentUser;
+    const { history } = this.props;
     e.preventDefault();
     parseForm(this.state, strForm => {
       fetch('/api/login', {
@@ -29,7 +32,11 @@ class Login extends Component {
             if (json['error']) {
               notify('error', locales.idParser(json['error']));
             } else if (json['success']) {
-              notify('success', locales.idParser(json['success']));
+              getCurrentUser(() => {
+                history.push("/");
+                notify('success', locales.idParser(json['success']));
+                resolve('ok');
+              });
             }
           });
         } else {
@@ -64,4 +71,4 @@ class Login extends Component {
   }
 }
 
-export default withLocalesHOC(Login);
+export default withAllHOC(Login);
