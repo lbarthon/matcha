@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/get', (req, res) => {
+router.get('/get', (req, res) => {
     lang = (req.session.lang || "fr");
     res.status(200).json({ "lang" : lang });
 })

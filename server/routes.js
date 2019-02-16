@@ -8,7 +8,7 @@ const lang_routes = require('./lang/routes');
 db_tools.connect();
 
 router.use((req, res, next) => {
-    if (req.is('application/x-www-form-urlencoded') == null && req.method == "POST") {
+    if ((req.is('application/x-www-form-urlencoded') == null && req.method == "POST") || (!req.xhr)) {
         res.status(404).send("<h1 style='text-align:center;'>Error 404 - Page not found</h1>")
     } else {
         next();
