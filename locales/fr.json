@@ -13,7 +13,8 @@
     "alert" : {
       "success": "Connection réussie !",
       "user_unknow": "Utilisateur inconnu !",
-      "password_diff": "Mot de passe incorrect !"
+      "password_diff": "Mot de passe incorrect !",
+      "already_logged" : "Vous êtes déjà connecté !"
     }
   },
   "register": {
@@ -54,6 +55,7 @@
     "error_unknown_email": "Mail inconnu !",
     "forbidden_access": "Vous n'avez pas accès à cette page !",
     "not_logged": "Vous devez être connectés pour faire ça !",
+    "reset_ask_success": "Le lien de réinitialisation vous sa étee envoyé par email !",
     "picture_add_success": "Photo ajoutée avec succès !",
     "picture_remove_success": "Photo supprimée avec succès !",
     "picture_set_main_error": "Erreur lors de la modification de votre photo",

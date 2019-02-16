@@ -8,12 +8,10 @@ const lang_routes = require('./lang/routes');
 db_tools.connect();
 
 router.use((req, res, next) => {
-    if (req.is('application/x-www-form-urlencoded') != null) {
-        console.log('Handling request on ', req.originalUrl, ' -- Actual time:',
-            new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''));
-        next();
-    } else {
+    if (req.is('application/x-www-form-urlencoded') == null && req.method == "POST") {
         res.status(404).send("<h1 style='text-align:center;'>Error 404 - Page not found</h1>")
+    } else {
+        next();
     }
 });
 
@@ -31,7 +29,7 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    user.login(req.body)
+    user.login(req)
     .then((arr) => {
         req.session.username = arr[0];
         req.session.uid = arr[1];
@@ -53,7 +51,7 @@ router.post('/update', (req, res) => {
     });
 });
 
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
     user.logout(req)
     .then(() => {
         res.status(200).json({ 'success' : 'alert.logout_success' });
@@ -63,7 +61,7 @@ router.post('/logout', (req, res) => {
     });
 });
 
-router.post('/logged', (req, res) => {
+router.get('/logged', (req, res) => {
     user.isLogged(req)
     .then((username) => {
         res.status(200).json({ 'response' : username });
@@ -76,10 +74,10 @@ router.post('/logged', (req, res) => {
 router.post('/reset/ask', (req, res) => {
     user.reset_ask(req)
     .then(() => {
-        res.status(200).json({ 'response' : username });
+        res.status(200).json({ 'response' : 'alert.reset_ask_success' });
     })
-    .catch(() => {
-        res.status(200).json({ 'response' : false });
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
     });
 });
 

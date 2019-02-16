@@ -7,11 +7,14 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
-const login = (infos) => {
+const login = (req) => {
+    infos = req.body;
     utils.areInfosClean(infos, 'users');
     return new Promise((resolve, reject) => {
         if (conn) {
-            if (infos.username == '') {
+            if (utils.isLogged(req)) {
+                reject(new Error("login.alert.already_logged"));
+            } else if (infos.username == '') {
                 reject(new Error("register.alert.username_null"));
             } else if (infos.pwd == '') {
                 reject(new Error("register.alert.password_null"));
