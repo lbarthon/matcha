@@ -2,7 +2,7 @@ import React from 'react';
 
 export const CurrentUserContext = React.createContext({
   username: '',
-  logged: false,
+  logged: undefined,
   getCurrentUser: () => {}
 });
 
@@ -10,29 +10,27 @@ export class CurrentUserProvider extends React.Component {
 
   state = {
     username: '',
-    logged: false,
+    logged: undefined,
     getCurrentUser: (callback) => {
-      fetch('/api/logged', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
-      })
+      fetch('/api/logged')
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
             if (json['response'] !== false) {
-              this.setState({username: json['response']});
-              this.setState({logged: true});
+              if (this.state.logged !== true)
+                this.setState({logged: true, username: json['response']});
             } else {
-              this.setState({logged: false});
+              if (this.state.logged !== false) {
+                this.setState({logged: false, username: json['response']});
+              }
             }
           })
         } else {
+          console.log(response);
           throw Error(response.statusText);
         }
       })
-      .catch(error => {
-        console.log(error);
-      });
+      .catch(error => { console.log(error); });
       if (callback)
         callback();
     }
@@ -40,13 +38,18 @@ export class CurrentUserProvider extends React.Component {
 
   componentWillMount() {
     this.state.getCurrentUser();
+    console.log('tululu');
   }
 
   render() {
     return (
-      <CurrentUserContext.Provider value={this.state}>
-        {this.props.children}
-      </CurrentUserContext.Provider>
+      <React.Fragment>
+        {this.state && this.state.logged !== undefined &&
+          <CurrentUserContext.Provider value={this.state}>
+            {this.props.children}
+          </CurrentUserContext.Provider>
+        }
+      </React.Fragment>
     )
   }
 }

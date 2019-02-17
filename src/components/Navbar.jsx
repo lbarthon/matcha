@@ -14,10 +14,7 @@ class Navbar extends Component {
 
   handleLogout = () => {
     const { getCurrentUser } = this.props.currentUser;
-    fetch('api/logout', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
-    })
+    fetch('/api/logout')
     .then(response => {
       if (response.ok) {
         getCurrentUser();
@@ -42,7 +39,10 @@ class Navbar extends Component {
             <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
             {logged === true &&
-              <li><a onClick={this.handleLogout}>Logout</a></li>
+              <React.Fragment>
+                <li><Link to="/update">{locales.locale.nav.update}</Link></li>
+                <li><a onClick={this.handleLogout}>{locales.locale.nav.logout}</a></li>
+              </React.Fragment>
             }
             {logged === false &&
               <React.Fragment>

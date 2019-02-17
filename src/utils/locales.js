@@ -37,7 +37,6 @@ export class LocalesProvider extends Component {
         tab.forEach(value => {
           ret = ret[value];
         });
-        // debug :: console.log(ret);
         return ret;
       }
     }
@@ -59,6 +58,7 @@ export class LocalesProvider extends Component {
       }
     });
   }
+  
   render() {
     return (
       <LocalesContext.Provider value={this.state}>

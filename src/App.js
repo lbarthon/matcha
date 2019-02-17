@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Register from './components/Register';
-import Login from './components/Login';
 import { AlertContainer, cleanAlerts } from './utils/alert';
 import { LocalesProvider } from './utils/locales';
 import { withCurrentUserHOC } from './utils/currentUser';
-import PrivateRoute from './utils/PrivateRoute';
+import UnloggedRoute from './utils/route/UnloggedRoute';
+import PrivateRoute from './utils/route/PrivateRoute';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Register from './components/Register';
+import Login from './components/Login';
+import Update from './components/Update';
 
 class App extends Component {
 
@@ -15,13 +18,13 @@ class App extends Component {
   }
 
   componentWillUpdate() {
+    this.props.currentUser.getCurrentUser();
     console.log('APP update');
     // effacer toutes les alerts au changement de page
     // cleanAlerts();
   }
 
   render() {
-    const { logged } = this.props.currentUser;
     console.log('APP render');
     return (
       <React.Fragment>
@@ -30,9 +33,10 @@ class App extends Component {
           <div className="container">
             <AlertContainer />
             <Switch>
-                <Route exact path="/" />
-                <Route path="/register" render={() => <Register />}/>
-                <PrivateRoute canAccess={!logged} path="/login" component={Login} />
+                <Route exact path="/" component={Home} />
+                <UnloggedRoute path="/register" component={Register}/>
+                <UnloggedRoute path="/login" component={Login}/>
+                <PrivateRoute path="/update" component={Update}/>
             </Switch>
           </div>
         </LocalesProvider>

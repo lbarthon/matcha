@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
 import { notify } from '../utils/alert';
-import { withLocalesHOC } from '../utils/locales';
+import { localeIdParser } from '../utils/locales';
+import { withAllHOC } from '../utils/allHOC';
 
-class Register extends Component {
-
+class Update extends Component {
   state = {
     username: '',
     location: '',
@@ -14,7 +14,7 @@ class Register extends Component {
     genre: '',
     lookingFor: '',
     email: '',
-    password: '',
+    newpassword: '',
     repassword: '',
     description: ''
   }
@@ -27,7 +27,7 @@ class Register extends Component {
     const { locales } = this.props;
     e.preventDefault();
     parseForm(this.state, strForm => {
-      fetch('/api/register', {
+      fetch('/api/update', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
         body: strForm
@@ -54,7 +54,7 @@ class Register extends Component {
 
   componentDidMount () {
     const {locale} = this.props.locales;
-    document.title = locale.title.register;
+    document.title = locale.title.update;
   }
 
   render() {
@@ -130,17 +130,6 @@ class Register extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="input-field col s6">
-            <i className="material-icons prefix">vpn_key</i>
-            <input name="password" id="password" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="password">{locale.password}</label>
-          </div>
-          <div className="input-field col s6">
-            <input name="repassword" id="repassword" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="repassword">{locale.repassword}</label>
-          </div>
-        </div>
-        <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">mode_edit</i>
             <textarea name="description" id="textarea1" className="materialize-textarea" onChange={this.onChange}></textarea>
@@ -155,10 +144,21 @@ class Register extends Component {
             <span className="helper-text" data-error="wrong" data-success="right">ex : bio geek piercing vegan ...</span>
           </div>
         </div>
-        <button className="btn waves-effect waves-light">{locale.register.btn}</button>
+        <div className="row">
+          <div className="input-field col s6">
+            <i className="material-icons prefix">vpn_key</i>
+            <input name="password" id="newpassword" type="newpassword" className="validate" onChange={this.onChange} />
+            <label htmlFor="newpassword">{locale.update.newpassword}</label>
+          </div>
+          <div className="input-field col s6">
+            <input name="repassword" id="repassword" type="password" className="validate" onChange={this.onChange} />
+            <label htmlFor="repassword">{locale.repassword}</label>
+          </div>
+        </div>
+        <button className="btn waves-effect waves-light">{locale.update.btn}</button>
       </form>
     );
   }
 }
 
-export default withLocalesHOC(Register);
+export default withAllHOC(Update);
