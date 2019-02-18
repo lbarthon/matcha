@@ -5,8 +5,14 @@
   "email" : "Email",
   "nav": {
     "logout": "Logout",
+    "update": "Update",
     "register": "Register",
     "login": "Login"
+  },
+  "title": {
+    "update": "Update your infos",
+    "register": "Register",
+    "login": "Log in"
   },
   "login": {
     "btn": "Login",
@@ -38,6 +44,10 @@
       "genders_null": "Both genders can't be null!",
       "hash_error": "Error processing your password"
     }
+  },
+  "update": {
+    "btn": "Update",
+    "newpassword": "New password"
   },
   "alert": {
     "update_success": "Informations mises à jour avec succès!",

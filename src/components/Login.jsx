@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
 import { notify } from '../utils/alert';
-import { localIdParser } from '../utils/locales';
 import { withAllHOC } from '../utils/allHOC';
 
 class Login extends Component {
@@ -35,7 +34,6 @@ class Login extends Component {
               getCurrentUser(() => {
                 history.push("/");
                 notify('success', locales.idParser(json['success']));
-                resolve('ok');
               });
             }
           });
@@ -47,6 +45,11 @@ class Login extends Component {
         console.log(error)
       });
     });
+  }
+
+  componentDidMount () {
+    const {locale} = this.props.locales;
+    document.title = locale.title.login;
   }
 
   render() {

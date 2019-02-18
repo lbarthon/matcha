@@ -5,6 +5,12 @@
   "email" : "Email",
   "nav": {
     "logout": "Deconnexion",
+    "update": "Informations",
+    "register": "S'inscrire",
+    "login": "Connexion"
+  },
+  "title": {
+    "update": "Mise a jour des informations",
     "register": "S'inscrire",
     "login": "Connexion"
   },
@@ -39,6 +45,10 @@
       "genders_null": "Les genres ne peuvent être nuls !",
       "hash_error": "Erreur lors de la gestion de votre mot de passe"
     }
+  },
+  "update": {
+    "btn": "Mettre a jour",
+    "newpassword": "Nouveau mot de passe"
   },
   "sql": {
     "alert": {
