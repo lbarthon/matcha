@@ -71,6 +71,16 @@ router.get('/logged', (req, res) => {
     });
 });
 
+router.get('/user/infos', (req, res) => {
+    user.get_infos(req)
+    .then((resolve) => {
+        res.status(200).json({ 'response' : resolve });
+    })
+    .catch((err) => {
+        res.status(200).json({ 'error' : err.message });
+    });
+});
+
 router.post('/reset/ask', (req, res) => {
     user.reset_ask(req)
     .then(() => {
