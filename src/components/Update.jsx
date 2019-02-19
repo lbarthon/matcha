@@ -60,7 +60,7 @@ class Update extends Component {
   render() {
     const {locale} = this.props.locales;
     return (
-      <form onSubmit={this.handleSubmit} className="col s12">
+      <form onSubmit={this.handleSubmit}>
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">person</i>

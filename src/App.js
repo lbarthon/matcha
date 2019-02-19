@@ -5,11 +5,13 @@ import { LocalesProvider } from './utils/locales';
 import { withCurrentUserHOC } from './utils/currentUser';
 import UnloggedRoute from './utils/route/UnloggedRoute';
 import PrivateRoute from './utils/route/PrivateRoute';
-import Navbar from './components/Navbar';
+import Navbar from './components/partials/Navbar';
 import Home from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
 import Update from './components/Update';
+import Upload from './components/Upload';
+import './css/upload.css';
 
 class App extends Component {
 
@@ -33,10 +35,11 @@ class App extends Component {
           <div className="container">
             <AlertContainer />
             <Switch>
-                <Route exact path="/" component={Home} />
-                <UnloggedRoute path="/register" component={Register}/>
-                <UnloggedRoute path="/login" component={Login}/>
-                <PrivateRoute path="/update" component={Update}/>
+              <Route exact path="/" component={Home} />
+              <UnloggedRoute path="/register" component={Register}/>
+              <UnloggedRoute path="/login" component={Login}/>
+              <PrivateRoute path="/update" component={Update}/>
+              <PrivateRoute path="/upload" component={Upload}/>
             </Switch>
           </div>
         </LocalesProvider>

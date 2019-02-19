@@ -1,0 +1,22 @@
+.upload {
+  width:calc(100%/3);
+  padding: 5px;
+  display: inline-block;
+}
+
+.upload input[type="file"] {
+  display: none;
+}
+
+.upload-img {
+  overflow: hidden;
+  border-radius: 3px;
+  padding-top: 100%;
+  width: 100%;
+  background-size: 100% auto;
+  background-color: #ddd;
+  background-position: center;
+  background-repeat: no-repeat;
+  max-height: 100%;
+  max-width: 100%;
+}

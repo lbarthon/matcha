@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { withAllHOC } from '../utils/allHOC';
+import { withAllHOC } from '../../utils/allHOC';
 
 class Navbar extends Component {
 
@@ -41,6 +41,7 @@ class Navbar extends Component {
             {logged === true &&
               <React.Fragment>
                 <li><Link to="/update">{locales.locale.nav.update}</Link></li>
+                <li><Link to="/upload">{locales.locale.nav.upload}</Link></li>
                 <li><a onClick={this.handleLogout}>{locales.locale.nav.logout}</a></li>
               </React.Fragment>
             }

@@ -7,12 +7,14 @@
     "logout": "Deconnexion",
     "update": "Informations",
     "register": "S'inscrire",
-    "login": "Connexion"
+    "login": "Connexion",
+    "upload": "Photos"
   },
   "title": {
     "update": "Mise a jour des informations",
     "register": "S'inscrire",
-    "login": "Connexion"
+    "login": "Connexion",
+    "upload": "Vos photos"
   },
   "login": {
     "btn": "Se connecter",
@@ -49,6 +51,9 @@
   "update": {
     "btn": "Mettre a jour",
     "newpassword": "Nouveau mot de passe"
+  },
+  "upload": {
+    "btn": "Sauvegarder"
   },
   "sql": {
     "alert": {

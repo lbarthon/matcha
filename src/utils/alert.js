@@ -19,7 +19,7 @@ export const cleanAlerts = () => {
   }
 }
 export const AlertContainer = () => {
-  return <div id="alert-container"></div>
+  return <div className="row"><div id="alert-container"></div></div>
 }
 
 class Alert extends React.Component {

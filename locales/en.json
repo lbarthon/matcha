@@ -7,19 +7,22 @@
     "logout": "Logout",
     "update": "Update",
     "register": "Register",
-    "login": "Login"
+    "login": "Login",
+    "upload": "Pictures"
   },
   "title": {
     "update": "Update your infos",
     "register": "Register",
-    "login": "Log in"
+    "login": "Log in",
+    "upload": "Your pictures"
   },
   "login": {
     "btn": "Login",
     "alert" : {
       "success": "Logged successfully!",
       "user_unknow": "Unknown user!",
-      "password_diff": "Wrong password!"
+      "password_diff": "Wrong password!",
+      "already_logged" : "You are already connected!"
     }
   },
   "register": {
@@ -48,6 +51,9 @@
   "update": {
     "btn": "Update",
     "newpassword": "New password"
+  },
+  "upload": {
+    "btn": "Save"
   },
   "alert": {
     "update_success": "Informations mises à jour avec succès!",
