@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withAllHOC } from '../../utils/allHOC';
+import M from 'materialize-css';
 
 class Navbar extends Component {
 
@@ -25,7 +26,14 @@ class Navbar extends Component {
     .catch(error => {
       console.log(error);
     })
+  }
 
+  componentDidMount() {
+    var elem = document.querySelector(".sidenav");
+    var instance = M.Sidenav.init(elem, {
+      edge: "left",
+      inDuration: 250
+    });
   }
 
   render() {
@@ -51,14 +59,25 @@ class Navbar extends Component {
                 <li><Link to="/login">{locales.locale.nav.login}</Link></li>
               </React.Fragment>
             }
-            <li><a className="waves-effect waves-light btn" onClick={() => locales.toggleLanguage()}>{locales.text}</a></li>
+              <li><a className="waves-effect waves-light btn" onClick={() => locales.toggleLanguage()}>{locales.text}</a></li>
             </ul>
           </div>
         </nav>
         <ul className="sidenav" id="mobile-demo">
-          <li><Link to="/logout">{locales.locale.nav.logout}</Link></li>
-          <li><Link to="/register">{locales.locale.nav.register}</Link></li>
-          <li><Link to="/login">{locales.locale.nav.login}</Link></li>
+        {logged === true &&
+          <React.Fragment>
+            <li><Link to="/update">{locales.locale.nav.update}</Link></li>
+            <li><Link to="/upload">{locales.locale.nav.upload}</Link></li>
+            <li><a onClick={this.handleLogout}>{locales.locale.nav.logout}</a></li>
+          </React.Fragment>
+        }
+        {logged === false &&
+          <React.Fragment>
+            <li><Link to="/register">{locales.locale.nav.register}</Link></li>
+            <li><Link to="/login">{locales.locale.nav.login}</Link></li>
+          </React.Fragment>
+        }
+          <li><a className="waves-effect waves-light btn" onClick={() => locales.toggleLanguage()}>{locales.text}</a></li>
         </ul>
       </header>
     );
