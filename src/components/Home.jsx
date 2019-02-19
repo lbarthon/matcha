@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { withAllHOC } from '../utils/allHOC';
 
 class Home extends Component {
+
+  componentDidMount () {
+    const {locale} = this.props.locales;
+    document.title = locale.title.home;
+  }
+
   render() {
     return (
       <React.Fragment>

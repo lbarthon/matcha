@@ -14,7 +14,8 @@
     "update": "Mise a jour des informations",
     "register": "S'inscrire",
     "login": "Connexion",
-    "upload": "Vos photos"
+    "upload": "Vos photos",
+    "home": "Accueil"
   },
   "login": {
     "btn": "Se connecter",

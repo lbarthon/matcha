@@ -14,7 +14,8 @@
     "update": "Update your infos",
     "register": "Register",
     "login": "Log in",
-    "upload": "Your pictures"
+    "upload": "Your pictures",
+    "home": "Homepage"
   },
   "login": {
     "btn": "Login",
