@@ -42,14 +42,11 @@ export class CurrentUserProvider extends React.Component {
   }
 
   render() {
+    if (this.state.logged === undefined) return null;
     return (
-      <React.Fragment>
-        {this.state && this.state.logged !== undefined &&
-          <CurrentUserContext.Provider value={this.state}>
-            {this.props.children}
-          </CurrentUserContext.Provider>
-        }
-      </React.Fragment>
+      <CurrentUserContext.Provider value={this.state}>
+        {this.props.children}
+      </CurrentUserContext.Provider>
     )
   }
 }

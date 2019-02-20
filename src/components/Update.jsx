@@ -76,9 +76,9 @@ class Update extends Component {
 
   render() {
     const {locale} = this.props.locales;
+    if (!this.state.username) return null;
     return (
       <React.Fragment>
-        {this.state.username &&
         <form onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="input-field col s12">
@@ -176,7 +176,6 @@ class Update extends Component {
           </div>
           <button className="btn waves-effect waves-light">{locale.update.btn}</button>
         </form>
-        }
       </React.Fragment>
     );
   }
