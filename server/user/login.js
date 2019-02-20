@@ -12,36 +12,39 @@ const login = (req) => {
     utils.areInfosClean(infos, 'users');
     return new Promise((resolve, reject) => {
         if (conn) {
-            /* if (utils.isLogged(req)) {
+            utils.isLogged(req)
+            .then(() => {
                 reject(new Error("login.alert.already_logged"));
-            } else */ if (infos.username == '') {
-                reject(new Error("register.alert.username_null"));
-            } else if (infos.pwd == '') {
-                reject(new Error("register.alert.password_null"));
-            } else {
-                conn.query("SELECT id,pwd FROM users WHERE username=?",
-                    [infos.username], (err, results) => {
-                    if (err) {
-                        reject(new Error("sql.alert.query"));
-                    } else {
-                        if (results.length != 0) {
-                            hash.compare(infos.pwd, results[0].pwd)
-                            .then(res => {
-                                if (!res) {
-                                    reject(new Error("login.alert.password_diff"));
-                                } else {
-                                    resolve([infos.username, results[0].id]);
-                                }
-                            })
-                            .catch(() => {
-                                reject(new Error("hash_error"))
-                            });
+            }).catch(() => {
+                if (infos.username == '') {
+                    reject(new Error("register.alert.username_null"));
+                } else if (infos.pwd == '') {
+                    reject(new Error("register.alert.password_null"));
+                } else {
+                    conn.query("SELECT id,pwd FROM users WHERE username=?",
+                        [infos.username], (err, results) => {
+                        if (err) {
+                            reject(new Error("sql.alert.query"));
                         } else {
-                            reject(new Error("login.alert.user_unknow"));
+                            if (results.length != 0) {
+                                hash.compare(infos.pwd, results[0].pwd)
+                                .then(res => {
+                                    if (!res) {
+                                        reject(new Error("login.alert.password_diff"));
+                                    } else {
+                                        resolve([infos.username, results[0].id]);
+                                    }
+                                })
+                                .catch(() => {
+                                    reject(new Error("hash_error"))
+                                });
+                            } else {
+                                reject(new Error("login.alert.user_unknow"));
+                            }
                         }
-                    }
-                })
-            }
+                    })
+                }
+            });
         } else {
             reject(new Error("error_sql_undefined"));
         }

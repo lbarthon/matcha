@@ -17,8 +17,9 @@ const reset_ask = (req) => {
                 utils.getIdFromEmail(infos.email)
                 .then(uid => {
                     var str = randomstring.generate(80);
+                    var date = Date.now();
                     conn.query("INSERT INTO resetpw (date, link, user_id) VALUES (?,?,?)",
-                            [Date.now(), str, uid], (err) => {
+                            [date, str, uid], (err) => {
                         if (err) {
                             reject(new Error("error_sql_query"));
                         } else {
