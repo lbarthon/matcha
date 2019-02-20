@@ -5,15 +5,17 @@ import parseForm from '../utils/parseForm';
 class Upload extends Component {
 
   state = {
-    file1: '',
-    file2: '',
-    file3: ''
+    pic1: '',
+    pic2: '',
+    pic3: '',
+    pic4: ''
   }
 
   handleSubmit = e => {
     e.preventDefault();
     parseForm(this.state, strForm => {
       console.log(strForm);
+      //API call : save pictures
     });
   }
 
@@ -38,6 +40,20 @@ class Upload extends Component {
     }
   }
 
+  handleFav = e => {
+    const fav = e.target;
+    const favs = document.querySelectorAll('#fav')
+    for (let i = 0; i < favs.length; i++) {
+      favs[i].innerHTML = 'star_border';
+    }
+    fav.innerHTML = 'star';
+    //call to API : set fav
+  }
+
+  componentWillMount() {
+    //call to API : getFavNb && getPicturesFromUser
+  }
+
   render() {
     const { locale } = this.props.locales;
     return (
@@ -45,16 +61,24 @@ class Upload extends Component {
         <form onSubmit={this.handleSubmit}>
           <div className="row">
             <div className="upload">
-                <input name="file1" type="file" accept="image/*" onChange={this.handleFileChange}/>
-                <div className="upload-img" onClick={this.handleUpload}/>
+              <input name="pic1" type="file" accept="image/*" onChange={this.handleFileChange}/>
+              <div className="upload-img" onClick={this.handleUpload}/>
+              <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
             </div>
             <div className="upload">
-                <input name="file2" type="file" accept="image/*" onChange={this.handleFileChange}/>
-                <div className="upload-img" onClick={this.handleUpload}/>
+              <input name="pic2" type="file" accept="image/*" onChange={this.handleFileChange}/>
+              <div className="upload-img" onClick={this.handleUpload}/>
+              <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
             </div>
             <div className="upload">
-                <input name="file3" type="file" accept="image/*" onChange={this.handleFileChange}/>
-                <div className="upload-img" onClick={this.handleUpload}/>
+              <input name="pic3" type="file" accept="image/*" onChange={this.handleFileChange}/>
+              <div className="upload-img" onClick={this.handleUpload}/>
+              <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
+            </div>
+            <div className="upload">
+              <input name="pic4" type="file" accept="image/*" onChange={this.handleFileChange}/>
+              <div className="upload-img" onClick={this.handleUpload}/>
+              <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
             </div>
           </div>
           <button className="btn waves-effect waves-light">{locale.upload.btn}</button>

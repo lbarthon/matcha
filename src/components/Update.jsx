@@ -54,7 +54,7 @@ class Update extends Component {
   }
 
   componentWillMount() {
-    fetch('api/user/infos')
+    fetch('api/user/current')
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
@@ -76,7 +76,7 @@ class Update extends Component {
 
   render() {
     const {locale} = this.props.locales;
-    if (!this.state.username) return null;
+    if (!this.state.username) return null; // attendre state.username pour render
     return (
       <React.Fragment>
         <form onSubmit={this.handleSubmit}>
