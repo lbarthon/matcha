@@ -83,6 +83,16 @@ router.get('/user/infos', (req, res) => {
     });
 });
 
+router.get('/user/:id', (req, res) => {
+    user.get_infos_id(req.params.id)
+    .then((resolve) => {
+        res.status(200).json({ 'response' : resolve });
+    })
+    .catch((err) => {
+        res.status(200).json({ 'error' : err.message });
+    });
+});
+
 router.post('/reset/ask', (req, res) => {
     user.reset_ask(req)
     .then(() => {

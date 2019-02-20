@@ -29,6 +29,25 @@ const get_infos = (req) => {
     });
 }
 
+const get_infos_id = (id) => {
+    return new Promise((resolve, reject) => {
+        if (conn) {
+            conn.query("SELECT * FROM users WHERE id=?", [id], (err, result) => {
+                if (err) {
+                    reject(new Error("sql.alert.query"));
+                } else if (result.length > 0) {
+                    resolve(result[0]);
+                } else {
+                    reject(new Error("error_user_not_found"));
+                }
+            });
+        } else {
+            reject(new Error("error_sql_undefined"));
+        }
+    });
+}
+
 module.exports = {
-    get_infos : get_infos
+    get_infos    : get_infos,
+    get_infos_id : get_infos_id
 }
