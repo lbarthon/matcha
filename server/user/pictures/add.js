@@ -30,7 +30,7 @@ const add = (infos, uid) => {
                 }
             });
         } else {
-            reject(new Error("error.sql.undefined"));
+            reject(new Error("error_sql_undefined"));
         }
     });
 }
