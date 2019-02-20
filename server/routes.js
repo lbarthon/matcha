@@ -73,7 +73,7 @@ router.get('/logged', (req, res) => {
     });
 });
 
-router.get('/user/infos', (req, res) => {
+router.get('/user/current', (req, res) => {
     user.get_infos(req)
     .then((resolve) => {
         res.status(200).json({ 'response' : resolve });
