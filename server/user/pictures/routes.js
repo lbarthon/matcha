@@ -10,6 +10,26 @@ router.use((req, res, next) => {
     }
 });
 
+router.get('/get', (req, res) => {
+    pictures.get(req.session.uid)
+    .then(() => {
+        res.status(200).json({ 'success' : 'picture.get.success' });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+});
+
+router.get('/get/:id', (req, res) => {
+    pictures.get(req.params.id)
+    .then(() => {
+        res.status(200).json({ 'success' : 'picture.get.success' });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+});
+
 router.post('/add', (req, res) => {
     pictures.add(req.body, req.session.uid)
     .then(() => {
