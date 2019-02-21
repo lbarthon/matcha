@@ -11,7 +11,7 @@ const get = (uid) => {
             conn.query("SELECT * FROM pictures WHERE user_id=?",
                     [uid], (err, results) => {
                 if (err) {
-                    reject(new Error("picture.error.select"));
+                    reject(new Error("sql.alert.query"));
                 } else if (result.length > 0) {
                     resolve(results);
                 } else {

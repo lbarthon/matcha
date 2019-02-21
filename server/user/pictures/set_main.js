@@ -8,18 +8,24 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 const set_main = (infos, uid) => {
     return new Promise((resolve, reject) => {
         if (conn) {
-            conn.query("UPDATE pictures SET main=1 WHERE id=? AND user_id=?",
-                    [infos.id, uid], (err, result) => {
+            conn.query("UPDATE pictures SET main=0 WHERE user_id=?", [uid], err => {
                 if (err) {
-                    reject(new Error("error.sql.query"));
-                } else if (result.affectedRows == 1) {
-                    resolve();
+                    reject(new Error("sql.alert.query"));
                 } else {
-                    reject(new Error("picture.set_main.error"));
+                    conn.query("UPDATE pictures SET main=1 WHERE id=? AND user_id=?",
+                            [infos.id, uid], (err, result) => {
+                        if (err) {
+                            reject(new Error("sql.alert.query"));
+                        } else if (result.affectedRows == 1) {
+                            resolve();
+                        } else {
+                            reject(new Error("picture.set_main.error"));
+                        }
+                    });
                 }
-            })
+            });
         } else {
-            reject(new Error("error.sql.undefined"));
+            reject(new Error("error_sql_undefined"));
         }
     });
 }

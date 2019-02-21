@@ -1,6 +1,7 @@
 const emitter = require('../../emitter');
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 const pic_path = './public/pictures/user/';
 
 const storage = multer.diskStorage({
@@ -36,8 +37,8 @@ const add = (req, res) => {
                             [uid, filename], err => {
                         if (err) {
                             // Ptet erreur mais faut le faire -- Si erreur sql delete le fichier
-                            unlink(pic_path + filename);
-                            reject(new Error("picture_error_insert"));
+                            fs.unlink('../../../' + pic_path + filename);
+                            reject(new Error("sql.alert.query"));
                         } else {
                             resolve();
                         }

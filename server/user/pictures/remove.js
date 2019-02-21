@@ -17,7 +17,7 @@ const remove = (infos, uid) => {
                     conn.query("DELETE FROM pictures WHERE id=? AND user_id=?",
                             [id, uid], (err, result) => {
                         if (err) {
-                            reject(new Error("picture.error.remove"));
+                            reject(new Error("sql.alert.query"));
                         } else if (result.affectedRows == 0) {
                             reject(new Error("picture.error.remove.none"));
                         } else {
