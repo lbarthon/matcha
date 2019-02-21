@@ -11,7 +11,9 @@ import Register from './components/Register';
 import Login from './components/Login';
 import Update from './components/Update';
 import Upload from './components/Upload';
+import User from './components/User';
 import './css/upload.css';
+import './css/alert.css';
 
 class App extends Component {
 
@@ -40,6 +42,7 @@ class App extends Component {
               <UnloggedRoute path="/login" component={Login}/>
               <PrivateRoute path="/update" component={Update}/>
               <PrivateRoute path="/upload" component={Upload}/>
+              <PrivateRoute path="/user/:id" component={User}/>
             </Switch>
           </div>
         </LocalesProvider>

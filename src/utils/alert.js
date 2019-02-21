@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './alert.css';
 
 export const notify = (type, text) => {
   let container = document.getElementById('alert-container');
@@ -18,6 +17,7 @@ export const cleanAlerts = () => {
     container.removeChild(container.lastChild);
   }
 }
+
 export const AlertContainer = () => {
   return <div className="row"><div id="alert-container"></div></div>
 }

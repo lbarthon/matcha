@@ -37,13 +37,9 @@ class Login extends Component {
               });
             }
           });
-        } else {
-          throw Error(response.statusText);
-        }
+        } else { throw Error(response.statusText); }
       })
-      .catch(error => {
-        console.log(error)
-      });
+      .catch(error => { console.log(error); });
     });
   }
 

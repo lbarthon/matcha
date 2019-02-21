@@ -24,7 +24,7 @@ const get_infos = (req) => {
                 reject(new Error("error_user_not_logged"))
             });
         } else {
-            reject(new Error("error_sql_undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }
@@ -42,7 +42,7 @@ const get_infos_id = (id) => {
                 }
             });
         } else {
-            reject(new Error("error_sql_undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }

@@ -11,13 +11,13 @@ const updateCol = (col, value, uid) => {
         if (key == "pwd") {
             hash.create(infos.password).then(hashed => {
                 conn.query("UPDATE users SET ?=? WHERE id=?", [col, hashed, uid], (err) => {
-                    if (err) reject(new Error("error.sql.query"));
+                    if (err) reject(new Error("sql.alert.query"));
                     else resolve();
                 });
             }).catch(reject);
         } else {
             conn.query("UPDATE users SET ?=? WHERE id=?", [col, value, uid], (err) => {
-                if (err) reject(new Error("error.sql.query"));
+                if (err) reject(new Error("sql.alert.query"));
                 else resolve();
             });
         }
@@ -39,7 +39,7 @@ const update = (infos, uid) => {
             .then(resolve)
             .catch(reject);
         } else {
-            reject(new Error("error.sql.undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }

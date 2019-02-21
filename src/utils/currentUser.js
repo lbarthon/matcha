@@ -38,7 +38,6 @@ export class CurrentUserProvider extends React.Component {
 
   componentWillMount() {
     this.state.getCurrentUser();
-    console.log('tululu');
   }
 
   render() {

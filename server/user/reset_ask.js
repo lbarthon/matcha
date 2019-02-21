@@ -21,7 +21,7 @@ const reset_ask = (req) => {
                     conn.query("INSERT INTO resetpw (date, link, user_id) VALUES (?,?,?)",
                             [date, str, uid], (err) => {
                         if (err) {
-                            reject(new Error("error_sql_query"));
+                            reject(new Error("sql.alert.query"));
                         } else {
                             // TODO -- SEND MAILS
                             resolve();
@@ -30,9 +30,9 @@ const reset_ask = (req) => {
                 })
                 .catch(reject);
             }
-            
+
         } else {
-            reject(new Error("error_sql_undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }
