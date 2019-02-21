@@ -43,10 +43,7 @@ export class LocalesProvider extends Component {
   }
 
   componentWillMount() {
-    fetch('/api/lang/get', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'}
-    })
+    fetch('/api/lang/get')
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
@@ -54,11 +51,11 @@ export class LocalesProvider extends Component {
             locale: locales[json.lang],
             text: json.lang
           });
-        })
+        });
       }
     });
   }
-  
+
   render() {
     return (
       <LocalesContext.Provider value={this.state}>

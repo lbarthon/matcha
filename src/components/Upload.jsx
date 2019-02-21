@@ -5,17 +5,17 @@ import parseForm from '../utils/parseForm';
 class Upload extends Component {
 
   state = {
-    pic1: '',
-    pic2: '',
-    pic3: '',
-    pic4: ''
+    picture: '',
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
-    parseForm(this.state, strForm => {
-      console.log(strForm);
-      //API call : save pictures
+  savePicture = input => {
+    console.log(this.state[input]);
+    parseForm(this.state[input], strForm => {
+      fetch('/api/pictures/add', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        body: strForm
+      })
     });
   }
 
@@ -27,6 +27,21 @@ class Upload extends Component {
 
   handleFileChange = e => {
     const input = e.target;
+    const formData = new FormData();
+    this.setState({ picture: input.files[0] }, () => {
+      formData.append('picture', this.state.picture);
+      console.log(this.state.picture)
+      console.log(formData);
+      fetch('/api/pictures/add', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        console.log(response);
+      })
+    });
+
+    /*
     const reader = new FileReader();
     const img = input.parentElement.querySelector('.upload-img');
     const upload = this;
@@ -38,6 +53,8 @@ class Upload extends Component {
       }
       reader.readAsDataURL(input.files[0]);
     }
+    this.savePicture(input.name);
+    */
   }
 
   handleFav = e => {
@@ -58,31 +75,14 @@ class Upload extends Component {
     const { locale } = this.props.locales;
     return (
       <React.Fragment>
-        <form onSubmit={this.handleSubmit}>
-          <div className="row">
-            <div className="upload">
-              <input name="pic1" type="file" accept="image/*" onChange={this.handleFileChange}/>
-              <div className="upload-img" onClick={this.handleUpload}/>
-              <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
-            </div>
-            <div className="upload">
-              <input name="pic2" type="file" accept="image/*" onChange={this.handleFileChange}/>
-              <div className="upload-img" onClick={this.handleUpload}/>
-              <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
-            </div>
-            <div className="upload">
-              <input name="pic3" type="file" accept="image/*" onChange={this.handleFileChange}/>
-              <div className="upload-img" onClick={this.handleUpload}/>
-              <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
-            </div>
-            <div className="upload">
-              <input name="pic4" type="file" accept="image/*" onChange={this.handleFileChange}/>
-              <div className="upload-img" onClick={this.handleUpload}/>
-              <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
-            </div>
+        <div className="row">
+          <div className="upload">
+            <input name="pic1" type="file" accept="image/*" onChange={this.handleFileChange}/>
+            <div className="upload-img" onClick={this.handleUpload}/>
+            <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
           </div>
-          <button className="btn waves-effect waves-light">{locale.upload.btn}</button>
-        </form>
+        </div>
+        <button className="btn waves-effect waves-light">{locale.upload.btn}</button>
       </React.Fragment>
     )
   }

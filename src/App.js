@@ -14,6 +14,7 @@ import Upload from './components/Upload';
 import User from './components/User';
 import './css/upload.css';
 import './css/alert.css';
+import './css/style.css';
 
 class App extends Component {
 
@@ -37,7 +38,7 @@ class App extends Component {
           <div className="container">
             <AlertContainer />
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={Home}/>
               <UnloggedRoute path="/register" component={Register}/>
               <UnloggedRoute path="/login" component={Login}/>
               <PrivateRoute path="/update" component={Update}/>

@@ -5,6 +5,11 @@
   "password": "Mot de passe",
   "repassword": "Repetez votre mot de passe",
   "email" : "Email",
+  "user": {
+    "like" : "J'aime",
+    "block" : "Bloquer",
+    "report": "Signaler"
+  },
   "nav": {
     "logout": "Deconnexion",
     "update": "Informations",

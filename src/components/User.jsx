@@ -33,6 +33,7 @@ class User extends Component {
   }
 
   render() {
+    const { locale } = this.props.locales;
     return (
       <React.Fragment>
         <h4>{this.state.username}</h4>
@@ -45,7 +46,10 @@ class User extends Component {
         <h6>Description</h6>
         <p>{this.state.description}</p>
         <h6>Gender</h6>
-        {this.state.gender}
+        <p>{this.state.gender}</p>
+        <a className="waves-effect waves-light btn"><i className="material-icons left">favorite</i>{locale.user.like}</a>
+        <a className="waves-effect waves-light btn red right ml-10"><i className="material-icons left">block</i>{locale.user.block}</a>
+        <a className="waves-effect waves-light btn red right"><i className="material-icons left">priority_high</i>{locale.user.report}</a>
       </React.Fragment>
     )
   }

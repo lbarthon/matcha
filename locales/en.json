@@ -5,6 +5,11 @@
   "password": "Password",
   "repassword": "Password confirmation",
   "email" : "Email",
+  "user": {
+    "like" : "Like",
+    "block" : "Block",
+    "report": "Report"
+  },
   "nav": {
     "logout": "Logout",
     "update": "Update",

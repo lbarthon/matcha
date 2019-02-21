@@ -11,6 +11,7 @@ const add = (infos, uid) => {
     return new Promise((resolve, reject) => {
         // TODO -- DEBUG ÇA DOIT Être éclaté
         if (conn) {
+            console.log(infos);
             var b64str = infos.picture;
             var pic = Buffer.from(b64str, 'base64');
             var name = randomstring.generate(100) + '.png';
