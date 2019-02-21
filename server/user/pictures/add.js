@@ -1,7 +1,7 @@
 const emitter = require('../../emitter');
 const multer = require("multer");
 const path = require("path");
-const pic_path = '../../../public/pictures/user/';
+const pic_path = './public/pictures/user/';
 
 const storage = multer.diskStorage({
     destination: pic_path,
@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
         callback(null, "Picture-" + Date.now() + path.extname(file.originalname));
     }
 });
- 
+
 const upload = multer({
     storage: storage
 }).single("user_pic");
@@ -22,6 +22,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 const add = (req) => {
     return new Promise((resolve, reject) => {
         // TODO -- DEBUG ÇA DOIT Être éclaté
+        console.log(req.file);
         if (!req.file) {
             reject(new Error("picture_add_no_file"));
         } else if (conn) {
