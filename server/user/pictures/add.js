@@ -1,29 +1,42 @@
 const emitter = require('../../emitter');
-const fs = require('fs');
-const randomstring = require('randomstring');
-var conn = null;
+const multer = require("multer");
+const path = require("path");
+const pic_path = '../../../public/pictures/user/';
 
+const storage = multer.diskStorage({
+    destination: pic_path,
+    filename: function(req, file, callback) {
+        callback(null, "Picture-" + Date.now() + path.extname(file.originalname));
+    }
+});
+ 
+const upload = multer({
+    storage: storage
+}).single("user_pic");
+
+var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
-const add = (infos, uid) => {
+const add = (req) => {
     return new Promise((resolve, reject) => {
         // TODO -- DEBUG ÇA DOIT Être éclaté
-        if (conn) {
-            console.log(infos);
-            var b64str = infos.picture;
-            var pic = Buffer.from(b64str, 'base64');
-            var name = randomstring.generate(100) + '.png';
-            var main = (infos.main == 1 || 0);
-            fs.writeFile('../../../public/pictures/users/' + name, pic, err => {
+        if (!req.file) {
+            reject(new Error("picture_add_no_file"));
+        } else if (conn) {
+            var uid = req.session.uid;
+            var filename = "Picture-" + Date.now() + path.extname(file.originalname);
+            upload(req, res, err => {
                 if (err) {
-                    reject(new Error("picture.error.write"))
+                    reject(new Error("picture_error_write"))
                 } else {
-                    conn.query("INSERT INTO pictures (main, user_id, picture) VALUES (?,?,?)",
-                            [main, uid, name], err => {
+                    conn.query("INSERT INTO pictures (user_id, picture) VALUES (?,?)",
+                            [uid, filename], err => {
                         if (err) {
-                            reject(new Error("picture.error.insert"));
+                            // Ptet erreur mais faut le faire -- Si erreur sql delete le fichier
+                            unlink(pic_path + filename);
+                            reject(new Error("picture_error_insert"));
                         } else {
                             resolve();
                         }

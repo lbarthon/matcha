@@ -31,7 +31,7 @@ router.get('/get/:id', (req, res) => {
 });
 
 router.post('/add', (req, res) => {
-    pictures.add(req.body, req.session.uid)
+    pictures.add(req)
     .then(() => {
         res.status(200).json({ 'success' : 'picture.add.success' });
     })
