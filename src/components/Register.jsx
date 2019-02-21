@@ -7,6 +7,8 @@ class Register extends Component {
 
   state = {
     username: '',
+    firstname: '',
+    lastname: '',
     location: '',
     day: '',
     month: '',
@@ -69,6 +71,35 @@ class Register extends Component {
           </div>
         </div>
         <div className="row">
+          <div className="input-field col s6">
+            <i className="material-icons prefix">person</i>
+            <input name="firstname" id="firstname" type="text" className="validate" onChange={this.onChange}/>
+            <label htmlFor="firstname">{locale.firstname}</label>
+          </div>
+          <div className="input-field col s6">
+            <input name="lastname" id="lastname" type="text" className="validate" onChange={this.onChange}/>
+            <label htmlFor="lastname">{locale.lastname}</label>
+          </div>
+        </div>
+        <div className="row">
+          <div className="input-field col s12">
+            <i className="material-icons prefix">alternate_email</i>
+            <input name="email" id="email" type="email" className="validate" onChange={this.onChange}/>
+            <label htmlFor="email">{locale.email}</label>
+          </div>
+        </div>
+        <div className="row">
+          <div className="input-field col s6">
+            <i className="material-icons prefix">vpn_key</i>
+            <input name="password" id="password" type="password" className="validate" onChange={this.onChange} />
+            <label htmlFor="password">{locale.password}</label>
+          </div>
+          <div className="input-field col s6">
+            <input name="repassword" id="repassword" type="password" className="validate" onChange={this.onChange} />
+            <label htmlFor="repassword">{locale.repassword}</label>
+          </div>
+        </div>
+        <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">location_city</i>
             <input name="location" id="location" type="text" className="validate" onChange={this.onChange}/>
@@ -120,24 +151,6 @@ class Register extends Component {
                 <span>F</span>
               </label>
             </p>
-          </div>
-        </div>
-        <div className="row">
-          <div className="input-field col s12">
-            <i className="material-icons prefix">alternate_email</i>
-            <input name="email" id="email" type="email" className="validate" onChange={this.onChange}/>
-            <label htmlFor="email">{locale.email}</label>
-          </div>
-        </div>
-        <div className="row">
-          <div className="input-field col s6">
-            <i className="material-icons prefix">vpn_key</i>
-            <input name="password" id="password" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="password">{locale.password}</label>
-          </div>
-          <div className="input-field col s6">
-            <input name="repassword" id="repassword" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="repassword">{locale.repassword}</label>
           </div>
         </div>
         <div className="row">

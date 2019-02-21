@@ -1,5 +1,7 @@
 {
   "username": "Nom d'utilisateur",
+  "firstname": "Prenom",
+  "lastname": "Nom",
   "password": "Mot de passe",
   "repassword": "Repetez votre mot de passe",
   "email" : "Email",

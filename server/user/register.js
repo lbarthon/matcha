@@ -36,7 +36,7 @@ const register = (infos) => {
                             var conf_link = randomstring.generate(80);
                             conn.query("INSERT INTO users (username, email, pwd, \
                                 sex, wanted, conf_link) VALUES (?,?,?,?,?,?)",
-                                [infos.username, infos.email, infos.password, infos.genre, infos.lookingFor, conf_link], err => {
+                                [infos.username, infos.email, infos.password, infos.gender, infos.lookingFor, conf_link], err => {
                                 if (err) {
                                     reject(new Error("sql.alert.query"));
                                 } else {

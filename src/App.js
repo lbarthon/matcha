@@ -42,7 +42,7 @@ class App extends Component {
               <UnloggedRoute path="/login" component={Login}/>
               <PrivateRoute path="/update" component={Update}/>
               <PrivateRoute path="/upload" component={Upload}/>
-              <PrivateRoute path="/user/:id" component={User}/>
+              <Route path="/user/:id" component={User}/>
             </Switch>
           </div>
         </LocalesProvider>
