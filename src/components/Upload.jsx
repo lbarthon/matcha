@@ -29,7 +29,7 @@ class Upload extends Component {
     const input = e.target;
     const formData = new FormData();
     this.setState({ picture: input.files[0] }, () => {
-      formData.append('picture', this.state.picture);
+      formData.append('file', this.state.picture);
       console.log(this.state.picture)
       console.log(formData);
       fetch('/api/pictures/add', {
