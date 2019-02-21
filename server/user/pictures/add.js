@@ -1,7 +1,7 @@
 const emitter = require('../../emitter');
 const multer = require("multer");
 const path = require("path");
-const pic_path = '../../../public/pictures/user/';
+const pic_path = './public/pictures/user/';
 
 const storage = multer.diskStorage({
     destination: pic_path,
@@ -19,7 +19,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
-const add = (req) => {
+const add = (req, res) => {
     return new Promise((resolve, reject) => {
         // TODO -- DEBUG ÇA DOIT Être éclaté
         if (!req.file) {
