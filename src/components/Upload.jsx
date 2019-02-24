@@ -10,18 +10,6 @@ class Upload extends Component {
     fav: ''
   }
 
-  // Unused ?
-  // savePicture = input => {
-  //   console.log(this.state[input]);
-  //   parseForm(this.state[input], strForm => {
-  //     fetch('/api/pictures/add', {
-  //       method: 'POST',
-  //       headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-  //       body: strForm
-  //     })
-  //   });
-  // }
-
   handleUpload = e => {
     const div = e.target.parentElement;
     const file = div.querySelector('input');
@@ -38,37 +26,43 @@ class Upload extends Component {
         body: formData
       })
       .then(response => {
-        // si photo unique, mettre fav par défaut
-        // handle response
-        console.log(response);
+        if (response.ok) {
+          // si photo unique, mettre fav par défaut
+          // handle response
+          console.log(response);
+        }
       })
       .catch(err => {
         // handle error
-      })
+        console.error(err);
+      });
     });
   }
 
   handleFav = e => {
     const fav = e.target;
     const favs = document.querySelectorAll('#fav')
+    const favId = e.target.parentNode.id;
     for (let i = 0; i < favs.length; i++) {
       favs[i].innerHTML = 'star_border';
     }
     fav.innerHTML = 'star';
-    // Dans le fav du state faut foutre l'id de la picture qui est fav.
-    parseForm([this.state.fav], strBody => {
-      fetch('/api/pictures/main/set', {
-        method: 'POST',
-        body: strBody
-      })
-      .then(response => {
-        if (response.ok) {
-          // handle response
-        }
-      })
-      .catch(err => {
-        // handle error
-        console.error(err);
+    this.setState({ fav: favId }, () => {
+      // Dans le fav du state faut foutre l'id de la picture qui est fav.
+      parseForm({ id: this.state.fav }, strBody => {
+        fetch('/api/pictures/main/set', {
+          method: 'POST',
+          body: strBody
+        })
+        .then(response => {
+          if (response.ok) {
+            // handle response
+          }
+        })
+        .catch(err => {
+          // handle error
+          console.error(err);
+        });
       });
     });
   }
