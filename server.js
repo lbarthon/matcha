@@ -38,9 +38,10 @@ var sessionStore = new MySQLStore(sqlOptions)
 
 app.set('trust proxy', 1);
 app.use(session({
+    key: 'session_cookie_name',
     secret: config.secret,
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     store: sessionStore,
     cookie: { 
         maxAge: 60 * 60 * 24
