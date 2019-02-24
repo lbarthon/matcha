@@ -50,6 +50,7 @@ class Update extends Component {
         }
       })
       .catch(error => {
+        // handle error
         console.log(error)
       });
     });
@@ -69,6 +70,10 @@ class Update extends Component {
         });
       }
     })
+    .catch(err => {
+      // handle error
+      console.error(err);
+    });
   }
 
   componentDidMount () {
@@ -79,7 +84,7 @@ class Update extends Component {
   render() {
     const {locale} = this.props.locales;
     const {username, firstname, lastname, email} = this.state;
-    if (!this.state.username) return null; // attendre state.username pour render
+    if (!this.state.username) return null; // attendre state.username pour render -- err 500 ?
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">

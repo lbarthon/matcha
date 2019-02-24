@@ -5,19 +5,22 @@ import parseForm from '../utils/parseForm';
 class Upload extends Component {
 
   state = {
-    picture: '',
+    pictures: [],
+    new_pic: '',
+    fav: ''
   }
 
-  savePicture = input => {
-    console.log(this.state[input]);
-    parseForm(this.state[input], strForm => {
-      fetch('/api/pictures/add', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-        body: strForm
-      })
-    });
-  }
+  // Unused ?
+  // savePicture = input => {
+  //   console.log(this.state[input]);
+  //   parseForm(this.state[input], strForm => {
+  //     fetch('/api/pictures/add', {
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+  //       body: strForm
+  //     })
+  //   });
+  // }
 
   handleUpload = e => {
     const div = e.target.parentElement;
@@ -28,33 +31,21 @@ class Upload extends Component {
   handleFileChange = e => {
     const input = e.target;
     const formData = new FormData();
-    this.setState({ picture: input.files[0] }, () => {
-      formData.append('file', this.state.picture);
-      console.log(this.state.picture)
-      console.log(formData);
+    this.setState({ new_pic: input.files[0] }, () => {
+      formData.append('file', this.state.new_pic);
       fetch('/api/pictures/add', {
         method: 'POST',
         body: formData
       })
       .then(response => {
+        // si photo unique, mettre fav par défaut
+        // handle response
         console.log(response);
       })
+      .catch(err => {
+        // handle error
+      })
     });
-
-    /*
-    const reader = new FileReader();
-    const img = input.parentElement.querySelector('.upload-img');
-    const upload = this;
-    this.setState({ [input.name]: input.files[0] });
-    if (input.files && input.files[0]) {
-      reader.onload = function(e) {
-        img.style.backgroundImage = 'url(' + e.target.result + ')';
-        upload.setState({ [input.name]: e.target.result });
-      }
-      reader.readAsDataURL(input.files[0]);
-    }
-    this.savePicture(input.name);
-    */
   }
 
   handleFav = e => {
@@ -64,17 +55,69 @@ class Upload extends Component {
       favs[i].innerHTML = 'star_border';
     }
     fav.innerHTML = 'star';
-    //call to API : set fav
+    // Dans le fav du state faut foutre l'id de la picture qui est fav.
+    parseForm([this.state.fav], strBody => {
+      fetch('/api/pictures/main/set', {
+        method: 'POST',
+        body: strBody
+      })
+      .then(response => {
+        if (response.ok) {
+          // handle response
+        }
+      })
+      .catch(err => {
+        // handle error
+        console.error(err);
+      });
+    });
   }
 
   componentWillMount() {
-    //call to API : getFavNb && getPicturesFromUser
+    getPictures();
+  }
+
+  getPictures = () => {
+    fetch('/api/pictures/get')
+    .then(response => {
+      if (response.ok) {
+        this.setState({ pictures: response });
+      }
+    })
+    .catch(err => {
+      // handle error
+      console.error(err);
+    });
+  }
+
+  renderPictures = () => {
+    var formatted = this.state.pictures.map(value => {
+      var isFav = "star_border";
+      var pictureUrl = "/pictures/user/" + value.picture;
+      if (value.main == 1) {
+        this.setState({ fav: value.id });
+        isFav = "star";
+      }
+      // Todo: Css du rendu en dessous
+      return (
+        <React.Fragment>
+          <div className="row">
+              <div className="user_picture" id={value.id}>
+                <img src={pictureUrl} alt={value.picture}/>
+                <i id="fav" className="material-icons" onClick={this.handleFav}>{isFav}</i>
+              </div>
+          </div>
+        </React.Fragment>
+      )
+    });
+    return (formatted.length > 0 ? <div className="pictures">{ formatted }</div> : null);
   }
 
   render() {
     const { locale } = this.props.locales;
     return (
       <React.Fragment>
+        {this.renderPictures}
         <div className="row">
           <div className="upload">
             <input name="pic1" type="file" accept="image/*" onChange={this.handleFileChange}/>
@@ -84,7 +127,8 @@ class Upload extends Component {
         </div>
         <button className="btn waves-effect waves-light">{locale.upload.btn}</button>
       </React.Fragment>
-    )
+    );
+    // Button upload useless nan ?
   }
 }
 

@@ -49,7 +49,8 @@ class Register extends Component {
         }
       })
       .catch(error => {
-        console.log(error)
+        // handle error
+        console.error(error)
       });
     });
   }

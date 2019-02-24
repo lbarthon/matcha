@@ -39,7 +39,10 @@ class Login extends Component {
           });
         } else { throw Error(response.statusText); }
       })
-      .catch(error => { console.log(error); });
+      .catch(error => {
+        // handle error
+        console.error(error);
+      });
     });
   }
 
