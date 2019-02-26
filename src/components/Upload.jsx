@@ -29,7 +29,8 @@ class Upload extends Component {
         if (response.ok) {
           // si photo unique, mettre fav par défaut
           // handle response
-          console.log(response);
+          // console.log(response);
+          this.getPictures();
         }
       })
       .catch(err => {
@@ -68,61 +69,44 @@ class Upload extends Component {
   }
 
   componentWillMount() {
-    getPictures();
+    this.getPictures();
   }
 
   getPictures = () => {
     fetch('/api/pictures/get')
     .then(response => {
       if (response.ok) {
-        this.setState({ pictures: response });
+        response.json().then(json => {
+          if (json.response !== this.state.pictures)
+            this.setState({ pictures: json.response });
+        });
       }
     })
-    .catch(err => {
-      // handle error
-      console.error(err);
-    });
-  }
-
-  renderPictures = () => {
-    var formatted = this.state.pictures.map(value => {
-      var isFav = "star_border";
-      var pictureUrl = "/pictures/user/" + value.picture;
-      if (value.main == 1) {
-        this.setState({ fav: value.id });
-        isFav = "star";
-      }
-      // Todo: Css du rendu en dessous
-      return (
-        <React.Fragment>
-          <div className="row">
-              <div className="user_picture" id={value.id}>
-                <img src={pictureUrl} alt={value.picture}/>
-                <i id="fav" className="material-icons" onClick={this.handleFav}>{isFav}</i>
-              </div>
-          </div>
-        </React.Fragment>
-      )
-    });
-    return (formatted.length > 0 ? <div className="pictures">{ formatted }</div> : null);
+    .catch(err => { console.error(err); });
   }
 
   render() {
     const { locale } = this.props.locales;
     return (
       <React.Fragment>
-        {this.renderPictures}
         <div className="row">
+          {this.state.pictures.map(pic => {
+            console.log(pic);
+            return (
+              <div className="upload" key={pic.id}>
+                <div className="" style={{backgroundImage: 'url(' + require('../../public/pictures/user/' + pic.picture) + ')'}}></div>
+                <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
+              </div>
+            );
+          })}
           <div className="upload">
             <input name="pic1" type="file" accept="image/*" onChange={this.handleFileChange}/>
             <div className="upload-img" onClick={this.handleUpload}/>
             <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
           </div>
         </div>
-        <button className="btn waves-effect waves-light">{locale.upload.btn}</button>
       </React.Fragment>
     );
-    // Button upload useless nan ?
   }
 }
 

@@ -24,6 +24,10 @@ module.exports = {
 			test: /\.css$/,
 			exclude: /node_modules/,
 			use: ["style-loader", "css-loader"]
+		},
+		{
+			test: /\.(png|jpg|jpeg|gif|svg)$/,
+			use: ['url-loader?limit=925000']
 		}]
 	},
 	mode: 'production'
