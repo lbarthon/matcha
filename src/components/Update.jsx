@@ -17,13 +17,13 @@ class Update extends Component {
     genre: '',
     lookingFor: '',
     email: '',
-    newpassword: '',
+    pwd: '',
     repassword: '',
     description: ''
   }
 
   onChange = e => {
-  //  this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   handleSubmit = e => {
@@ -87,7 +87,7 @@ class Update extends Component {
   render() {
     const {locale} = this.props.locales;
     const {username, firstname, lastname, email} = this.state;
-    if (!this.state.username) return null; // attendre state.username pour render -- err 500 ?
+    if (this.state.username == undefined) return null; // attendre state.username pour render -- err 500 ?
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
@@ -118,8 +118,8 @@ class Update extends Component {
         <div className="row">
           <div className="input-field col s6">
             <i className="material-icons prefix">vpn_key</i>
-            <input name="newpassword" id="newpassword" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="newpassword">{locale.update.newpassword}</label>
+            <input name="pwd" id="pwd" type="password" className="validate" onChange={this.onChange} />
+            <label htmlFor="pwd">{locale.update.newpassword}</label>
           </div>
           <div className="input-field col s6">
             <input name="repassword" id="repassword" type="password" className="validate" onChange={this.onChange} />

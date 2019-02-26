@@ -87,28 +87,31 @@ const getTableColumns = table => {
 }
 
 const areInfosClean = (infos, table) => {
-    getTableColumns(table)
-    .then((ret) => {
-        ret = JSON.parse(JSON.stringify(ret));
-        for (let key in ret) {
-            ret[key] = ret[key].column_name;
-        }
-        var good_vals = [];
-        var logged = 0;
-        for (let key in infos) {
-            if (!ret.includes(key)) {
-                if (!prod && logged < 3) {
-                    console.log("Unknown database value for", key, ". This might be normal.");
-                }
-                logged++;
-            } else {
-                good_vals.push(key);
+    return new Promise((resolve, reject) => {
+        getTableColumns(table)
+        .then((ret) => {
+            ret = JSON.parse(JSON.stringify(ret));
+            for (let key in ret) {
+                ret[key] = ret[key].column_name;
             }
-        }
-        if (!prod && logged > 3) {
-            console.log("(", logged - 3, "more )")
-        }
-    }).catch(console.error)
+            var good_vals = [];
+            var logged = 0;
+            for (let key in infos) {
+                if (!ret.includes(key)) {
+                    if (!prod && logged < 3) {
+                        console.log("Unknown database value for", key, ". This might be normal.");
+                    }
+                    logged++;
+                } else {
+                    good_vals.push(key);
+                }
+            }
+            if (!prod && logged > 3) {
+                console.log("(", logged - 3, "more )")
+            }
+            resolve(good_vals);
+        }).catch(reject);
+    });
 }
 
 module.exports = {
