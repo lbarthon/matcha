@@ -9,11 +9,6 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 
 const updateCol = (col, value, uid) => {
     return new Promise((resolve, reject) => {
-        if (col == "pwd" && !value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[^\w])(?=.{8,})/)) {
-            reject(new Error("register.alert.password_regex"));
-        } else if (col == "email" && !value.match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
-            reject(new Error("register.alert.email_invalid"));
-        }
         if (col == "pwd") {
             hash.create(value).then(hashed => {
                 conn.query("UPDATE users SET ? WHERE id=?", [{[col]: hashed}, uid], (err) => {
@@ -48,6 +43,10 @@ const checks = (filtered, uid) => {
         }
         if (filtered['pwd'] != filtered['repassword']) {
             reject(new Error("register.alert.password_diff"));
+        } else if (filtered['pwd'] != undefined && !filtered['pwd'].match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[^\w])(?=.{8,})/)) {
+            reject(new Error("register.alert.password_regex"));
+        } else if (filtered['email'] != undefined && !filtered['email'].match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
+            reject(new Error("register.alert.email_invalid"));
         } else {
             resolve();
         }
