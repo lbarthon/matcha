@@ -44,14 +44,8 @@ class Register extends Component {
               notify('success', locales.idParser(json['success']));
             }
           });
-        } else {
-          throw Error(response.statusText);
-        }
+        } else console.error(new Error(response.statusText));
       })
-      .catch(error => {
-        // handle error
-        console.error(error)
-      });
     });
   }
 
@@ -65,10 +59,16 @@ class Register extends Component {
     });
   }
 
+  initSelect = () => {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems, {});
+  }
+
   componentDidMount () {
     const {locale} = this.props.locales;
     document.title = locale.title.register;
     this.initDatepicker();
+    this.initSelect();
   }
 
   render() {
@@ -127,34 +127,22 @@ class Register extends Component {
         </div>
         <div className="row">
           <div className="input-field col s6">
-            <div><label>{locale.register.gender}</label></div>
-            <p>
-              <label>
-                <input name="gender" value="m" type="radio" onChange={this.onChange}/>
-                <span>M</span>
-              </label>
-            </p>
-            <p>
-              <label>
-                <input name="gender" value="f" type="radio" onChange={this.onChange}/>
-                <span>F</span>
-              </label>
-            </p>
+            <select name="gender" onChange={this.onChange}>
+              <option value="" disabled selected>{locale.register.select_gender}</option>
+              <option value="male">M</option>
+              <option value="female">F</option>
+              <option value="panzer">Tank panzer</option>
+            </select>
+            <label>{locale.register.gender}</label>
           </div>
           <div className="input-field col s6">
-            <div><label>{locale.register.lookingfor}</label></div>
-            <p>
-              <label>
-                <input name="lookingFor" value="m" type="radio" onChange={this.onChange}/>
-                <span>M</span>
-              </label>
-            </p>
-            <p>
-              <label>
-                <input name="lookingFor" value="f" type="radio" onChange={this.onChange}/>
-                <span>F</span>
-              </label>
-            </p>
+            <select name="lookingFor" onChange={this.onChange}>
+              <option value="" disabled selected>{locale.register.select_gender}</option>
+              <option value="male">M</option>
+              <option value="female">F</option>
+              <option value="panzer">Tank panzer</option>
+            </select>
+            <label>{locale.register.lookingfor}</label>
           </div>
         </div>
         <div className="row">

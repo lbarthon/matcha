@@ -11,9 +11,7 @@ class Update extends Component {
     firstname: '',
     lastname: '',
     location: '',
-    day: '',
-    month: '',
-    year: '',
+    birthdate: '',
     genre: '',
     wanted: '',
     email: '',
@@ -45,15 +43,24 @@ class Update extends Component {
               notify('success', locales.idParser(json['success']));
             }
           });
-        } else {
-          throw Error(response.statusText);
-        }
+        } else console.error(new Error(response.statusText));
       })
-      .catch(error => {
-        // handle error
-        console.log(error)
-      });
     });
+  }
+
+  initDatepicker = () => {
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems, {
+      format: 'dd/mm/yyyy',
+      defaultDate : new Date('01/01/1995'),
+      autoClose: true,
+      onSelect: date => { this.setState({ birthdate: date.toString() }); }
+    });
+  }
+
+  initSelect = () => {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems, {});
   }
 
   componentWillMount() {
@@ -62,7 +69,7 @@ class Update extends Component {
       if (response.ok) {
         response.json().then(json => {
           if (json.error) {
-            // GERE L'ERREUR MOSSIEU LE DEV FRONT
+            notify('error', locales.idParser(json['error']));
           } else {
             this.setState({
               username: json.response.username,
@@ -75,7 +82,7 @@ class Update extends Component {
             });
           }
         });
-      }
+      } else console.error(new Error(response.statusText));
     })
     .catch(err => {
       // handle error
@@ -86,12 +93,14 @@ class Update extends Component {
   componentDidMount () {
     const {locale} = this.props.locales;
     document.title = locale.title.update;
+    this.initSelect();
+    this.initDatepicker();
   }
 
   render() {
     const {locale} = this.props.locales;
     const {username, firstname, lastname, email, description} = this.state;
-    if (this.state.username == undefined) return null; // attendre state.username pour render -- err 500 ?
+    if (this.state.username === undefined) return null; // attendre state.username pour render -- err 500 ?
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
@@ -137,51 +146,31 @@ class Update extends Component {
             <label className="active" htmlFor="location">{locale.register.location}</label>
           </div>
         </div>
-        <label>{locale.register.birthdate}</label>
         <div className="row">
-          <div className="input-field col s2">
-            <input name="day" id="day" type="text" className="validate" onChange={this.onChange}/>
-            <label className="active" htmlFor="day">{locale.register.day}</label>
-          </div>
-          <div className="input-field col s2">
-            <input name="month" id="month" type="text" className="validate" onChange={this.onChange}/>
-            <label className="active" htmlFor="month">{locale.register.month}</label>
-          </div>
-          <div className="input-field col s8">
-            <input name="year" id="year" type="text" className="validate" onChange={this.onChange}/>
-            <label className="active" htmlFor="year">{locale.register.year}</label>
+          <div className="input-field col s12">
+            <i className="material-icons prefix">cake</i>
+            <input name="birthdate" id="birthdate" type="text" class="datepicker" onChange={this.onChange}/>
+            <label htmlFor="birthdate">{locale.register.birthdate}</label>
           </div>
         </div>
         <div className="row">
           <div className="input-field col s6">
-            <div><label>{locale.register.gender}</label></div>
-            <p>
-              <label>
-                <input name="sex" value="m" type="radio" onChange={this.onChange} checked={this.state.sex === "m"}/>
-                <span>M</span>
-              </label>
-            </p>
-            <p>
-              <label>
-                <input name="sex" value="f" type="radio" onChange={this.onChange} checked={this.state.sex === "f"}/>
-                <span>F</span>
-              </label>
-            </p>
+            <select name="gender" onChange={this.onChange}>
+              <option value="" disabled selected>{locale.register.select_gender}</option>
+              <option value="male">M</option>
+              <option value="female">F</option>
+              <option value="panzer">Tank panzer</option>
+            </select>
+            <label>{locale.register.gender}</label>
           </div>
           <div className="input-field col s6">
-            <div><label>{locale.register.lookingfor}</label></div>
-            <p>
-              <label>
-                <input name="wanted" value="m" type="radio" onChange={this.onChange} checked={this.state.wanted === "m"}/>
-                <span>M</span>
-              </label>
-            </p>
-            <p>
-              <label>
-                <input name="wanted" value="f" type="radio" onChange={this.onChange} checked={this.state.wanted === "f"}/>
-                <span>F</span>
-              </label>
-            </p>
+            <select name="lookingFor" onChange={this.onChange}>
+              <option value="" disabled selected>{locale.register.select_gender}</option>
+              <option value="male">M</option>
+              <option value="female">F</option>
+              <option value="panzer">Tank panzer</option>
+            </select>
+            <label>{locale.register.lookingfor}</label>
           </div>
         </div>
         <div className="row">

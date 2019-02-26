@@ -44,6 +44,7 @@
     "tags": "Centres d'interet",
     "about": "A propos de vous...",
     "btn": "S'inscrire",
+    "select_gender": "Selectionner un genre",
     "alert": {
       "success": "Compte créé avec succès",
       "password_regex": "Votre mot de passe doit au moins contenir un chiffre, une minuscule, une majuscule et un caractère spécial !",

@@ -44,6 +44,7 @@
     "tags": "Hobbies",
     "about": "About you...",
     "btn": "Register",
+    "select_gender": "Select a gender",
     "alert": {
       "success": "Account created successfully!",
       "password_regex": "Your password must contain a digit, an uppercase letter, a lowercase letter and a special character!",
