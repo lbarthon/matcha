@@ -12,7 +12,7 @@ const getIdFromUsername = username => {
         if (conn) {
             conn.query("SELECT id FROM users WHERE username=?", [username], (err, results) => {
                 if (err) {
-                    reject(new Error("error_sql_query"));
+                    reject(new Error("sql.alert.query"));
                 } else {
                     if (results.length == 0) {
                         reject(new Error("error_unknown_user"));
@@ -22,7 +22,7 @@ const getIdFromUsername = username => {
                 }
             });
         } else {
-            reject(new Error("error_sql_undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }
@@ -32,7 +32,7 @@ const getIdFromEmail = email => {
         if (conn) {
             conn.query("SELECT id FROM users WHERE email=?", [email], (err, results) => {
                 if (err) {
-                    reject(new Error("error_sql_query"));
+                    reject(new Error("sql.alert.query"));
                 } else {
                     if (results.length == 0) {
                         reject(new Error("error_unknown_email"));
@@ -42,7 +42,7 @@ const getIdFromEmail = email => {
                 }
             });
         } else {
-            reject(new Error("error_sql_undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }
@@ -71,17 +71,17 @@ const getTableColumns = table => {
             conn.query("SELECT column_name FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA=? AND TABLE_NAME=?",
                     [db_infos.db_name, table], (err, results) => {
                 if (err) {
-                    reject(new Error("error_sql_query"));
+                    reject(new Error("sql.alert.query"));
                 } else {
                     if (results.length == 0) {
-                        reject(new Error("error_sql_table_undefined"));
+                        reject(new Error("sql.alert.table_undefined"));
                     } else {
                         resolve(results);
                     }
                 }
             });
         } else {
-            reject(new Error("error_sql_undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }

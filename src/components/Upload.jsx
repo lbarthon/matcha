@@ -49,10 +49,10 @@ class Upload extends Component {
     }
     fav.innerHTML = 'star';
     this.setState({ fav: favId }, () => {
-      // Dans le fav du state faut foutre l'id de la picture qui est fav.
       parseForm({ id: this.state.fav }, strBody => {
         fetch('/api/pictures/main/set', {
           method: 'POST',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
           body: strBody
         })
         .then(response => {
@@ -76,9 +76,10 @@ class Upload extends Component {
     fetch('/api/pictures/get')
     .then(response => {
       if (response.ok) {
-        response.json().then(json => {
-          if (json.response !== this.state.pictures)
-            this.setState({ pictures: json.response });
+          response.json().then(json => {
+            if (json['error'] == null && json['success'] !== this.state.pictures) {
+              this.setState({ pictures: json['success'] });
+            }
         });
       }
     })
@@ -93,9 +94,9 @@ class Upload extends Component {
           {this.state.pictures.map(pic => {
             console.log(pic);
             return (
-              <div className="upload" key={pic.id}>
-                <div className="" style={{backgroundImage: 'url(' + require('../../public/pictures/user/' + pic.picture) + ')'}}></div>
-                <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
+              <div className="upload" id={pic.id}>
+                <img className="" id="testimg" src={'/pictures/user/' + pic.picture}></img>
+                <i id="fav" className="material-icons" onClick={this.handleFav}>{pic.main == 1 ? 'star' : 'star_border'}</i>
               </div>
             );
           })}

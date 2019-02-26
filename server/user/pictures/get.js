@@ -15,11 +15,11 @@ const get = (uid) => {
                 } else if (results.length > 0) {
                     resolve(results);
                 } else {
-                    reject(new Error("error_user_not_found"));
+                    reject(new Error("error_no_picture"));
                 }
             });
         } else {
-            reject(new Error("error_sql_undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }

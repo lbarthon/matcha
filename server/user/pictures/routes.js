@@ -12,8 +12,8 @@ router.use((req, res, next) => {
 
 router.get('/get', (req, res) => {
     pictures.get(req.session.uid)
-    .then((resolve) => {
-        res.status(200).json({ 'response' : resolve });
+    .then(resolve => {
+        res.status(200).json({ 'success' : resolve });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
