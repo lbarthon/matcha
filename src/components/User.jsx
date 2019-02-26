@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withAllHOC } from '../utils/allHOC';
+import { notify } from '../utils/alert';
 import '../css/user.css';
 
 class User extends Component {
@@ -7,10 +8,11 @@ class User extends Component {
   state = {
     username: '',
     description: '',
-    gender: ''
+    gender: '',
+    pictures: [],
   }
 
-  componentWillMount() {
+  getUser = () => {
     const { id } = this.props.match.params;
     fetch('/api/user/' + id)
     .then(response => {
@@ -23,12 +25,28 @@ class User extends Component {
             gender: json.sex
           })
         });
-      } else { throw Error(response.statusText); }
+      } else { console.error(new Error(response.statusText)); }
     })
-    .catch(error => {
-      // handle error
-      console.error(error);
-    })
+  }
+
+  getPictures = () => {
+    fetch('/api/pictures/get')
+    .then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json['error'] == null && json['success'] !== this.state.pictures)
+            this.setState({ pictures: json['success'] });
+          else if (json['error'])
+            notify('error', this.props.locales.idParser(json['error']));
+        });
+      } else console.error(new Error(response.statusText));
+    });
+  }
+
+  componentWillMount() {
+    console.log('user mount')
+    this.getUser();
+    this.getPictures();
   }
 
   componentDidMount() {

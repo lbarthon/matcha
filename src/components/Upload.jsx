@@ -98,7 +98,6 @@ class Upload extends Component {
   }
 
   getPictures = () => {
-    console.log('reeeeesqwsqw');
     fetch('/api/pictures/get')
     .then(response => {
       if (response.ok) {

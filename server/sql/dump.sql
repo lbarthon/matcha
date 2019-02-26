@@ -1,11 +1,13 @@
 CREATE TABLE users(
 id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 username VARCHAR(255) NOT NULL UNIQUE,
+lastname VARCHAR(128) NOT NULL,
+firstname VARCHAR(128) NOT NULL,
 email VARCHAR(255) NOT NULL UNIQUE,
 pwd VARCHAR(128) NOT NULL,
-`name` VARCHAR(128) NOT NULL,
 sex VARCHAR(10) NOT NULL,
 wanted VARCHAR(10) NOT NULL,
+description VARCHAR(2000),
 conf_link VARCHAR(255),
 confirmed BIT DEFAULT 0,
 perm_level BIT DEFAULT 0,
@@ -30,6 +32,6 @@ create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (`user_id`) REFERENCES users(id)
 );
 
--- 
+--
 -- Add other requests here. Requests must end with a ;
--- 
+--
