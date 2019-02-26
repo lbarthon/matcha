@@ -43,7 +43,8 @@ class Upload extends Component {
   handleFav = e => {
     const fav = e.target;
     const favs = document.querySelectorAll('#fav')
-    const favId = e.target.parentNode.id;
+    const favId = fav.parentNode.id;
+    console.log(favId);
     for (let i = 0; i < favs.length; i++) {
       favs[i].innerHTML = 'star_border';
     }
@@ -60,10 +61,7 @@ class Upload extends Component {
             // handle response
           }
         })
-        .catch(err => {
-          // handle error
-          console.error(err);
-        });
+        .catch(err => { console.error(err); });
       });
     });
   }
@@ -91,18 +89,16 @@ class Upload extends Component {
       <React.Fragment>
         <div className="row">
           {this.state.pictures.map(pic => {
-            console.log(pic);
             return (
-              <div className="upload" key={pic.id}>
-                <div className="" style={{backgroundImage: 'url(' + require('../../public/pictures/user/' + pic.picture) + ')'}}></div>
-                <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
+              <div className="upload" key={pic.id} id={pic.id}>
+                <div className="upload-img" style={{backgroundImage: 'url("/pictures/user/' + pic.picture + '")'}}></div>
+                <i id="fav" className="material-icons" onClick={this.handleFav}>{pic.main ? 'star' : 'star_border'}</i>
               </div>
             );
           })}
           <div className="upload">
             <input name="pic1" type="file" accept="image/*" onChange={this.handleFileChange}/>
             <div className="upload-img" onClick={this.handleUpload}/>
-            <i id="fav" className="material-icons" onClick={this.handleFav}>star_border</i>
           </div>
         </div>
       </React.Fragment>
