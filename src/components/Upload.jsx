@@ -31,10 +31,11 @@ class Upload extends Component {
           response.json().then(json => {
             if (json['error'])
               notify('error', this.props.locales.idParser(json['error']));
-            else if (json['success'])
+            else if (json['success']) {
+              this.getPictures();
               notify('success', this.props.locales.idParser(json['success']));
+            }
           });
-          this.getPictures();
         } else console.error(new Error(response.statusText));
       })
     });
@@ -44,7 +45,7 @@ class Upload extends Component {
     const fav = e.target;
     const favs = document.querySelectorAll('#fav')
     const favId = fav.parentNode.id;
-    console.log(favId);
+    if (fav.innerHTML === 'star') return;
     for (let i = 0; i < favs.length; i++) {
       favs[i].innerHTML = 'star_border';
     }
@@ -72,6 +73,7 @@ class Upload extends Component {
 
   handleRemove = (e) => {
     const id = e.target.parentNode.id;
+    const div = e.target.parentNode;
     console.log(id);
     parseForm({ id: id }, strBody => {
       fetch('/api/pictures/remove', {
@@ -85,8 +87,10 @@ class Upload extends Component {
             console.log(json);
             if (json['error'])
               notify('error', this.props.locales.idParser(json['error']));
-            else if (json['success'])
+            else if (json['success']) {
+              this.getPictures();
               notify('success', this.props.locales.idParser(json['success']));
+            }
           });
         } else console.error(new Error(response.statusText));
       })
@@ -94,6 +98,7 @@ class Upload extends Component {
   }
 
   getPictures = () => {
+    console.log('reeeeesqwsqw');
     fetch('/api/pictures/get')
     .then(response => {
       if (response.ok) {

@@ -41,7 +41,7 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/remove', (req, res) => {
-    pictures.add(req.body, req.session.uid)
+    pictures.remove(req.body, req.session.uid)
     .then(() => {
         res.status(200).json({ 'success' : 'picture.remove.success' });
     })
