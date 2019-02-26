@@ -1,7 +1,7 @@
 const db_tools = require('./database');
 const fs = require('fs');
 
-fs.readFile("server/sql/dump.sql", (err, data) => {
+fs.readFile("./sql/dump.sql", (err, data) => {
     if (err) exit("Error reading file ./sql/dump.sql");
     var queries = String(data).split(";");
     db_tools.connect_no_db((conn, err) => {
@@ -22,10 +22,10 @@ fs.readFile("server/sql/dump.sql", (err, data) => {
                 .then(() => exit("Setup ended correctly."))
                 .catch(console.error)
                 .finally(() => process.exit(0));
-            });
-        }, true);
-    });
-}, true);
+            }, true);
+        });
+    }, true);
+});
 
 const exit = (msg) => {
     console.log("Process terminating.\n" + msg);

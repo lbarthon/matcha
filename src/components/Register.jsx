@@ -15,7 +15,7 @@ class Register extends Component {
     genre: '',
     lookingFor: '',
     email: '',
-    password: '',
+    pwd: '',
     repassword: '',
     description: ''
   }
@@ -103,8 +103,8 @@ class Register extends Component {
         <div className="row">
           <div className="input-field col s6">
             <i className="material-icons prefix">vpn_key</i>
-            <input name="password" id="password" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="password">{locale.password}</label>
+            <input name="pwd" id="pwd" type="password" className="validate" onChange={this.onChange} />
+            <label htmlFor="pwd">{locale.password}</label>
           </div>
           <div className="input-field col s6">
             <input name="repassword" id="repassword" type="password" className="validate" onChange={this.onChange} />

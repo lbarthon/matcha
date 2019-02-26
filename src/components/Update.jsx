@@ -15,15 +15,15 @@ class Update extends Component {
     month: '',
     year: '',
     genre: '',
-    lookingFor: '',
+    wanted: '',
     email: '',
-    newpassword: '',
+    pwd: '',
     repassword: '',
     description: ''
   }
 
   onChange = e => {
-  //  this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   handleSubmit = e => {
@@ -57,16 +57,23 @@ class Update extends Component {
   }
 
   componentWillMount() {
-    fetch('api/user/current')
+    fetch('/api/user/current')
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
-          console.log(json.response)
-          this.setState({
-            username: json.response.username,
-            wanted: json.response.wanted,
-            email: json.response.email
-          });
+          if (json.error) {
+            // GERE L'ERREUR MOSSIEU LE DEV FRONT
+          } else {
+            this.setState({
+              username: json.response.username,
+              wanted: json.response.wanted,
+              sex: json.response.sex,
+              email: json.response.email,
+              firstname: json.response.firstname,
+              lastname: json.response.lastname,
+              description: json.response.description
+            });
+          }
         });
       }
     })
@@ -83,8 +90,8 @@ class Update extends Component {
 
   render() {
     const {locale} = this.props.locales;
-    const {username, firstname, lastname, email} = this.state;
-    if (!this.state.username) return null; // attendre state.username pour render -- err 500 ?
+    const {username, firstname, lastname, email, description} = this.state;
+    if (this.state.username == undefined) return null; // attendre state.username pour render -- err 500 ?
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
@@ -115,8 +122,8 @@ class Update extends Component {
         <div className="row">
           <div className="input-field col s6">
             <i className="material-icons prefix">vpn_key</i>
-            <input name="newpassword" id="newpassword" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="newpassword">{locale.update.newpassword}</label>
+            <input name="pwd" id="pwd" type="password" className="validate" onChange={this.onChange} />
+            <label htmlFor="pwd">{locale.update.newpassword}</label>
           </div>
           <div className="input-field col s6">
             <input name="repassword" id="repassword" type="password" className="validate" onChange={this.onChange} />
@@ -150,13 +157,13 @@ class Update extends Component {
             <div><label>{locale.register.gender}</label></div>
             <p>
               <label>
-                <input name="gender" value="m" type="radio" onChange={this.onChange}/>
+                <input name="sex" value="m" type="radio" onChange={this.onChange} checked={this.state.sex === "m"}/>
                 <span>M</span>
               </label>
             </p>
             <p>
               <label>
-                <input name="gender" value="f" type="radio" onChange={this.onChange}/>
+                <input name="sex" value="f" type="radio" onChange={this.onChange} checked={this.state.sex === "f"}/>
                 <span>F</span>
               </label>
             </p>
@@ -165,13 +172,13 @@ class Update extends Component {
             <div><label>{locale.register.lookingfor}</label></div>
             <p>
               <label>
-                <input name="lookingFor" value="m" type="radio" onChange={this.onChange}/>
+                <input name="wanted" value="m" type="radio" onChange={this.onChange} checked={this.state.wanted === "m"}/>
                 <span>M</span>
               </label>
             </p>
             <p>
               <label>
-                <input name="lookingFor" value="f" type="radio" onChange={this.onChange}/>
+                <input name="wanted" value="f" type="radio" onChange={this.onChange} checked={this.state.wanted === "f"}/>
                 <span>F</span>
               </label>
             </p>
@@ -180,7 +187,7 @@ class Update extends Component {
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">mode_edit</i>
-            <textarea name="description" id="textarea1" className="materialize-textarea" onChange={this.onChange}></textarea>
+            <textarea value={description} name="description" id="textarea1" className="materialize-textarea" onChange={this.onChange}></textarea>
             <label className="active" htmlFor="textarea1">{locale.register.about}<br/></label>
           </div>
         </div>
