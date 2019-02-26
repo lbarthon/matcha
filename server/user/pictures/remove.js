@@ -27,7 +27,7 @@ const remove = (infos, uid) => {
                 }
             });
         } else {
-            reject(new Error("error_sql_undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }

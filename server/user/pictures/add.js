@@ -39,7 +39,7 @@ const add = (req, res) => {
                             [uid], (err, result) => {
                         if (err) {
                             reject(new Error("sql.alert.query"));
-                        } else if (result.length > 0) {
+                        } else if (result.length == 0) {
                             main = 1;
                         }
                         conn.query("INSERT INTO pictures (user_id, picture, main) VALUES (?,?,?)",

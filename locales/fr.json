@@ -77,6 +77,7 @@
     "error_email_invalid": "Votre mail n'est pas valide !",
     "error_user_not_logged": "Vous n'êtes pas connecté !",
     "error_user_not_found": "Cet utilisateur n'existe pas !",
+    "error_no_picture": "Vous n'avez pas de photo !",
     "error_unknown_email": "Mail inconnu !",
     "forbidden_access": "Vous n'avez pas accès à cette page !",
     "not_logged": "Vous devez être connectés pour faire ça !",

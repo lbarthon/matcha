@@ -50,10 +50,10 @@ class Upload extends Component {
     }
     fav.innerHTML = 'star';
     this.setState({ fav: favId }, () => {
-      // Dans le fav du state faut foutre l'id de la picture qui est fav.
       parseForm({ id: this.state.fav }, strBody => {
         fetch('/api/pictures/main/set', {
           method: 'POST',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
           body: strBody
         })
         .then(response => {
@@ -74,9 +74,10 @@ class Upload extends Component {
     fetch('/api/pictures/get')
     .then(response => {
       if (response.ok) {
-        response.json().then(json => {
-          if (json.response !== this.state.pictures)
-            this.setState({ pictures: json.response });
+          response.json().then(json => {
+            if (json['error'] == null && json['success'] !== this.state.pictures) {
+              this.setState({ pictures: json['success'] });
+            }
         });
       }
     })
