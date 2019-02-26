@@ -26,7 +26,7 @@ router.post('/login', (req, res) => {
 });
 
 router.post('/update', (req, res) => {
-    user.update(req.body, req.session.uid)
+    user.update(req, req.session.uid)
     .then(() => {
         res.status(200).json({ 'success' : 'alert.update_success' });
     })

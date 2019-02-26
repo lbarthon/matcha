@@ -30,38 +30,54 @@ const updateCol = (col, value, uid) => {
     });
 }
 
-const update = (infos, uid) => {
+const checks = (filtered, uid) => {
+    return new Promise(async (resolve, reject) => {
+        if (filtered['email'] != undefined) {
+            await utils.getIdFromEmail(filtered['email']).then(id => {
+                if (id != uid) {
+                    reject(new Error("register.alert.email_took"));
+                }
+            }).catch(() => {});
+        }
+        if (filtered['username'] != undefined) {
+            await utils.getIdFromUsername(filtered['username']).then(id => {
+                if (id != uid) {
+                    reject(new Error("register.alert.username_took"));
+                }
+            }).catch(() => {});
+        }
+        if (filtered['pwd'] != filtered['repassword']) {
+            reject(new Error("register.alert.password_diff"));
+        } else {
+            resolve();
+        }
+    })
+};
+
+const update = (req, uid) => {
     return new Promise((resolve, reject) => {
         if (conn) {
+            var infos = req.body;
             var filtered = [];
             for (let key in infos) {
                 if (infos[key] != null && infos[key] != '') {
                     filtered[key] = infos[key];
                 }
             }
-            if (filtered['email'] != undefined) {
-                utils.getIdFromEmail(filtered['email']).then(id => {
-                    if (id != uid) reject(new Error("register.alert.email_took"));
-                }).catch();
-            }
-            if (filtered['username'] != undefined) {
-                utils.getIdFromUsername(filtered['username']).then(id => {
-                    if (id != uid) reject(new Error("register.alert.username_took"));
-                }).catch();
-            }
-            if (filtered['pwd'] != filtered['repassword']) {
-                reject(new Error("register.alert.password_diff"));
-            } else {
+            checks(filtered, uid)
+            .then(() => {
                 utils.areInfosClean(filtered, 'users')
                 .then(good => {
                     var promises = good.map(key => {
                         return updateCol(key ,filtered[key], uid);
                     });
+                    req.session.username = filtered['username'];
                     Promise.all(promises)
                     .then(resolve)
                     .catch(reject);
-                });
-            }
+                }).catch(() => {});
+            })
+            .catch(reject);
         } else {
             reject(new Error("sql.alert.undefined"));
         }
