@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withAllHOC } from '../utils/allHOC';
 import parseForm from '../utils/parseForm';
+import { notify } from '../utils/alert';
 
 class Upload extends Component {
 
@@ -27,20 +28,19 @@ class Upload extends Component {
       })
       .then(response => {
         if (response.ok) {
-          // si photo unique, mettre fav par défaut
-          // handle response
-          // console.log(response);
+          response.json().then(json => {
+            if (json['error'])
+              notify('error', this.props.locales.idParser(json['error']));
+            else if (json['success'])
+              notify('success', this.props.locales.idParser(json['success']));
+          });
           this.getPictures();
-        }
+        } else console.error(new Error(response.statusText));
       })
-      .catch(err => {
-        // handle error
-        console.error(err);
-      });
     });
   }
 
-  handleFav = e => {
+  handleFav = (e) => {
     const fav = e.target;
     const favs = document.querySelectorAll('#fav')
     const favId = fav.parentNode.id;
@@ -58,30 +58,57 @@ class Upload extends Component {
         })
         .then(response => {
           if (response.ok) {
-            // handle response
-          }
+            response.json().then(json => {
+              if (json['error'])
+                notify('error', this.props.locales.idParser(json['error']));
+              else if (json['success'])
+                notify('success', this.props.locales.idParser(json['success']));
+            });
+          } else console.error(new Error(response.statusText));
         })
-        .catch(err => { console.error(err); });
       });
     });
   }
 
-  componentWillMount() {
-    this.getPictures();
+  handleRemove = (e) => {
+    const id = e.target.parentNode.id;
+    console.log(id);
+    parseForm({ id: id }, strBody => {
+      fetch('/api/pictures/remove', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        body: strBody
+      })
+      .then(response => {
+        if (response.ok) {
+          response.json().then(json => {
+            console.log(json);
+            if (json['error'])
+              notify('error', this.props.locales.idParser(json['error']));
+            else if (json['success'])
+              notify('success', this.props.locales.idParser(json['success']));
+          });
+        } else console.error(new Error(response.statusText));
+      })
+    });
   }
 
   getPictures = () => {
     fetch('/api/pictures/get')
     .then(response => {
       if (response.ok) {
-          response.json().then(json => {
-            if (json['error'] == null && json['success'] !== this.state.pictures) {
-              this.setState({ pictures: json['success'] });
-            }
+        response.json().then(json => {
+          if (json['error'] == null && json['success'] !== this.state.pictures)
+            this.setState({ pictures: json['success'] });
+          else if (json['error'])
+            notify('error', this.props.locales.idParser(json['error']));
         });
-      }
-    })
-    .catch(err => { console.error(err); });
+      } else console.error(new Error(response.statusText));
+    });
+  }
+
+  componentWillMount() {
+    this.getPictures();
   }
 
   render() {
@@ -94,6 +121,7 @@ class Upload extends Component {
               <div className="upload" key={pic.id} id={pic.id}>
                 <div className="upload-img" style={{backgroundImage: 'url("/pictures/user/' + pic.picture + '")'}}></div>
                 <i id="fav" className="material-icons" onClick={this.handleFav}>{pic.main ? 'star' : 'star_border'}</i>
+                <i id="delete" className="material-icons" onClick={this.handleRemove}>close</i>
               </div>
             );
           })}

@@ -22,9 +22,20 @@
   max-width: 100%;
 }
 
-.upload i {
+.upload #fav {
   cursor: pointer;
   position: absolute;
   top:10px;
   right:10px;
+  background:white;
+  border-radius:100%;
+}
+
+.upload #delete {
+  cursor: pointer;
+  position: absolute;
+  top:10px;
+  left:10px;
+  background:white;
+  border-radius:100%;
 }

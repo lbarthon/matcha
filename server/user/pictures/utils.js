@@ -1,4 +1,4 @@
-const emitter = require('../emitter');
+const emitter = require('../../emitter');
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
