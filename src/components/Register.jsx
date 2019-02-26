@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
 import { notify } from '../utils/alert';
 import { withLocalesHOC } from '../utils/locales';
+import M from 'materialize-css'
 
 class Register extends Component {
 
@@ -10,9 +11,7 @@ class Register extends Component {
     firstname: '',
     lastname: '',
     location: '',
-    day: '',
-    month: '',
-    year: '',
+    birthdate: '',
     genre: '',
     lookingFor: '',
     email: '',
@@ -28,6 +27,7 @@ class Register extends Component {
   handleSubmit = e => {
     const { locales } = this.props;
     e.preventDefault();
+    console.log(this.state)
     parseForm(this.state, strForm => {
       fetch('/api/register', {
         method: 'POST',
@@ -55,9 +55,20 @@ class Register extends Component {
     });
   }
 
+  initDatepicker = () => {
+    var elems = document.querySelectorAll('.datepicker');
+    var instances = M.Datepicker.init(elems, {
+      format: 'dd/mm/yyyy',
+      defaultDate : new Date('01/01/1995'),
+      autoClose: true,
+      onSelect: date => { this.setState({ birthdate: date.toString() }); }
+    });
+  }
+
   componentDidMount () {
     const {locale} = this.props.locales;
     document.title = locale.title.register;
+    this.initDatepicker();
   }
 
   render() {
@@ -107,19 +118,11 @@ class Register extends Component {
             <label htmlFor="location">{locale.register.location}</label>
           </div>
         </div>
-        <label>{locale.register.birthdate}</label>
         <div className="row">
-          <div className="input-field col s2">
-            <input name="day" id="day" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="day">{locale.register.day}</label>
-          </div>
-          <div className="input-field col s2">
-            <input name="month" id="month" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="month">{locale.register.month}</label>
-          </div>
-          <div className="input-field col s8">
-            <input name="year" id="year" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="year">{locale.register.year}</label>
+          <div className="input-field col s12">
+            <i className="material-icons prefix">cake</i>
+            <input name="birthdate" id="birthdate" type="text" class="datepicker" onChange={this.onChange}/>
+            <label htmlFor="birthdate">{locale.register.birthdate}</label>
           </div>
         </div>
         <div className="row">
