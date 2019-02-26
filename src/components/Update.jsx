@@ -57,16 +57,19 @@ class Update extends Component {
   }
 
   componentWillMount() {
-    fetch('api/user/current')
+    fetch('/api/user/current')
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
-          console.log(json.response)
-          this.setState({
-            username: json.response.username,
-            wanted: json.response.wanted,
-            email: json.response.email
-          });
+          if (json.error) {
+            // GERE L'ERREUR MOSSIEU LE DEV FRONT
+          } else {
+            this.setState({
+              username: json.response.username,
+              wanted: json.response.wanted,
+              email: json.response.email
+            });
+          }
         });
       }
     })

@@ -7,7 +7,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 
 const get_infos = (req) => {
-    return get_infos_id(req.session.id);
+    return get_infos_id(req.session.uid);
 }
 
 const get_infos_id = (id) => {
