@@ -1,15 +1,18 @@
 const emitter = require('../../emitter');
 const multer = require("multer");
-const path = require("path");
 const fs = require("fs");
 const pic_path = './public/pictures/user/';
-
 const timestamp = Date.now();
+
+const niceName = name => {
+    var split = name.split(".");
+    return name.slice(0, 200) + "." + split[split.length - 1];
+};
 
 const storage = multer.diskStorage({
     destination: pic_path,
     filename: (req, file, callback) => {
-        callback(null, "Picture-" + timestamp + file.originalname);
+        callback(null, "Picture-" + timestamp + '-' + niceName(file.originalname));
     }
 });
 
@@ -33,7 +36,7 @@ const add = (req, res) => {
                     reject(new Error("picture_add_no_file"));
                 } else {
                     var uid = req.session.uid;
-                    var filename = "Picture-" + timestamp + file.originalname;
+                    var filename = "Picture-" + timestamp + '-' + niceName(file.originalname);
                     var main = 0;
                     conn.query("SELECT * FROM pictures WHERE user_id=?",
                             [uid], (err, result) => {
