@@ -1,8 +1,8 @@
-.pictures div {
-  float:left;
+.picture {
+  display:inline-block;
   width:calc(25% - 10px);
   padding-top: calc(25% - 10px);
-  margin-bottom:10px;
+  margin:5px;
   border-radius:3px;
   background-size: 100% auto;
   background-color: #ddd;
@@ -10,16 +10,9 @@
   background-repeat: no-repeat;
 }
 
-.pictures div:first-child {
-  padding-top: calc(75% - 10px);
-  margin-right: 10px;
-  width: calc(75% - 10px);
-}
-
-.pictures:after {
-  content: ".";
-  visibility: hidden;
+.picture-main {
   display: block;
-  height: 0;
-  clear: both;
+  padding-top: 100%;
+  width: 100%;
+  margin:0;
 }
