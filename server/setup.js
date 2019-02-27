@@ -1,8 +1,8 @@
 const db_tools = require('./database');
 const fs = require('fs');
 
-fs.readFile("./sql/dump.sql", (err, data) => {
-    if (err) exit("Error reading file ./sql/dump.sql");
+fs.readFile("./server/sql/dump.sql", (err, data) => {
+    if (err) exit("Error reading file ./server/sql/dump.sql");
     var queries = String(data).split(";");
     db_tools.connect_no_db((conn, err) => {
         if (err) exit("Error connecting to database.");
