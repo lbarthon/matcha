@@ -1,19 +1,20 @@
-const emitter = require('../../emitter');
+const emitter = require('../emitter');
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
-const get = (uid) => {
+const list = req => {
     return new Promise((resolve, reject) => {
         if (conn) {
-            conn.query("SELECT * FROM pictures WHERE user_id=?",
-                    [uid], (err, results) => {
+            conn.query("SELECT DISTINCT name FROM tags", (err, results) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
-                } else {
+                } else if (results.length > 0) {
                     resolve(results);
+                } else {
+                    reject(new Error("tag.list.none"));
                 }
             });
         } else {
@@ -22,6 +23,4 @@ const get = (uid) => {
     });
 }
 
-module.exports = {
-    get : get
-}
+module.exports = list;

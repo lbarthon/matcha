@@ -1,4 +1,4 @@
-const emitter = require('../../emitter');
+const emitter = require('../emitter');
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
@@ -8,8 +8,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 const get = (uid) => {
     return new Promise((resolve, reject) => {
         if (conn) {
-            conn.query("SELECT * FROM pictures WHERE user_id=?",
-                    [uid], (err, results) => {
+            conn.query("SELECT name FROM tags WHERE ?", [{user_id: uid}], (err, results) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
                 } else {
@@ -22,6 +21,4 @@ const get = (uid) => {
     });
 }
 
-module.exports = {
-    get : get
-}
+module.exports = get;

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const pictures = require('./pictures');
-const userUtils = require('../utils');
+const userUtils = require('../user/utils');
+const tags = require('./tags');
 
 router.use((req, res, next) => {
     if (req.session.username == undefined || req.session.uid == undefined) {
@@ -13,30 +13,10 @@ router.use((req, res, next) => {
     }
 });
 
-router.get('/get', (req, res) => {
-    pictures.get(req.session.uid)
-    .then(resolve => {
-        res.status(200).json({ 'success' : resolve });
-    })
-    .catch(err => {
-        res.status(200).json({ 'error' : err.message });
-    });
-});
-
-router.get('/get/:id', (req, res) => {
-    pictures.get(req.params.id)
-    .then(resolve => {
-        res.status(200).json({ 'success' : resolve });
-    })
-    .catch(err => {
-        res.status(200).json({ 'error' : err.message });
-    });
-});
-
 router.post('/add', (req, res) => {
-    pictures.add(req, res)
+    tags.add(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'picture.add.success' });
+        res.status(200).json({ 'success' : 'tag.add.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
@@ -44,19 +24,39 @@ router.post('/add', (req, res) => {
 });
 
 router.post('/remove', (req, res) => {
-    pictures.remove(req.body, req.session.uid)
+    tags.remove(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'picture.remove.success' });
+        res.status(200).json({ 'success' : 'tag.remove.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
     });
 });
 
-router.post('/main/set', (req, res) => {
-    pictures.set_main(req.body, req.session.uid)
-    .then(() => {
-        res.status(200).json({ 'success' : 'picture.set_main.success' });
+router.get('/list', (req, res) => {
+    tags.list()
+    .then(response => {
+        res.status(200).json({ 'success' : response });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+});
+
+router.get('/get', (req, res) => {
+    tags.get(req.session.uid)
+    .then(response => {
+        res.status(200).json({ 'success' : response });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+});
+
+router.get('/get/:id', (req, res) => {
+    tags.get(req.params.id)
+    .then(response => {
+        res.status(200).json({ 'success' : response });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
