@@ -41,7 +41,6 @@ const register = (infos) => {
                                 sex, wanted, conf_link, birthdate, description) VALUES (?,?,?,?,?,?,?,?)",
                                 [infos.username, infos.email, infos.pwd, infos.gender, infos.lookingFor, conf_link, infos.birthdate, infos.description], err => {
                                 if (err) {
-                                    console.error(err);
                                     reject(new Error("sql.alert.query"));
                                 } else {
                                     // TODO -- SEND MAILS

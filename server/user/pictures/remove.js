@@ -28,7 +28,6 @@ const remove = (infos, uid) => {
                   //  }
                 });
             });
-            // TODO -- CHECK COMMENT QUE TU ME SEND LE NAME OU ID DE LA PHOTO
         } else {
             reject(new Error("sql.alert.undefined"));
         }
