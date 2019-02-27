@@ -128,19 +128,17 @@ class Register extends Component {
         <div className="row">
           <div className="input-field col s6">
             <select name="gender" onChange={this.onChange}>
-              <option value="" disabled selected>{locale.register.select_gender}</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Panzer">Tank panzer</option>
+              <option defaultValue="" disabled selected>{locale.register.select_gender}</option>
+              <option defaultValue="male">{locale.gender.male}</option>
+              <option defaultValue="female">{locale.gender.female}</option>
             </select>
             <label>{locale.register.gender}</label>
           </div>
           <div className="input-field col s6">
-            <select name="lookingFor" onChange={this.onChange}>
-              <option value="" disabled selected>{locale.register.select_gender}</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Panzer">Tank panzer</option>
+            <select name="wanted" onChange={this.onChange}>
+              <option defaultValue="" disabled selected>{locale.register.select_gender}</option>
+              <option defaultValue="male">{locale.gender.male}</option>
+              <option defaultValue="female">{locale.gender.female}</option>
             </select>
             <label>{locale.register.lookingfor}</label>
           </div>
@@ -150,14 +148,6 @@ class Register extends Component {
             <i className="material-icons prefix">mode_edit</i>
             <textarea name="description" id="textarea1" className="materialize-textarea" onChange={this.onChange}></textarea>
             <label htmlFor="textarea1">{locale.register.about}<br/></label>
-          </div>
-        </div>
-        <div className="row">
-          <div className="input-field col s12">
-            <i className="material-icons prefix">favorite</i>
-            <textarea name="tags" id="textarea2" className="materialize-textarea" onChange={this.onChange}></textarea>
-            <label htmlFor="textarea2">{locale.register.tags}<br/></label>
-            <span className="helper-text" data-error="wrong" data-success="right">ex : bio geek piercing vegan ...</span>
           </div>
         </div>
         <button className="btn waves-effect waves-light">{locale.register.btn}</button>

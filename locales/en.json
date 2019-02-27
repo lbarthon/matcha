@@ -5,6 +5,10 @@
   "password": "Password",
   "repassword": "Password confirmation",
   "email" : "Email",
+  "gender" : {
+    "male" : "Male",
+    "female" : "Female"
+  },
   "user": {
     "like" : "Like",
     "block" : "Block",

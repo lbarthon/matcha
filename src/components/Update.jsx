@@ -60,9 +60,6 @@ class Update extends Component {
   }
 
   initSelect = () => {
-    console.log(this.state.gender);
-    document.querySelector('select[name="gender"]').value = this.state.gender;
-    document.querySelector('select[name="wanted"]').value = this.state.wanted;
     var elems = document.querySelectorAll('select');
     M.FormSelect.init(elems, {});
   }
@@ -99,8 +96,6 @@ class Update extends Component {
   }
 
   componentDidUpdate() {
-    document.querySelector('select[name="gender"]').value = this.state.gender;
-    document.querySelector('select[name="wanted"]').value = this.state.wanted;
     this.initSelect();
   }
 
@@ -162,17 +157,17 @@ class Update extends Component {
         <div className="row">
           <div className="input-field col s6">
             <select name="gender" onChange={this.onChange}>
-              <option defaultValue="" disabled selected>{locale.register.select_gender}</option>
-              <option defaultValue="Male">Male</option>
-              <option defaultValue="Female">Female</option>
+              <option value="" disabled>{locale.register.select_gender}</option>
+              <option value="male" selected={gender === 'female' ? true : false}>{locale.gender.male}</option>
+              <option value="female" selected={gender === 'female' ? true : false}>{locale.gender.female}</option>
             </select>
             <label>{locale.register.gender}</label>
           </div>
           <div className="input-field col s6">
             <select name="wanted" onChange={this.onChange}>
-              <option defaultValue="" disabled>{locale.register.select_gender}</option>
-              <option defaultValue="Male">Male</option>
-              <option defaultValue="Female">Female</option>
+              <option value="" disabled>{locale.register.select_gender}</option>
+              <option value="male">{locale.gender.male}</option>
+              <option value="female">{locale.gender.female}</option>
             </select>
             <label>{locale.register.lookingfor}</label>
           </div>
