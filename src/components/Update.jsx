@@ -163,8 +163,8 @@ class Update extends Component {
           <div className="input-field col s6">
             <select name="gender" onChange={this.onChange}>
               <option defaultValue="" disabled selected>{locale.register.select_gender}</option>
-              <option defaultValue="male">male</option>
-              <option defaultValue="female">female</option>
+              <option defaultValue="Male">Male</option>
+              <option defaultValue="Female">Female</option>
               <option defaultValue="Panzer">Tank panzer</option>
             </select>
             <label>{locale.register.gender}</label>
@@ -172,8 +172,8 @@ class Update extends Component {
           <div className="input-field col s6">
             <select name="wanted" onChange={this.onChange}>
               <option defaultValue="" disabled>{locale.register.select_gender}</option>
-              <option defaultValue="male">male</option>
-              <option defaultValue="female">female</option>
+              <option defaultValue="Male">Male</option>
+              <option defaultValue="Female">Female</option>
               <option defaultValue="Panzer">Tank panzer</option>
             </select>
             <label>{locale.register.lookingfor}</label>
