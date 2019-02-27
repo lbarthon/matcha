@@ -12,7 +12,7 @@ class Register extends Component {
     lastname: '',
     location: '',
     birthdate: '',
-    genre: '',
+    gender: '',
     lookingFor: '',
     email: '',
     pwd: '',

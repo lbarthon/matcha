@@ -3,6 +3,7 @@ id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 username VARCHAR(255) NOT NULL,
 lastname VARCHAR(128) NOT NULL,
 firstname VARCHAR(128) NOT NULL,
+birthdate VARCHAR(128) NOT NULL,
 email VARCHAR(255) NOT NULL,
 pwd VARCHAR(128) NOT NULL,
 sex VARCHAR(10) NOT NULL,
@@ -38,6 +39,9 @@ CREATE TABLE tags (
 create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (`user_id`) REFERENCES users(id)
 );
+
+INSERT INTO users (username, lastname, firstname, birthdate, email, pwd, sex, wanted, confirmed, perm_level)
+VALUES ('admin', 'admin', 'admin', '01/01/1970', 'admin@admin.admin', '$2b$10$U9LU5mrIydb0MII79M0tbOXttYx1/oo.1UUBgKT2Y9a2U7VfYNx5a', 'Male', 'Female', 1, 1);
 
 --
 -- Add other requests here. Requests must end with a ;
