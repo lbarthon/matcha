@@ -129,18 +129,18 @@ class Register extends Component {
           <div className="input-field col s6">
             <select name="gender" onChange={this.onChange}>
               <option value="" disabled selected>{locale.register.select_gender}</option>
-              <option value="male">M</option>
-              <option value="female">F</option>
-              <option value="panzer">Tank panzer</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Panzer">Tank panzer</option>
             </select>
             <label>{locale.register.gender}</label>
           </div>
           <div className="input-field col s6">
             <select name="lookingFor" onChange={this.onChange}>
               <option value="" disabled selected>{locale.register.select_gender}</option>
-              <option value="male">M</option>
-              <option value="female">F</option>
-              <option value="panzer">Tank panzer</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Panzer">Tank panzer</option>
             </select>
             <label>{locale.register.lookingfor}</label>
           </div>

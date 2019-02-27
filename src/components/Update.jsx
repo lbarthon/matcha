@@ -12,7 +12,7 @@ class Update extends Component {
     lastname: '',
     location: '',
     birthdate: '',
-    genre: '',
+    gender: '',
     wanted: '',
     email: '',
     pwd: '',
@@ -51,7 +51,7 @@ class Update extends Component {
 
   initDatepicker = () => {
     var elems = document.querySelectorAll('.datepicker');
-    var instances = M.Datepicker.init(elems, {
+    M.Datepicker.init(elems, {
       format: 'dd/mm/yyyy',
       defaultDate : new Date('01/01/1995'),
       autoClose: true,
@@ -60,8 +60,11 @@ class Update extends Component {
   }
 
   initSelect = () => {
+    console.log(this.state.gender);
+    document.querySelector('select[name="gender"]').value = this.state.gender;
+    document.querySelector('select[name="wanted"]').value = this.state.wanted;
     var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems, {});
+    M.FormSelect.init(elems, {});
   }
 
   componentWillMount() {
@@ -73,10 +76,11 @@ class Update extends Component {
             notify('error', locales.idParser(json['error']));
           } else {
             const { response } = json;
+            console.log(response);
             this.setState({
               username: response.username,
               wanted: response.wanted,
-              sex: response.sex,
+              gender: response.sex,
               email: response.email,
               firstname: response.firstname,
               lastname: response.lastname,
@@ -85,24 +89,24 @@ class Update extends Component {
           }
         });
       } else console.error(new Error(response.statusText));
-    })
-    .catch(err => {
-      // handle error
-      console.error(err);
     });
   }
 
   componentDidMount () {
     const {locale} = this.props.locales;
     document.title = locale.title.update;
-    this.initSelect();
     this.initDatepicker();
+  }
+
+  componentDidUpdate() {
+    document.querySelector('select[name="gender"]').value = this.state.gender;
+    document.querySelector('select[name="wanted"]').value = this.state.wanted;
+    this.initSelect();
   }
 
   render() {
     const {locale} = this.props.locales;
-    const {username, firstname, lastname, email, description} = this.state;
-    if (this.state.username === undefined) return null; // attendre state.username pour render -- err 500 ?
+    const {username, firstname, lastname, email, description, gender, wanted} = this.state;
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
@@ -158,19 +162,19 @@ class Update extends Component {
         <div className="row">
           <div className="input-field col s6">
             <select name="gender" onChange={this.onChange}>
-              <option value="" disabled selected>{locale.register.select_gender}</option>
-              <option value="male">M</option>
-              <option value="female">F</option>
-              <option value="panzer">Tank panzer</option>
+              <option defaultValue="" disabled selected>{locale.register.select_gender}</option>
+              <option defaultValue="male">male</option>
+              <option defaultValue="female">female</option>
+              <option defaultValue="Panzer">Tank panzer</option>
             </select>
             <label>{locale.register.gender}</label>
           </div>
           <div className="input-field col s6">
-            <select name="lookingFor" onChange={this.onChange}>
-              <option value="" disabled selected>{locale.register.select_gender}</option>
-              <option value="male">M</option>
-              <option value="female">F</option>
-              <option value="panzer">Tank panzer</option>
+            <select name="wanted" onChange={this.onChange}>
+              <option defaultValue="" disabled>{locale.register.select_gender}</option>
+              <option defaultValue="male">male</option>
+              <option defaultValue="female">female</option>
+              <option defaultValue="Panzer">Tank panzer</option>
             </select>
             <label>{locale.register.lookingfor}</label>
           </div>
