@@ -165,7 +165,6 @@ class Update extends Component {
               <option defaultValue="" disabled selected>{locale.register.select_gender}</option>
               <option defaultValue="Male">Male</option>
               <option defaultValue="Female">Female</option>
-              <option defaultValue="Panzer">Tank panzer</option>
             </select>
             <label>{locale.register.gender}</label>
           </div>
@@ -174,7 +173,6 @@ class Update extends Component {
               <option defaultValue="" disabled>{locale.register.select_gender}</option>
               <option defaultValue="Male">Male</option>
               <option defaultValue="Female">Female</option>
-              <option defaultValue="Panzer">Tank panzer</option>
             </select>
             <label>{locale.register.lookingfor}</label>
           </div>
