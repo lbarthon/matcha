@@ -22,8 +22,8 @@ router.get('/get', (req, res) => {
 
 router.get('/get/:id', (req, res) => {
     pictures.get(req.params.id)
-    .then(() => {
-        res.status(200).json({ 'success' : 'picture.get.success' });
+    .then(resolve => {
+        res.status(200).json({ 'success' : resolve });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });

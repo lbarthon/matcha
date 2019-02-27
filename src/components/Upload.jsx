@@ -74,7 +74,6 @@ class Upload extends Component {
   handleRemove = (e) => {
     const id = e.target.parentNode.id;
     const div = e.target.parentNode;
-    console.log(id);
     parseForm({ id: id }, strBody => {
       fetch('/api/pictures/remove', {
         method: 'POST',
@@ -115,6 +114,10 @@ class Upload extends Component {
     this.getPictures();
   }
 
+  componentDidMount() {
+    document.title = this.props.locales.locale.title.upload;
+  }
+
   render() {
     const { locale } = this.props.locales;
     return (
@@ -131,7 +134,7 @@ class Upload extends Component {
           })}
           <div className="upload">
             <input name="pic1" type="file" accept="image/*" onChange={this.handleFileChange}/>
-            <div className="upload-img" onClick={this.handleUpload}/>
+            <div className="upload-img" style={{backgroundImage: 'url("images/add.svg")'}} onClick={this.handleUpload}/>
           </div>
         </div>
       </React.Fragment>

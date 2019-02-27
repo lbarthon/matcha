@@ -12,7 +12,7 @@ const get = (uid) => {
                     [uid], (err, results) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
-                } else if (results.length > 0) {
+                } else if (results.length >= 0) {
                     resolve(results);
                 } else {
                     reject(new Error("error_no_picture"));

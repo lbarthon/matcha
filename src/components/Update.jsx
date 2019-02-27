@@ -17,6 +17,7 @@ class Update extends Component {
     email: '',
     pwd: '',
     repassword: '',
+    newpassword: '',
     description: ''
   }
 
@@ -71,14 +72,15 @@ class Update extends Component {
           if (json.error) {
             notify('error', locales.idParser(json['error']));
           } else {
+            const { response } = json;
             this.setState({
-              username: json.response.username,
-              wanted: json.response.wanted,
-              sex: json.response.sex,
-              email: json.response.email,
-              firstname: json.response.firstname,
-              lastname: json.response.lastname,
-              description: json.response.description
+              username: response.username,
+              wanted: response.wanted,
+              sex: response.sex,
+              email: response.email,
+              firstname: response.firstname,
+              lastname: response.lastname,
+              description: response.description
             });
           }
         });

@@ -31,7 +31,8 @@ class User extends Component {
   }
 
   getPictures = () => {
-    fetch('/api/pictures/get')
+    const { id } = this.props.match.params;
+    fetch('/api/pictures/get/' + id)
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
@@ -39,9 +40,8 @@ class User extends Component {
             let pictures = json.success;
             for (var i in pictures) {
               if (pictures[i].main) {
-                console.log(pictures[i]);
                 this.setState({ mainPic: pictures[i] });
-                console.log(this);
+                delete pictures[i];
               }
             }
             this.setState({ pictures: pictures });
@@ -53,7 +53,6 @@ class User extends Component {
   }
 
   componentWillMount() {
-    console.log('user mount')
     this.getUser();
     this.getPictures();
   }
@@ -72,14 +71,20 @@ class User extends Component {
             <div className="picture picture-main" style={{backgroundImage: 'url("/pictures/user/' + this.state.mainPic.picture + '")'}}></div>
           </div>
         </div>
-        <h6>Description</h6>
+        <div className="row">
+          <div className="col s12 m4">
+            <a className="waves-effect waves-light btn-small"><i className="material-icons left">favorite</i>{locale.user.like}</a>
+          </div>
+          <div className="col s12 m8">
+            <a className="waves-effect waves-light btn-small red right ml-5"><i className="material-icons left">block</i>{locale.user.block}</a>
+            <a className="waves-effect waves-light btn-small red right"><i className="material-icons left">priority_high</i>{locale.user.report}</a>
+          </div>
+        </div>
+        <h5>Description</h5>
         <p>{this.state.description}</p>
-        <h6>Gender</h6>
+        <h5>Gender</h5>
         <p>{this.state.gender}</p>
-        <a className="waves-effect waves-light btn"><i className="material-icons left">favorite</i>{locale.user.like}</a>
-        <a className="waves-effect waves-light btn red right ml-10"><i className="material-icons left">block</i>{locale.user.block}</a>
-        <a className="waves-effect waves-light btn red right"><i className="material-icons left">priority_high</i>{locale.user.report}</a>
-        <h6>More pics</h6>
+        <h5>More pics</h5>
         {this.state.pictures.map(pic => {
           return (
             <div className="picture" style={{backgroundImage: 'url("/pictures/user/' + pic.picture + '")'}}></div>
