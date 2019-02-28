@@ -18,7 +18,8 @@ class Update extends Component {
     pwd: '',
     repassword: '',
     newpassword: '',
-    description: ''
+    description: '',
+    tags: []
   }
 
   onChange = e => {
@@ -38,8 +39,8 @@ class Update extends Component {
         if (response.ok) {
           response.json().then(json => {
             console.log(json);
-            if (json['error']) {
-              notify('error', locales.idParser(json['error']));
+            if (json.error) {
+              notify('error', locales.idParser(json.error));
             } else if (json['success']) {
               notify('success', locales.idParser(json['success']));
             }
@@ -64,24 +65,23 @@ class Update extends Component {
     M.FormSelect.init(elems, {});
   }
 
-  componentWillMount() {
+  getUser = () => {
     fetch('/api/user/current')
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.error) {
-            notify('error', locales.idParser(json['error']));
+            notify('error', locales.idParser(json.error));
           } else {
-            const { response } = json;
-            console.log(response);
+            const { res } = json;
             this.setState({
-              username: response.username,
-              wanted: response.wanted,
-              gender: response.sex,
-              email: response.email,
-              firstname: response.firstname,
-              lastname: response.lastname,
-              description: response.description
+              username: res.username,
+              wanted: res.wanted,
+              gender: res.sex,
+              email: res.email,
+              firstname: res.firstname,
+              lastname: res.lastname,
+              description: res.description
             });
           }
         });
@@ -89,7 +89,26 @@ class Update extends Component {
     });
   }
 
-  componentDidMount () {
+  getTags = () => {
+    fetch('/api/tags/list')
+    .then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.success) {
+            const res = json.success;
+          } else
+            notify('error', locales.idParser(json.error))
+        });
+      } else console.error(new Error(response.statusText));
+    });
+  }
+
+  componentWillMount() {
+    this.getUser();
+    this.getTags();
+  }
+
+  componentDidMount() {
     const {locale} = this.props.locales;
     document.title = locale.title.update;
     this.initDatepicker();
