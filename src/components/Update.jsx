@@ -29,6 +29,8 @@ class Update extends Component {
   }
 
   handleSubmit = e => {
+    const tags = httpBuildQuery(this.state.tags);
+    console.log(tags);
     const { locales } = this.props;
     e.preventDefault();
     parseForm(this.state, strForm => {
@@ -40,7 +42,6 @@ class Update extends Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            console.log(json);
             if (json.error) {
               notify('error', locales.idParser(json.error));
             } else if (json['success']) {
@@ -56,7 +57,8 @@ class Update extends Component {
     let elems = document.querySelectorAll('.datepicker');
     M.Datepicker.init(elems, {
       format: 'dd/mm/yyyy',
-      defaultDate : new Date('01/01/1995'),
+      defaultDate : new Date(this.state.birthdate),
+      setDefaultDate: true,
       autoClose: true,
       onSelect: date => { this.setState({ birthdate: date.toString() }); }
     });
@@ -65,6 +67,23 @@ class Update extends Component {
   initSelect = () => {
     let elems = document.querySelectorAll('select');
     M.FormSelect.init(elems, {});
+  }
+
+  initTags = () => {
+    let elems = document.querySelectorAll('.chips');
+    M.Chips.init(elems, {
+      data: this.state.tags,
+      autocompleteOptions: {
+        data: this.state.tagsList
+      },
+      onChipAdd: () => { this.getChipsData(); },
+      onChipDelete: () => { this.getChipsData(); }
+    });
+  }
+
+  getChipsData = () => {
+    const instance = M.Chips.getInstance(document.querySelector('.chips'));
+    this.setState({tags: instance.chipsData});
   }
 
   getUser = () => {
@@ -82,7 +101,11 @@ class Update extends Component {
               email: res.email,
               firstname: res.firstname,
               lastname: res.lastname,
-              description: res.description
+              description: res.description,
+              birthdate: res.birthdate
+            }, () => {
+              this.initDatepicker();
+              this.initSelect();
             });
           } else if (json.error)
             notify('error', locales.idParser(json.error));
@@ -118,7 +141,6 @@ class Update extends Component {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
-            console.log(json.success);
             this.setState({tags: json.success}, () => {
               this.initTags();
             });
@@ -127,23 +149,6 @@ class Update extends Component {
         });
       } else console.error(new Error(response.statusText));
     });
-  }
-
-  initTags = () => {
-    let elems = document.querySelectorAll('.chips');
-    M.Chips.init(elems, {
-      data: this.state.tags,
-      autocompleteOptions: {
-        data: this.state.tagsList
-      },
-      onChipAdd: () => { this.getChipsData(); },
-      onChipDelete: () => { this.getChipsData(); }
-    });
-  }
-
-  getChipsData = () => {
-    const instance = M.Chips.getInstance(document.querySelector('.chips'));
-    this.setState({tags: instance.chipsData})
   }
 
   componentWillMount() {
@@ -155,16 +160,10 @@ class Update extends Component {
   componentDidMount() {
     const {locale} = this.props.locales;
     document.title = locale.title.update;
-    this.initDatepicker();
-  }
-
-  componentDidUpdate() {
-    this.initSelect();
   }
 
   render() {
     const {locale} = this.props.locales;
-    if (this.state.username === '') return null;
     const {username, firstname, lastname, email, description, gender, wanted} = this.state;
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
@@ -249,7 +248,7 @@ class Update extends Component {
             <label className="active" htmlFor="textarea1">{locale.register.about}<br/></label>
           </div>
         </div>
-        <button className="btn waves-effect waves-light">{locale.register.btn}</button>
+        <button className="btn waves-effect waves-light">{locale.update.btn}</button>
       </form>
     );
   }
