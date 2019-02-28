@@ -17,6 +17,7 @@ const get_infos_id = (id) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
                 } else if (result.length > 0) {
+                    delete result[0].pwd
                     resolve(result[0]);
                 } else {
                     reject(new Error("error_user_not_found"));

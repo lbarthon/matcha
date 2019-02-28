@@ -13,13 +13,13 @@ const remove = req => {
             if (tag == undefined || tag == '') {
                 reject(new Error("tag.remove.undefined"));
             } else {
-                conn.query("SELECT name FROM tags WHERE ? AND ?", [{user_id: uid}, {name: tag}], (err, results) => {
+                conn.query("SELECT tag FROM tags WHERE ? AND ?", [{user_id: uid}, {tag: tag}], (err, results) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
                     } else if (results.length == 0) {
                         reject(new Error("tag.remove.not_set"));
                     } else {
-                        conn.query("DELETE FROM tags WHERE ? AND ?", [{user_id: uid}, {name: tag}], err => {
+                        conn.query("DELETE FROM tags WHERE ? AND ?", [{user_id: uid}, {tag: tag}], err => {
                             if (err) {
                                 reject(new Error("sql.alert.query"));
                             } else {

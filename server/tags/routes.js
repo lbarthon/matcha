@@ -43,7 +43,7 @@ router.get('/list', (req, res) => {
     });
 });
 
-router.get('/get', (req, res) => {
+router.get('/', (req, res) => {
     tags.get(req.session.uid)
     .then(response => {
         res.status(200).json({ 'success' : response });
@@ -53,7 +53,7 @@ router.get('/get', (req, res) => {
     });
 });
 
-router.get('/get/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     tags.get(req.params.id)
     .then(response => {
         res.status(200).json({ 'success' : response });

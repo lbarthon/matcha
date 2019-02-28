@@ -8,7 +8,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 const get = (uid) => {
     return new Promise((resolve, reject) => {
         if (conn) {
-            conn.query("SELECT name FROM tags WHERE ?", [{user_id: uid}], (err, results) => {
+            conn.query("SELECT tag FROM tags WHERE ?", [{user_id: uid}], (err, results) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
                 } else {

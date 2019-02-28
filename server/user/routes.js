@@ -48,17 +48,17 @@ router.get('/logout', (req, res) => {
 router.get('/logged', (req, res) => {
     user.isLogged(req)
     .then((username) => {
-        res.status(200).json({ 'response' : username });
+        res.status(200).json({ 'success' : username });
     })
     .catch(() => {
-        res.status(200).json({ 'response' : false });
+        res.status(200).json({ 'success' : false });
     });
 });
 
 router.get('/user/current', (req, res) => {
     user.get_infos(req)
     .then((resolve) => {
-        res.status(200).json({ 'response' : resolve });
+        res.status(200).json({ 'success' : resolve });
     })
     .catch((err) => {
         res.status(200).json({ 'error' : err.message });
@@ -68,7 +68,7 @@ router.get('/user/current', (req, res) => {
 router.get('/user/:id', (req, res) => {
     user.get_infos_id(req.params.id)
     .then((resolve) => {
-        res.status(200).json({ 'response' : resolve });
+        res.status(200).json({ 'success' : resolve });
     })
     .catch((err) => {
         res.status(200).json({ 'error' : err.message });
@@ -78,7 +78,7 @@ router.get('/user/:id', (req, res) => {
 router.post('/reset/ask', (req, res) => {
     user.reset_ask(req)
     .then(() => {
-        res.status(200).json({ 'response' : 'alert.reset_ask_success' });
+        res.status(200).json({ 'success' : 'alert.reset_ask_success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });

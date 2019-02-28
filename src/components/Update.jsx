@@ -4,31 +4,30 @@ import { notify } from '../utils/alert';
 import { localeIdParser } from '../utils/locales';
 import { withAllHOC } from '../utils/allHOC';
 import M from 'materialize-css';
+import httpBuildQuery from 'http-build-query';
 
 class Update extends Component {
   state = {
-    username: '',
-    firstname: '',
-    lastname: '',
-    location: '',
-    birthdate: '',
-    gender: '',
-    wanted: '',
-    email: '',
-    pwd: '',
-    repassword: '',
-    newpassword: '',
-    description: ''
+    user : {},
+    tags: [],
+    tagsList: {},
   }
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      user: {
+        ...this.state.user,
+        [e.target.name]: e.target.value
+      }
+    });
   }
 
   handleSubmit = e => {
+    const tags = httpBuildQuery(this.state.tags);
+    console.log(tags);
     const { locales } = this.props;
     e.preventDefault();
-    parseForm(this.state, strForm => {
+    parseForm(this.state.user, strForm => {
       fetch('/api/update', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -37,9 +36,8 @@ class Update extends Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            console.log(json);
-            if (json['error']) {
-              notify('error', locales.idParser(json['error']));
+            if (json.error) {
+              notify('error', locales.idParser(json.error));
             } else if (json['success']) {
               notify('success', locales.idParser(json['success']));
             }
@@ -50,60 +48,117 @@ class Update extends Component {
   }
 
   initDatepicker = () => {
-    var elems = document.querySelectorAll('.datepicker');
+    let elems = document.querySelectorAll('.datepicker');
     M.Datepicker.init(elems, {
       format: 'dd/mm/yyyy',
-      defaultDate : new Date('01/01/1995'),
+      defaultDate : new Date(this.state.birthdate),
+      setDefaultDate: true,
       autoClose: true,
       onSelect: date => { this.setState({ birthdate: date.toString() }); }
     });
   }
 
   initSelect = () => {
-    var elems = document.querySelectorAll('select');
+    let elems = document.querySelectorAll('select');
     M.FormSelect.init(elems, {});
   }
 
-  componentWillMount() {
+  initTags = () => {
+    let elems = document.querySelectorAll('.chips');
+    M.Chips.init(elems, {
+      data: this.state.tags,
+      autocompleteOptions: {
+        data: this.state.tagsList
+      },
+      onChipAdd: () => { this.getChipsData(); },
+      onChipDelete: () => { this.getChipsData(); }
+    });
+  }
+
+  getChipsData = () => {
+    const instance = M.Chips.getInstance(document.querySelector('.chips'));
+    this.setState({tags: instance.chipsData});
+  }
+
+  getUser = () => {
+    const { locales } = this.props;
     fetch('/api/user/current')
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
-          if (json.error) {
-            notify('error', locales.idParser(json['error']));
-          } else {
-            const { response } = json;
-            console.log(response);
-            this.setState({
-              username: response.username,
-              wanted: response.wanted,
-              gender: response.sex,
-              email: response.email,
-              firstname: response.firstname,
-              lastname: response.lastname,
-              description: response.description
+          if (json.success) {
+            const res = json.success
+            this.setState({ user: res }, () => {
+              this.initDatepicker();
+              this.initSelect();
             });
-          }
+          } else if (json.error)
+            notify('error', locales.idParser(json.error));
         });
       } else console.error(new Error(response.statusText));
     });
   }
 
-  componentDidMount () {
-    const {locale} = this.props.locales;
-    document.title = locale.title.update;
-    this.initDatepicker();
+  getTagsList = () => {
+    const {locales} = this.props;
+    fetch('/api/tags/list')
+    .then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.success) {
+            const res = json.success;
+            const obj = {};
+            res.map((tag, i) => { obj[tag.tag] = null; });
+            this.setState({tagsList: obj}, () => {
+              this.initTags();
+            });
+          } else
+            notify('error', locales.idParser(json.error))
+        });
+      } else console.error(new Error(response.statusText));
+    });
   }
 
-  componentDidUpdate() {
-    this.initSelect();
+  getTags = () => {
+    const {locales} = this.props;
+    fetch('/api/tags')
+    .then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.success) {
+            this.setState({tags: json.success}, () => {
+              this.initTags();
+            });
+          } else
+            notify('error', locales.idParser(json.error))
+        });
+      } else console.error(new Error(response.statusText));
+    });
+  }
+
+  componentWillMount() {
+    this.getUser();
+    this.getTagsList();
+    this.getTags();
+  }
+
+  componentDidMount() {
+    const {locale} = this.props.locales;
+    document.title = locale.title.update;
   }
 
   render() {
     const {locale} = this.props.locales;
-    const {username, firstname, lastname, email, description, gender, wanted} = this.state;
+    const {username, firstname, lastname, email, description, gender, wanted} = this.state.user;
+    console.log(this.props.user)
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
+        <div className="row">
+          <div className="col s12">
+            <label>{locale.register.tags}</label>
+            <div className="chips chips-autocomplete"></div>
+          </div>
+        </div>
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">person</i>
@@ -179,15 +234,7 @@ class Update extends Component {
             <label className="active" htmlFor="textarea1">{locale.register.about}<br/></label>
           </div>
         </div>
-        <div className="row">
-          <div className="input-field col s12">
-            <i className="material-icons prefix">favorite</i>
-            <textarea name="tags" id="textarea2" className="materialize-textarea" onChange={this.onChange}></textarea>
-            <label className="active" htmlFor="textarea2">{locale.register.tags}<br/></label>
-            <span className="helper-text" data-error="wrong" data-success="right">ex : bio geek piercing vegan ...</span>
-          </div>
-        </div>
-        <button className="btn waves-effect waves-light">{locale.register.btn}</button>
+        <button className="btn waves-effect waves-light">{locale.update.btn}</button>
       </form>
     );
   }
