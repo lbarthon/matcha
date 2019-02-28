@@ -1,11 +1,9 @@
-const add = require('./add');
-const get = require('./get');
+const update = require('./update');
 const list = require('./list');
 const remove = require('./remove');
 
 module.exports = {
-    add    : add,
-    get    : get,
+    update : update,
     list   : list,
     remove : remove
 }

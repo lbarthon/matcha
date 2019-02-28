@@ -13,20 +13,10 @@ router.use((req, res, next) => {
     }
 });
 
-router.post('/add', (req, res) => {
-    tags.add(req)
+router.post('/update', (req, res) => {
+    tags.update(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'tag.add.success' });
-    })
-    .catch(err => {
-        res.status(200).json({ 'error' : err.message });
-    });
-});
-
-router.post('/remove', (req, res) => {
-    tags.remove(req)
-    .then(() => {
-        res.status(200).json({ 'success' : 'tag.remove.success' });
+        res.status(200).json({ 'success' : 'tag.update.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
