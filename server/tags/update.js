@@ -24,7 +24,7 @@ const update = req => {
                         var toAdd = [];
                         var toRemove = mapped;
                         for (var index = 0; index < tags.length; index++) {
-                            if (mapped.includes(tags[index].tag)) {
+                            if (toRemove.includes(tags[index].tag)) {
                                 toRemove.splice(toRemove.indexOf(tags[index].tag), 1);
                             } else {
                                 toAdd.push(tags[index].tag);
