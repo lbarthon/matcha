@@ -8,24 +8,18 @@ import httpBuildQuery from 'http-build-query';
 
 class Update extends Component {
   state = {
-    username: '',
-    firstname: '',
-    lastname: '',
-    location: '',
-    birthdate: '',
-    gender: '',
-    wanted: '',
-    email: '',
-    pwd: '',
-    repassword: '',
-    newpassword: '',
-    description: '',
+    user : {},
     tags: [],
     tagsList: {},
   }
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      user: {
+        ...this.state.user,
+        [e.target.name]: e.target.value
+      }
+    });
   }
 
   handleSubmit = e => {
@@ -33,7 +27,7 @@ class Update extends Component {
     console.log(tags);
     const { locales } = this.props;
     e.preventDefault();
-    parseForm(this.state, strForm => {
+    parseForm(this.state.user, strForm => {
       fetch('/api/update', {
         method: 'POST',
         headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -94,16 +88,7 @@ class Update extends Component {
         response.json().then(json => {
           if (json.success) {
             const res = json.success
-            this.setState({
-              username: res.username,
-              wanted: res.wanted,
-              gender: res.sex,
-              email: res.email,
-              firstname: res.firstname,
-              lastname: res.lastname,
-              description: res.description,
-              birthdate: res.birthdate
-            }, () => {
+            this.setState({ user: res }, () => {
               this.initDatepicker();
               this.initSelect();
             });
@@ -164,7 +149,8 @@ class Update extends Component {
 
   render() {
     const {locale} = this.props.locales;
-    const {username, firstname, lastname, email, description, gender, wanted} = this.state;
+    const {username, firstname, lastname, email, description, gender, wanted} = this.state.user;
+    console.log(this.props.user)
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
