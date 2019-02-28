@@ -13,13 +13,13 @@ const add = req => {
             if (tag == undefined || tag == '') {
                 reject(new Error("tag.add.undefined"));
             } else {
-                conn.query("SELECT name FROM tags WHERE ? AND ?", [{user_id: uid}, {name: tag}], (err, results) => {
+                conn.query("SELECT tag FROM tags WHERE ? AND ?", [{user_id: uid}, {tag: tag}], (err, results) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
                     } else if (results.length > 0) {
                         reject(new Error("tag.add.already_set"));
                     } else {
-                        conn.query("INSERT INTO tags (name, user_id) VALUES (?,?)", [tag, uid], err => {
+                        conn.query("INSERT INTO tags (tag, user_id) VALUES (?,?)", [tag, uid], err => {
                             if (err) {
                                 reject(new Error("sql.alert.query"));
                             } else {

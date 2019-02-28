@@ -4,6 +4,7 @@ import { notify } from '../utils/alert';
 import { localeIdParser } from '../utils/locales';
 import { withAllHOC } from '../utils/allHOC';
 import M from 'materialize-css';
+import httpBuildQuery from 'http-build-query';
 
 class Update extends Component {
   state = {
@@ -19,7 +20,8 @@ class Update extends Component {
     repassword: '',
     newpassword: '',
     description: '',
-    tags: []
+    tags: [],
+    tagsList: {},
   }
 
   onChange = e => {
@@ -51,7 +53,7 @@ class Update extends Component {
   }
 
   initDatepicker = () => {
-    var elems = document.querySelectorAll('.datepicker');
+    let elems = document.querySelectorAll('.datepicker');
     M.Datepicker.init(elems, {
       format: 'dd/mm/yyyy',
       defaultDate : new Date('01/01/1995'),
@@ -61,11 +63,12 @@ class Update extends Component {
   }
 
   initSelect = () => {
-    var elems = document.querySelectorAll('select');
+    let elems = document.querySelectorAll('select');
     M.FormSelect.init(elems, {});
   }
 
   getUser = () => {
+    const { locales } = this.props;
     fetch('/api/user/current')
     .then(response => {
       if (response.ok) {
@@ -88,13 +91,19 @@ class Update extends Component {
     });
   }
 
-  getTags = () => {
+  getTagsList = () => {
+    const {locales} = this.props;
     fetch('/api/tags/list')
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
             const res = json.success;
+            const obj = {};
+            res.map((tag, i) => { obj[tag.tag] = null; });
+            this.setState({tagsList: obj}, () => {
+              this.initTags();
+            });
           } else
             notify('error', locales.idParser(json.error))
         });
@@ -102,23 +111,44 @@ class Update extends Component {
     });
   }
 
-  initAutocomplete = () => {
-    var elems = document.querySelectorAll('.autocomplete');
-    var instances = M.Autocomplete.init(elems, {
-      data: {
-        'coucou': null,
-        'salut': null,
-      }
+  getTags = () => {
+    const {locales} = this.props;
+    fetch('/api/tags')
+    .then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.success) {
+            console.log(json.success);
+            this.setState({tags: json.success}, () => {
+              this.initTags();
+            });
+          } else
+            notify('error', locales.idParser(json.error))
+        });
+      } else console.error(new Error(response.statusText));
     });
   }
 
   initTags = () => {
-    var elems = document.querySelectorAll('.chips');
-    var instances = M.Chips.init(elems, options);
+    let elems = document.querySelectorAll('.chips');
+    M.Chips.init(elems, {
+      data: this.state.tags,
+      autocompleteOptions: {
+        data: this.state.tagsList
+      },
+      onChipAdd: () => { this.getChipsData(); },
+      onChipDelete: () => { this.getChipsData(); }
+    });
+  }
+
+  getChipsData = () => {
+    const instance = M.Chips.getInstance(document.querySelector('.chips'));
+    this.setState({tags: instance.chipsData})
   }
 
   componentWillMount() {
     this.getUser();
+    this.getTagsList();
     this.getTags();
   }
 
@@ -126,7 +156,6 @@ class Update extends Component {
     const {locale} = this.props.locales;
     document.title = locale.title.update;
     this.initDatepicker();
-    this.initAutocomplete();
   }
 
   componentDidUpdate() {
@@ -135,18 +164,14 @@ class Update extends Component {
 
   render() {
     const {locale} = this.props.locales;
+    if (this.state.username === '') return null;
     const {username, firstname, lastname, email, description, gender, wanted} = this.state;
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
-        <div class="row">
-          <div class="chips chips-autocomplete"></div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <i class="material-icons prefix">favorite</i>
-            <input name="tags" type="text" id="autocomplete-input" class="autocomplete" onChange={this.onChange}/>
-            <label for="autocomplete-input">{locale.register.tags}</label>
-            <span className="helper-text" data-error="wrong" data-success="right">ex : bio geek piercing vegan ...</span>
+        <div className="row">
+          <div className="col s12">
+            <label>{locale.register.tags}</label>
+            <div className="chips chips-autocomplete"></div>
           </div>
         </div>
         <div className="row">

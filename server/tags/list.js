@@ -8,7 +8,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 const list = req => {
     return new Promise((resolve, reject) => {
         if (conn) {
-            conn.query("SELECT DISTINCT name FROM tags", (err, results) => {
+            conn.query("SELECT DISTINCT tag FROM tags", (err, results) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
                 } else if (results.length > 0) {
