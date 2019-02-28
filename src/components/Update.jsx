@@ -70,10 +70,8 @@ class Update extends Component {
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
-          if (json.error) {
-            notify('error', locales.idParser(json.error));
-          } else {
-            const { res } = json;
+          if (json.success) {
+            const res = json.success
             this.setState({
               username: res.username,
               wanted: res.wanted,
@@ -83,7 +81,8 @@ class Update extends Component {
               lastname: res.lastname,
               description: res.description
             });
-          }
+          } else if (json.error)
+            notify('error', locales.idParser(json.error));
         });
       } else console.error(new Error(response.statusText));
     });
@@ -103,6 +102,21 @@ class Update extends Component {
     });
   }
 
+  initAutocomplete = () => {
+    var elems = document.querySelectorAll('.autocomplete');
+    var instances = M.Autocomplete.init(elems, {
+      data: {
+        'coucou': null,
+        'salut': null,
+      }
+    });
+  }
+
+  initTags = () => {
+    var elems = document.querySelectorAll('.chips');
+    var instances = M.Chips.init(elems, options);
+  }
+
   componentWillMount() {
     this.getUser();
     this.getTags();
@@ -112,6 +126,7 @@ class Update extends Component {
     const {locale} = this.props.locales;
     document.title = locale.title.update;
     this.initDatepicker();
+    this.initAutocomplete();
   }
 
   componentDidUpdate() {
@@ -123,6 +138,17 @@ class Update extends Component {
     const {username, firstname, lastname, email, description, gender, wanted} = this.state;
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
+        <div class="row">
+          <div class="chips chips-autocomplete"></div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">favorite</i>
+            <input name="tags" type="text" id="autocomplete-input" class="autocomplete" onChange={this.onChange}/>
+            <label for="autocomplete-input">{locale.register.tags}</label>
+            <span className="helper-text" data-error="wrong" data-success="right">ex : bio geek piercing vegan ...</span>
+          </div>
+        </div>
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">person</i>
@@ -196,14 +222,6 @@ class Update extends Component {
             <i className="material-icons prefix">mode_edit</i>
             <textarea value={description} name="description" id="textarea1" className="materialize-textarea" onChange={this.onChange}></textarea>
             <label className="active" htmlFor="textarea1">{locale.register.about}<br/></label>
-          </div>
-        </div>
-        <div className="row">
-          <div className="input-field col s12">
-            <i className="material-icons prefix">favorite</i>
-            <textarea name="tags" id="textarea2" className="materialize-textarea" onChange={this.onChange}></textarea>
-            <label className="active" htmlFor="textarea2">{locale.register.tags}<br/></label>
-            <span className="helper-text" data-error="wrong" data-success="right">ex : bio geek piercing vegan ...</span>
           </div>
         </div>
         <button className="btn waves-effect waves-light">{locale.register.btn}</button>
