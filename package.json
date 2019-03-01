@@ -37,6 +37,7 @@
     "express-ws": "^4.0.0",
     "file-loader": "^3.0.1",
     "fs": "0.0.1-security",
+    "google-maps-react": "^2.0.2",
     "history": "^4.7.2",
     "http-build-query": "^0.7.0",
     "materialize-css": "^1.0.0-rc.2",
