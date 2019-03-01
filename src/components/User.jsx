@@ -10,7 +10,8 @@ class User extends Component {
     description: '',
     gender: '',
     pictures: [],
-    mainPic: {}
+    mainPic: {},
+    tags: [],
   }
 
   getUser = () => {
@@ -52,7 +53,24 @@ class User extends Component {
     });
   }
 
+  getTags = () => {
+    const { id } = this.props.match.params;
+    const { locales } = this.props;
+    fetch('/api/tags/' + id)
+    .then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.success) {
+            this.setState({tags: json.success});
+          } else
+            notify('error', locales.idParser(json.error))
+        });
+      } else console.error(new Error(response.statusText));
+    });
+  }
+
   componentWillMount() {
+    this.getTags();
     this.getUser();
     this.getPictures();
   }
@@ -80,11 +98,15 @@ class User extends Component {
             <a className="waves-effect waves-light btn-small red right"><i className="material-icons left">priority_high</i>{locale.user.report}</a>
           </div>
         </div>
-        <h5>Description</h5>
+        {this.state.tags && <h6>Tags</h6>}
+        {this.state.tags.map(tag => {
+          return (<div class="chip">{tag.tag}</div>);
+        })}
+        <h6>Description</h6>
         <p>{this.state.description}</p>
-        <h5>Gender</h5>
+        <h6>Gender</h6>
         <p>{this.state.gender}</p>
-        <h5>More pics</h5>
+        <h6>More pics</h6>
         {this.state.pictures.map(pic => {
           return (
             <div className="picture" style={{backgroundImage: 'url("/pictures/user/' + pic.picture + '")'}}></div>
