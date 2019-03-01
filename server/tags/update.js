@@ -5,18 +5,44 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
-const update = req => {
+const add = toAdd => {
     return new Promise((resolve, reject) => {
+        if (toAdd.length > 0) {
+            conn.query("INSERT INTO tags (tag, user_id) VALUES ?", [toAdd], err => {
+                if (err) reject();
+                else resolve();
+            });
+        } else {
+            resolve();
+        }
+    });
+}
+
+const remove = toRemove => {
+    return new Promise((resolve, reject) => {
+        if (toRemove.length > 0) {
+            conn.query("DELETE FROM tags WHERE (tag, user_id) IN (?)", [toRemove], err => {
+                if (err) reject();
+                else resolve();
+            });
+        } else {
+            resolve();
+        }
+    });
+}
+
+const update = req => {
+    return new Promise(async (resolve, reject) => {
         if (conn) {
             var uid = req.session.uid;
             var tags = req.body.tags;
-            console.log(req.body);
             if (tags == undefined || tags.length == 0) {
                 reject(new Error("tag.update.undefined"));
             } else {
                 conn.query("SELECT tag FROM tags WHERE ?", [{user_id: uid}], (err, results) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
+                        console.log("error 1")
                     } else {
                         var mapped = results.map(value => {
                             return value.tag;
@@ -36,18 +62,17 @@ const update = req => {
                         toRemove = toRemove.map(value => {
                             return [ value, uid ];
                         });
-                        conn.query("INSERT INTO tags (tag, user_id) VALUES ?", [toAdd], err => {
-                            if (err) {
+                        add(toAdd)
+                        .then(() => {
+                            remove(toRemove)
+                            .then(() => {
+                                resolve();
+                            })
+                            .catch(() => {
                                 reject(new Error("sql.alert.query"));
-                            } else {
-                                conn.query("DELETE FROM tags WHERE (tag, user_id) IN (?)", [toRemove], err => {
-                                    if (err) {
-                                        reject(new Error("sql.alert.query"));
-                                    } else {
-                                        resolve();
-                                    }
-                                });
-                            }
+                            })
+                        }).catch(() => {
+                            reject(new Error("sql.alert.query"));
                         });
                     }
                 });
