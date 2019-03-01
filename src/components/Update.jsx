@@ -23,27 +23,45 @@ class Update extends Component {
   }
 
   handleSubmit = e => {
-    const tags = httpBuildQuery(this.state.tags);
-    console.log(tags);
+    let tags = {tags: this.state.tags}
+    tags = httpBuildQuery(tags);
+    const user = httpBuildQuery(this.state.user);
     const { locales } = this.props;
     e.preventDefault();
-    parseForm(this.state.user, strForm => {
-      fetch('/api/update', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
-        body: strForm
-      })
-      .then(response => {
-        if (response.ok) {
-          response.json().then(json => {
-            if (json.error) {
-              notify('error', locales.idParser(json.error));
-            } else if (json['success']) {
-              notify('success', locales.idParser(json['success']));
-            }
-          });
-        } else console.error(new Error(response.statusText));
-      })
+    // update tags
+    fetch('api/tags/update', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+      body: tags
+    })
+    .then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.error) {
+            notify('error', locales.idParser(json.error));
+          } else if (json.success) {
+            this.getTags();
+            notify('success', locales.idParser(json.success));
+          }
+        });
+      } else console.error(new Error(response.statusText));
+    });
+    // update user
+    fetch('/api/update', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+      body: user
+    })
+    .then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.error) {
+            notify('error', locales.idParser(json.error));
+          } else if (json.success) {
+            notify('success', locales.idParser(json.success));
+          }
+        });
+      } else console.error(new Error(response.statusText));
     });
   }
 
@@ -149,8 +167,7 @@ class Update extends Component {
 
   render() {
     const {locale} = this.props.locales;
-    const {username, firstname, lastname, email, description, gender, wanted} = this.state.user;
-    console.log(this.props.user)
+    const {username, firstname, lastname, email, description, sex, wanted} = this.state.user;
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
@@ -213,16 +230,16 @@ class Update extends Component {
           <div className="input-field col s6">
             <select name="gender" onChange={this.onChange}>
               <option value="" disabled>{locale.register.select_gender}</option>
-              <option value="male" selected={gender === 'female' ? true : false}>{locale.gender.male}</option>
-              <option value="female" selected={gender === 'female' ? true : false}>{locale.gender.female}</option>
+              <option value="male" selected={sex == 'female' ? true : false}>{locale.gender.male}</option>
+              <option value="female" selected={sex == 'female' ? true : false}>{locale.gender.female}</option>
             </select>
             <label>{locale.register.gender}</label>
           </div>
           <div className="input-field col s6">
             <select name="wanted" onChange={this.onChange}>
               <option value="" disabled>{locale.register.select_gender}</option>
-              <option value="male">{locale.gender.male}</option>
-              <option value="female">{locale.gender.female}</option>
+              <option value="male" selected={sex == 'female' ? true : false}>{locale.gender.male}</option>
+              <option value="female" selected={sex == 'female' ? true : false}>{locale.gender.female}</option>
             </select>
             <label>{locale.register.lookingfor}</label>
           </div>

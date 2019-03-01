@@ -12,8 +12,8 @@ class Register extends Component {
     lastname: '',
     location: '',
     birthdate: '',
-    gender: '',
-    lookingFor: '',
+    sex: '',
+    wanted: '',
     email: '',
     pwd: '',
     repassword: '',
@@ -50,8 +50,8 @@ class Register extends Component {
   }
 
   initDatepicker = () => {
-    var elems = document.querySelectorAll('.datepicker');
-    var instances = M.Datepicker.init(elems, {
+    let elems = document.querySelectorAll('.datepicker');
+    let instances = M.Datepicker.init(elems, {
       format: 'dd/mm/yyyy',
       defaultDate : new Date('01/01/1995'),
       autoClose: true,
@@ -60,8 +60,8 @@ class Register extends Component {
   }
 
   initSelect = () => {
-    var elems = document.querySelectorAll('select');
-    var instances = M.FormSelect.init(elems, {});
+    let elems = document.querySelectorAll('select');
+    let instances = M.FormSelect.init(elems, {});
   }
 
   componentDidMount () {

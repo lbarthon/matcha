@@ -27,3 +27,8 @@ A voir comment implementer ca soit faire une table pour les visites, soit le met
 
 == Une table pour les bloquages
 "Bloquer l’utilisateur. Un utilisateur bloqué ne doit plus apparaître dans les résultats de recherche, et ne doit plus génerer de notifications."
+
+
+///////////////// 01/03/2019
+
+== Les genre et wanted s'updatent pas sur la page update

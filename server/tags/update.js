@@ -10,6 +10,7 @@ const update = req => {
         if (conn) {
             var uid = req.session.uid;
             var tags = req.body.tags;
+            console.log(req.body);
             if (tags == undefined || tags.length == 0) {
                 reject(new Error("tag.update.undefined"));
             } else {
@@ -17,7 +18,6 @@ const update = req => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
                     } else {
-                        var tags = [{tag: 'Beau gosse'}, {tag: 'Beau gossesdsds'}, {tag: 'Beau gossesfgsdfdsfdsds'}];
                         var mapped = results.map(value => {
                             return value.tag;
                         });
