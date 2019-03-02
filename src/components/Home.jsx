@@ -5,7 +5,7 @@ class Home extends Component {
 
   componentDidMount () {
     const {locale} = this.props.locales;
-    document.title = locale.title.home;
+    document.title = 'Matcha';
   }
 
   render() {
