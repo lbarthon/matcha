@@ -5,6 +5,7 @@
   "password": "Mot de passe",
   "repassword": "Repetez votre mot de passe",
   "email" : "Email",
+  "notfound" : "Ressource pas trouvee",
   "gender" : {
     "male" : "Homme",
     "female" : "Femme"
@@ -12,7 +13,10 @@
   "user": {
     "like" : "J'aime",
     "block" : "Bloquer",
-    "report": "Signaler"
+    "report": "Signaler",
+    "alert" : {
+      "notfound" : "Cet utilisateur n'existe pas"
+    }
   },
   "nav": {
     "logout": "Deconnexion",

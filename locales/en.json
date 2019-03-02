@@ -5,6 +5,7 @@
   "password": "Password",
   "repassword": "Password confirmation",
   "email" : "Email",
+  "notfound" : "Ressource not found",
   "gender" : {
     "male" : "Male",
     "female" : "Female"
@@ -12,7 +13,10 @@
   "user": {
     "like" : "Like",
     "block" : "Block",
-    "report": "Report"
+    "report": "Report",
+    "alert" : {
+      "notfound" : "User not found"
+    }
   },
   "nav": {
     "logout": "Logout",

@@ -28,12 +28,12 @@ class Login extends Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            if (json['error']) {
-              notify('error', locales.idParser(json['error']));
-            } else if (json['success']) {
+            if (json.error) {
+              notify('error', locales.idParser(json.error));
+            } else if (json.sucess) {
               getCurrentUser(() => {
                 history.push("/");
-                notify('success', locales.idParser(json['success']));
+                notify('success', locales.idParser(json.sucess));
               });
             }
           });
