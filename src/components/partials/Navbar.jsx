@@ -57,7 +57,7 @@ class Navbar extends Component {
                   <li><Link to="/login">{locales.locale.nav.login}</Link></li>
                 </React.Fragment>
               }
-              <li><a className="waves-effect waves-light btn" onClick={() => locales.toggleLanguage()}>{locales.text}</a></li>
+              <li><a className="waves-effect waves-light btn" onClick={locales.toggleLanguage}>{locales.text}</a></li>
             </ul>
           </div>
         </nav>
@@ -75,7 +75,7 @@ class Navbar extends Component {
               <li><Link to="/login">{locales.locale.nav.login}</Link></li>
             </React.Fragment>
           }
-          <li><a className="waves-effect waves-light btn" onClick={() => locales.toggleLanguage()}>{locales.text}</a></li>
+          <li><a className="waves-effect waves-light btn" onClick={locales.toggleLanguage}>{locales.text}</a></li>
         </ul>
       </header>
     );
