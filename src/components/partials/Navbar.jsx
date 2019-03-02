@@ -41,7 +41,7 @@ class Navbar extends Component {
       <header>
         <nav style={{ marginBottom:20 }}>
           <div className="nav-wrapper">
-            <Link to="/" className="brand-logo"><img src="images/logo.png"/></Link>
+            <Link to="/" className="brand-logo ml-10">Matcha</Link>
             <a href="#" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
               {logged === true &&

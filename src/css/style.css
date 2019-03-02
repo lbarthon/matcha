@@ -3,15 +3,3 @@
 .mr-10 { margin-right: 10px; }
 
 .ml-5 { margin-left:5px; }
-
-.brand-logo {
-  height:calc(100% - 20px);
-  margin:10px;
-  position: relative;
-}
-
-.brand-logo>img {
-  height: 100%;
-  width: auto;
-  position: absolute;
-}
