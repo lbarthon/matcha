@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withAllHOC } from '../../utils/allHOC';
 import M from 'materialize-css';
+import io from 'socket.io-client';
 
 class Navbar extends Component {
 
@@ -26,12 +27,27 @@ class Navbar extends Component {
     .catch(error => { console.log(error); });
   }
 
-  componentDidMount() {
-    var elem = document.querySelector(".sidenav");
-    var instance = M.Sidenav.init(elem, {
+  initNavbar = () => {
+    let elem = document.querySelector(".sidenav");
+    M.Sidenav.init(elem, {
       edge: "left",
       inDuration: 250
     });
+  }
+
+  componentWillMount() {
+    const socket = io('http://localhost:3000');
+    socket.on('connect', () => {
+      console.log('connected to ws', socket.connected);
+    });
+    socket.on('test', data => {
+      console.log(data);
+    });
+  }
+
+  componentDidMount() {
+    this.initNavbar();
+    const host = window.location.host;
   }
 
   render() {
