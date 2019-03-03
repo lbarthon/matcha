@@ -53,7 +53,7 @@ const isLogged = req => {
             getIdFromUsername(req.session.username)
             .then(id => {
                 if (req.session.uid == id) {
-                    resolve(req.session.username);
+                    resolve(req.session);
                 } else {
                     reject();
                 }

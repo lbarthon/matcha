@@ -69,7 +69,7 @@ class Update extends Component {
     let elems = document.querySelectorAll('.datepicker');
     M.Datepicker.init(elems, {
       format: 'dd/mm/yyyy',
-      defaultDate : new Date(this.state.birthdate),
+      defaultDate : new Date(this.state.user.birthdate),
       setDefaultDate: true,
       autoClose: true,
       onSelect: date => { this.setState({ birthdate: date.toString() }); }
@@ -238,8 +238,8 @@ class Update extends Component {
           <div className="input-field col s6">
             <select name="wanted" onChange={this.onChange}>
               <option value="" disabled>{locale.register.select_gender}</option>
-              <option value="male" selected={sex == 'female' ? true : false}>{locale.gender.male}</option>
-              <option value="female" selected={sex == 'female' ? true : false}>{locale.gender.female}</option>
+              <option value="male" selected={wanted == 'female' ? true : false}>{locale.gender.male}</option>
+              <option value="female" selected={wanted == 'female' ? true : false}>{locale.gender.female}</option>
             </select>
             <label>{locale.register.lookingfor}</label>
           </div>

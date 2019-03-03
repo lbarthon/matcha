@@ -104,7 +104,7 @@ class User extends Component {
           </div>
           <div className="col s12 m8">
             <a className="waves-effect waves-light btn-small red right ml-5" onClick={this.handleBlock}><i className="material-icons left">block</i>{locale.user.block}</a>
-            <a className="waves-effect waves-light btn-small red right" onClick={this.handleReport}><i className="material-icons left">priority_high</i>{locale.user.report}</a>
+            <a className="waves-effect waves-light btn-small red right" onClick={this.handleReport}><i className="material-icons left">flag</i>{locale.user.report}</a>
           </div>
         </div>
         {this.state.tags && <h6>Tags</h6>}

@@ -53,8 +53,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 io.on('connection', socket => {
-  console.log('connected');
-  socket.emit('test', 'salut');
+  console.log('active connections :', io.engine.clientsCount);
+  socket.on('join', data => {
+    socket.join(data.id);
+  });
+  socket.on('test', data => {
+    io.sockets.in(data.id).emit('new_msg', {msg: 'hello'});
+  })
 });
 
 app.use('/api', routes);
