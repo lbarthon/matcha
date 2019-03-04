@@ -43,4 +43,14 @@ router.get('/get/:id', (req, res) => {
     });
 });
 
+router.get('/has_like/:id', (req, res) => {
+    likes.has_like(req.session.uid, req.params.id)
+    .then(resolve => {
+        res.status(200).json({ 'success' : resolve });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+})
+
 module.exports = router;
