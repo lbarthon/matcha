@@ -10,8 +10,8 @@
 
 .chat-msg-right > p {
   float:right !important;
-  background-color:#e0e0e0 !important;
-  color: #rgba(0, 0, 0, 0.7) !important;
+  background-color:#42a5f5 !important;
+  color: white !important;
 }
 
 .chat-msg > img {
