@@ -23,18 +23,20 @@ export class DisplayMap extends Component {
 
   render() {
     if (this.state.userLocation.lat == undefined) return null;
-    
+
     const { userLocation } = this.state;
     const { google } = this.props;
 
     return (
-      <Map google={google}
-        initialCenter={userLocation}
-        zoom={10}>
+      <div style={{position: 'relative', height: '500px'}}>
+        <Map google={google}
+          initialCenter={userLocation}
+          zoom={10}>
 
-        <Marker name={'User location'}
-          position={userLocation} />
-      </Map>
+          <Marker name={'User location'}
+            position={userLocation} />
+        </Map>
+      </div>
     );
   }
 }

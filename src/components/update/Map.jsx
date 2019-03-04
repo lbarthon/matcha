@@ -16,7 +16,7 @@ export class UpdateMap extends Component {
       // Use DB saved location
       const latLng = location.split(";");
       this.setState({
-        userLocation: { 
+        userLocation: {
           lat: latLng[0],
           lng: latLng[1]
         },
@@ -27,9 +27,9 @@ export class UpdateMap extends Component {
         // Get position if he agreed
         const { latitude, longitude } = position.coords;
         this.setState({
-          userLocation: { 
-            lat: latitude, 
-            lng: longitude 
+          userLocation: {
+            lat: latitude,
+            lng: longitude
           },
           loading: false
         }, () => {
@@ -44,9 +44,9 @@ export class UpdateMap extends Component {
           if (response.ok) {
             response.json().then(json => {
               this.setState({
-                userLocation: { 
-                  lat: json.lat, 
-                  lng: json.lon 
+                userLocation: {
+                  lat: json.lat,
+                  lng: json.lon
                 },
                 loading: false
               }, () => {
@@ -95,16 +95,19 @@ export class UpdateMap extends Component {
     if (loading) return null;
 
     return (
-      <Map onClick={(t, map, coord) => this.updateCoords(coord)}
-        google={google}
-        initialCenter={userLocation}
-        zoom={10}>
+      <div style={{position: 'relative', height: '500px'}}>
+        <Map onClick={(t, map, coord) => this.updateCoords(coord)}
+          google={google}
+          initialCenter={userLocation}
+          zoom={10}
+          >
 
-        <Marker onDragend={(t, map, coord) => this.updateCoords(coord)}
-          name={'Current location'}
-          position={userLocation}
-          draggable={true} />
-      </Map>
+          <Marker onDragend={(t, map, coord) => this.updateCoords(coord)}
+            name={'Current location'}
+            position={userLocation}
+            draggable={true} />
+        </Map>
+      </div>
     );
   }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withAllHOC } from '../utils/allHOC';
 import { notify } from '../utils/alert';
 import '../css/user.css';
-import DisplayMap from './DisplayMap';
+import Map from './user/Map';
 import httpBuildQuery from 'http-build-query';
 
 class User extends Component {
@@ -58,8 +58,7 @@ class User extends Component {
   getTags = () => {
     const { id } = this.props.match.params;
     const { locales } = this.props;
-    fetch('/api/tags/' + id)
-    .then(response => {
+    fetch('/api/tags/' + id).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
@@ -72,21 +71,21 @@ class User extends Component {
   }
 
   getLike = () => {
-    fetch('/api/likes/has_like/' + this.props.match.params).then(response => {
+    fetch('/api/likes/has_like/' + this.props.match.params.id).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
             if (json.success === true)
               this.setState({liked: true});
           } else
-            notify('error', locales.idParser(json.error));
+            notify('error', this.props.locales.idParser(json.error));
         });
       } else console.error(new Error(response.statusText));
     });
   }
 
   handleLike = () => {
-    const str = httpBuildQuery({target : this.props.match.params});
+    const str = httpBuildQuery({target : this.props.match.params.id});
     fetch('/api/likes/add', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -97,14 +96,14 @@ class User extends Component {
           if (json.success) {
             this.setState({liked: true});
           } else
-            notify('error', locales.idParser(json.error));
+            notify('error', this.props.locales.idParser(json.error));
         });
       } else console.error(new Error(response.statusText));
     });
   }
 
   handleUnlike = () => {
-    const str = httpBuildQuery({target : this.props.match.params});
+    const str = httpBuildQuery({target : this.props.match.params.id});
     fetch('/api/likes/remove', {
       method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
@@ -115,7 +114,7 @@ class User extends Component {
           if (json.success) {
             this.setState({liked: false});
           } else
-            notify('error', locales.idParser(json.error));
+            notify('error', this.props.locales.idParser(json.error));
         });
       } else console.error(new Error(response.statusText));
     });
@@ -166,7 +165,7 @@ class User extends Component {
         <p>{description}</p>
         <h6>Gender</h6>
         <p>{sex}</p>
-        <DisplayMap location={location} />
+        <Map location={location} />
         {this.state.pictures.length > 1 ? <h6>More pics</h6> : ''}
         {this.state.pictures.map(pic => {
           return (

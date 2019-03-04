@@ -5,7 +5,7 @@ import { localeIdParser } from '../utils/locales';
 import { withAllHOC } from '../utils/allHOC';
 import M from 'materialize-css';
 import httpBuildQuery from 'http-build-query';
-import UpdateMap from './UpdateMap';
+import Map from './update/Map';
 
 class Update extends Component {
   state = {
@@ -226,7 +226,8 @@ class Update extends Component {
           </div>
         </div>
         <div className="row">
-          <UpdateMap onChange={this.handleLocationChange} location={location} />
+          <label>{locale.register.location}</label>
+          <Map onChange={this.handleLocationChange} location={location} />
         </div>
         <div className="row">
           <div className="input-field col s12">
@@ -239,7 +240,7 @@ class Update extends Component {
           <div className="input-field col s6">
             <select name="gender" onChange={this.onChange}>
               <option value="" disabled>{locale.register.select_gender}</option>
-              <option value="male" selected={sex == 'female' ? true : false}>{locale.gender.male}</option>
+              <option value="male" selected={sex == 'male' ? true : false}>{locale.gender.male}</option>
               <option value="female" selected={sex == 'female' ? true : false}>{locale.gender.female}</option>
             </select>
             <label>{locale.register.gender}</label>
@@ -247,7 +248,7 @@ class Update extends Component {
           <div className="input-field col s6">
             <select name="wanted" onChange={this.onChange}>
               <option value="" disabled>{locale.register.select_gender}</option>
-              <option value="male" selected={wanted == 'female' ? true : false}>{locale.gender.male}</option>
+              <option value="male" selected={wanted == 'male' ? true : false}>{locale.gender.male}</option>
               <option value="female" selected={wanted == 'female' ? true : false}>{locale.gender.female}</option>
             </select>
             <label>{locale.register.lookingfor}</label>

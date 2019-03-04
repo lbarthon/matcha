@@ -12,6 +12,7 @@
   },
   "user": {
     "like" : "Like",
+    "unlike" : "Unlike",
     "block" : "Block",
     "report": "Report",
     "alert" : {
