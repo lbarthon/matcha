@@ -8,15 +8,13 @@ const tags_routes = require('./tags/routes');
 const chat_routes = require('./chat/routes');
 const likes_routes = require('./user/likes/routes');
 
-/*
 router.use((req, res, next) => {
-    if ((req.is('application/x-www-form-urlencoded') == null && req.method == "POST") || (!req.xhr)) {
+    if (!req.is('application/x-www-form-urlencoded') && !req.is('multipart/form-data') && req.method == "POST") {
         res.status(404).send("<h1 style='text-align:center;'>Error 404 - Page not found</h1>")
     } else {
         next();
     }
 });
-*/
 
 router.use('/lang', lang_routes);
 router.use('/', user_routes);
