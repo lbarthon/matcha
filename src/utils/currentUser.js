@@ -14,21 +14,22 @@ export class CurrentUserProvider extends React.Component {
     id: undefined,
     logged: undefined,
     getCurrentUser: (callback) => {
+      console.log('ahhhh');
       fetch('/api/logged')
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
             if (json.success !== false) {
-              if (this.state.logged !== true)
+              if (this.state.logged !== true) {
                 this.setState({
                   logged: true,
                   username: json.success.username,
                   id: json.success.uid
                 });
-            } else {
-              if (this.state.logged !== false) {
-                this.setState({logged: false});
               }
+            } else {
+              if (this.state.logged !== false)
+                this.setState({logged: false});
             }
           })
         } else {

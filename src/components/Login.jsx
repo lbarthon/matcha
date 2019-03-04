@@ -17,6 +17,7 @@ class Login extends Component {
   handleSubmit = (e) => {
     const { locales } = this.props;
     const { getCurrentUser } = this.props.currentUser;
+    console.log(getCurrentUser);
     const { history } = this.props;
     e.preventDefault();
     parseForm(this.state, strForm => {
@@ -30,10 +31,10 @@ class Login extends Component {
           response.json().then(json => {
             if (json.error) {
               notify('error', locales.idParser(json.error));
-            } else if (json.sucess) {
+            } else if (json.success) {
               getCurrentUser(() => {
                 history.push("/");
-                notify('success', locales.idParser(json.sucess));
+                notify('success', locales.idParser(json.success));
               });
             }
           });
