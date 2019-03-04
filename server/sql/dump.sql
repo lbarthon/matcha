@@ -24,6 +24,28 @@ create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (`user_id`) REFERENCES users(id)
 );
 
+CREATE TABLE likes (
+`user_id` INT(10) UNSIGNED NOT NULL,
+`target_id` INT(10) UNSIGNED NOT NULL,
+FOREIGN KEY (`user_id`) REFERENCES users(id),
+FOREIGN KEY (`target_id`) REFERENCES users(id)
+);
+
+CREATE TABLE reports (
+`user_id` INT(10) UNSIGNED NOT NULL,
+`target_id` INT(10) UNSIGNED NOT NULL,
+report TEXT NOT NULL,
+FOREIGN KEY (`user_id`) REFERENCES users(id),
+FOREIGN KEY (`target_id`) REFERENCES users(id)
+);
+
+CREATE TABLE blocked (
+`user_id` INT(10) UNSIGNED NOT NULL,
+`target_id` INT(10) UNSIGNED NOT NULL,
+FOREIGN KEY (`user_id`) REFERENCES users(id),
+FOREIGN KEY (`target_id`) REFERENCES users(id)
+);
+
 CREATE TABLE pictures (
 id INT(12) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 main BOOLEAN DEFAULT FALSE,
