@@ -12,6 +12,7 @@ import Login from './components/Login';
 import Update from './components/Update';
 import Upload from './components/Upload';
 import User from './components/User';
+import { MapContainer } from './components/MapContainer';
 import './css/upload.css';
 import './css/alert.css';
 import './css/style.css';
@@ -39,6 +40,7 @@ class App extends Component {
             <AlertContainer />
             <Switch>
               <Route exact path="/" component={Home}/>
+              <Route exact path="/test" component={MapContainer}/>
               <UnloggedRoute path="/register" component={Register}/>
               <UnloggedRoute path="/login" component={Login}/>
               <PrivateRoute path="/update" component={Update}/>
