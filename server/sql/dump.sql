@@ -27,6 +27,7 @@ FOREIGN KEY (`user_id`) REFERENCES users(id)
 CREATE TABLE likes (
 `user_id` INT(10) UNSIGNED NOT NULL,
 `target_id` INT(10) UNSIGNED NOT NULL,
+create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (`user_id`) REFERENCES users(id),
 FOREIGN KEY (`target_id`) REFERENCES users(id)
 );
@@ -35,6 +36,7 @@ CREATE TABLE reports (
 `user_id` INT(10) UNSIGNED NOT NULL,
 `target_id` INT(10) UNSIGNED NOT NULL,
 report TEXT NOT NULL,
+create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (`user_id`) REFERENCES users(id),
 FOREIGN KEY (`target_id`) REFERENCES users(id)
 );
@@ -42,6 +44,7 @@ FOREIGN KEY (`target_id`) REFERENCES users(id)
 CREATE TABLE blocked (
 `user_id` INT(10) UNSIGNED NOT NULL,
 `target_id` INT(10) UNSIGNED NOT NULL,
+create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (`user_id`) REFERENCES users(id),
 FOREIGN KEY (`target_id`) REFERENCES users(id)
 );
@@ -63,12 +66,13 @@ FOREIGN KEY (`user_id`) REFERENCES users(id)
 );
 
 CREATE TABLE chat_rooms (
+id INT(12) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 `id_user1` INT(10) UNSIGNED NOT NULL,
 `id_user2` INT(10) UNSIGNED NOT NULL,
 create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-FOREIGN KEY (`id_u1`) REFERENCES users(id),
-FOREIGN KEY (`id_u2`) REFERENCES users(id)
-)
+FOREIGN KEY (`id_user1`) REFERENCES users(id),
+FOREIGN KEY (`id_user2`) REFERENCES users(id)
+);
 
 CREATE TABLE chat_messages (
 `id_room` INT(10) UNSIGNED NOT NULL,
@@ -76,9 +80,9 @@ CREATE TABLE chat_messages (
 `read` BIT DEFAULT 0,
 `message` TEXT,
 create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-FOREIGN KEY (`id_room`) REFERENCES rooms(id),
+FOREIGN KEY (`id_room`) REFERENCES chat_rooms(id),
 FOREIGN KEY (`id_from`) REFERENCES users(id)
-)
+);
 
 INSERT INTO users (username, lastname, firstname, birthdate, email, pwd, sex, wanted, confirmed, perm_level)
 VALUES ('admin', 'admin', 'admin', '01/01/1970', 'admin@admin.admin', '$2b$10$U9LU5mrIydb0MII79M0tbOXttYx1/oo.1UUBgKT2Y9a2U7VfYNx5a', 'Male', 'Female', 1, 1);
