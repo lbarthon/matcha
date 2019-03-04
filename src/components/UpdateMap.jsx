@@ -32,6 +32,8 @@ export class UpdateMap extends Component {
             lng: longitude 
           },
           loading: false
+        }, () => {
+          this.updateProps();
         });
       }, () => {
         // If he refuses position -> here
@@ -47,6 +49,8 @@ export class UpdateMap extends Component {
                   lng: json.lon 
                 },
                 loading: false
+              }, () => {
+                this.updateProps();
               });
             })
             .catch(() => {
@@ -62,6 +66,14 @@ export class UpdateMap extends Component {
     }
   }
 
+  updateProps() {
+    // Calls parent module function onChange if exists
+    const { onChange } = this.props;
+    if (onChange) {
+      onChange(this.state.userLocation);
+    }
+  }
+
   updateCoords(coord) {
     const { latLng } = coord;
     const lat = latLng.lat();
@@ -72,11 +84,7 @@ export class UpdateMap extends Component {
         lng: lng
       }
     }, () => {
-      // Calls parent module function onChange if exists
-      const { onChange } = this.props;
-      if (onChange) {
-        onChange(this.state.userLocation);
-      }
+      this.updateProps();
     });
   }
 

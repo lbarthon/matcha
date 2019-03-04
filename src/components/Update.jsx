@@ -179,7 +179,7 @@ class Update extends Component {
     const {locale} = this.props.locales;
     const {username, firstname, lastname, email, description, location, sex, wanted} = this.state.user;
 
-    if (!location) return null;
+    if (!this.state.user) return null;
 
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
