@@ -33,7 +33,7 @@ router.post('/remove', (req, res) => {
     });
 });
 
-router.post('/get/:id', (req, res) => {
+router.get('/get/:id', (req, res) => {
     likes.get(req.params.id)
     .then(resolve => {
         res.status(200).json({ 'success' : resolve });
