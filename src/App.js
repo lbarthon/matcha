@@ -13,6 +13,7 @@ import Update from './components/Update';
 import Upload from './components/Upload';
 import User from './components/User';
 import { MapContainer } from './components/MapContainer';
+import NotFound from './components/NotFound';
 import './css/upload.css';
 import './css/alert.css';
 import './css/style.css';
@@ -46,6 +47,7 @@ class App extends Component {
               <PrivateRoute path="/update" component={Update}/>
               <PrivateRoute path="/upload" component={Upload}/>
               <Route path="/user/:id" component={User}/>
+              <Route path='*' exact={true} component={NotFound} />
             </Switch>
           </div>
         </LocalesProvider>

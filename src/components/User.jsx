@@ -6,9 +6,7 @@ import '../css/user.css';
 class User extends Component {
 
   state = {
-    username: '',
-    description: '',
-    gender: '',
+    user : undefined,
     pictures: [],
     mainPic: {},
     tags: [],
@@ -20,12 +18,13 @@ class User extends Component {
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
-          json = json.response;
-          this.setState({
-            username: json.username,
-            description: json.description,
-            gender: json.sex
-          })
+          if (json.success) {
+            this.setState({ user: json.success }, () => {
+              document.title = this.state.user.username;
+            });
+          } else if (json.error) {
+            notify('error', this.props.locales.idParser(json.error));
+          }
         });
       } else { console.error(new Error(response.statusText)); }
     })
@@ -37,7 +36,7 @@ class User extends Component {
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
-          if (json['error'] == null && json['success'] !== this.state.pictures) {
+          if (json.error == null && json.success !== this.state.pictures) {
             let pictures = json.success;
             for (var i in pictures) {
               if (pictures[i].main) {
@@ -46,8 +45,8 @@ class User extends Component {
               }
             }
             this.setState({ pictures: pictures });
-          } else if (json['error'])
-            notify('error', this.props.locales.idParser(json['error']));
+          } else if (json.error)
+            notify('error', this.props.locales.idParser(json.error));
         });
       } else console.error(new Error(response.statusText));
     });
@@ -69,21 +68,31 @@ class User extends Component {
     });
   }
 
+  handleLike = () => {
+
+  }
+
+  handleBlock = () => {
+
+  }
+
+  handleReport = () => {
+
+  }
+
   componentWillMount() {
     this.getTags();
     this.getUser();
     this.getPictures();
   }
 
-  componentDidMount() {
-    document.title = this.state.username;
-  }
-
   render() {
+    if (!this.state.user) return null;
     const { locale } = this.props.locales;
+    const { username, gender, description } = this.state.user;
     return (
       <React.Fragment>
-        <h4>{this.state.username}</h4>
+        <h4>{username}</h4>
         <div className="row">
           <div className="col xl10 s12">
             <div className="picture picture-main" style={{backgroundImage: 'url("/pictures/user/' + this.state.mainPic.picture + '")'}}></div>
@@ -91,11 +100,11 @@ class User extends Component {
         </div>
         <div className="row">
           <div className="col s12 m4">
-            <a className="waves-effect waves-light btn-small"><i className="material-icons left">favorite</i>{locale.user.like}</a>
+            <a className="waves-effect waves-light btn-small" onClick={this.handleLike}><i className="material-icons left">favorite</i>{locale.user.like}</a>
           </div>
           <div className="col s12 m8">
-            <a className="waves-effect waves-light btn-small red right ml-5"><i className="material-icons left">block</i>{locale.user.block}</a>
-            <a className="waves-effect waves-light btn-small red right"><i className="material-icons left">priority_high</i>{locale.user.report}</a>
+            <a className="waves-effect waves-light btn-small red right ml-5" onClick={this.handleBlock}><i className="material-icons left">block</i>{locale.user.block}</a>
+            <a className="waves-effect waves-light btn-small red right" onClick={this.handleReport}><i className="material-icons left">flag</i>{locale.user.report}</a>
           </div>
         </div>
         {this.state.tags && <h6>Tags</h6>}
@@ -103,9 +112,9 @@ class User extends Component {
           return (<div class="chip">{tag.tag}</div>);
         })}
         <h6>Description</h6>
-        <p>{this.state.description}</p>
+        <p>{description}</p>
         <h6>Gender</h6>
-        <p>{this.state.gender}</p>
+        <p>{gender}</p>
         <h6>More pics</h6>
         {this.state.pictures.map(pic => {
           return (

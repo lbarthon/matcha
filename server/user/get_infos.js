@@ -20,7 +20,7 @@ const get_infos_id = (id) => {
                     delete result[0].pwd
                     resolve(result[0]);
                 } else {
-                    reject(new Error("error_user_not_found"));
+                    reject(new Error("user.alert.notfound"));
                 }
             });
         } else {

@@ -47,8 +47,8 @@ router.get('/logout', (req, res) => {
 
 router.get('/logged', (req, res) => {
     user.isLogged(req)
-    .then((username) => {
-        res.status(200).json({ 'success' : username });
+    .then((user) => {
+        res.status(200).json({ 'success' : user });
     })
     .catch(() => {
         res.status(200).json({ 'success' : false });

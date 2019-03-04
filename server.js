@@ -2,11 +2,12 @@ const config = require('./server/config');
 const db_infos = require('./server/database');
 const express = require('express');
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 const path = require('path');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
-const ws = require('express-ws')(app);
 
 const prod = (process.env.PROD == "true" || false);
 const port = (process.env.PORT || 3000);
@@ -43,7 +44,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
-    cookie: { 
+    cookie: {
         maxAge: 60 * 60 * 24 * 1000
     }
 }));
@@ -51,7 +52,15 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.ws('/socket');
+io.on('connection', socket => {
+  console.log('active connections :', io.engine.clientsCount);
+  socket.on('join', data => {
+    socket.join(data.id);
+  });
+  socket.on('test', data => {
+    io.sockets.in(data.id).emit('new_msg', {msg: 'hello'});
+  })
+});
 
 app.use('/api', routes);
 
@@ -61,7 +70,9 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.listen(port, err => {
+server.listen(port, err => {
     if (err) console.error(err);
     console.log("App listening on port " + port + "!");
 })
+
+//server.listen(port);
