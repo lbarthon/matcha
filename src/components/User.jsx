@@ -3,6 +3,7 @@ import { withAllHOC } from '../utils/allHOC';
 import { notify } from '../utils/alert';
 import '../css/user.css';
 import DisplayMap from './DisplayMap';
+import httpBuildQuery from 'http-build-query';
 
 class User extends Component {
 
@@ -11,6 +12,7 @@ class User extends Component {
     pictures: [],
     mainPic: {},
     tags: [],
+    liked: false
   }
 
   getUser = () => {
@@ -69,8 +71,54 @@ class User extends Component {
     });
   }
 
-  handleLike = () => {
+  getLike = () => {
+    fetch('/api/likes/has_like/' + this.props.match.params).then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.success) {
+            if (json.success === true)
+              this.setState({liked: true});
+          } else
+            notify('error', locales.idParser(json.error));
+        });
+      } else console.error(new Error(response.statusText));
+    });
+  }
 
+  handleLike = () => {
+    const str = httpBuildQuery({target : this.props.match.params});
+    fetch('/api/likes/add', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+      body: str
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.success) {
+            this.setState({liked: true});
+          } else
+            notify('error', locales.idParser(json.error));
+        });
+      } else console.error(new Error(response.statusText));
+    });
+  }
+
+  handleUnlike = () => {
+    const str = httpBuildQuery({target : this.props.match.params});
+    fetch('/api/likes/remove', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+      body: str
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.success) {
+            this.setState({liked: false});
+          } else
+            notify('error', locales.idParser(json.error));
+        });
+      } else console.error(new Error(response.statusText));
+    });
   }
 
   handleBlock = () => {
@@ -85,6 +133,7 @@ class User extends Component {
     this.getTags();
     this.getUser();
     this.getPictures();
+    this.getLike();
   }
 
   render() {
@@ -101,7 +150,8 @@ class User extends Component {
         </div>
         <div className="row">
           <div className="col s12 m4">
-            <a className="waves-effect waves-light btn-small" onClick={this.handleLike}><i className="material-icons left">favorite</i>{locale.user.like}</a>
+            {this.state.liked && <a className="waves-effect waves-light btn-small" onClick={this.handleUnlike}><i className="material-icons left">favorite</i>{locale.user.unlike}</a>}
+            {!this.state.liked && <a className="waves-effect waves-light btn-small" onClick={this.handleLike}><i className="material-icons left">favorite</i>{locale.user.like}</a>}
           </div>
           <div className="col s12 m8">
             <a className="waves-effect waves-light btn-small red right ml-5" onClick={this.handleBlock}><i className="material-icons left">block</i>{locale.user.block}</a>
