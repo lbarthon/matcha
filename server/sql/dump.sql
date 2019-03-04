@@ -54,8 +54,8 @@ CREATE TABLE chat_messages (
 `read` BIT DEFAULT 0,
 `message` TEXT,
 create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-FOREIGN KEY (`id_room`) REFERENCES users(id),
-FOREIGN KEY (`id_from`) REFERENCES users(id),
+FOREIGN KEY (`id_room`) REFERENCES rooms(id),
+FOREIGN KEY (`id_from`) REFERENCES users(id)
 )
 
 INSERT INTO users (username, lastname, firstname, birthdate, email, pwd, sex, wanted, confirmed, perm_level)
