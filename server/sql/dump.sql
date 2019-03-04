@@ -40,6 +40,24 @@ create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (`user_id`) REFERENCES users(id)
 );
 
+CREATE TABLE chat_rooms (
+`id_u1` INT(10) UNSIGNED NOT NULL,
+`id_u2` INT(10) UNSIGNED NOT NULL,
+create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (`id_u1`) REFERENCES users(id),
+FOREIGN KEY (`id_u2`) REFERENCES users(id)
+)
+
+CREATE TABLE chat_messages (
+`id_room` INT(10) UNSIGNED NOT NULL,
+`id_from` INT(10) UNSIGNED NOT NULL,
+`read` BIT DEFAULT 0,
+`message` TEXT,
+create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (`id_room`) REFERENCES users(id),
+FOREIGN KEY (`id_from`) REFERENCES users(id),
+)
+
 INSERT INTO users (username, lastname, firstname, birthdate, email, pwd, sex, wanted, confirmed, perm_level)
 VALUES ('admin', 'admin', 'admin', '01/01/1970', 'admin@admin.admin', '$2b$10$U9LU5mrIydb0MII79M0tbOXttYx1/oo.1UUBgKT2Y9a2U7VfYNx5a', 'Male', 'Female', 1, 1);
 
