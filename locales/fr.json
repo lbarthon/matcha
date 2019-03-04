@@ -18,6 +18,16 @@
       "notfound" : "Cet utilisateur n'existe pas"
     }
   },
+  "likes": {
+    "add": {
+      "present": "Vous avez déjà aimé cet utilisateur !",
+      "success": "Vous aimez maintenant cet utilisateur."
+    },
+    "remove": {
+      "absent": "Vous n'aimez pas cet utilisateur !",
+      "success": "Vous n'aimez plus cet utilisateur."
+    }
+  },
   "nav": {
     "logout": "Deconnexion",
     "update": "Informations",
