@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {GoogleApiWrapper, Map} from "google-maps-react";
+import {GoogleApiWrapper, Map, Marker} from "google-maps-react";
 
-export class MapContainer extends React.Component {
+export class MapContainer extends Component {
     state = {
         userLocation: {
             lat: 32,
@@ -10,7 +10,7 @@ export class MapContainer extends React.Component {
         loading: true
     };
 
-    componentDidMount(props) {
+    componentDidMount() {
         navigator.geolocation.getCurrentPosition(position => {
             const { latitude, longitude } = position.coords;
 
@@ -28,16 +28,51 @@ export class MapContainer extends React.Component {
         );
     }
 
+    mapClicked(coord) {
+        const { latLng } = coord;
+        const lat = latLng.lat();
+        const lng = latLng.lng();
+        this.setState({
+            userLocation: {
+                lat: lat,
+                lng: lng
+            }
+        }, () => {
+            console.log(this.state.userLocation);
+        });
+    }
+
+    onMarkerDragEnd(coord) {
+        const { latLng } = coord;
+        const lat = latLng.lat();
+        const lng = latLng.lng();
+        this.setState({
+            userLocation: {
+                lat: lat,
+                lng: lng
+            }
+        }, () => {
+            console.log(this.state.userLocation);
+        })
+    }
+
     render() {
         const { loading, userLocation } = this.state;
         const { google } = this.props;
 
         if (loading) return null;
 
-        return <Map google={google} initialCenter={userLocation} zoom={10} />;
+        return (
+            <Map onClick={(t, map, coord) => this.mapClicked(coord)} google={google} initialCenter={userLocation} zoom={10}>
+                <Marker onDragend={(t, map, coord) => this.onMarkerDragEnd(coord)}
+                    name={'Current location'}
+                    position={userLocation}
+                    draggable={true} />
+            </Map>
+        );
     }
 }
 
 export default GoogleApiWrapper({
-    apiKey: "AIzaSyCvuRRwAARDn5Vl6ewbMxYNOIJYhbNWK7A"
+    apiKey: "AIzaSyCQwOn1Z6oev0SFXRHTxM9tKOqKi9pCMAU"
 })(MapContainer);
