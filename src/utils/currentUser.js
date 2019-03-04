@@ -14,7 +14,6 @@ export class CurrentUserProvider extends React.Component {
     id: undefined,
     logged: undefined,
     getCurrentUser: (callback) => {
-      console.log('ahhhh');
       fetch('/api/logged')
       .then(response => {
         if (response.ok) {
