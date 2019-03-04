@@ -1,0 +1,68 @@
+.chat-msg {
+    margin-top:10px;
+}
+
+.chat-msg-right > img {
+  float:right !important;
+  margin-left:10px !important;
+  margin-right:0 !important;
+}
+
+.chat-msg-right > p {
+  float:right !important;
+  background-color:#e0e0e0 !important;
+  color: #rgba(0, 0, 0, 0.7) !important;
+}
+
+.chat-msg > img {
+  height:30px;
+  width:30px;
+  border-radius: 2px;
+  margin-right:10px;
+  float: left;
+}
+.chat-msg > p {
+  margin:0;
+  padding:5px 10px;
+  display: block;
+  float: left;
+  width:auto;
+  max-width: calc(100% - 40px);
+  background: #f5f5f5;
+  border-radius:3px;
+}
+
+.chat-tab {
+  padding:5px;
+  border-radius:2px;
+  cursor: pointer;
+}
+
+.chat-tab > .chip {
+  margin:0;
+}
+
+.chat-tab:hover {
+  background-color: #f5f5f5;
+}
+
+.chat-tab > i {
+  margin-top:10px;
+  margin-right:5px;
+}
+
+.chat-tab > .chip {
+  position: relative;
+}
+
+.chat-tab > .chip > .chat-new {
+  right:-6px;
+  top:-5px;
+  color:white;
+  padding:0 5px;
+  height:18px;
+  line-height:18px;
+  background: red;
+  border-radius: 2px;
+  position: absolute;
+}

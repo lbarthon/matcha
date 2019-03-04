@@ -2,13 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 import { CurrentUserProvider } from './utils/currentUser'
+import { LocalesProvider } from './utils/locales'
+import { SocketProvider } from './utils/socket'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <BrowserRouter>
     <CurrentUserProvider>
-      <App />
+      <LocalesProvider>
+        <SocketProvider>
+          <App />
+        </SocketProvider>
+      </LocalesProvider>
     </CurrentUserProvider>
   </BrowserRouter>
   , document.getElementById('root')
