@@ -41,8 +41,8 @@ FOREIGN KEY (`user_id`) REFERENCES users(id)
 );
 
 CREATE TABLE chat_rooms (
-`id_u1` INT(10) UNSIGNED NOT NULL,
-`id_u2` INT(10) UNSIGNED NOT NULL,
+`id_user1` INT(10) UNSIGNED NOT NULL,
+`id_user2` INT(10) UNSIGNED NOT NULL,
 create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (`id_u1`) REFERENCES users(id),
 FOREIGN KEY (`id_u2`) REFERENCES users(id)
@@ -54,8 +54,8 @@ CREATE TABLE chat_messages (
 `read` BIT DEFAULT 0,
 `message` TEXT,
 create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-FOREIGN KEY (`id_room`) REFERENCES users(id),
-FOREIGN KEY (`id_from`) REFERENCES users(id),
+FOREIGN KEY (`id_room`) REFERENCES rooms(id),
+FOREIGN KEY (`id_from`) REFERENCES users(id)
 )
 
 INSERT INTO users (username, lastname, firstname, birthdate, email, pwd, sex, wanted, confirmed, perm_level)
