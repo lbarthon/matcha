@@ -13,6 +13,7 @@ import Upload from './components/Upload';
 import User from './components/User';
 import Notifications from './components/Notifications';
 import Chat from './components/Chat';
+import { MapContainer } from './components/MapContainer';
 import NotFound from './components/NotFound';
 import './css/upload.css';
 import './css/alert.css';
