@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withAllHOC } from '../utils/allHOC';
 import { notify } from '../utils/alert';
 import '../css/user.css';
+import DisplayMap from './DisplayMap';
 
 class User extends Component {
 
@@ -89,7 +90,7 @@ class User extends Component {
   render() {
     if (!this.state.user) return null;
     const { locale } = this.props.locales;
-    const { username, gender, description } = this.state.user;
+    const { username, sex, description, location } = this.state.user;
     return (
       <React.Fragment>
         <h4>{username}</h4>
@@ -114,8 +115,9 @@ class User extends Component {
         <h6>Description</h6>
         <p>{description}</p>
         <h6>Gender</h6>
-        <p>{gender}</p>
-        <h6>More pics</h6>
+        <p>{sex}</p>
+        <DisplayMap location={location} />
+        {this.state.pictures.length > 1 ? <h6>More pics</h6> : ''}
         {this.state.pictures.map(pic => {
           return (
             <div className="picture" style={{backgroundImage: 'url("/pictures/user/' + pic.picture + '")'}}></div>
