@@ -1,5 +1,47 @@
+
+.chat {
+  position: absolute;
+  bottom: 0px;
+  right: 15px;
+  width: 500px;
+  height: auto;
+  border-radius: 3px 3px 0 0;
+  background-color: white;
+}
+
+.chat-room {
+  float: left;
+  border-right: solid 1px #e0e0e0;
+  height: auto;
+  width: calc(100% - 200px);
+  position: relative;
+}
+
+.chat-room > h6 {
+  padding: 0 10px;
+}
+
+.chat-room-input {
+  padding:0 10px;
+  float: left;
+  width:100%;
+}
+
+.chat-room-body {
+  padding:0 10px;
+  height: 380px;
+  float: left;
+  width:100%;
+  overflow: auto;
+}
+
+.chat-side {
+  width:200px;
+  float: left;
+}
+
 .chat-msg {
-    margin-top:10px;
+  margin-top:10px;
 }
 
 .chat-msg-right > img {
@@ -34,8 +76,22 @@
 
 .chat-tab {
   padding:5px;
-  border-radius:2px;
+  height:calc(32px + 10px);
+  line-height:32px;
   cursor: pointer;
+}
+
+.chat-tab > .right > img {
+  display: inline-block;
+  height:32px;
+  border-radius:2px;
+  vertical-align: middle;
+}
+
+.chat-tab > .right > b {
+  display:inline-block;
+  line-height:32px;
+  margin-right: 10px;
 }
 
 .chat-tab > .chip {
@@ -51,18 +107,13 @@
   margin-right:5px;
 }
 
-.chat-tab > .chip {
-  position: relative;
-}
-
-.chat-tab > .chip > .chat-new {
-  right:-6px;
-  top:-5px;
+.chat-tab-new {
+  display:inline-block;
   color:white;
   padding:0 5px;
+  width:auto;
   height:18px;
   line-height:18px;
   background: red;
   border-radius: 2px;
-  position: absolute;
 }

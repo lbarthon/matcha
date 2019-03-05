@@ -12,7 +12,7 @@ import Update from './components/Update';
 import Upload from './components/Upload';
 import User from './components/User';
 import Notifications from './components/Notifications';
-import Chat from './components/Chat';
+import Chat from './components/partials/Chat';
 import NotFound from './components/NotFound';
 import './css/upload.css';
 import './css/alert.css';
@@ -51,6 +51,7 @@ class App extends Component {
             <Route path='*' exact={true} component={NotFound} />
           </Switch>
         </div>
+        {this.props.currentUser.logged && <Chat />}
       </React.Fragment>
     );
   }
