@@ -6,7 +6,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
-const get = id => {
+const get = uid => {
     return new Promise((resolve, reject) => {
         if (conn) {
             conn.query('SELECT chat_rooms.*, user1.username AS user1, user1pic.picture AS user1pic, \
@@ -16,11 +16,25 @@ const get = id => {
               LEFT JOIN pictures AS user1pic ON user1.id = user1pic.user_id AND user1pic.main = 1 \
               LEFT JOIN pictures AS user2pic ON user2.id = user2pic.user_id AND user2pic.main = 1 \
               WHERE ? OR ?',
-              [{'chat_rooms.id_user1': id}, {'chat_rooms.id_user2': id}], (err, results) => {
-                if (err)
+              [{'chat_rooms.id_user1': uid}, {'chat_rooms.id_user2': uid}], (err, results) => {
+                if (err) {
                     reject(new Error("sql.alert.query"));
-                else {
-                    console.log(results);
+                } else {
+                    for (var index = 0; index < results.length; index++) {
+                        if (results[index].id_user1 != uid) {
+                            results[index].user = {
+                                id: results[index].id_user1,
+                                username: results[index].user1,
+                                pic: results[index].user1pic,
+                            };
+                        } else {
+                            results[index].user = {
+                                id: results[index].id_user2,
+                                username: results[index].user2,
+                                pic: results[index].user2pic,
+                            };
+                        }
+                    }
                     resolve(results);
                 }
             });

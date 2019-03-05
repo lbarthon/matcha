@@ -3,20 +3,20 @@ const router = express.Router();
 //const userUtils = require('../../user/utils');
 const message = require('./message');
 
-router.post('/message', (req, res) => {
-    message.create(req)
+router.post('/', (req, res) => {
+    message.create(req.body.roomId, req.body.message, req.session.uid)
     .then(() => {
-        res.status(200).json({ 'success' : 'tag.update.success' });
+        res.status(200).json({ 'success' : true });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
     });
 });
 
-router.get('/message', (req, res) => {
-    message.get(req)
-    .then((response) => {
-        res.status(200).json({ 'success' : res });
+router.get('/:id', (req, res) => {
+    message.get(req.params.id, req.session.uid)
+    .then((resolve) => {
+        res.status(200).json({ 'success' : resolve });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });

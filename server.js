@@ -57,7 +57,7 @@ io.on('connection', socket => {
     socket.join(data.id);
   });
   socket.on('new_msg', data => {
-    io.sockets.in(data.id).emit('new_msg', {msg: data.msg});
+    io.sockets.in(data.id).emit('new_msg');
   })
 });
 
