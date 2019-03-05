@@ -119,7 +119,7 @@ class Register extends Component {
         </div>
         <div className="row">
           <label>{locale.register.location}</label>
-          {false ? <Map onChange={this.handleLocationChange} /> : ''}
+          <Map onChange={this.handleLocationChange} />
         </div>
         <div className="row">
           <div className="input-field col s12">
