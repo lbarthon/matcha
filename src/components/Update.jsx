@@ -9,7 +9,7 @@ import Map from './update/Map';
 
 class Update extends Component {
   state = {
-    user : {},
+    user : undefined,
     tags: [],
     tagsList: {},
   }
@@ -176,10 +176,10 @@ class Update extends Component {
   }
 
   render() {
+    if (this.state.user == undefined) return null;
+
     const {locale} = this.props.locales;
     const {username, firstname, lastname, email, description, location, sex, wanted} = this.state.user;
-
-    if (!this.state.user) return null;
 
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
