@@ -53,7 +53,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 io.on('connection', socket => {
-  console.log('active connections :', io.engine.clientsCount);
   socket.on('join', data => {
     socket.join(data.id);
   });
