@@ -6,6 +6,11 @@ const password = '12345678';
 const database = 'Matcha';
 var conn = null;
 
+/**
+ * Globally connects to db (for setup)
+ * @param {*} callback 
+ * @param {*} force 
+ */
 const connect_no_db = (callback, force) => {
     if (!conn || force) {
         conn = mysql.createConnection({
@@ -26,6 +31,11 @@ const connect_no_db = (callback, force) => {
     callback(conn);
 }
 
+/**
+ * Connect to the db
+ * @param {*} callback 
+ * @param {*} force 
+ */
 const connect = (callback, force) => {
     if (!conn || force) {
         conn = mysql.createConnection({
@@ -45,6 +55,10 @@ const connect = (callback, force) => {
     }
 }
 
+/**
+ * Ends the database connection
+ * @param {*} callback 
+ */
 const end = (callback) => {
     if (conn && conn.state == "authenticated") {
         conn.end(err => {

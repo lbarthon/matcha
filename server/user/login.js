@@ -6,8 +6,11 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
-const login = (req) => {
+/**
+ * Function that logins an user.
+ * @param {*} req 
+ */
+const login = req => {
     infos = req.body;
     utils.areInfosClean(infos, 'users');
     return new Promise((resolve, reject) => {
@@ -21,7 +24,7 @@ const login = (req) => {
                 } else if (infos.pwd == '') {
                     reject(new Error("register.alert.password_null"));
                 } else {
-                    conn.query("SELECT id,pwd FROM users WHERE username=?",
+                    conn.query("SELECT id, pwd, confirmed FROM users WHERE username=?",
                         [infos.username], (err, results) => {
                         if (err) {
                             reject(new Error("sql.alert.query"));
@@ -31,6 +34,8 @@ const login = (req) => {
                                 .then(res => {
                                     if (!res) {
                                         reject(new Error("login.alert.password_diff"));
+                                    } else if (results[0].confirmed == 0) {
+                                        reject(new Error("login.alert.not_confirmed"));
                                     } else {
                                         resolve([infos.username, results[0].id]);
                                     }

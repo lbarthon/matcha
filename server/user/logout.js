@@ -1,6 +1,9 @@
 const utils = require('./utils');
-
-const logout = (req) => {
+/**
+ * Function that logouts the current user.
+ * @param {*} req 
+ */
+const logout = req => {
     return new Promise((resolve, reject) => {
         utils.isLogged(req)
         .then(() => {

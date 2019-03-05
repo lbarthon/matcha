@@ -7,6 +7,10 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
+/**
+ * Returns uid of the username in param.
+ * @param {string} username 
+ */
 const getIdFromUsername = username => {
     return new Promise((resolve, reject) => {
         if (conn) {
@@ -26,7 +30,10 @@ const getIdFromUsername = username => {
         }
     });
 }
-
+/**
+ * Returns uid of the email in param.
+ * @param {email} email 
+ */
 const getIdFromEmail = email => {
     return new Promise((resolve, reject) => {
         if (conn) {
@@ -46,7 +53,10 @@ const getIdFromEmail = email => {
         }
     });
 }
-
+/**
+ * Resolves if the user is logged, rejects otherwise.
+ * @param {*} req 
+ */
 const isLogged = req => {
     return new Promise((resolve, reject) => {
         if (req.session.username != undefined && req.session.uid != undefined) {
@@ -64,7 +74,31 @@ const isLogged = req => {
         }
     });
 }
-
+/**
+ * Resolves if the user is admin, rejects otherwise.
+ * @param {*} req 
+ */
+const isAdmin = req => {
+    return new Promise((resolve, reject) => {
+        isLogged(req)
+        .then(session => {
+            conn.query("SELECT perm_level FROM users WHERE ?", [{id: session.uid}], (err, results) => {
+                if (err) {
+                    reject();
+                } else if (results.length == 1) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            }); 
+        })
+        .catch(() => reject())
+    });
+}
+/**
+ * Returns all the columns of the table in param.
+ * @param {string} table 
+ */
 const getTableColumns = table => {
     return new Promise((resolve, reject) => {
         if (conn) {
@@ -85,7 +119,12 @@ const getTableColumns = table => {
         }
     });
 }
-
+/**
+ * Weird function that filter infos returning only good keys in it, in order to update those.
+ * Alerts weird values that aren't in database if prod = false;
+ * @param {req.body} infos 
+ * @param {string} table 
+ */
 const areInfosClean = (infos, table) => {
     return new Promise((resolve, reject) => {
         getTableColumns(table)
@@ -118,6 +157,7 @@ module.exports = {
     getIdFromUsername : getIdFromUsername,
     getIdFromEmail    : getIdFromEmail,
     isLogged          : isLogged,
+    isAdmin           : isAdmin,
     getTableColumns   : getTableColumns,
     areInfosClean     : areInfosClean
 }

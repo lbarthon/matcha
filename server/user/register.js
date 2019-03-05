@@ -7,12 +7,14 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
-const register = (infos) => {
+/**
+ * Function that registers a new user.
+ * @param {req.body} infos 
+ */
+const register = infos => {
     utils.areInfosClean(infos, 'users');
     return new Promise((resolve, reject) => {
         if (conn) {
-            console.log(infos);
             if (infos.username == '') {
                 reject(new Error("register.alert.username_null"));
             } else if (infos.password == '') {

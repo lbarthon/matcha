@@ -5,6 +5,10 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
+/**
+ * Adds array of tags in param.
+ * @param {*} toAdd 
+ */
 const add = toAdd => {
     return new Promise((resolve, reject) => {
         if (toAdd.length > 0) {
@@ -18,6 +22,10 @@ const add = toAdd => {
     });
 }
 
+/**
+ * Remove array of tags in param.
+ * @param {*} toRemove 
+ */
 const remove = toRemove => {
     return new Promise((resolve, reject) => {
         if (toRemove.length > 0) {
@@ -31,18 +39,23 @@ const remove = toRemove => {
     });
 }
 
+/**
+ * Updates user's tags.
+ * @param {*} req 
+ */
 const update = req => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         if (conn) {
             var uid = req.session.uid;
             var tags = req.body.tags;
-            if (tags == undefined || tags.length == 0) {
+            if (uid == undefined || uid == '' || isNaN(uid)) {
+                reject(new Error("error_wrong_id"));
+            } else if (tags == undefined || tags.length == 0) {
                 reject(new Error("tag.update.undefined"));
             } else {
                 conn.query("SELECT tag FROM tags WHERE ?", [{user_id: uid}], (err, results) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
-                        console.log("error 1")
                     } else {
                         var mapped = results.map(value => {
                             return value.tag;

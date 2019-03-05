@@ -5,7 +5,10 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
-const list = req => {
+/**
+ * Return the list of all used tags.
+ */
+const list = () => {
     return new Promise((resolve, reject) => {
         if (conn) {
             conn.query("SELECT DISTINCT tag FROM tags", (err, results) => {

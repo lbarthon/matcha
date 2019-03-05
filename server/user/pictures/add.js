@@ -1,9 +1,13 @@
 const emitter = require('../../emitter');
-const multer = require("multer");
-const fs = require("fs");
+const multer = require('multer');
+const fs = require('fs');
 const pic_path = './public/pictures/user/';
 const timestamp = Date.now();
 
+/**
+ * Shortens the name of the picture if it's greater than 200 chars, so it fits in the db.
+ * @param {string} name 
+ */
 const niceName = name => {
     var split = name.split(".");
     return name.slice(0, 200) + "." + split[split.length - 1];
@@ -25,6 +29,11 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
+/**
+ * Adds a picture to the session user profile.
+ * @param {*} req 
+ * @param {*} res 
+ */
 const add = (req, res) => {
     return new Promise((resolve, reject) => {
         if (conn) {

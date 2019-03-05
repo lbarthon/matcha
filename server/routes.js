@@ -7,10 +7,14 @@ const user_routes = require('./user/routes');
 const tags_routes = require('./tags/routes');
 const chat_routes = require('./chat/routes');
 const likes_routes = require('./user/likes/routes');
+const report_routes = require('./user/reports/routes');
 
+/**
+ * Drops queries 
+ */
 router.use((req, res, next) => {
     if (!req.is('application/x-www-form-urlencoded') && !req.is('multipart/form-data') && req.method == "POST") {
-        res.status(404).send("<h1 style='text-align:center;'>Error 404 - Page not found</h1>")
+        res.sendFile(path.join(__dirname, 'public/index.html'));
     } else {
         next();
     }
@@ -22,6 +26,7 @@ router.use('/pictures', user_pictures_routes);
 router.use('/tags', tags_routes);
 router.use('/chat', chat_routes);
 router.use('/likes', likes_routes);
+router.use('/report', report_routes);
 
 db_tools.connect();
 

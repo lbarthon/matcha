@@ -24,18 +24,26 @@ const get_uid_likes = (results, uid) => {
     return 0;
 }
 
-const get = (uid) => {
+/**
+ * Returns the popularity of the uid taken in param.
+ * @param {int} uid 
+ */
+const get = uid => {
     return new Promise((resolve, reject) => {
         if (conn) {
-            conn.query("SELECT target_id AS user, COUNT(*) AS count FROM likes GROUP BY target_id", (err, results) => {
-                if (err) {
-                    reject(new Error("sql.alert.query"));
-                } else {
-                    var max = get_max_likes(results);
-                    var actual = get_uid_likes(results, uid);
-                    resolve((actual / max) * 10);
-                }
-            });
+            if (uid == undefined || uid == '' || isNaN(uid)) {
+                reject(new Error("error_wrong_id"));
+            } else {
+                conn.query("SELECT target_id AS user, COUNT(*) AS count FROM likes GROUP BY target_id", (err, results) => {
+                    if (err) {
+                        reject(new Error("sql.alert.query"));
+                    } else {
+                        var max = get_max_likes(results);
+                        var actual = get_uid_likes(results, uid);
+                        resolve((actual / max) * 10);
+                    }
+                });
+            }
         } else {
             reject(new Error("sql.alert.undefined"));
         }

@@ -6,7 +6,13 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
+/**
+ * Function that update a specified column with value for the specific uid.
+ * Called in loop lower in the code.
+ * @param {string} col 
+ * @param {*} value 
+ * @param {int} uid 
+ */
 const updateCol = (col, value, uid) => {
     return new Promise((resolve, reject) => {
         if (col == "pwd") {
@@ -24,7 +30,11 @@ const updateCol = (col, value, uid) => {
         }
     });
 }
-
+/**
+ * Some checks before the updates.
+ * @param {*} filtered 
+ * @param {int} uid 
+ */
 const checks = (filtered, uid) => {
     return new Promise(async (resolve, reject) => {
         if (filtered['email'] != undefined) {
@@ -53,6 +63,11 @@ const checks = (filtered, uid) => {
     })
 };
 
+/**
+ * Updates uid's infos.
+ * @param {*} req 
+ * @param {int} uid 
+ */
 const update = (req, uid) => {
     return new Promise((resolve, reject) => {
         if (conn) {

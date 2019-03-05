@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userUtils = require('../utils');
-const likes = require('./likes');
+const reports = require('./reports');
 
 router.use((req, res, next) => {
     if (req.session.username == undefined || req.session.uid == undefined) {
@@ -13,44 +13,34 @@ router.use((req, res, next) => {
     }
 });
 
+router.get('/get', (req, res) => {
+    reports.get(req)
+    .then(response => {
+        res.status(200).json({ 'success' : response });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+});
+
 router.post('/add', (req, res) => {
-    likes.add(req)
+    reports.add(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'likes.add.success' });
+        res.status(200).json({ 'success' : 'reports.add.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
     });
 });
 
-router.post('/remove', (req, res) => {
-    likes.remove(req)
+router.post('/del', (req, res) => {
+    reports.del(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'likes.remove.success' });
+        res.status(200).json({ 'success' : 'reports.delete.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
     });
 });
-
-router.get('/get/:id', (req, res) => {
-    likes.get(req.params.id)
-    .then(resolve => {
-        res.status(200).json({ 'success' : resolve });
-    })
-    .catch(err => {
-        res.status(200).json({ 'error' : err.message });
-    });
-});
-
-router.get('/has_like/:id', (req, res) => {
-    likes.has_like(req.session.uid, req.params.id)
-    .then(resolve => {
-        res.status(200).json({ 'success' : resolve });
-    })
-    .catch(err => {
-        res.status(200).json({ 'error' : err.message });
-    });
-})
 
 module.exports = router;

@@ -6,25 +6,26 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 
 /**
- * Removes a like from an user.
- * Informations taken :
- * req.body.target -> User you want to dislike
+ * Adds a report. Takes in body those params :
+ * req.body.target = target id
+ * req.body.text = report text
  * @param {*} req 
  */
-const remove = req => {
+const add = req => {
     var infos = req.body;
+    var uid = req.session.uid;
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.target == undefined || infos.target == '' || isNaN(infos.target)) {
                 reject(new Error("error_wrong_id"));
+            } else if (infos.text == undefined || infos.text == '') {
+                reject(new Error("error_null_text"));
             } else {
-                conn.query("DELETE FROM likes WHERE ? AND ?", [{target_id: infos.target}, {user_id: req.session.uid}], (err, results) => {
+                conn.query("INSERT INTO reports (user_id, target_id, report) VALUES (?,?,?)", [uid, infos.target, infos.text], err => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
-                    } else if (results.affectedRows == 1) {
-                        resolve();
                     } else {
-                        reject(new Error("likes.remove.absent"));
+                        resolve();
                     }
                 });
             }
@@ -34,4 +35,4 @@ const remove = req => {
     });
 }
 
-module.exports = remove;
+module.exports = add;
