@@ -15,7 +15,9 @@ const register = infos => {
     utils.areInfosClean(infos, 'users');
     return new Promise((resolve, reject) => {
         if (conn) {
-            if (infos.username == '') {
+            if (infos.firstname == '' || infos.lastname == '') {
+                reject(new Error("register.alert.name_null"))
+            } else if (infos.username == '') {
                 reject(new Error("register.alert.username_null"));
             } else if (infos.password == '') {
                 reject(new Error("register.alert.password_null"));
@@ -29,6 +31,9 @@ const register = infos => {
                 reject(new Error("register.alert.birthdate_null"));
             } else if (!String(infos.email).match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
                 reject(new Error("register.alert.email_invalid"));
+            } else if (!String(infos.location).match(/[\-\d\.]+\;[\-\d\.]+/)) {
+                console.log(infos.location);
+                reject(new Error("register.alert.location_invalid"));
             } else {
                 utils.getIdFromEmail(infos.email).then(() => {
                     reject(new Error("register.alert.email_took"));
@@ -39,9 +44,11 @@ const register = infos => {
                         hash.create(infos.pwd).then(hashed => {
                             infos.pwd = hashed;
                             var conf_link = randomstring.generate(80);
-                            conn.query("INSERT INTO users (username, email, pwd, \
-                                sex, wanted, conf_link, birthdate, description) VALUES (?,?,?,?,?,?,?,?)",
-                                [infos.username, infos.email, infos.pwd, infos.sex, infos.wanted, conf_link, infos.birthdate, infos.description], err => {
+                            conn.query("INSERT INTO users (username, email, pwd, firstname, lastname,\
+                                    sex, wanted, conf_link, birthdate, description, location) \
+                                    VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                                    [infos.username, infos.email, infos.pwd, infos.firstname, infos.lastname, infos.sex, infos.wanted,
+                                        conf_link, infos.birthdate, infos.description, infos.location], err => {
                                 if (err) {
                                     reject(new Error("sql.alert.query"));
                                 } else {

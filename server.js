@@ -73,5 +73,3 @@ server.listen(port, err => {
     if (err) console.error(err);
     console.log("App listening on port " + port + "!");
 })
-
-//server.listen(port);

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import parseForm from '../utils/parseForm';
 import { notify } from '../utils/alert';
 import { withLocalesHOC } from '../utils/locales';
-import M from 'materialize-css'
+import M from 'materialize-css';
+import Map from './update/Map';
 
 class Register extends Component {
 
@@ -24,10 +25,13 @@ class Register extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  handleLocationChange = location => {
+    this.setState({ location: location.lat + ";" + location.lng });
+  }
+
   handleSubmit = e => {
     const { locales } = this.props;
-    e.preventDefault();
-    console.log(this.state)
+    //e.preventDefault();
     parseForm(this.state, strForm => {
       fetch('/api/register', {
         method: 'POST',
@@ -37,7 +41,6 @@ class Register extends Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            console.log(json);
             if (json['error']) {
               notify('error', locales.idParser(json['error']));
             } else if (json['success']) {
@@ -45,6 +48,9 @@ class Register extends Component {
             }
           });
         } else console.error(new Error(response.statusText));
+      })
+      .catch(() => {
+        // TO HANDLE 
       })
     });
   }
@@ -74,7 +80,7 @@ class Register extends Component {
   render() {
     const {locale} = this.props.locales;
     return (
-      <form onSubmit={this.handleSubmit} className="col s12">
+      <form id="temporaire" onSubmit={this.handleSubmit} className="col s12">
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">person</i>
@@ -112,11 +118,8 @@ class Register extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="input-field col s12">
-            <i className="material-icons prefix">location_city</i>
-            <input name="location" id="location" type="text" className="validate" onChange={this.onChange}/>
-            <label htmlFor="location">{locale.register.location}</label>
-          </div>
+          <label>{locale.register.location}</label>
+          {false ? <Map onChange={this.handleLocationChange} /> : ''}
         </div>
         <div className="row">
           <div className="input-field col s12">

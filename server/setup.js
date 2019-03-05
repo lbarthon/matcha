@@ -3,7 +3,7 @@ const fs = require('fs');
 
 fs.readFile("./server/sql/dump.sql", (err, data) => {
     if (err) exit("Error reading file ./server/sql/dump.sql");
-    var queries = String(data).split(";");
+    var queries = String(data).split(";\n");
     db_tools.connect_no_db((conn, err) => {
         if (err) exit("Error connecting to database.");
         conn.query("CREATE DATABASE IF NOT EXISTS Matcha", err => {

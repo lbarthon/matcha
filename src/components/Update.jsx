@@ -75,6 +75,11 @@ class Update extends Component {
     });
   }
 
+  // Padding for date
+  pad(s) {
+    return (s < 10) ? '0' + s : s;
+  }
+
   initDatepicker = () => {
     let elems = document.querySelectorAll('.datepicker');
     M.Datepicker.init(elems, {
@@ -82,7 +87,14 @@ class Update extends Component {
       defaultDate : new Date(this.state.user.birthdate),
       setDefaultDate: true,
       autoClose: true,
-      onSelect: date => { this.setState({ birthdate: date.toString() }); }
+      onSelect: date => {
+        this.setState({
+          user: {
+            ...this.state.user,
+            birthdate: [this.pad(date.getDate()), this.pad(date.getMonth()+1), date.getFullYear()].join('/')
+          }
+        });
+      }
     });
   }
 
@@ -232,7 +244,7 @@ class Update extends Component {
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">cake</i>
-            <input name="birthdate" id="birthdate" type="text" class="datepicker" onChange={this.onChange}/>
+            <input name="birthdate" id="birthdate" type="text" class="datepicker"/>
             <label htmlFor="birthdate">{locale.register.birthdate}</label>
           </div>
         </div>
