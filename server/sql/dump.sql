@@ -88,7 +88,10 @@ FOREIGN KEY (`id_from`) REFERENCES users(id)
 
 INSERT INTO users (username, lastname, firstname, birthdate, email, pwd, sex, wanted, confirmed, perm_level)
 VALUES ('admin', 'admin', 'admin', '01/01/1970', 'admin@admin.admin', '$2b$10$U9LU5mrIydb0MII79M0tbOXttYx1/oo.1UUBgKT2Y9a2U7VfYNx5a', 'Male', 'Female', 1, 1);
-
+INSERT INTO users (username, lastname, firstname, birthdate, email, pwd, sex, wanted, confirmed, perm_level)
+VALUES ('admin1', 'admin1', 'admin1', '01/01/1970', 'admin1@admin.admin', '$2b$10$U9LU5mrIydb0MII79M0tbOXttYx1/oo.1UUBgKT2Y9a2U7VfYNx5a', 'Male', 'Female', 1, 1);
+INSERT INTO users (username, lastname, firstname, birthdate, email, pwd, sex, wanted, confirmed, perm_level)
+VALUES ('admin2', 'admin2', 'admin2', '01/01/1970', 'admin2@admin.admin', '$2b$10$U9LU5mrIydb0MII79M0tbOXttYx1/oo.1UUBgKT2Y9a2U7VfYNx5a', 'Male', 'Female', 1, 1);
 --
 -- Add other requests here. Requests must end with a ;
 --
