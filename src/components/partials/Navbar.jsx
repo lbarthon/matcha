@@ -5,14 +5,6 @@ import M from 'materialize-css';
 
 class Navbar extends Component {
 
-  componentWillMount() {
-    console.log('mount navbar');
-  }
-
-  componentWillUpdate() {
-    console.log('update navbar');
-  }
-
   handleLogout = () => {
     const { getCurrentUser } = this.props.currentUser;
     fetch('/api/logout').then(response => {
@@ -41,7 +33,7 @@ class Navbar extends Component {
   }
 
   getNotifications = () => {
-
+    //todo
   }
 
   componentWillMount() {
