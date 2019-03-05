@@ -24,8 +24,19 @@ class Chat extends Component {
     document.querySelector('#message').value = '';
   }
 
-  componentWillMount() {
+  getRooms = () => {
+    fetch('/api/chat/room/').then(response => {
+      console.log(response);
+      if (response.ok) {
+        response.json().then(json => {
+          console.log(json);
+        });
+      } else console.error(new Error(response.statusText));
+    });
+  }
 
+  componentWillMount() {
+    this.getRooms();
   }
 
   componentDidMount() {

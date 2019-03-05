@@ -15,8 +15,7 @@ class Navbar extends Component {
 
   handleLogout = () => {
     const { getCurrentUser } = this.props.currentUser;
-    fetch('/api/logout')
-    .then(response => {
+    fetch('/api/logout').then(response => {
       if (response.ok) {
         getCurrentUser();
       } else {
