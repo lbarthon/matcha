@@ -15,8 +15,7 @@ class User extends Component {
     liked: false
   }
 
-  getUser = () => {
-    const { id } = this.props.match.params;
+  getUser = (id) => {
     fetch('/api/user/' + id)
     .then(response => {
       if (response.ok) {
@@ -33,8 +32,7 @@ class User extends Component {
     })
   }
 
-  getPictures = () => {
-    const { id } = this.props.match.params;
+  getPictures = (id) => {
     fetch('/api/pictures/get/' + id)
     .then(response => {
       if (response.ok) {
@@ -55,8 +53,7 @@ class User extends Component {
     });
   }
 
-  getTags = () => {
-    const { id } = this.props.match.params;
+  getTags = (id) => {
     const { locales } = this.props;
     fetch('/api/tags/' + id).then(response => {
       if (response.ok) {
@@ -70,8 +67,8 @@ class User extends Component {
     });
   }
 
-  getLike = () => {
-    fetch('/api/likes/has_like/' + this.props.match.params.id).then(response => {
+  getLike = (id) => {
+    fetch('/api/likes/has_like/' + id).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
@@ -102,7 +99,7 @@ class User extends Component {
     });
   }
 
-  handleUnlike = () => {
+  handleUnlike = (id) => {
     const str = httpBuildQuery({target : this.props.match.params.id});
     fetch('/api/likes/remove', {
       method: 'POST',
@@ -128,11 +125,19 @@ class User extends Component {
 
   }
 
+  getInfos = (id) => {
+    this.getTags(id);
+    this.getUser(id);
+    this.getPictures(id);
+    this.getLike(id);
+  }
+
   componentWillMount() {
-    this.getTags();
-    this.getUser();
-    this.getPictures();
-    this.getLike();
+    this.getInfos(this.props.match.params.id);
+  }
+
+  componentWillUpdate() {
+    this.getInfos(this.props.match.params.id);
   }
 
   render() {

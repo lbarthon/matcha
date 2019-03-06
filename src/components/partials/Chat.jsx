@@ -120,7 +120,7 @@ class Chat extends Component {
     return (
       <div className="chat z-depth-2">
         <div className="chat-room">
-          <b>{room.id ? room.user.username : 'Selectionnez un salon'}</b>
+          <b>{room.id ? <Link to={'/user/' + room.user.id}>{room.user.username}</Link> : 'Selectionnez un salon'}</b>
           <div className="divider"></div>
           <div className="chat-room-body">
           {messages.map(message => {
