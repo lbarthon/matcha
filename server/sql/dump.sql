@@ -8,6 +8,7 @@ CREATE TABLE `blocked` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `chat_messages` (
+  `id` int(12) UNSIGNED NOT NULL,
   `id_room` int(10) UNSIGNED NOT NULL,
   `id_from` int(10) UNSIGNED NOT NULL,
   `read` bit(1) DEFAULT b'0',
@@ -1143,6 +1144,7 @@ ALTER TABLE `blocked`
   ADD KEY `target_id` (`target_id`);
 
 ALTER TABLE `chat_messages`
+  ADD PRIMARY KEY (`id`),
   ADD KEY `id_room` (`id_room`),
   ADD KEY `id_from` (`id_from`);
 
@@ -1175,6 +1177,9 @@ ALTER TABLE `tags`
 
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `chat_messages`
+  MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `chat_rooms`
   MODIFY `id` int(12) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
