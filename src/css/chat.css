@@ -18,9 +18,9 @@
   position: relative;
 }
 
-.chat-room > h6 {
-  padding: 0 10px;
-  font-weight: bold;
+.chat-room > b {
+  padding: 10px 10px;
+  display: block;
 }
 
 .chat-room-input {
@@ -99,6 +99,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 13px;
 }
 
 .chat-tab:hover {
@@ -106,12 +107,14 @@
 }
 
 .chat-tab > i {
-  margin-top:10px;
+  margin-top:5px;
   margin-right:5px;
 }
 
 .chat-tab-new {
-  display:inline-block;
+  display:block;
+  float:left;
+  margin-top:7px;
   color:white;
   padding:0 5px;
   width:auto;

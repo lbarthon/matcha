@@ -10,7 +10,7 @@ const get = uid => {
     return new Promise((resolve, reject) => {
         if (conn) {
             conn.query('SELECT chat_rooms.*, user1.username AS user1, user1pic.picture AS user1pic, \
-                user2.username AS user2, user2pic.picture AS user2pic, COUNT(chat_messages.message) as unread \
+                user2.username AS user2, user2pic.picture AS user2pic, COUNT(chat_messages.id) as unread \
                 FROM chat_rooms \
                 INNER JOIN users AS user1 ON chat_rooms.id_user1 = user1.id \
                 INNER JOIN users AS user2 ON chat_rooms.id_user2 = user2.id \

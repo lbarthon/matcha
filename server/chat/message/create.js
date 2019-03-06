@@ -8,7 +8,6 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 const create = (roomId, message, uid) => {
     return new Promise((resolve, reject) => {
         //todo verif
-        console.log(roomId)
         if (conn) {
             conn.query('INSERT INTO chat_messages (id_room, message, id_from) values (?,?,?)', [roomId, message, uid], (err, results) => {
                 if (err) {

@@ -16,9 +16,11 @@ class SideChat extends Component {
         <div className="chat-close"><i className="material-icons" onClick={this.closeChat}>close</i></div>
         {this.props.rooms.map(room => {
           return (
-            <div className="chat-tab" onClick={() => this.props.getMessages(room.id)}>
-              <i className="tiny material-icons">keyboard_arrow_left</i>
-              {room.unread &&
+            <div key={room.id} className="chat-tab" onClick={() => this.props.getMessages(room.id)}>
+              {this.props.active == room.id &&
+                <i className="material-icons">keyboard_arrow_left</i>
+              }
+              {room.unread > 0 &&
                 <div className="chat-tab-new">{room.unread}</div>
               }
               <div className="right">

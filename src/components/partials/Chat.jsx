@@ -85,13 +85,13 @@ class Chat extends Component {
   }
 
   getRooms = () => {
+    const { room, rooms } = this.state;
     fetch('/api/chat/room/').then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
             this.setState({rooms: json.success}, () => {
-              if (this.state.rooms[0] && this.state.room.id === undefined)
-                this.getMessages(this.state.rooms[0].id);
+
             });
           } else {
             notify('error', this.props.locales.idParser(json.error));
@@ -102,12 +102,12 @@ class Chat extends Component {
   }
 
   componentWillMount() {
-    const { room } = this.state;
+    const { socket } = this.props;
     this.getRooms();
-    this.props.socket.on('new_message', (data) => {
+    socket.on('new_message', (data) => {
+      if (data.roomId == this.state.room.id)
+        this.getMessages(this.state.room.id);
       this.getRooms();
-      if (room.id && data.roomId == room.id)
-        this.getMessages(room.id);
     })
   }
 
@@ -120,20 +120,20 @@ class Chat extends Component {
     return (
       <div className="chat z-depth-2">
         <div className="chat-room">
-          <h6>{room.id ? room.user.username : 'Selectionnez un salon'}</h6>
+          <b>{room.id ? room.user.username : 'Selectionnez un salon'}</b>
           <div className="divider"></div>
           <div className="chat-room-body">
           {messages.map(message => {
             return (
               <React.Fragment>
                 {message.id_from == room.user.id &&
-                  <div className="chat-msg clearfix">
+                  <div key={message.id} className="chat-msg clearfix">
                     <img src={this.state.room.user.pic != null ? '/pictures/user/' + room.user.pic : '/pictures/user/default.jpg'}/>
                     <p>{message.message}</p>
                   </div>
                 }
                 {message.id_from != room.user.id &&
-                  <div className="chat-msg clearfix chat-msg-right">
+                  <div key={message.id} className="chat-msg clearfix chat-msg-right">
                     <p>{message.message}</p>
                   </div>
                 }
@@ -153,7 +153,7 @@ class Chat extends Component {
           }
         </div>
         <div className="chat-side">
-          <SideChat rooms={this.state.rooms} getMessages={this.getMessages} />
+          <SideChat rooms={this.state.rooms} getMessages={this.getMessages} active={this.state.room.id} />
         </div>
       </div>
     );
