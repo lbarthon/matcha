@@ -25,7 +25,7 @@ const add = req => {
                     } else if (results.length > 0) {
                         reject(new Error("likes.add.present"));
                     } else {
-                        conn.query("INSERT INTO likes (user_id, target_id) VALUES (?,?)", [infos.target, req.session.uid], err => {
+                        conn.query("INSERT INTO likes (target_id, user_id) VALUES (?,?)", [infos.target, req.session.uid], err => {
                             if (err) {
                                 reject(new Error("sql.alert.query"));
                             } else {
