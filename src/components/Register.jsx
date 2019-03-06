@@ -55,13 +55,22 @@ class Register extends Component {
     });
   }
 
+  // Padding for date
+  pad(s) {
+    return (s < 10) ? '0' + s : s;
+  }
+
   initDatepicker = () => {
     let elems = document.querySelectorAll('.datepicker');
     let instances = M.Datepicker.init(elems, {
       format: 'dd/mm/yyyy',
       defaultDate : new Date('01/01/1995'),
       autoClose: true,
-      onSelect: date => { this.setState({ birthdate: date.toString() }); }
+      onSelect: date => {
+        this.setState({
+          birthdate: [this.pad(date.getDate()), this.pad(date.getMonth()+1), date.getFullYear()].join('/')
+        });
+      }
     });
   }
 
