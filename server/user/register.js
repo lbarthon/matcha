@@ -32,7 +32,6 @@ const register = infos => {
             } else if (!String(infos.email).match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
                 reject(new Error("register.alert.email_invalid"));
             } else if (!String(infos.location).match(/[\-\d\.]+\;[\-\d\.]+/)) {
-                console.log(infos.location);
                 reject(new Error("register.alert.location_invalid"));
             } else {
                 utils.getIdFromEmail(infos.email).then(() => {
