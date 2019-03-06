@@ -18,7 +18,9 @@ class SideChat extends Component {
           return (
             <div className="chat-tab" onClick={() => this.props.getMessages(room.id)}>
               <i className="tiny material-icons">keyboard_arrow_left</i>
-              <div className="chat-tab-new">4</div>
+              {room.unread &&
+                <div className="chat-tab-new">{room.unread}</div>
+              }
               <div className="right">
                 <b>{room.user.username}</b>
                 <img src={room.user.pic != null ? '/pictures/user/' + room.user.pic : '/pictures/user/default.jpg'}/>

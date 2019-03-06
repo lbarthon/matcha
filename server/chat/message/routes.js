@@ -23,4 +23,15 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.get('/read/:roomId', (req, res) => {
+    message.read(req.params.roomId, req.session.uid)
+    .then((resolve) => {
+        res.status(200).json({ 'success' : resolve });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+});
+
+
 module.exports = router;

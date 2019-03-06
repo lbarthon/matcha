@@ -20,6 +20,7 @@
 
 .chat-room > h6 {
   padding: 0 10px;
+  font-weight: bold;
 }
 
 .chat-room-input {
@@ -83,17 +84,21 @@
 }
 
 .chat-tab > .right > img {
-  display: inline-block;
+  display: block;
   height:32px;
   border-radius:2px;
-  vertical-align: middle;
   border-radius:100%;
+  float:right;
 }
 
 .chat-tab > .right > b {
   display:inline-block;
   line-height:32px;
   margin-right: 10px;
+  max-width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chat-tab:hover {

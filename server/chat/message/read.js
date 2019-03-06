@@ -5,14 +5,13 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
 
-const get = (id, uid) => {
+const get = (roomId, uid) => {
     return new Promise((resolve, reject) => {
         if (conn) {
-            conn.query('SELECT chat_messages.* FROM chat_messages \
-            INNER JOIN chat_rooms ON chat_messages.id_room = chat_rooms.id \
-            WHERE ? AND (? OR ?)',
-            [{'chat_messages.id_room': id }, {'chat_rooms.id_user1': uid}, {'chat_rooms.id_user2': uid}], (err, results) => {
+            conn.query('UPDATE chat_messages SET read = 1 WHERE id_room = ? AND id_from <> ?',
+            [roomId, uid], (err, results) => {
                 if (err) {
+                  console.log(err);
                     reject(new Error("sql.alert.query"));
                 } else {
                     resolve(results);

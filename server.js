@@ -56,8 +56,8 @@ io.on('connection', socket => {
   socket.on('join', data => {
     socket.join(data.id);
   });
-  socket.on('new_msg', data => {
-    io.sockets.in(data.id).emit('new_msg');
+  socket.on('new_message', data => {
+    socket.broadcast.to(data.to).emit('new_message', data);
   })
 });
 
