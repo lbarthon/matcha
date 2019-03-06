@@ -611,7 +611,7 @@ FOREIGN KEY (`id_user2`) REFERENCES users(id)
 CREATE TABLE chat_messages (
 `id_room` INT(10) UNSIGNED NOT NULL,
 `id_from` INT(10) UNSIGNED NOT NULL,
-`read` BIT DEFAULT 0,
+`read` TINYINT(1) DEFAULT 0,
 `message` TEXT,
 create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (`id_room`) REFERENCES chat_rooms(id),
