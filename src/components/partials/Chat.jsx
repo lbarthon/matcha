@@ -28,7 +28,10 @@ class Chat extends Component {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
-            this.setState({messages: json.success});
+            this.setState({messages: json.success}, () => {
+              let chat = document.querySelector('.chat-room-body');
+              chat.scrollTop = chat.scrollHeight;
+            });
           } else {
             notify('error', this.props.locales.idParser(json.error));
           }
@@ -71,7 +74,8 @@ class Chat extends Component {
         response.json().then(json => {
           if (json.success) {
             this.setState({rooms: json.success}, () => {
-              this.getMessages(this.state.rooms[0].id);
+              if (this.state.rooms[0])
+                this.getMessages(this.state.rooms[0].id);
             });
           } else {
             notify('error', this.props.locales.idParser(json.error));

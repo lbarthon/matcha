@@ -115,3 +115,13 @@
   background: red;
   border-radius: 2px;
 }
+
+.chat-close {
+  margin:5px;
+  text-align: right;
+  height:24px;
+}
+
+.chat-close > i {
+  cursor:pointer;
+}

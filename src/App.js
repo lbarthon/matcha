@@ -45,8 +45,6 @@ class App extends Component {
             <PrivateRoute path="/update" component={Update}/>
             <PrivateRoute path="/upload" component={Upload}/>
             <PrivateRoute path="/user/:id" component={User}/>
-            <PrivateRoute path="/chat" component={Chat}/>
-            <PrivateRoute path="/chat/:id" component={Chat}/>
             <PrivateRoute path="/notifications" component={Notifications}/>
             <Route path='*' exact={true} component={NotFound} />
           </Switch>
