@@ -1,0 +1,8 @@
+#!/bin/bash
+tar --exclude='.git' --exclude='./node_modules' -czvf output.tar.gz .
+ssh -p 2222 -t root@51.77.202.107 rm -rf /var/www/php/matcha/*
+scp -rP 2222 ./output.tar.gz root@51.77.202.107:/opt
+ssh -p 2222 -t root@51.77.202.107 tar xvf /opt/output.tar.gz -C /var/www/php/matcha/
+ssh -p 2222 -t root@51.77.202.107 rm /opt/output.tar.gz
+ssh -p 2222 -t root@51.77.202.107 chown -R www-data: /var/www
+rm output.tar.gz
