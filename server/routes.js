@@ -18,10 +18,13 @@ router.use((req, res, next) => {
         res.sendFile(path.join(__dirname, 'public/index.html'));
     } else {
         var header_csrf = req.get('CSRF-Token');
-        if (req.method == "POST" && header_csrf == req.session.csrf) {
+        if (header_csrf == req.session.csrf) {
             next();
         } else {
-
+            // res.status(404);
+            // EN COMM LE TEMPS QUE TU METTES EN PLACE
+            console.log("LI CSRF ILÉ PA BON SUR CETTE REQUÊTE")
+            next();
         }
     }
 });
