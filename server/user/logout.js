@@ -9,6 +9,7 @@ const logout = req => {
         .then(() => {
             req.session.username = undefined;
             req.session.uid = undefined;
+            req.session.save();
             resolve();
         })
         .catch(() => {

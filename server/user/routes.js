@@ -17,6 +17,7 @@ router.post('/login', (req, res) => {
     .then((arr) => {
         req.session.username = arr[0];
         req.session.uid = arr[1];
+        req.session.perm_level = arr[2] == 1 ? 1 : 0;
         req.session.save();
         res.status(200).json({ 'success' : 'login.alert.success' });
     })
