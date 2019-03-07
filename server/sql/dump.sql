@@ -21,6 +21,7 @@ INSERT INTO `chat_messages` (`id`, `id_room`, `id_from`, `read`, `message`, `cre
 
 CREATE TABLE `chat_rooms` (
   `id` int(12) UNSIGNED NOT NULL,
+  `display` bit(1) DEFAULT b'1',
   `id_user1` int(10) UNSIGNED NOT NULL,
   `id_user2` int(10) UNSIGNED NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
