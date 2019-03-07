@@ -132,8 +132,9 @@ class Update extends Component {
               this.initDatepicker();
               this.initSelect();
             });
-          } else if (json.error)
+          } else if (json.error) {
             notify('error', locales.idParser(json.error));
+          }
         });
       } else console.error(new Error(response.statusText));
     });
@@ -152,8 +153,9 @@ class Update extends Component {
             this.setState({tagsList: obj}, () => {
               this.initTags();
             });
-          } else
-            notify('error', locales.idParser(json.error))
+          } else {
+            notify('error', locales.idParser(json.error));
+          }
         });
       } else console.error(new Error(response.statusText));
     });
@@ -169,8 +171,9 @@ class Update extends Component {
             this.setState({tags: json.success}, () => {
               this.initTags();
             });
-          } else
-            notify('error', locales.idParser(json.error))
+          } else {
+            notify('error', locales.idParser(json.error));
+          }
         });
       } else console.error(new Error(response.statusText));
     });

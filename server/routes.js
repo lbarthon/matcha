@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const randomstring = require('randomstring');
 const db_tools = require('./database');
 const user_pictures_routes = require('./user/pictures/routes');
 const lang_routes = require('./lang/routes');
@@ -16,7 +17,15 @@ router.use((req, res, next) => {
     if (!req.is('application/x-www-form-urlencoded') && !req.is('multipart/form-data') && req.method == "POST") {
         res.sendFile(path.join(__dirname, 'public/index.html'));
     } else {
-        next();
+        var header_csrf = req.get('CSRF-Token');
+        if (header_csrf == req.session.csrf) {
+            next();
+        } else {
+            // res.status(404);
+            // EN COMM LE TEMPS QUE TU METTES EN PLACE
+            console.log("LI CSRF ILÉ PA BON SUR CETTE REQUÊTE")
+            next();
+        }
     }
 });
 
