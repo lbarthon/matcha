@@ -36,6 +36,11 @@ class Chat extends Component {
     });
   }
 
+  changeRoom = (roomId) => {
+    this.setState({messages: []});
+    this.getMessages(roomId);
+  }
+
   getMessages = (roomId) => {
     this.state.rooms.map(room => { if (room.id == roomId) this.setState({room: room}) });
     fetch('/api/chat/message/' + roomId).then(response => {
@@ -90,9 +95,7 @@ class Chat extends Component {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
-            this.setState({rooms: json.success}, () => {
-
-            });
+            this.setState({rooms: json.success});
           } else {
             notify('error', this.props.locales.idParser(json.error));
           }
@@ -109,10 +112,6 @@ class Chat extends Component {
         this.getMessages(this.state.room.id);
       this.getRooms();
     })
-  }
-
-  componentDidMount() {
-
   }
 
   render() {
@@ -153,7 +152,7 @@ class Chat extends Component {
           }
         </div>
         <div className="chat-side">
-          <SideChat rooms={this.state.rooms} getMessages={this.getMessages} active={this.state.room.id} />
+          <SideChat rooms={this.state.rooms} changeRoom={this.changeRoom} active={this.state.room.id} />
         </div>
       </div>
     );

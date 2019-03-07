@@ -126,6 +126,13 @@ class User extends Component {
   }
 
   getInfos = (id) => {
+    this.setState({
+      user : undefined,
+      pictures: [],
+      mainPic: {},
+      tags: [],
+      liked: false
+    });
     this.getTags(id);
     this.getUser(id);
     this.getPictures(id);
@@ -136,8 +143,9 @@ class User extends Component {
     this.getInfos(this.props.match.params.id);
   }
 
-  componentWillUpdate() {
-    this.getInfos(this.props.match.params.id);
+  componentWillReceiveProps(nextProps) {
+    if (this.props.match.params.id != nextProps.match.params.id)
+      this.getInfos(nextProps.match.params.id);
   }
 
   render() {
