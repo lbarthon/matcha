@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withAllHOC } from '../../utils/allHOC';
 import M from 'materialize-css';
-import SideChat from './chat/SideChat'
+import WindowChatSide from './chat/WindowChatSide'
 import '../../css/chat.css'
 import { notify } from '../../utils/alert';
 import httpBuildQuery from 'http-build-query';
@@ -48,7 +48,7 @@ class Chat extends Component {
         response.json().then(json => {
           if (json.success) {
             this.setState({messages: json.success}, () => {
-              let chat = document.querySelector('.chat-room-body');
+              let chat = document.querySelector('.window-chat-room-body');
               chat.scrollTop = chat.scrollHeight;
               this.setRead(roomId);
             });
@@ -107,13 +107,18 @@ class Chat extends Component {
   leaveRoom = (roomId) => {
     fetch('/api/chat/room/leave/' + roomId).then(response => {
       if (response.ok) {
-        if (json.success) {
-
-        } else {
-          notify('error', this.props.locales.idParser(json.error));
-        }
+        response.json().then(json => {
+          if (json.success) {
+            this.setState({room : {
+              ...this.state.room,
+              display: 0
+            }})
+          } else {
+            notify('error', this.props.locales.idParser(json.error));
+          }
+        });
       } else console.error(new Error(response.statusText));
-    })
+    });
   }
 
   componentWillMount() {
@@ -129,27 +134,27 @@ class Chat extends Component {
   render() {
     const { messages, room } = this.state;
     const { locale } = this.props.locales
-    console.log(room);
+    const window = this.props.window !== undefined;
     return (
-      <div className="chat z-depth-2">
-        <div className="chat-room">
+      <div className="window-chat z-depth-2">
+        <div className="window-chat-room">
           <span>
             {room.id ? <Link to={'/user/' + room.user.id}>{room.user.username}</Link> : locale.chat.room_select}
-            <i className="material-icons" onClick={() => this.leaveRoom(room.id)}>exit_to_app</i>
+            {room.id && <i className="material-icons" onClick={() => this.leaveRoom(room.id)}>exit_to_app</i> }
           </span>
           <div className="divider"></div>
-          <div className="chat-room-body">
+          <div className="window-chat-room-body">
           {messages.map(message => {
             return (
               <React.Fragment>
                 {message.id_from == room.user.id &&
-                  <div key={message.id} className="chat-msg clearfix">
+                  <div key={message.id} className="window-chat-msg clearfix">
                     <img src={this.state.room.user.pic != null ? '/pictures/user/' + room.user.pic : '/pictures/user/default.jpg'}/>
                     <p>{message.message}</p>
                   </div>
                 }
                 {message.id_from != room.user.id &&
-                  <div key={message.id} className="chat-msg clearfix chat-msg-right">
+                  <div key={message.id} className="window-chat-msg clearfix window-chat-msg-right">
                     <p>{message.message}</p>
                   </div>
                 }
@@ -159,7 +164,7 @@ class Chat extends Component {
           </div>
           {room.id &&
             (room.display ? (
-              <div className="chat-room-input">
+              <div className="window-chat-room-input">
                 <form onSubmit={this.handleSubmit}>
                   <div className="input-field">
                     <input name="message" id="message" type="text" className="validate" onChange={this.onChange}/>
@@ -171,8 +176,8 @@ class Chat extends Component {
             )
           }
         </div>
-        <div className="chat-side">
-          <SideChat rooms={this.state.rooms} changeRoom={this.changeRoom} active={this.state.room.id} />
+        <div className="window-chat-side">
+          <WindowChatSide rooms={this.state.rooms} changeRoom={this.changeRoom} active={this.state.room.id} />
         </div>
       </div>
     );

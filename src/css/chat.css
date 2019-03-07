@@ -1,5 +1,5 @@
 
-.chat {
+.window-chat {
   position: fixed;
   bottom: 0%;
   right: 15px;
@@ -10,7 +10,7 @@
   z-index: 10;
 }
 
-.chat-room {
+.window-chat-room {
   float: left;
   border-right: solid 1px #e0e0e0;
   height: 500px;
@@ -18,23 +18,23 @@
   position: relative;
 }
 
-.chat-room > span {
+.window-chat-room > span {
   padding: 10px 10px;
   display: block;
 }
 
-.chat-room > span > i {
+.window-chat-room > span > i {
   float: right;
   cursor: pointer;
 }
 
-.chat-room-input {
+.window-chat-room-input {
   padding:0 10px;
   float: left;
   width:100%;
 }
 
-.chat-room-body {
+.window-chat-room-body {
   padding:0 10px;
   height: 380px;
   float: left;
@@ -42,36 +42,36 @@
   overflow: auto;
 }
 
-.chat-side {
+.window-chat-side {
   width:200px;
   float: left;
   height:100%;
 }
 
-.chat-msg {
+.window-chat-msg {
   margin-top:10px;
 }
 
-.chat-msg-right > img {
+.window-chat-msg-right > img {
   float:right !important;
   margin-left:10px !important;
   margin-right:0 !important;
 }
 
-.chat-msg-right > p {
+.window-chat-msg-right > p {
   float:right !important;
   background-color:#42a5f5 !important;
   color: white !important;
 }
 
-.chat-msg > img {
+.window-chat-msg > img {
   height:30px;
   width:30px;
   border-radius: 2px;
   margin-right:10px;
   float: left;
 }
-.chat-msg > p {
+.window-chat-msg > p {
   margin:0;
   padding:5px 10px;
   display: block;
@@ -83,19 +83,19 @@
   overflow-wrap: break-word;
 }
 
-.chat-tabs {
+.window-chat-tabs {
   height: calc(500px - 34px);
   overflow: auto;
 }
 
-.chat-tab {
+.window-chat-tab {
   padding:10px;
   height:calc(32px + 20px);
   line-height:32px;
   cursor: pointer;
 }
 
-.chat-tab > .right > img {
+.window-chat-tab > .right > img {
   display: block;
   height:32px;
   border-radius:2px;
@@ -103,7 +103,7 @@
   float:right;
 }
 
-.chat-tab > .right > b {
+.window-chat-tab > .right > b {
   display:inline-block;
   line-height:32px;
   margin-right: 10px;
@@ -114,16 +114,16 @@
   font-size: 13px;
 }
 
-.chat-tab:hover {
+.window-chat-tab:hover {
   background-color: #f5f5f5;
 }
 
-.chat-tab > i {
+.window-chat-tab > i {
   margin-top:5px;
   margin-right:5px;
 }
 
-.chat-tab-new {
+.window-chat-tab-new {
   display:block;
   float:left;
   margin-top:7px;
@@ -136,12 +136,12 @@
   border-radius: 2px;
 }
 
-.chat-close {
+.window-chat-close {
   margin:5px;
   text-align: right;
   height:24px;
 }
 
-.chat-close > i {
+.window-chat-close > i {
   cursor:pointer;
 }

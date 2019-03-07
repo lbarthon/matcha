@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { withAllHOC } from '../../../utils/allHOC';
+import { withAllHOC } from '../../utils/allHOC';
 import M from 'materialize-css';
 
 class SideChat extends Component {
