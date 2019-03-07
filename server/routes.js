@@ -20,10 +20,10 @@ router.use((req, res, next) => {
         var header_csrf = req.get('CSRF-Token');
         if (header_csrf == req.session.csrf) {
             next();
-        } else {
+        } else if (req.session.csrf != undefined) {
             // res.status(404);
             // EN COMM LE TEMPS QUE TU METTES EN PLACE
-            console.log("LI CSRF ILÉ PA BON SUR CETTE REQUÊTE")
+            console.log("LI CSRF ILÉ PA BON SUR CETTE REQUÊTE");
             next();
         }
     }
