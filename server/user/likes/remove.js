@@ -1,4 +1,6 @@
 const emitter = require('../../emitter');
+const Types = require('../notification/types');
+const notify = require('../notification/notify');
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
@@ -13,16 +15,24 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
  */
 const remove = req => {
     var infos = req.body;
+    var uid = req.session.uid;
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.target == undefined || infos.target == '' || isNaN(infos.target)) {
                 reject(new Error("error_wrong_id"));
             } else {
-                conn.query("DELETE FROM likes WHERE ? AND ?", [{target_id: infos.target}, {user_id: req.session.uid}], (err, results) => {
+                conn.query("DELETE FROM likes WHERE ? AND ?", [{user_id: uid}, {target_id: infos.target}], (err, results) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
                     } else if (results.affectedRows == 1) {
-                        resolve();
+                        conn.query("SELECT * FROM likes WHERE ? AND ?", [{user_id: infos.target}, {target_id: uid}], (err, results) => {
+                            if (err) {
+                                reject(new Error("sql.alert.query"));
+                            } else if (results.length == 1) {
+                                notify(Types.MATCH_DISLIKE, uid, infos.target);
+                            }
+                            resolve();
+                        })
                     } else {
                         reject(new Error("likes.remove.absent"));
                     }

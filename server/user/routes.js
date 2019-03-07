@@ -66,7 +66,7 @@ router.get('/user/current', (req, res) => {
 });
 
 router.get('/user/:id', (req, res) => {
-    user.get_infos_id(req.params.id)
+    user.get_infos_id(req.params.id, req.session.uid)
     .then((resolve) => {
         res.status(200).json({ 'success' : resolve });
     })

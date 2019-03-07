@@ -23,12 +23,14 @@ export class CurrentUserProvider extends React.Component {
                 this.setState({
                   logged: true,
                   username: json.success.username,
-                  id: json.success.uid
+                  id: json.success.uid,
+                  csrf: json.success.csrf
                 });
               }
             } else {
-              if (this.state.logged !== false)
+              if (this.state.logged !== false) {
                 this.setState({logged: false});
+              }
             }
           })
         } else {
@@ -37,8 +39,9 @@ export class CurrentUserProvider extends React.Component {
         }
       })
       .catch(error => { console.log(error); });
-      if (callback)
+      if (callback) {
         callback();
+      }
     }
   }
 

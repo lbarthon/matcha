@@ -1,3 +1,4 @@
+const randomstring = require('randomstring');
 const emitter = require('../emitter');
 const db_infos = require('../database');
 const prod = (process.env.PROD == "true" || false);
@@ -63,6 +64,7 @@ const isLogged = req => {
             getIdFromUsername(req.session.username)
             .then(id => {
                 if (req.session.uid == id) {
+                    req.session.csrf = randomstring.generate(50);
                     resolve(req.session);
                 } else {
                     reject();
