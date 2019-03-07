@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { withAllHOC } from '../../utils/allHOC';
 import M from 'materialize-css';
 import WindowChatSide from './chat/WindowChatSide'
-import '../../css/chat.css'
+import '../../css/windowchat.css'
 import { notify } from '../../utils/alert';
 import httpBuildQuery from 'http-build-query';
 

@@ -1,0 +1,147 @@
+
+.window-chat {
+  position: fixed;
+  bottom: 0%;
+  right: 15px;
+  width: 500px;
+  height: auto;
+  border-radius: 3px 3px 0 0;
+  background-color: white;
+  z-index: 10;
+}
+
+.window-chat-room {
+  float: left;
+  border-right: solid 1px #e0e0e0;
+  height: 500px;
+  width: calc(100% - 200px);
+  position: relative;
+}
+
+.window-chat-room > span {
+  padding: 10px 10px;
+  display: block;
+}
+
+.window-chat-room > span > i {
+  float: right;
+  cursor: pointer;
+}
+
+.window-chat-room-input {
+  padding:0 10px;
+  float: left;
+  width:100%;
+}
+
+.window-chat-room-body {
+  padding:0 10px;
+  height: 380px;
+  float: left;
+  width:100%;
+  overflow: auto;
+}
+
+.window-chat-side {
+  width:200px;
+  float: left;
+  height:100%;
+}
+
+.window-chat-msg {
+  margin-top:10px;
+}
+
+.window-chat-msg-right > img {
+  float:right !important;
+  margin-left:10px !important;
+  margin-right:0 !important;
+}
+
+.window-chat-msg-right > p {
+  float:right !important;
+  background-color:#42a5f5 !important;
+  color: white !important;
+}
+
+.window-chat-msg > img {
+  height:30px;
+  width:30px;
+  border-radius: 2px;
+  margin-right:10px;
+  float: left;
+}
+.window-chat-msg > p {
+  margin:0;
+  padding:5px 10px;
+  display: block;
+  float: left;
+  width:auto;
+  max-width: calc(100% - 40px);
+  background: #f5f5f5;
+  border-radius:3px;
+  overflow-wrap: break-word;
+}
+
+.window-chat-tabs {
+  height: calc(500px - 34px);
+  overflow: auto;
+}
+
+.window-chat-tab {
+  padding:10px;
+  height:calc(32px + 20px);
+  line-height:32px;
+  cursor: pointer;
+}
+
+.window-chat-tab > .right > img {
+  display: block;
+  height:32px;
+  border-radius:2px;
+  border-radius:100%;
+  float:right;
+}
+
+.window-chat-tab > .right > b {
+  display:inline-block;
+  line-height:32px;
+  margin-right: 10px;
+  max-width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 13px;
+}
+
+.window-chat-tab:hover {
+  background-color: #f5f5f5;
+}
+
+.window-chat-tab > i {
+  margin-top:5px;
+  margin-right:5px;
+}
+
+.window-chat-tab-new {
+  display:block;
+  float:left;
+  margin-top:7px;
+  color:white;
+  padding:0 5px;
+  width:auto;
+  height:18px;
+  line-height:18px;
+  background: red;
+  border-radius: 2px;
+}
+
+.window-chat-close {
+  margin:5px;
+  text-align: right;
+  height:24px;
+}
+
+.window-chat-close > i {
+  cursor:pointer;
+}

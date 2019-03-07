@@ -18,7 +18,7 @@ class Navbar extends Component {
   }
 
   initNavbar = () => {
-    let elem = document.querySelector(".sidenav");
+    let elem = document.querySelector('.sidenav.sidenav-main');
     M.Sidenav.init(elem, {
       edge: 'left',
       inDuration: 250
@@ -90,7 +90,7 @@ class Navbar extends Component {
             </ul>
           </div>
         </nav>
-        <ul className="sidenav" id="sidenav">
+        <ul className="sidenav sidenav-main" id="sidenav">
           {logged === true &&
             <React.Fragment>
               <li><Link to="/notifications"><i className="material-icons">notifications_none</i>Notifications</Link></li>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withAllHOC } from '../utils/allHOC';
 import M from 'materialize-css';
-import SideChat from './chat/SideChat'
+import ChatSide from './chat/ChatSide'
 import '../css/chat.css'
 import { notify } from '../utils/alert';
 import httpBuildQuery from 'http-build-query';
@@ -130,9 +130,50 @@ class Chat extends Component {
       this.getRooms();
     })
   }
+
   render() {
+    const { room, messages } = this.state;
+    const { locale } = this.props.locales;
     return (
-      null
+      <div className="chat">
+        <ChatSide rooms={this.state.rooms} changeRoom={this.changeRoom} active={this.state.room.id} />
+        <div>
+          {room.id ? <Link to={'/user/' + room.user.id}>{room.user.username}</Link> : locale.chat.room_select}
+          {room.id && <i className="material-icons right" onClick={() => this.leaveRoom(room.id)}>exit_to_app</i>}
+        </div>
+        <div className="window-chat-room-body">
+          {messages.map(message => {
+            return (
+              <React.Fragment>
+                {message.id_from == room.user.id &&
+                  <div key={message.id} className="window-chat-msg clearfix">
+                    <img src={this.state.room.user.pic != null ? '/pictures/user/' + room.user.pic : '/pictures/user/default.jpg'}/>
+                    <p>{message.message}</p>
+                  </div>
+                }
+                {message.id_from != room.user.id &&
+                  <div key={message.id} className="window-chat-msg clearfix window-chat-msg-right">
+                    <p>{message.message}</p>
+                  </div>
+                }
+              </React.Fragment>
+            )
+          })}
+        </div>
+        {room.id &&
+          (room.display ? (
+            <div className="window-chat-room-input">
+              <form onSubmit={this.handleSubmit}>
+                <div className="input-field">
+                  <input name="message" id="message" type="text" className="validate" onChange={this.onChange}/>
+                  <label for="message">Message</label>
+                </div>
+              </form>
+            </div>
+          ) : <div className="m-10"><em>{locale.chat.room_unactive}</em></div>
+          )
+        }
+      </div>
     );
   }
 }
