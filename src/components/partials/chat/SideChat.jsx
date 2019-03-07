@@ -14,22 +14,24 @@ class SideChat extends Component {
     return (
       <div>
         <div className="chat-close"><i className="material-icons" onClick={this.closeChat}>close</i></div>
-        {this.props.rooms.map(room => {
-          return (
-            <div key={room.id} className="chat-tab" onClick={() => this.props.changeRoom(room.id)}>
-              {this.props.active == room.id &&
-                <i className="material-icons">keyboard_arrow_left</i>
-              }
-              {room.unread > 0 &&
-                <div className="chat-tab-new">{room.unread}</div>
-              }
-              <div className="right">
-                <b>{room.user.username}</b>
-                <img src={room.user.pic != null ? '/pictures/user/' + room.user.pic : '/pictures/user/default.jpg'}/>
+        <div className="chat-tabs">
+          {this.props.rooms.map(room => {
+            return (
+              <div key={room.id} className="chat-tab" onClick={() => this.props.changeRoom(room.id)}>
+                {this.props.active == room.id &&
+                  <i className="material-icons">keyboard_arrow_left</i>
+                }
+                {room.unread > 0 &&
+                  <div className="chat-tab-new">{room.unread}</div>
+                }
+                <div className="right">
+                  <b>{room.user.username}</b>
+                  <img src={room.user.pic != null ? '/pictures/user/' + room.user.pic : '/pictures/user/default.jpg'}/>
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
     )
   }

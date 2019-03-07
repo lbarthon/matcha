@@ -128,14 +128,15 @@ class Chat extends Component {
 
   render() {
     const { messages, room } = this.state;
+    const { locale } = this.props.locales
     console.log(room);
     return (
       <div className="chat z-depth-2">
         <div className="chat-room">
-          <b>
-            {room.id ? <Link to={'/user/' + room.user.id}>{room.user.username}</Link> : 'Selectionnez un salon'}
+          <span>
+            {room.id ? <Link to={'/user/' + room.user.id}>{room.user.username}</Link> : locale.chat.room_select}
             <i className="material-icons" onClick={() => this.leaveRoom(room.id)}>exit_to_app</i>
-          </b>
+          </span>
           <div className="divider"></div>
           <div className="chat-room-body">
           {messages.map(message => {
@@ -156,15 +157,18 @@ class Chat extends Component {
             )
           })}
           </div>
-          {room.id && room.display &&
-            <div className="chat-room-input">
-              <form onSubmit={this.handleSubmit}>
-                <div className="input-field">
-                  <input name="message" id="message" type="text" className="validate" onChange={this.onChange}/>
-                  <label for="message">Message</label>
-                </div>
-              </form>
-            </div>
+          {room.id &&
+            (room.display ? (
+              <div className="chat-room-input">
+                <form onSubmit={this.handleSubmit}>
+                  <div className="input-field">
+                    <input name="message" id="message" type="text" className="validate" onChange={this.onChange}/>
+                    <label for="message">Message</label>
+                  </div>
+                </form>
+              </div>
+            ) : <div className="m-10"><em>{locale.chat.room_unactive}</em></div>
+            )
           }
         </div>
         <div className="chat-side">

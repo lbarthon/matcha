@@ -6,6 +6,10 @@
   "repassword": "Repetez votre mot de passe",
   "email" : "Email",
   "notfound" : "Ressource pas trouvee",
+  "chat" : {
+    "room_select" : "Selectionnez une salle",
+    "room_unactive" : "Vous ou l'autre utilisateur avez quitte cet espace de chat"
+  },
   "gender" : {
     "male" : "Homme",
     "female" : "Femme"

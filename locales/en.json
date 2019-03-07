@@ -6,6 +6,10 @@
   "repassword": "Password confirmation",
   "email" : "Email",
   "notfound" : "Ressource not found",
+  "chat" : {
+    "room_select" : "Select a room",
+    "room_unactive" : "You or the other user has left this chat space"
+  },
   "gender" : {
     "male" : "Male",
     "female" : "Female"
