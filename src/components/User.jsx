@@ -46,8 +46,9 @@ class User extends Component {
               }
             }
             this.setState({ pictures: pictures });
-          } else if (json.error)
+          } else if (json.error) {
             notify('error', this.props.locales.idParser(json.error));
+          }
         });
       } else console.error(new Error(response.statusText));
     });
@@ -60,8 +61,9 @@ class User extends Component {
         response.json().then(json => {
           if (json.success) {
             this.setState({tags: json.success});
-          } else
+          } else {
             notify('error', locales.idParser(json.error))
+          }
         });
       } else console.error(new Error(response.statusText));
     });
@@ -71,11 +73,13 @@ class User extends Component {
     fetch('/api/likes/has_like/' + id).then(response => {
       if (response.ok) {
         response.json().then(json => {
-          if (json.success) {
-            if (json.success === true)
+          if (json.success != undefined) {
+            if (json.success === true) {
               this.setState({liked: true});
-          } else
+            }
+          } else {
             notify('error', this.props.locales.idParser(json.error));
+          }
         });
       } else console.error(new Error(response.statusText));
     });
