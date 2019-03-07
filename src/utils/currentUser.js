@@ -23,12 +23,15 @@ export class CurrentUserProvider extends React.Component {
                 this.setState({
                   logged: true,
                   username: json.success.username,
-                  id: json.success.uid
+                  id: json.success.uid,
+                  csrf: json.success.csrf
                 });
               }
             } else {
               if (this.state.logged !== false)
-                this.setState({logged: false});
+                this.setState({
+                  logged: false, csrf: json.success.csrf
+                });
             }
           })
         } else {
