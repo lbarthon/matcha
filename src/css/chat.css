@@ -22,6 +22,10 @@
   padding: 10px 10px;
   display: block;
 }
+.chat-room > b > i {
+  float: right;
+  cursor: pointer;
+}
 
 .chat-room-input {
   padding:0 10px;

@@ -18,7 +18,7 @@ export class CurrentUserProvider extends React.Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            if (json.success !== false) {
+            if (json.success.username !== undefined) {
               if (this.state.logged !== true) {
                 this.setState({
                   logged: true,
@@ -29,7 +29,10 @@ export class CurrentUserProvider extends React.Component {
               }
             } else {
               if (this.state.logged !== false) {
-                this.setState({logged: false});
+                this.setState({
+                  logged: false,
+                  csrf: json.success.csrf
+                });
               }
             }
           })
