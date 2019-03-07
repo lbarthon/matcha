@@ -61,6 +61,7 @@ const getIdFromEmail = email => {
 const isLogged = req => {
     return new Promise((resolve, reject) => {
         req.session.csrf = randomstring.generate(50);
+        req.session.save();
         if (req.session.username != undefined && req.session.uid != undefined) {
             getIdFromUsername(req.session.username)
             .then(id => {
