@@ -39,13 +39,13 @@ class App extends Component {
         <div className="container">
           <AlertContainer />
           <Switch>
-            <Route exact path="/" component={Home}/>
-            <UnloggedRoute path="/register" component={Register}/>
-            <UnloggedRoute path="/login" component={Login}/>
-            <PrivateRoute path="/update" component={Update}/>
-            <PrivateRoute path="/upload" component={Upload}/>
-            <PrivateRoute path="/user/:id" component={User}/>
-            <PrivateRoute path="/notifications" component={Notifications}/>
+            <Route exact path="/" component={Home} />
+            <UnloggedRoute path="/register" component={Register} />
+            <UnloggedRoute path="/login" component={Login} />
+            <PrivateRoute path="/update" component={Update} />
+            <PrivateRoute path="/upload" component={Upload} />
+            <PrivateRoute path="/user/:id" component={User} />
+            <PrivateRoute path="/notifications" component={Notifications} />
             <Route path='*' exact={true} component={NotFound} />
           </Switch>
         </div>

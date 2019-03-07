@@ -95,7 +95,7 @@ class Navbar extends Component {
           {logged === true &&
             <React.Fragment>
               <li><Link to="/notifications"><i className="material-icons">notifications_none</i>Notifications</Link></li>
-              <li><a onClick={this.toggleChat}><i className="material-icons">message</i></a></li>
+              <li><Link to="/chat"><i className="material-icons">message</i>Chat</Link></li>
               <li><Link to="/update">{locales.locale.nav.update}</Link></li>
               <li><Link to="/upload">{locales.locale.nav.upload}</Link></li>
               <li><a onClick={this.handleLogout}>{locales.locale.nav.logout}</a></li>
