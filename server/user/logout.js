@@ -7,7 +7,8 @@ const logout = req => {
     return new Promise((resolve, reject) => {
         utils.isLogged(req)
         .then(() => {
-            req.session.destroy();
+            req.session.username = undefined;
+            req.session.uid = undefined;
             resolve();
         })
         .catch(() => {

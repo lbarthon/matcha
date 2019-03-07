@@ -60,19 +60,19 @@ const getIdFromEmail = email => {
  */
 const isLogged = req => {
     return new Promise((resolve, reject) => {
+        req.session.csrf = randomstring.generate(50);
         if (req.session.username != undefined && req.session.uid != undefined) {
             getIdFromUsername(req.session.username)
             .then(id => {
                 if (req.session.uid == id) {
-                    req.session.csrf = randomstring.generate(50);
                     resolve(req.session);
                 } else {
-                    reject();
+                    reject(req.session);
                 }
             })
-            .catch(() => reject());
+            .catch(() => reject(req.session));
         } else {
-            reject();
+            reject(req.session);
         }
     });
 }

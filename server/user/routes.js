@@ -47,11 +47,11 @@ router.get('/logout', (req, res) => {
 
 router.get('/logged', (req, res) => {
     user.isLogged(req)
-    .then((resolve) => {
+    .then(resolve => {
         res.status(200).json({ 'success' : resolve });
     })
-    .catch(() => {
-        res.status(200).json({ 'success' : resolve });
+    .catch(response => {
+        res.status(200).json({ 'success' : response });
     });
 });
 
