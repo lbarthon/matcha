@@ -1,5 +1,4 @@
 const emitter = require('../../emitter');
-const { get_infos_id } = require('../../user/get_infos');
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {

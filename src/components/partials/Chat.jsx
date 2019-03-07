@@ -104,8 +104,16 @@ class Chat extends Component {
     });
   }
 
-  exitRoom = () => {
-    console.log('exit');
+  leaveRoom = (roomId) => {
+    fetch('/api/chat/room/leave/' + roomId).then(response => {
+      if (response.ok) {
+        if (json.success) {
+
+        } else {
+          notify('error', this.props.locales.idParser(json.error));
+        }
+      } else console.error(new Error(response.statusText));
+    })
   }
 
   componentWillMount() {
@@ -120,12 +128,13 @@ class Chat extends Component {
 
   render() {
     const { messages, room } = this.state;
+    console.log(room);
     return (
       <div className="chat z-depth-2">
         <div className="chat-room">
           <b>
             {room.id ? <Link to={'/user/' + room.user.id}>{room.user.username}</Link> : 'Selectionnez un salon'}
-            <i className="material-icons" onClick={this.exitRoom}>exit_to_app</i>
+            <i className="material-icons" onClick={() => this.leaveRoom(room.id)}>exit_to_app</i>
           </b>
           <div className="divider"></div>
           <div className="chat-room-body">
@@ -147,7 +156,7 @@ class Chat extends Component {
             )
           })}
           </div>
-          {room.id &&
+          {room.id && room.display &&
             <div className="chat-room-input">
               <form onSubmit={this.handleSubmit}>
                 <div className="input-field">
