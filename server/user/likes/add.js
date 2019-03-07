@@ -36,9 +36,9 @@ const add = req => {
                                     if (err) {
                                         reject(new Error("sql.alert.query"));
                                     } else if (results.length == 1) {
-                                        notify(Types.LIKE_BACK, uid, target_id);
+                                        notify(Types.LIKE_BACK, uid, infos.target);
                                     } else {
-                                        notify(Types.LIKE, uid, target_id);
+                                        notify(Types.LIKE, uid, infos.target);
                                     }
                                     resolve();
                                 })
