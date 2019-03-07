@@ -98,6 +98,4 @@ const update = (req, uid) => {
     });
 }
 
-module.exports = {
-    update : update
-}
+module.exports = update;

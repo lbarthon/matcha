@@ -18,6 +18,4 @@ const logout = req => {
     });
 }
 
-module.exports = {
-    logout : logout
-}
+module.exports = logout;

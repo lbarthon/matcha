@@ -56,6 +56,4 @@ const login = req => {
     });
 }
 
-module.exports = {
-    login : login
-}
+module.exports = login;

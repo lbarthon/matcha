@@ -40,6 +40,4 @@ const reset_ask = req => {
     });
 }
 
-module.exports = {
-    reset_ask : reset_ask
-}
+module.exports = reset_ask;

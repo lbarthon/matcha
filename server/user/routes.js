@@ -3,7 +3,7 @@ const router = express.Router();
 const user = require('./user');
 
 router.post('/register', (req, res) => {
-    user.register(req.body)
+    user.register(req)
     .then(() => {
         res.status(200).json({ 'success' : 'register.alert.success' });
     })
@@ -64,6 +64,16 @@ router.get('/user/current', (req, res) => {
     .catch((err) => {
         res.status(200).json({ 'error' : err.message });
     });
+});
+
+router.post('/confirm', (req, res) => {
+    user.confirm(req.body)
+    .then(() => {
+        res.status(200).json({ 'success' : 'confirm.success' });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    })
 });
 
 router.get('/user/:id', (req, res) => {

@@ -2,7 +2,14 @@ const hash = require('./hash');
 const emitter = require('../emitter');
 const utils = require('./utils');
 const randomstring = require('randomstring');
+const nodemailer = require('nodemailer');
 var conn = null;
+
+var transporter = nodemailer.createTransport({
+    sendmail: true,
+    newline: 'unix',
+    path: '/usr/sbin/sendmail'
+});
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
@@ -11,7 +18,8 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
  * Function that registers a new user.
  * @param {req.body} infos 
  */
-const register = infos => {
+const register = req => {
+    var infos = req.body;
     utils.areInfosClean(infos, 'users');
     return new Promise((resolve, reject) => {
         if (conn) {
@@ -51,7 +59,14 @@ const register = infos => {
                                 if (err) {
                                     reject(new Error("sql.alert.query"));
                                 } else {
-                                    // TODO -- SEND MAILS
+                                    let mailOptions = {
+                                        from: 'no-reply@barthonet.ovh',
+                                        to: infos.email,
+                                        subject: "Matcha - Confirm your email",
+                                        text: "Hey, confirm your account here !\n\n\t" + req.protocol + "://" + req.get('host') + "/confirm/" + conf_link + " !\n\nSee you soon on matcha!",
+                                        html: "<p>Hey, confirm your account here !<br><br>\t" + req.protocol + "://" + req.get('host') + "/api/confirm/" + conf_link + " !<br><br>See you soon on matcha!</p>"
+                                    };
+                                    transporter.sendMail(mailOptions)
                                     resolve();
                                 }
                             })
@@ -65,6 +80,4 @@ const register = infos => {
     });
 }
 
-module.exports = {
-    register : register
-}
+module.exports = register;
