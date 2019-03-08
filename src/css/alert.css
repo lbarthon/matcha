@@ -1,11 +1,18 @@
+#alert-container {
+  position: fixed;
+  top:80px;
+  right:20px;
+  left:20px;
+  z-index:99;
+}
+
 .alert {
   padding: 10px 10px;
-  height: 56px;
+  height: auto;
   line-height: 36px;
 }
 
-.alert button{
-  float: right;
+.alert span {
 }
 
 .alert i {

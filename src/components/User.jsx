@@ -172,20 +172,20 @@ class User extends Component {
     const { username, sex, description, location } = this.state.user;
     return (
       <React.Fragment>
-        <h4>{username}</h4>
+        <h4 className="center">{username}</h4>
         <div className="row">
-          <div className="col xl10 s12">
+          <div className="col xl6 s8 offset-xl3 offset-s2">
             <div className="picture picture-main" style={{backgroundImage: 'url("/pictures/user/' + this.state.mainPic.picture + '")'}}></div>
           </div>
         </div>
         <div className="row">
           <div className="col s12 m4">
-            {this.state.liked && <a className="waves-effect waves-light btn-small" onClick={this.handleUnlike}><i className="material-icons left">favorite</i>{locale.user.unlike}</a>}
-            {!this.state.liked && <a className="waves-effect waves-light btn-small" onClick={this.handleLike}><i className="material-icons left">favorite</i>{locale.user.like}</a>}
+            {this.state.liked && <a className="waves-effect waves-light btn-small mt-5" onClick={this.handleUnlike}><i className="material-icons left">favorite</i>{locale.user.unlike}</a>}
+            {!this.state.liked && <a className="waves-effect waves-light btn-small mt-5" onClick={this.handleLike}><i className="material-icons left">favorite</i>{locale.user.like}</a>}
           </div>
           <div className="col s12 m8">
-            <a className="waves-effect waves-light btn-small red right ml-5" onClick={this.handleBlock}><i className="material-icons left">block</i>{locale.user.block}</a>
-            <a className="waves-effect waves-light btn-small red right" onClick={this.handleReport}><i className="material-icons left">flag</i>{locale.user.report}</a>
+            <a className="waves-effect waves-light btn-small red right ml-5 mt-5" onClick={this.handleBlock}><i className="material-icons left">block</i>{locale.user.block}</a>
+            <a className="waves-effect waves-light btn-small red right mt-5" onClick={this.handleReport}><i className="material-icons left">flag</i>{locale.user.report}</a>
           </div>
         </div>
         {this.state.tags && <h6>Tags</h6>}

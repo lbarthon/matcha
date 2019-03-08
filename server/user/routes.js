@@ -29,7 +29,7 @@ router.post('/login', (req, res) => {
 router.post('/update', (req, res) => {
     user.update(req, req.session.uid)
     .then(() => {
-        res.status(200).json({ 'success' : 'alert.update_success' });
+        res.status(200).json({ 'success' : 'update.alert.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
@@ -69,7 +69,7 @@ router.get('/user/current', (req, res) => {
 router.post('/confirm', (req, res) => {
     user.confirm(req.body)
     .then(() => {
-        res.status(200).json({ 'success' : 'confirm.success' });
+        res.status(200).json({ 'success' : 'confirm.alert.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
@@ -89,7 +89,7 @@ router.get('/user/:id', (req, res) => {
 router.post('/reset/ask', (req, res) => {
     user.reset_ask(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'alert.reset_ask_success' });
+        res.status(200).json({ 'success' : 'alert.reset.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });

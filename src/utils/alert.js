@@ -44,10 +44,10 @@ class Alert extends React.Component {
     const { type, text } = this.props;
     const { icon, color } = this.styles[type];
     return (
-      <div className={'alert card-panel white ' + color + '-text'}>
+      <div className={'alert clearfix card-panel white ' + color + '-text'}>
         <i className="material-icons left">{icon}</i>
-         {text}
-        <button className={'btn-flat waves-effect waves-' + color + ' float-right ' + color + '-text'} onClick={this.remove}>OK</button>
+        <span>{text}</span>
+        <button className={'btn-flat waves-effect waves-' + color + ' right ' + color + '-text'} onClick={this.remove}>OK</button>
       </div>
     );
   }

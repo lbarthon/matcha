@@ -8,14 +8,14 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 /**
  * Function that sends a mail to reset user's password.
- * @param {*} req 
+ * @param {*} req
  */
 const reset_ask = req => {
     return new Promise((resolve, reject) => {
         if (conn) {
             var infos = req.body;
             if (!String(infos.email).match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
-                reject(new Error("error_email_invalid"));
+                reject(new Error("register.alert.email_invalid"));
             } else {
                 utils.getIdFromEmail(infos.email)
                 .then(uid => {

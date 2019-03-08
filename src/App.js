@@ -38,8 +38,8 @@ class App extends Component {
     return (
       <React.Fragment>
         <Navbar />
-        <div className="container">
-          <AlertContainer />
+        <AlertContainer />
+        <div className="container" style={{margin: '20px auto'}}>
           <Switch>
             <Route exact path="/" component={Home} />
             <UnloggedRoute path="/register" component={Register} />
