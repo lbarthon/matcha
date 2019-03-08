@@ -33,7 +33,7 @@ class Navbar extends Component {
   }
 
   toggleChat = () => {
-    let chat = document.querySelector('.chat');
+    let chat = document.querySelector('.window-chat');
     if (chat.style.display == 'none')
       chat.style.display = 'block';
     else

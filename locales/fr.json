@@ -5,8 +5,8 @@
   "password": "Mot de passe",
   "repassword": "Repetez votre mot de passe",
   "email" : "Email",
-  "notfound" : "Ressource pas trouvee",
   "chat" : {
+    "new" : "nouveau",
     "room_select" : "Selectionnez une salle",
     "room_unactive" : "Vous ou l'autre utilisateur avez quitte cet espace de chat"
   },
@@ -84,7 +84,10 @@
   },
   "update": {
     "btn": "Mettre a jour",
-    "newpassword": "Nouveau mot de passe"
+    "newpassword": "Nouveau mot de passe",
+    "alert": {
+      "success": "Informations mises à jour avec succès!"
+    }
   },
   "upload": {
     "btn": "Sauvegarder"
@@ -97,7 +100,6 @@
     }
   },
   "alert": {
-    "update_success": "Vos informations ont bien été mises à jour",
     "logout_success": "Vous vous êtes bien déconnecté !",
     "logout_error": "Erreur lors de la déconnection",
     "error_email_invalid": "Votre mail n'est pas valide !",

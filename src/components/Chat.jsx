@@ -137,10 +137,10 @@ class Chat extends Component {
     return (
       <div className="chat">
         <ChatSide rooms={this.state.rooms} changeRoom={this.changeRoom} active={this.state.room.id} />
-        <div>
+        <h6>
           {room.id ? <Link to={'/user/' + room.user.id}>{room.user.username}</Link> : locale.chat.room_select}
           {room.id && <i className="material-icons right" onClick={() => this.leaveRoom(room.id)}>exit_to_app</i>}
-        </div>
+        </h6>
         <div className="window-chat-room-body">
           {messages.map(message => {
             return (
