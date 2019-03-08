@@ -21,8 +21,9 @@ const matchs = req => {
                     var sex = user.sex;
                     var wanted = user.wanted;
                     conn.query("SELECT GROUP_CONCAT(tags.tag SEPARATOR '" + separator + "') AS tags, users.id, \
-                        users.username, users.birthdate, users.location, users.description FROM users \
+                        users.username, users.birthdate, users.location, users.description, pictures.picture FROM users \
                         INNER JOIN tags ON users.id = tags.user_id \
+                        INNER JOIN pictures ON users.id = pictures.user_id AND pictures.main=1 \
                         WHERE ? AND ? AND ? AND ? GROUP BY users.id",
                         [{'users.confirmed': 1}, {'users.perm_level': 0}, {sex: wanted}, {wanted: sex}], (err, results) => {
                         if (err) {

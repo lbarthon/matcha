@@ -61,7 +61,21 @@ class Match extends Component {
     },
     {
       key: 'matchs.sorts.tags',
-      function: this.commonTagsSort
+      function: () => {
+        const compare = arr => {
+          var userTags = this.state.user.tags;
+          var count = 0;
+          arr.forEach(elem => {
+            if (userTags.includes(elem)) {
+              count++;
+            }
+          });
+          return count;
+        }
+        this.setState({ sorted: this.state.matchs.sort((a, b) => {
+          return compare(b.tags) - compare(a.tags);
+        })
+      })}
     }
   ]
 
@@ -97,33 +111,31 @@ class Match extends Component {
     .catch(console.error);
   }
 
-  // Tous ces sorts doivent pouvoir prendre des limites genre dans this.state.limits pour l'âge, la location etc.
-  // On va bien se marrer mon pote
-
-  defaultSort = () => {
-    // Ce sort c'est un mix de location + tags + popularité
-  }
-
-  reverseSort = () => {
-    // Ça reverse le sort pris en param
-    // En gros, si sort par location la plus proche, ça sortira le plus loin en premier.
-    // Juste ça reverse l'array bien sort
-  }
-
-  locationSort = () => {
-    // Faire des calculs avec lat & lng pr sort le plus proche puis le 2e plus proche etc.
-  }
-
-  ageSort = () => {
-    // Calculs sur birthdate
-  }
-
-  commonTagsSort = () => {
-    // Sort en fonction du nombre de tags en commun
+  fetchTags = () => {
+    const { locales } = this.props;
+    fetch("/api/tags/").then(response => {
+      if (response.ok) {
+        response.json().then(json => {
+          if (json.error) {
+            notify('error', locales.idParser(json.error))
+          } else {
+            var tags = json.success.map(value => { return value.tag; });
+            this.setState({
+              user: {
+                ...this.state.user,
+                tags: tags
+              }
+            });
+          }
+        }).catch(console.error);
+      }
+    })
+    .catch(console.error);
   }
 
   componentWillMount = () => {
     this.fetchUser();
+    this.fetchTags();
     this.fetchMatchs();
   }
 
@@ -134,6 +146,7 @@ class Match extends Component {
 
     return (
       <div>
+        {console.log(this.state.user)}
         <Map matchs={matchs} userLocation={this.state.user.location} />
         {this.sorts.map(value => {
             return (<button onClick={value.function}>{value.key}</button>)
@@ -146,6 +159,7 @@ class Match extends Component {
               <div>{value.location}</div>
               <div>{value.birthdate}</div>
               <div>{value.description}</div>
+              <div>{value.tags.join(", ")}</div>
             </div>
             )
         })}
