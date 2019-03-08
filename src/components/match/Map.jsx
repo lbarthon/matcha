@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Link, BrowserRouter } from 'react-router-dom';
 import {GoogleApiWrapper, Map, Marker, InfoWindow} from "google-maps-react";
 
-export class DisplayMap extends Component {
+export class MatchMap extends Component {
   state = {
     infoWindow: {
       display: false,
@@ -12,7 +13,7 @@ export class DisplayMap extends Component {
         lat: undefined,
         lng: undefined
     },
-    matchs: []
+    markers: []
   };
 
   componentDidMount = () => {
@@ -21,14 +22,21 @@ export class DisplayMap extends Component {
     var mapped = matchs.map(value => {
       let latLng = value.location.split(";");
       return {
-        username: username,
-        id: id,
+        username: value.username,
+        id: value.id,
         lat: latLng[0],
         lng: latLng[1]
       };
     });
-    this.setState({ matchs: mapped });
-    let latLng = userLocation.split(";");    
+    var markers = mapped.map(match => {
+      return (
+        <Marker match={match}
+          position={{ lat: match.lat, lng: match.lng }}
+          onClick={this.onMarkerClick} />
+      );
+    });
+    this.setState({ markers: markers });
+    let latLng = userLocation.split(";");
     this.setState({
       userLocation: {
         lat: latLng[0],
@@ -49,29 +57,25 @@ export class DisplayMap extends Component {
 
   render() {
     const { google } = this.props;
-    const { userLocation, matchs } = this.state;
+    const { userLocation, markers } = this.state;
 
-    if (matchs.length == 0) return null;
+    if (userLocation.lat == undefined || markers.length == 0) return null;
 
     return (
       <div style={{position: 'relative', height: '500px'}}>
         <Map google={google}
           initialCenter={userLocation}
-          zoom={10}>
+          zoom={6}>
 
           <Marker position={userLocation}/>
-          {this.state.matchs.map(match => {
-            return (
-              <Marker match={match}
-                position={{ lat: match.lat, lng: match.lng }}
-                onClick={this.onMarkerClick} />
-            );
-          })};
+          {markers}
           <InfoWindow marker={this.state.infoWindow.marker}
             visible={this.state.infoWindow.display}>
-            <Link to={"/user/" + this.state.infoWindow.match.id}>
-              {this.state.infoWindow.match.username}
-            </Link>
+            <BrowserRouter>
+              <Link to={"/user/" + this.state.infoWindow.match.id}>
+                {this.state.infoWindow.match.username}
+              </Link>
+            </BrowserRouter>
           </InfoWindow>
         </Map>
       </div>
@@ -81,4 +85,4 @@ export class DisplayMap extends Component {
 
 export default GoogleApiWrapper({
     apiKey: "AIzaSyCQwOn1Z6oev0SFXRHTxM9tKOqKi9pCMAU"
-})(DisplayMap);
+})(MatchMap);
