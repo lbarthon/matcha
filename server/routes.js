@@ -13,7 +13,7 @@ const blocked_routes = require('./user/blocked/routes');
 const match_routes = require('./matchs/routes');
 
 /**
- * Drops queries 
+ * Drops queries
  */
 router.use((req, res, next) => {
     if (!req.is('application/x-www-form-urlencoded') && !req.is('multipart/form-data') && req.method == "POST") {
@@ -21,11 +21,12 @@ router.use((req, res, next) => {
     } else {
         var header_csrf = req.get('CSRF-Token');
         if (header_csrf == req.session.csrf) {
+            console.log('CSRF BON : ' + req.get('CSRF-Token'));
             next();
         } else if (req.session.csrf != undefined) {
             // res.status(404);
             // EN COMM LE TEMPS QUE TU METTES EN PLACE
-            console.log("LI CSRF ILÉ PA BON SUR CETTE REQUÊTE");
+            console.log('LI CSRF ILÉ PA BON SUR CETTE REQUÊTE : ' + req.get('CSRF-Token') + ' / ' + req.session.csrf);
             next();
         }
     }

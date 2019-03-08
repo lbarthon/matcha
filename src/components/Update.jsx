@@ -41,7 +41,10 @@ class Update extends Component {
     // update tags
     fetch('/api/tags/update', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'CSRF-Token' : localStorage.getItem('csrf')
+      },
       body: tags
     })
     .then(response => {
@@ -59,7 +62,10 @@ class Update extends Component {
     // update user
     fetch('/api/update', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'CSRF-Token' : localStorage.getItem('csrf')
+      },
       body: user
     })
     .then(response => {
@@ -122,8 +128,9 @@ class Update extends Component {
 
   getUser = () => {
     const { locales } = this.props;
-    fetch('/api/user/current')
-    .then(response => {
+    fetch('/api/user/current', {
+      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
@@ -142,8 +149,9 @@ class Update extends Component {
 
   getTagsList = () => {
     const {locales} = this.props;
-    fetch('/api/tags/list')
-    .then(response => {
+    fetch('/api/tags/list', {
+      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
@@ -163,8 +171,9 @@ class Update extends Component {
 
   getTags = () => {
     const {locales} = this.props;
-    fetch('/api/tags')
-    .then(response => {
+    fetch('/api/tags', {
+      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {

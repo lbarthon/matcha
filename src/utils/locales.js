@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import fr from '../../locales/fr.json';
 import en from '../../locales/en.json';
+import { withCurrentUserHOC } from './currentUser';
 
 const locales = {
   fr: fr,
   en: en
 }
 
-export const LocalesContext = React.createContext({
+const LocalesContext = React.createContext({
   locale: [],
   text: '',
   toggleLanguage : () => {},
   idParser : () => {}
 });
 
-export class LocalesProvider extends Component {
+class _LocalesProvider extends Component {
 
   state = {
     locale: locales['en'],
@@ -25,7 +26,10 @@ export class LocalesProvider extends Component {
       this.setState({ locale: locales[newLang], text: newLang});
       fetch('/api/lang/set', {
         method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          'CSRF-Token': localStorage.getItem('csrf')
+        },
         body: "lang=" + newLang
       })
     },
@@ -41,8 +45,9 @@ export class LocalesProvider extends Component {
   }
 
   componentWillMount() {
-    fetch('/api/lang/get')
-    .then(response => {
+    fetch('/api/lang/get', {
+      headers: {'CSRF-Token': localStorage.getItem('csrf')}
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           this.setState({
@@ -64,6 +69,8 @@ export class LocalesProvider extends Component {
     )
   }
 }
+
+export const LocalesProvider = withCurrentUserHOC(_LocalesProvider);
 
 export const withLocalesHOC = Component => {
   class HOC extends React.Component {

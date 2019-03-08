@@ -23,7 +23,9 @@ class Chat extends Component {
   }
 
   setRead = (roomId) => {
-    fetch('/api/chat/message/read/' + roomId).then(response => {
+    fetch('/api/chat/message/read/' + roomId, {
+      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
@@ -43,7 +45,9 @@ class Chat extends Component {
 
   getMessages = (roomId) => {
     this.state.rooms.map(room => { if (room.id == roomId) this.setState({room: room}) });
-    fetch('/api/chat/message/' + roomId).then(response => {
+    fetch('/api/chat/message/' + roomId, {
+      headers: {'CSRF-Token': localStorage.getItem('csrf')}
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
@@ -72,7 +76,10 @@ class Chat extends Component {
     const str = httpBuildQuery({message: message, roomId: room.id});
     fetch('/api/chat/message', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'CSRF-Token': localStorage.getItem('csrf')
+      },
       body: str
     }).then(response => {
       if (response.ok) {
@@ -91,7 +98,9 @@ class Chat extends Component {
 
   getRooms = () => {
     const { room, rooms } = this.state;
-    fetch('/api/chat/room/').then(response => {
+    fetch('/api/chat/room/', {
+      headers: {'CSRF-Token': localStorage.getItem('csrf')}
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
@@ -105,7 +114,9 @@ class Chat extends Component {
   }
 
   leaveRoom = (roomId) => {
-    fetch('/api/chat/room/leave/' + roomId).then(response => {
+    fetch('/api/chat/room/leave/' + roomId, {
+      headers: {'CSRF-Token': localStorage.getItem('csrf')}
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {

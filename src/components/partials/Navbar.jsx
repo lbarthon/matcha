@@ -7,7 +7,9 @@ class Navbar extends Component {
 
   handleLogout = () => {
     const { getCurrentUser } = this.props.currentUser;
-    fetch('/api/logout').then(response => {
+    fetch('/api/logout', {
+      headers: {'CSRF-Token' : this.props.currentUser.csrf}
+    }).then(response => {
       if (response.ok) {
         getCurrentUser();
       } else {

@@ -10,7 +10,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 
 /**
  * Returns uid of the username in param.
- * @param {string} username 
+ * @param {string} username
  */
 const getIdFromUsername = username => {
     return new Promise((resolve, reject) => {
@@ -33,7 +33,7 @@ const getIdFromUsername = username => {
 }
 /**
  * Returns uid of the email in param.
- * @param {email} email 
+ * @param {email} email
  */
 const getIdFromEmail = email => {
     return new Promise((resolve, reject) => {
@@ -56,12 +56,14 @@ const getIdFromEmail = email => {
 }
 /**
  * Resolves if the user is logged, rejects otherwise.
- * @param {*} req 
+ * @param {*} req
  */
-const isLogged = req => {
+const isLogged = (req, regen = 0) => {
     return new Promise((resolve, reject) => {
-        req.session.csrf = randomstring.generate(50);
-        req.session.save();
+        if (regen) {
+            req.session.csrf = randomstring.generate(50);
+            req.session.save();
+        }
         if (req.session.username != undefined && req.session.uid != undefined) {
             getIdFromUsername(req.session.username)
             .then(id => {
@@ -79,7 +81,7 @@ const isLogged = req => {
 }
 /**
  * Resolves if the user is admin, rejects otherwise.
- * @param {*} req 
+ * @param {*} req
  */
 const isAdmin = req => {
     return new Promise((resolve, reject) => {
@@ -93,14 +95,14 @@ const isAdmin = req => {
                 } else {
                     reject();
                 }
-            }); 
+            });
         })
         .catch(() => reject())
     });
 }
 /**
  * Returns all the columns of the table in param.
- * @param {string} table 
+ * @param {string} table
  */
 const getTableColumns = table => {
     return new Promise((resolve, reject) => {
@@ -125,8 +127,8 @@ const getTableColumns = table => {
 /**
  * Weird function that filter infos returning only good keys in it, in order to update those.
  * Alerts weird values that aren't in database if prod = false;
- * @param {req.body} infos 
- * @param {string} table 
+ * @param {req.body} infos
+ * @param {string} table
  */
 const areInfosClean = (infos, table) => {
     return new Promise((resolve, reject) => {

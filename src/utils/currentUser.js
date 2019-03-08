@@ -14,34 +14,28 @@ export class CurrentUserProvider extends React.Component {
     id: undefined,
     logged: undefined,
     getCurrentUser: (callback) => {
-      fetch('/api/logged')
-      .then(response => {
+      fetch('/api/logged').then(response => {
         if (response.ok) {
           response.json().then(json => {
+            window.localStorage.setItem('csrf', json.success.csrf);
             if (json.success.username !== undefined) {
               if (this.state.logged !== true) {
                 this.setState({
                   logged: true,
                   username: json.success.username,
                   id: json.success.uid,
-                  csrf: json.success.csrf
                 });
               }
             } else {
               if (this.state.logged !== false) {
                 this.setState({
                   logged: false,
-                  csrf: json.success.csrf
                 });
               }
             }
           })
-        } else {
-          console.log(response);
-          throw Error(response.statusText);
-        }
-      })
-      .catch(error => { console.log(error); });
+        } else console.error(new Error(response.statusText));
+      });
       if (callback) {
         callback();
       }

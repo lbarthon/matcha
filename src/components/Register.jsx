@@ -35,7 +35,10 @@ class Register extends Component {
     parseForm(this.state, strForm => {
       fetch('/api/register', {
         method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          'CSRF-Token' : localStorage.getItem('csrf')
+        },
         body: strForm
       })
       .then(response => {
@@ -50,7 +53,7 @@ class Register extends Component {
         } else console.error(new Error(response.statusText));
       })
       .catch(() => {
-        // TO HANDLE 
+        // TO HANDLE
       })
     });
   }

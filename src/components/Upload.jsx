@@ -24,6 +24,9 @@ class Upload extends Component {
       formData.append('file', this.state.new_pic);
       fetch('/api/pictures/add', {
         method: 'POST',
+        headers: {
+          'CSRF-Token' : localStorage.getItem('csrf')
+        },
         body: formData
       })
       .then(response => {
@@ -54,7 +57,10 @@ class Upload extends Component {
       parseForm({ id: this.state.fav }, strBody => {
         fetch('/api/pictures/main/set', {
           method: 'POST',
-          headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+            'CSRF-Token' : localStorage.getItem('csrf')
+          },
           body: strBody
         })
         .then(response => {
@@ -77,7 +83,10 @@ class Upload extends Component {
     parseForm({ id: id }, strBody => {
       fetch('/api/pictures/remove', {
         method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+          'CSRF-Token' : localStorage.getItem('csrf')
+        },
         body: strBody
       })
       .then(response => {
@@ -97,7 +106,9 @@ class Upload extends Component {
   }
 
   getPictures = () => {
-    fetch('/api/pictures/get')
+    fetch('/api/pictures/get', {
+      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    })
     .then(response => {
       if (response.ok) {
         response.json().then(json => {

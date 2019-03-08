@@ -16,7 +16,9 @@ class User extends Component {
   }
 
   getUser = (id) => {
-    fetch('/api/user/' + id)
+    fetch('/api/user/' + id, {
+      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    })
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
@@ -33,7 +35,9 @@ class User extends Component {
   }
 
   getPictures = (id) => {
-    fetch('/api/pictures/get/' + id)
+    fetch('/api/pictures/get/' + id, {
+      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    })
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
@@ -56,7 +60,9 @@ class User extends Component {
 
   getTags = (id) => {
     const { locales } = this.props;
-    fetch('/api/tags/' + id).then(response => {
+    fetch('/api/tags/' + id, {
+      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
@@ -70,7 +76,9 @@ class User extends Component {
   }
 
   getLike = (id) => {
-    fetch('/api/likes/has_like/' + id).then(response => {
+    fetch('/api/likes/has_like/' + id, {
+      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.success != undefined) {
@@ -89,7 +97,10 @@ class User extends Component {
     const str = httpBuildQuery({target : this.props.match.params.id});
     fetch('/api/likes/add', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'CSRF-Token' : localStorage.getItem('csrf')
+      },
       body: str
     }).then(response => {
       if (response.ok) {
@@ -107,7 +118,10 @@ class User extends Component {
     const str = httpBuildQuery({target : this.props.match.params.id});
     fetch('/api/likes/remove', {
       method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'},
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        'CSRF-Token' : localStorage.getItem('csrf')
+      },
       body: str
     }).then(response => {
       if (response.ok) {
