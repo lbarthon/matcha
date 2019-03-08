@@ -40,7 +40,8 @@ const get = uid => {
                     } else {
                         var max = get_max_likes(results);
                         var actual = get_uid_likes(results, uid);
-                        resolve((actual / max) * 10);
+                        if (max == 0) resolve(0);
+                        else resolve((actual / max) * 10);
                     }
                 });
             }

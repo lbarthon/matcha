@@ -4,7 +4,6 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
 /**
  * Returns all uid tags
  * @param {int} uid 

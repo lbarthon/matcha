@@ -10,6 +10,7 @@ const chat_routes = require('./chat/routes');
 const likes_routes = require('./user/likes/routes');
 const report_routes = require('./user/reports/routes');
 const blocked_routes = require('./user/blocked/routes');
+const match_routes = require('./matchs/routes');
 
 /**
  * Drops queries 
@@ -38,6 +39,7 @@ router.use('/chat', chat_routes);
 router.use('/likes', likes_routes);
 router.use('/report', report_routes);
 router.use('/blocked', blocked_routes);
+router.use('/matchs', match_routes);
 
 db_tools.connect();
 
