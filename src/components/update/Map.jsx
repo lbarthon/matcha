@@ -10,7 +10,7 @@ export class UpdateMap extends Component {
     loading: true
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     const { location } = this.props;
     if (location != undefined) {
       // Use DB saved location
@@ -66,7 +66,7 @@ export class UpdateMap extends Component {
     }
   }
 
-  updateProps() {
+  updateProps = () => {
     // Calls parent module function onChange if exists
     const { onChange } = this.props;
     if (onChange) {
@@ -74,7 +74,7 @@ export class UpdateMap extends Component {
     }
   }
 
-  updateCoords(coord) {
+  updateCoords = (coord) => {
     const { latLng } = coord;
     const lat = latLng.lat();
     const lng = latLng.lng();

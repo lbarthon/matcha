@@ -9,7 +9,7 @@ export class DisplayMap extends Component {
     }
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     if (this.props.location != undefined) {
       const latLng = this.props.location.split(";");
       this.setState({
