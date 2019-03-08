@@ -104,7 +104,10 @@ class Chat extends Component {
       if (response.ok) {
         response.json().then(json => {
           if (json.success) {
-            this.setState({rooms: json.success});
+            this.setState({rooms: json.success}, () => {
+              if (this.state.rooms[0] && this.state.room.id === undefined)
+              this.getMessages(this.state.rooms[0].id);
+            });
           } else {
             notify('error', this.props.locales.idParser(json.error));
           }

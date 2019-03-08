@@ -147,7 +147,7 @@ class Chat extends Component {
     const { locale } = this.props.locales
     const window = this.props.window !== undefined;
     return (
-      <div className="window-chat z-depth-2">
+      <div className="window-chat z-depth-2" style={{display: 'none'}}>
         <div className="window-chat-room">
           <span>
             {room.id ? <Link to={'/user/' + room.user.id}>{room.user.username}</Link> : locale.chat.room_select}
