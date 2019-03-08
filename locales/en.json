@@ -5,8 +5,8 @@
   "password": "Password",
   "repassword": "Password confirmation",
   "email" : "Email",
-  "notfound" : "Ressource not found",
   "chat" : {
+    "new" : "new",
     "room_select" : "Select a room",
     "room_unactive" : "You or the other user has left this chat space"
   },
@@ -72,7 +72,10 @@
   },
   "update": {
     "btn": "Update",
-    "newpassword": "New password"
+    "newpassword": "New password",
+    "alert": {
+      "success": "Informations updates successfully"
+    }
   },
   "upload": {
     "btn": "Save"
@@ -85,7 +88,6 @@
     }
   },
   "alert": {
-    "update_success": "Informations mises à jour avec succès!",
     "logout_success": "Logout successfully!",
     "logout_error": "Error logging out from your account",
     "error_email_invalid": "Invalid email!",
