@@ -6,12 +6,13 @@ class MatchUser extends Component {
   render() {
     if (this.props.user === undefined) return null;
     const { locale } = this.props.locales;
-    const { username, sex, description, birthdate } = this.props.user;
+    const { username, tags, description, birthdate } = this.props.user;
     return (
       <React.Fragment>
         <p>{username}</p>
         <p>{description}</p>
         <p>{birthdate}</p>
+        <p>{tags.join(", ")}</p>
       </React.Fragment>
     )
   }

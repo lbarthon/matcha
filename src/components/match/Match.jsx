@@ -16,7 +16,15 @@ class Match extends Component {
     {
       key: 'matchs.sorts.default',
       function: () => {
-        return this.sorts[1].function();
+        var loc = this.sorts[1].function();
+        var pop = this.sorts[3].function();
+        var tag = this.sorts[4].function();
+        return this.state.matchs.map(value => {
+          value.score = loc.indexOf(value) + pop.indexOf(value) + tag.indexOf(value);
+          return value;
+        }).sort((a, b) => {
+          return a.score - b.score;
+        });
       }
     },
     {
@@ -73,15 +81,18 @@ class Match extends Component {
           });
           return count;
         }
-        return this.state.matchs.sort((a, b) => {
-          return compare(b.tags) - compare(a.tags);
+        return this.state.matchs.map(value => {
+          value.commonTags = compare(value.tags);
+          return value;
+        }).sort((a, b) => {
+          return b.commonTags - a.commonTags;
         })
       }
     }
   ]
 
   sort = (value) => {
-    this.setState({ sorted: value.function() }, () => { console.log(this.state.sorted) });
+    this.setState({ sorted: value.function() });
   }
 
   fetchMatchs = () => {
