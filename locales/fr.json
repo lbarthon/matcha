@@ -24,28 +24,13 @@
       "notfound" : "Cet utilisateur n'existe pas"
     }
   },
-  "matchs": {
-    "sorts": {
-      "default": {
-        "normal": "",
-        "reverse": ""
-      },
-      "location": {
-        "normal": "",
-        "reverse": ""
-      },
-      "age": {
-        "normal": "",
-        "reverse": ""
-      },
-      "popularity": {
-        "normal": "",
-        "reverse": ""
-      },
-      "tags": {
-        "normal": "",
-        "reverse": ""
-      }
+  "match": {
+    "sort": {
+      "default": "Default",
+      "location": "Distance",
+      "age": "Age",
+      "popularity": "Popularite",
+      "tags": "Tags en commun"
     }
   },
   "likes": {

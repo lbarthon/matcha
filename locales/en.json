@@ -24,6 +24,15 @@
       "notfound" : "User not found"
     }
   },
+  "match": {
+    "sort": {
+      "default": "Default",
+      "location": "Distance",
+      "age": "Age",
+      "popularity": "Popularity",
+      "tags": "Tags in commun"
+    }
+  },
   "nav": {
     "logout": "Logout",
     "update": "Update",
