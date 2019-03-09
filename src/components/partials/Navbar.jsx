@@ -78,6 +78,7 @@ class Navbar extends Component {
                 <li style={{display: logged ? 'block' : 'none' }}><a class="dropdown-trigger" data-target="dropdown1">{username}<i class="material-icons right">arrow_drop_down</i></a></li>
                 {logged === true &&
                   <React.Fragment>
+                    <li><Link to="/match">Match</Link></li>
                     <li><Link to="/notifications"><i className="material-icons">notifications_none</i></Link></li>
                     <li><a onClick={this.toggleChat}><i className="material-icons">message</i></a></li>
                     <li><a onClick={this.handleLogout}>{locales.locale.nav.logout}</a></li>
@@ -99,6 +100,7 @@ class Navbar extends Component {
             <React.Fragment>
               <li><Link to="/notifications"><i className="material-icons">notifications_none</i>Notifications</Link></li>
               <li><Link to="/chat"><i className="material-icons">message</i>Chat</Link></li>
+              <li><Link to="/match">Match</Link></li>
               <li><Link to="/update">{locales.locale.nav.update}</Link></li>
               <li><Link to="/upload">{locales.locale.nav.upload}</Link></li>
               <li><a onClick={this.handleLogout}>{locales.locale.nav.logout}</a></li>
