@@ -21,12 +21,12 @@ const remove = (infos, uid) => {
                     if (err) {
                         reject(new Error("picture.error.remove"))
                     } else {
-                        conn.query("DELETE FROM pictures WHERE id=? AND user_id=?",
+                        conn.query("DELETE FROM pictures WHERE id=? AND user_id=? AND main=0",
                                 [infos.id, uid], (err, result) => {
                             if (err) {
                                 reject(new Error("sql.alert.query"));
                             } else if (result.affectedRows == 0) {
-                                reject(new Error("picture.error.remove.none"));
+                                reject(new Error("picture.error.remove.main"));
                             } else {
                                 resolve();
                             }

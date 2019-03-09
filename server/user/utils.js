@@ -58,7 +58,7 @@ const getIdFromEmail = email => {
  * Resolves if the user is logged, rejects otherwise.
  * @param {*} req
  */
-const isLogged = (req, regen = 0) => {
+const isLogged = (req, regen = false) => {
     return new Promise((resolve, reject) => {
         if (regen) {
             req.session.csrf = randomstring.generate(50);

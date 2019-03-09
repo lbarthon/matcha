@@ -86,6 +86,7 @@ const update = (req, uid) => {
                         return updateCol(key ,filtered[key], uid);
                     });
                     req.session.username = filtered['username'];
+                    req.session.save();
                     Promise.all(promises)
                     .then(resolve)
                     .catch(reject);

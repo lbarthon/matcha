@@ -47,7 +47,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/logged', (req, res) => {
-    user.isLogged(req, 1)
+    user.isLogged(req, true)
     .then(resolve => {
         res.status(200).json({ 'success' : resolve });
     })

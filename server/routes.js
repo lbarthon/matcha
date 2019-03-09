@@ -20,7 +20,7 @@ router.use((req, res, next) => {
         res.sendFile(path.join(__dirname, 'public/index.html'));
     } else {
         var header_csrf = req.get('CSRF-Token');
-        if (header_csrf == req.session.csrf) {
+        if (req.originalUrl == '/api/logged' || header_csrf == req.session.csrf) {
             console.log('CSRF BON : ' + req.get('CSRF-Token'));
             next();
         } else if (req.session.csrf != undefined) {
