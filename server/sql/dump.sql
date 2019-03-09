@@ -14149,7 +14149,6 @@ CREATE TABLE `reports` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `resetpw` (
-  `date` varchar(20) NOT NULL,
   `link` varchar(255) NOT NULL,
   `user_id` int(10) UNSIGNED NOT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP

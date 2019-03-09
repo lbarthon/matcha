@@ -64,7 +64,7 @@ const register = req => {
                                         to: infos.email,
                                         subject: "Matcha - Confirm your email",
                                         text: "Hey, confirm your account here !\n\n\t" + req.protocol + "://" + req.get('host') + "/confirm/" + conf_link + " !\n\nSee you soon on matcha!",
-                                        html: "<p>Hey, confirm your account here !<br><br>\t" + req.protocol + "://" + req.get('host') + "/api/confirm/" + conf_link + " !<br><br>See you soon on matcha!</p>"
+                                        html: "<p>Hey, confirm your account here !<br><br>\t" + req.protocol + "://" + req.get('host') + "/confirm/" + conf_link + " !<br><br>See you soon on matcha!</p>"
                                     };
                                     transporter.sendMail(mailOptions)
                                     resolve();

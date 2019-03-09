@@ -1,7 +1,14 @@
 const emitter = require('../emitter');
 const utils = require('./utils');
 const randomstring = require('randomstring');
+const nodemailer = require('nodemailer');
 var conn = null;
+
+var transporter = nodemailer.createTransport({
+    sendmail: true,
+    newline: 'unix',
+    path: '/usr/sbin/sendmail'
+});
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
@@ -20,13 +27,19 @@ const reset_ask = req => {
                 utils.getIdFromEmail(infos.email)
                 .then(uid => {
                     var str = randomstring.generate(80);
-                    var date = Date.now();
-                    conn.query("INSERT INTO resetpw (date, link, user_id) VALUES (?,?,?)",
-                            [date, str, uid], (err) => {
+                    conn.query("INSERT INTO resetpw (link, user_id) VALUES (?,?)",
+                            [str, uid], (err) => {
                         if (err) {
                             reject(new Error("sql.alert.query"));
                         } else {
-                            // TODO -- SEND MAILS
+                            let mailOptions = {
+                                from: 'no-reply@barthonet.ovh',
+                                to: infos.email,
+                                subject: "Matcha - Password reset",
+                                text: "Hey, reset your password here !\n\n\t" + req.protocol + "://" + req.get('host') + "/reset/" + conf_link + " !\n\nSee you soon  on matcha!",
+                                html: "<p>Hey, reset your password here !<br><br>\t" + req.protocol + "://" + req.get('host') + "/reset/" + conf_link + " !<br><br>See you soon on matcha!</p>"
+                            };
+                            transporter.sendMail(mailOptions)
                             resolve();
                         }
                     })

@@ -67,9 +67,19 @@ router.get('/user/current', (req, res) => {
 });
 
 router.post('/confirm', (req, res) => {
-    user.confirm(req.body)
+    user.confirm(req)
     .then(() => {
         res.status(200).json({ 'success' : 'confirm.alert.success' });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    })
+});
+
+router.post('/reset', (req, res) => {
+    user.resetpw(req)
+    .then(() => {
+        res.status(200).json({ 'success' : 'resetpw.alert.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
@@ -89,7 +99,7 @@ router.get('/user/:id', (req, res) => {
 router.post('/reset/ask', (req, res) => {
     user.reset_ask(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'alert.reset.success' });
+        res.status(200).json({ 'success' : 'resetpw.alert.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });

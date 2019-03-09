@@ -1,5 +1,3 @@
-const hash = require('./hash');
-const utils = require('./utils');
 const emitter = require('../emitter');
 var conn = null;
 
@@ -10,7 +8,8 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
  * Function that confirms an user's account.
  * @param {*} req 
  */
-const confirm = infos => {
+const confirm = req => {
+    var infos = req.body;
     return new Promise((resolve, reject) => {
         if (conn) {
             conn.query("UPDATE users SET confirmed=1, conf_link=NULL WHERE conf_link=?", [infos.link], (err, results) => {
