@@ -8,14 +8,14 @@
 
 .mt-5 { margin-top: 5px; }
 
+.m-5 { margin: 5px; }
+
+.m-10 { margin: 10px; }
+
 .clearfix:after {
   content: ".";
   visibility: hidden;
   display: block;
   height: 0;
   clear: both;
-}
-
-.m-10 {
-  margin: 10px;
 }

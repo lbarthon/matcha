@@ -1,0 +1,28 @@
+.match-card {
+  width:calc(100%);
+  padding-top: calc(100%);
+  background-size: 100% auto;
+  background-color: #ddd;
+  background-position: center;
+  background-repeat: no-repeat;
+  position:relative;
+  margin-bottom:20px;
+  overflow: hidden;
+}
+
+.match-card > span {
+  color: white;
+  position:absolute;
+  bottom:30px;
+  left:10px;
+  font-weight:bold;
+  text-shadow:1px 1px 1px rgba(0,0,0,0.8);
+}
+
+.match-card > small {
+  color: white;
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  text-shadow:1px 1px 1px rgba(0,0,0,0.5);
+}

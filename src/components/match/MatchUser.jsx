@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import { withAllHOC } from '../../utils/allHOC';
+import '../../css/match.css';
+import { Link, BrowserRouter } from 'react-router-dom';
 
 class MatchUser extends Component {
 
   render() {
     if (this.props.user === undefined) return null;
     const { locale } = this.props.locales;
-    const { username, tags, description, birthdate } = this.props.user;
+    const { username, tags, description, birthdate, picture, id} = this.props.user;
     return (
       <React.Fragment>
-        <p>{username}</p>
-        <p>{description}</p>
-        <p>{birthdate}</p>
-        <p>{tags.join(", ")}</p>
+        <div className="col s4 m3">
+          <Link to={'/user/' + id}>
+            <div className="match-card z-depth-2" style={{backgroundImage: 'url("/pictures/user/' + picture + '")'}}>
+              <span>{username}</span>
+              <small>{birthdate}</small>
+            </div>
+          </Link>
+        </div>
       </React.Fragment>
     )
   }

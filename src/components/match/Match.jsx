@@ -9,12 +9,13 @@ class Match extends Component {
   state = {
     matchs: [],
     user: [],
-    sorted: []
+    sorted: [],
+    key: ''
   }
 
   sorts = [
     {
-      key: 'matchs.sorts.default',
+      key: 'default',
       function: () => {
         var loc = this.sorts[1].function();
         var pop = this.sorts[3].function();
@@ -28,7 +29,7 @@ class Match extends Component {
       }
     },
     {
-      key: 'matchs.sorts.location',
+      key: 'location',
       function: () => {
         const deg2rad = (deg) => {
           return deg * (Math.PI/180)
@@ -36,9 +37,9 @@ class Match extends Component {
 
         const getDistanceFromLatLon = (lat1,lon1,lat2,lon2) => {
           var dLat = deg2rad(lat2 - lat1);
-          var dLon = deg2rad(lon2 - lon1); 
-          var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2); 
-          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
+          var dLon = deg2rad(lon2 - lon1);
+          var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
           return c;
         }
 
@@ -53,7 +54,7 @@ class Match extends Component {
       }
     },
     {
-      key: 'matchs.sorts.age',
+      key: 'age',
       function: () => {
         return this.state.matchs.sort((a, b) => {
             var a_split = a.birthdate.split("/");
@@ -63,13 +64,13 @@ class Match extends Component {
       }
     },
     {
-      key: 'matchs.sorts.popularity',
+      key: 'popularity',
       function: () => {
         return this.state.matchs.sort((a, b) => b.popularity - a.popularity);
       }
     },
     {
-      key: 'matchs.sorts.tags',
+      key: 'tags',
       function: () => {
         const compare = arr => {
           var userTags = this.state.user.tags;
@@ -91,8 +92,23 @@ class Match extends Component {
     }
   ]
 
-  sort = (value) => {
-    this.setState({ sorted: value.function() });
+  sort = (value, button) => {
+    const { locale } = this.props.locales;
+    let icon = document.querySelector('.sortbtn > i');
+    if (icon && icon.parentElement.childNodes[0].data != locale.match.sort[value.key])
+      icon.parentElement.removeChild(icon);
+    if (value.key != this.state.key) {
+      this.setState({ sorted: value.function(), key: value.key }, () => {
+        let newIcon = document.createElement('i');
+        newIcon.className = 'material-icons left';
+        newIcon.innerHTML = 'arrow_drop_down';
+        button.appendChild(newIcon);
+      });
+    } else {
+      this.setState({ sorted: [...this.state.sorted].reverse()}, () => {
+        icon.innerHTML = (icon.innerHTML == 'arrow_drop_down' ? 'arrow_drop_up' : 'arrow_drop_down');
+      });
+    }
   }
 
   fetchMatchs = () => {
@@ -169,18 +185,25 @@ class Match extends Component {
 
   render() {
     const { sorted, matchs } = this.state;
+    const { locale } = this.props.locales;
 
     if (matchs.length == 0) return null;
 
     return (
       <div>
         <Map matchs={matchs} userLocation={this.state.user.location} />
-        {this.sorts.map(value => {
-            return <button onClick={() => { this.sort(value) }}>{value.key}</button>
-        })}
-        {sorted.map(value => {
-          return <MatchUser user={value} />
-        })}
+        <div className="row">
+          <div className="col s12">
+            {this.sorts.map(value => {
+              return <button onClick={(e) => { this.sort(value, e.target) }} className="waves-effect waves-light btn-small mr-5 mt-5 sortbtn">{locale.match.sort[value.key]}</button>
+            })}
+          </div>
+        </div>
+        <div className="row">
+          {sorted.map(value => {
+            return <MatchUser key={value.id} user={value} />
+          })}
+        </div>
       </div>
     )
   }
