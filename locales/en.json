@@ -12,7 +12,8 @@
   },
   "gender" : {
     "male" : "Male",
-    "female" : "Female"
+    "female" : "Female",
+    "bisexual": "Bisexual"
   },
   "user": {
     "like" : "Like",

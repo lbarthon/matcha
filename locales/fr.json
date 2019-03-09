@@ -11,8 +11,9 @@
     "room_unactive" : "Vous ou l'autre utilisateur avez quitte cet espace de chat"
   },
   "gender" : {
-    "male" : "Homme",
-    "female" : "Femme"
+    "male": "Homme",
+    "female": "Femme",
+    "bisexual": "Bisexuel"
   },
   "user": {
     "like" : "J'aime",

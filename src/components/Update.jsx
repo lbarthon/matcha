@@ -271,7 +271,7 @@ class Update extends Component {
           </div>
           <div className="input-field col s6">
             <select name="wanted" onChange={this.onChange}>
-              <option value="" disabled>{locale.register.select_gender}</option>
+              <option value="bisexual" selected={wanted == 'bisexual' ? true : false}>{locale.gender.bisexual}</option>
               <option value="male" selected={wanted == 'male' ? true : false}>{locale.gender.male}</option>
               <option value="female" selected={wanted == 'female' ? true : false}>{locale.gender.female}</option>
             </select>
