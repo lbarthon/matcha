@@ -24,6 +24,30 @@
       "notfound" : "Cet utilisateur n'existe pas"
     }
   },
+  "matchs": {
+    "sorts": {
+      "default": {
+        "normal": "",
+        "reverse": ""
+      },
+      "location": {
+        "normal": "",
+        "reverse": ""
+      },
+      "age": {
+        "normal": "",
+        "reverse": ""
+      },
+      "popularity": {
+        "normal": "",
+        "reverse": ""
+      },
+      "tags": {
+        "normal": "",
+        "reverse": ""
+      }
+    }
+  },
   "likes": {
     "add": {
       "present": "Vous avez déjà aimé cet utilisateur !",
