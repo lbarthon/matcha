@@ -36,7 +36,8 @@
   "likes": {
     "add": {
       "present": "Vous avez déjà aimé cet utilisateur !",
-      "success": "Vous aimez maintenant cet utilisateur."
+      "success": "Vous aimez maintenant cet utilisateur.",
+      "yourself": "Vous ne pouvez pas vous aimer vous-même !"
     },
     "remove": {
       "absent": "Vous n'aimez pas cet utilisateur !",

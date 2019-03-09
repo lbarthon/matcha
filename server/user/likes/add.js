@@ -20,6 +20,8 @@ const add = req => {
         if (conn) {
             if (infos.target == undefined || infos.target == '' || isNaN(infos.target)) {
                 reject(new Error("error_wrong_id"));
+            } else if (infos.target == uid) {
+                reject(new Error("likes.add.yourself"));
             } else {
                 conn.query("SELECT * FROM likes WHERE ? AND ?",
                         [{target_id: infos.target}, {user_id: uid}], (err, results) => {
