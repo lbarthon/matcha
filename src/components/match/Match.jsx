@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import parseForm from '../../utils/parseForm';
 import { notify } from '../../utils/alert';
 import { withAllHOC } from '../../utils/allHOC';
-import M from 'materialize-css'
 import Map from './Map';
+import MatchUser from './MatchUser';
 
 class Match extends Component {
 
@@ -16,7 +15,9 @@ class Match extends Component {
   sorts = [
     {
       key: 'matchs.sorts.default',
-      function: this.defaultSort
+      function: () => {
+        return this.sorts[1].function();
+      }
     },
     {
       key: 'matchs.sorts.location',
@@ -36,27 +37,27 @@ class Match extends Component {
         var user_split = this.state.user.location.split(";");
         var lat = user_split[0];
         var lng = user_split[1];
-        this.setState({ sorted: this.state.matchs.sort((a, b) => {
+       return this.state.matchs.sort((a, b) => {
           var a_split = a.location.split(";");
           var b_split = b.location.split(";");
           return getDistanceFromLatLon(lat, lng, a_split[0], a_split[1]) - getDistanceFromLatLon(lat, lng, b_split[0], b_split[1]);
         })
-      })}
+      }
     },
     {
       key: 'matchs.sorts.age',
       function: () => {
-        this.setState({ sorted: this.state.matchs.sort((a, b) => {
+        return this.state.matchs.sort((a, b) => {
             var a_split = a.birthdate.split("/");
             var b_split = b.birthdate.split("/");
             return Number(a_split[2] + a_split[1] + a_split[0]) - Number(b_split[2] + b_split[1] + b_split[0]);
         })
-      })}
+      }
     },
     {
       key: 'matchs.sorts.popularity',
       function: () => {
-        this.setState({ sorted: this.state.matchs.sort((a, b) => b.popularity - a.popularity) });
+        return this.state.matchs.sort((a, b) => b.popularity - a.popularity);
       }
     },
     {
@@ -72,16 +73,24 @@ class Match extends Component {
           });
           return count;
         }
-        this.setState({ sorted: this.state.matchs.sort((a, b) => {
+        return this.state.matchs.sort((a, b) => {
           return compare(b.tags) - compare(a.tags);
         })
-      })}
+      }
     }
   ]
 
+  sort = (value) => {
+    this.setState({ sorted: value.function() }, () => { console.log(this.state.sorted) });
+  }
+
   fetchMatchs = () => {
     const { locales } = this.props;
-    fetch("/api/matchs/").then(response => {
+    fetch("/api/matchs/", {
+      headers: {
+        'CSRF-Token' : localStorage.getItem('csrf')
+      }
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.error) {
@@ -97,7 +106,11 @@ class Match extends Component {
 
   fetchUser = () => {
     const { locales } = this.props;
-    fetch("/api/user/current").then(response => {
+    fetch("/api/user/current", {
+      headers: {
+        'CSRF-Token' : localStorage.getItem('csrf')
+      }
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.error) {
@@ -113,7 +126,11 @@ class Match extends Component {
 
   fetchTags = () => {
     const { locales } = this.props;
-    fetch("/api/tags/").then(response => {
+    fetch("/api/tags/", {
+      headers: {
+        'CSRF-Token' : localStorage.getItem('csrf')
+      }
+    }).then(response => {
       if (response.ok) {
         response.json().then(json => {
           if (json.error) {
@@ -146,22 +163,12 @@ class Match extends Component {
 
     return (
       <div>
-        {console.log(this.state.user)}
         <Map matchs={matchs} userLocation={this.state.user.location} />
         {this.sorts.map(value => {
-            return (<button onClick={value.function}>{value.key}</button>)
+            return <button onClick={() => { this.sort(value) }}>{value.key}</button>
         })}
         {sorted.map(value => {
-          return (
-            <div>
-              <div>{value.username}</div>
-              <div>{value.popularity}</div>
-              <div>{value.location}</div>
-              <div>{value.birthdate}</div>
-              <div>{value.description}</div>
-              <div>{value.tags.join(", ")}</div>
-            </div>
-            )
+          return <MatchUser user={value} />
         })}
       </div>
     )
