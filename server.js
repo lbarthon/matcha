@@ -59,10 +59,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 io.on('connection', socket => {
+  let currentUserId;
   socket.on('disconnect', () => {
+    console.log(currentUserId);
     // requete qui update la derniere connexion ici
   });
   socket.on('join', data => {
+    currentUserId = data.id;
     socket.join(data.id);
   });
   socket.on('new_message', data => {
@@ -70,7 +73,6 @@ io.on('connection', socket => {
   });
   socket.on('is_online', data => {
     let online = io.sockets.adapter.rooms[data.userId] !== undefined ? true : false;
-    console.log(online);
     socket.emit('is_online', online);
   });
 });
