@@ -19,10 +19,13 @@ const resetpw = req => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
                 } else if (results.affectedRows == 1) {
-                    if (!String(infos.pwd).match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[^\w])(?=.{8,})/)) {
+                    if (!String(infos.password).match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[^\w])(?=.{8,})/)) {
                         reject(new Error("register.alert.password_regex"));
+                    } else if (infos.password != infos.repassword) {
+                        reject(new Error("register.alert.password_diff"));
                     } else {
-                        hash.create(infos.pwd).then(hashed => {
+                        hash.create(infos.password)
+                        .then(hashed => {
                             conn.query("UPDATE users SET pwd=? WHERE id=?", [hashed, uid], err => {
                                 if (err) {
                                     reject(new Error("sql.alert.query"));

@@ -12,6 +12,12 @@ const bodyParser = require('body-parser');
 const prod = (process.env.PROD == "true" || false);
 const port = (process.env.PORT || 3000);
 
+process.on('unhandledRejection', (reason, p) => {
+    console.error(reason, 'Unhandled Rejection at Promise', p);
+})
+.on('uncaughtException', err => {
+    console.error(err, 'Uncaught Exception thrown');
+});
 
 if (!prod) {
     const webpack = require('webpack');
