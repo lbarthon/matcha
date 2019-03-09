@@ -12,7 +12,8 @@ class User extends Component {
     pictures: [],
     mainPic: {},
     tags: [],
-    liked: false
+    liked: false,
+    online: false
   }
 
   getUser = (id) => {
@@ -135,6 +136,16 @@ class User extends Component {
     });
   }
 
+  isOnline = (id) => {
+    const { socket } = this.props;
+    socket.emit('is_online', {userId: id});
+    console.log('test');
+    socket.on('is_online', data => {
+      if (this.state.online !== data)
+        this.setState({online: data});
+    });
+  }
+
   handleBlock = () => {
 
   }
@@ -149,12 +160,14 @@ class User extends Component {
       pictures: [],
       mainPic: {},
       tags: [],
-      liked: false
+      liked: false,
+      online: false
     });
     this.getTags(id);
     this.getUser(id);
     this.getPictures(id);
     this.getLike(id);
+    this.isOnline(id);
   }
 
   componentWillMount() {
@@ -169,7 +182,7 @@ class User extends Component {
   render() {
     if (!this.state.user) return null;
     const { locale } = this.props.locales;
-    const { username, sex, description, location } = this.state.user;
+    const { username, sex, description, location, firstname, lastname, wanted, birthdate} = this.state.user;
     return (
       <React.Fragment>
         <h4 className="center">{username}</h4>
@@ -178,20 +191,48 @@ class User extends Component {
             <div className="picture picture-main" style={{backgroundImage: 'url("/pictures/user/' + this.state.mainPic.picture + '")'}}></div>
           </div>
         </div>
-        <div className="row">
-          {this.state.liked && <a className="waves-effect waves-light btn-small mt-5" onClick={this.handleUnlike}><i className="material-icons left">favorite</i>{locale.user.unlike}</a>}
-          {!this.state.liked && <a className="waves-effect waves-light btn-small mt-5" onClick={this.handleLike}><i className="material-icons left">favorite</i>{locale.user.like}</a>}
-          <a className="waves-effect waves-light btn-small red right ml-5 mt-5" onClick={this.handleBlock}><i className="material-icons left">block</i>{locale.user.block}</a>
-          <a className="waves-effect waves-light btn-small red right mt-5" onClick={this.handleReport}><i className="material-icons left">flag</i>{locale.user.report}</a>
-        </div>
+        {this.props.match.params.id != this.props.currentUser.id &&
+          <div className="row">
+            {this.state.liked && <a className="waves-effect waves-light btn-small mt-5" onClick={this.handleUnlike}><i className="material-icons left">favorite</i>{locale.user.unlike}</a>}
+            {!this.state.liked && <a className="waves-effect waves-light btn-small mt-5" onClick={this.handleLike}><i className="material-icons left">favorite</i>{locale.user.like}</a>}
+            <a className="waves-effect waves-light btn-small red right ml-5 mt-5" onClick={this.handleBlock}><i className="material-icons left">block</i>{locale.user.block}</a>
+            <a className="waves-effect waves-light btn-small red right mt-5" onClick={this.handleReport}><i className="material-icons left">flag</i>{locale.user.report}</a>
+          </div>
+        }
         {this.state.tags && <h6>Tags</h6>}
         {this.state.tags.map(tag => {
           return (<div class="chip">{tag.tag}</div>);
         })}
         <h6>Description</h6>
         <p>{description}</p>
-        <h6>Gender</h6>
-        <p>{sex}</p>
+        <h6>Informations</h6>
+        <div className="row">
+          <div className="col s12 m6 mt-10">
+            <span>{locale.firstname} </span>
+            <b>{firstname}</b>
+          </div>
+          <div className="col s12 m6 mt-10">
+            <span>{locale.lastname} </span>
+            <b>{lastname}</b>
+          </div>
+
+          <div className="col s12 m6 mt-10">
+            <span>{locale.register.gender} </span>
+            <b>{locale.gender[sex.toLowerCase()]}</b>
+          </div>
+          <div className="col s12 m6 mt-10">
+            <span>{locale.register.lookingfor} </span>
+            <b>{locale.gender[wanted.toLowerCase()]}</b>
+          </div>
+          <div className="col s12 m6 mt-10">
+            <span>{locale.register.birthdate} </span>
+            <b>{birthdate}</b>
+          </div>
+          <div className="col s12 m6 mt-10">
+            <span>{locale.user.last_connection} </span>
+            <b>{this.state.online ? locale.user.online : 'offline'}</b>
+          </div>
+        </div>
         <Map location={location} />
         {this.state.pictures.length > 1 ? <h6>More pics</h6> : ''}
         {this.state.pictures.map(pic => {

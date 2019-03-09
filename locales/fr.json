@@ -20,6 +20,8 @@
     "unlike" : "Je n'aime plus",
     "block" : "Bloquer",
     "report": "Signaler",
+    "online": "En ligne",
+    "last_connection": "Derniere connexion",
     "alert" : {
       "notfound" : "Cet utilisateur n'existe pas"
     }

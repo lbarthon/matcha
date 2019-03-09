@@ -20,6 +20,8 @@
     "unlike" : "Unlike",
     "block" : "Block",
     "report": "Report",
+    "online": "Online",
+    "last_connection": "Last connection",
     "alert" : {
       "notfound" : "User not found"
     }
