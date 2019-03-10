@@ -7,7 +7,7 @@ import M from 'materialize-css'
 class NotFound extends Component {
 
   componentDidMount() {
-    document.title = this.props.locales.locale.notfound;
+    document.title = '404 not found';
   }
 
   render() {

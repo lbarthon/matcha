@@ -5,8 +5,16 @@ import M from 'materialize-css';
 
 class Notifications extends Component {
 
-  getNotifications = () => {
+  state = {
+    notifications: [
+      {
+        type: 'message',
+        read: 0,
+      }
+    ]
+  }
 
+  getNotifications = () => {
   }
 
   componentWillMount() {
@@ -19,7 +27,11 @@ class Notifications extends Component {
 
   render() {
     return (
-      null
+      <React.Fragment>
+        {this.state.notifications.map(notification => {
+          <div></div>
+        })}
+      </React.Fragment>
     );
   }
 }
