@@ -1,5 +1,4 @@
 const emitter = require('../../emitter');
-const Types = require('../notification/types');
 const notify = require('../notification/notify');
 var conn = null;
 
@@ -11,7 +10,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
  * Function that adds a like.
  * Informations taken :
  * req.body.target -> User to like
- * @param {*} req 
+ * @param {*} req
  */
 const add = req => {
     var infos = req.body;
@@ -38,9 +37,9 @@ const add = req => {
                                     if (err) {
                                         reject(new Error("sql.alert.query"));
                                     } else if (results.length == 1) {
-                                        notify(Types.LIKE_BACK, uid, infos.target);
+                                        notify('like', uid, infos.target);
                                     } else {
-                                        notify(Types.LIKE, uid, infos.target);
+                                        notify('like', uid, infos.target);
                                     }
                                     resolve();
                                 })

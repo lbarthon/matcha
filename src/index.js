@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom'
-import { CurrentUserProvider } from './utils/currentUser'
-import { LocalesProvider } from './utils/locales'
-import { SocketProvider } from './utils/socket'
+import { BrowserRouter } from 'react-router-dom';
+import { CurrentUserProvider } from './utils/currentUser';
+import { LocalesProvider } from './utils/locales';
+import { SocketProvider } from './utils/socket';
+import { NotificationsProvider } from './utils/notifications';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
@@ -12,7 +13,9 @@ ReactDOM.render(
     <CurrentUserProvider>
       <LocalesProvider>
         <SocketProvider>
-          <App />
+          <NotificationsProvider>
+            <App />
+          </NotificationsProvider>
         </SocketProvider>
       </LocalesProvider>
     </CurrentUserProvider>

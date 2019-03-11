@@ -25,3 +25,17 @@
   height: 0;
   clear: both;
 }
+
+.navbar-new{
+  height:15px;
+  width:auto;
+  padding:0 4px;
+  border-radius:2px;
+  position:absolute;
+  top:15px;
+  right:7px;
+  line-height:15px;
+  font-size:11px;
+  background-color:#42a5f5;
+  color:white;
+}

@@ -42,10 +42,6 @@ class Navbar extends Component {
       chat.style.display = 'none';
   }
 
-  getNotifications = () => {
-    //todo
-  }
-
   componentWillMount() {
     const { socket } = this.props;
     const { id } = this.props.currentUser;
@@ -63,6 +59,7 @@ class Navbar extends Component {
   render() {
     const { locales } = this.props;
     const { logged, username } = this.props.currentUser;
+    const { notifs } = this.props;
     return (
       <header>
         <ul id="dropdown1" class="dropdown-content">
@@ -79,8 +76,13 @@ class Navbar extends Component {
                 {logged === true &&
                   <React.Fragment>
                     <li><Link to="/match">Match</Link></li>
-                    <li><Link to="/notifications"><i className="material-icons">notifications_none</i></Link></li>
-                    <li><a onClick={this.toggleChat}><i className="material-icons">message</i></a></li>
+                    <li>
+                      <Link to="/notifications" style={{position: 'relative'}}>
+                        <i className="material-icons">notifications_none</i>
+                        {notifs.count != 0 && <div className="navbar-new">{notifs.count}</div>}
+                      </Link>
+                    </li>
+                    <li><a onClick={this.toggleChat}><i className="material-icons">chat_bubble_outline</i></a></li>
                     <li><a onClick={this.handleLogout}>{locales.locale.nav.logout}</a></li>
                   </React.Fragment>
                 }
@@ -99,7 +101,7 @@ class Navbar extends Component {
           {logged === true &&
             <React.Fragment>
               <li><Link to="/notifications"><i className="material-icons">notifications_none</i>Notifications</Link></li>
-              <li><Link to="/chat"><i className="material-icons">message</i>Chat</Link></li>
+              <li><Link to="/chat"><i className="material-icons">chat_bubble_outline</i>Chat</Link></li>
               <li><Link to="/match">Match</Link></li>
               <li><Link to="/update">{locales.locale.nav.update}</Link></li>
               <li><Link to="/upload">{locales.locale.nav.upload}</Link></li>

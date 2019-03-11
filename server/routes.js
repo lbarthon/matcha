@@ -11,6 +11,7 @@ const likes_routes = require('./user/likes/routes');
 const report_routes = require('./user/reports/routes');
 const blocked_routes = require('./user/blocked/routes');
 const match_routes = require('./matchs/routes');
+const notif_routes = require('./user/notification/routes');
 
 /**
  * Drops queries
@@ -40,6 +41,7 @@ router.use('/likes', likes_routes);
 router.use('/report', report_routes);
 router.use('/blocked', blocked_routes);
 router.use('/matchs', match_routes);
+router.use('/notification', notif_routes);
 
 db_tools.connect();
 

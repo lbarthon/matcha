@@ -1,5 +1,4 @@
 const emitter = require('../emitter');
-const Types = require('./notification/types');
 const notify = require('./notification/notify');
 var conn = null;
 
@@ -12,7 +11,7 @@ const get_infos = (req) => {
 }
 /**
  * Returns infos from the user whose id is in param.
- * @param {int} id 
+ * @param {int} id
  */
 const get_infos_id = (id, visiter) => {
     return new Promise((resolve, reject) => {
@@ -26,7 +25,7 @@ const get_infos_id = (id, visiter) => {
                     } else if (result.length > 0) {
                         delete result[0].pwd;
                         if (visiter != undefined && !isNaN(visiter)) {
-                            notify(Types.VISIT, visiter, id);
+                          //  notify(Types.VISIT, visiter, id);
                         }
                         resolve(result[0]);
                     } else {

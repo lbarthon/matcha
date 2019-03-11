@@ -1,5 +1,4 @@
 const emitter = require('../../emitter');
-const Types = require('../notification/types');
 const notify = require('../notification/notify');
 var conn = null;
 
@@ -11,7 +10,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
  * Removes a like from an user.
  * Informations taken :
  * req.body.target -> User you want to dislike
- * @param {*} req 
+ * @param {*} req
  */
 const remove = req => {
     var infos = req.body;

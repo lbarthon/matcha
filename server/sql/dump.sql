@@ -17190,3 +17190,15 @@ ALTER TABLE `resetpw`
 
 ALTER TABLE `tags`
   ADD CONSTRAINT `tags_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+CREATE TABLE `notifications` (
+  `id` int(12) UNSIGNED NOT NULL,
+  `to_id` int(10) UNSIGNED NOT NULL,
+  `from_id` int(10) UNSIGNED NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `read` tinyint(1) NOT NULL DEFAULT '0',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`to_id`) REFERENCES `users` (`id`),
+  FOREIGN KEY (`from_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

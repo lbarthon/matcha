@@ -5,6 +5,13 @@
   "password": "Mot de passe",
   "repassword": "Repetez votre mot de passe",
   "email" : "Email",
+  "notification" : {
+    "message" : "vous a envoye un message",
+    "like" : "a like votre profile",
+    "unmatch" : "ne match plus avec vous",
+    "visit" : "a visite votre profile",
+    "match" : "match avec vous ! retrouvez la/le dans votre espace de chat"
+  },
   "chat" : {
     "new" : "nouveau",
     "room_select" : "Selectionnez une salle",

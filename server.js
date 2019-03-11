@@ -8,6 +8,7 @@ const path = require('path');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
+const notify = require('./server/user/notification/notify')
 
 const prod = (process.env.PROD == "true" || false);
 const port = (process.env.PORT || 3000);
@@ -74,6 +75,9 @@ io.on('connection', socket => {
   socket.on('is_online', data => {
     let online = io.sockets.adapter.rooms[data.userId] !== undefined ? true : false;
     socket.emit('is_online', online);
+  });
+  socket.on('notify', data => {
+    notify(data.toId, data.fromId, data.type);
   });
 });
 
