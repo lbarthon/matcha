@@ -1,5 +1,4 @@
 const emitter = require('../emitter');
-const notify = require('./notification/notify');
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
@@ -24,9 +23,6 @@ const get_infos_id = (id, visiter) => {
                         reject(new Error("sql.alert.query"));
                     } else if (result.length > 0) {
                         delete result[0].pwd;
-                        if (visiter != undefined && !isNaN(visiter)) {
-                          //  notify(Types.VISIT, visiter, id);
-                        }
                         resolve(result[0]);
                     } else {
                         reject(new Error("user.alert.notfound"));

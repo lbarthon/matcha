@@ -28,7 +28,7 @@ const remove = req => {
                             if (err) {
                                 reject(new Error("sql.alert.query"));
                             } else if (results.length == 1) {
-                                notify(Types.MATCH_DISLIKE, uid, infos.target);
+                                notify('unmatch', uid, infos.target);
                             }
                             resolve();
                         })

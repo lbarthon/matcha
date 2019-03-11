@@ -37,7 +37,7 @@ const add = req => {
                                     if (err) {
                                         reject(new Error("sql.alert.query"));
                                     } else if (results.length == 1) {
-                                        notify('like', uid, infos.target);
+                                        notify('match', uid, infos.target);
                                     } else {
                                         notify('like', uid, infos.target);
                                     }

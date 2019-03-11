@@ -26,7 +26,7 @@ yarn-error.log*
 package*.json
 
 #dev - user pictures
-*public/pictures/user/*
+#*public/pictures/user/*
 
 #build bundle
 *bundle.js

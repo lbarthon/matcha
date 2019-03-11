@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const user = require('./user');
+const notify = require('./notification/notify');
 
 router.post('/register', (req, res) => {
     user.register(req)
@@ -89,6 +90,7 @@ router.post('/reset', (req, res) => {
 router.get('/user/:id', (req, res) => {
     user.get_infos_id(req.params.id, req.session.uid)
     .then((resolve) => {
+        notify('visit', req.session.uid, req.params.id);
         res.status(200).json({ 'success' : resolve });
     })
     .catch((err) => {
