@@ -139,7 +139,6 @@ class User extends Component {
   isOnline = (id) => {
     const { socket } = this.props;
     socket.emit('is_online', {userId: id});
-    console.log('test');
     socket.on('is_online', data => {
       if (this.state.online !== data)
         this.setState({online: data});

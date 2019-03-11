@@ -3,6 +3,7 @@ import { notify } from '../../utils/alert';
 import { withAllHOC } from '../../utils/allHOC';
 import Map from './Map';
 import MatchUser from './MatchUser';
+import nouislider from 'nouislider';
 
 class Match extends Component {
 
@@ -123,7 +124,9 @@ class Match extends Component {
           if (json.error) {
             notify('error', locales.idParser(json.error))
           } else {
-            this.setState({ matchs: json.success });
+            this.setState({ matchs: json.success }, () => {
+              this.initSlider();
+            });
           }
         }).catch(console.error);
       }
@@ -177,11 +180,17 @@ class Match extends Component {
     .catch(console.error);
   }
 
+  initSlider = () => {
+    let elems = document.querySelectorAll("input[type=range]");
+    M.Range.init(elems);
+  }
+
   componentWillMount = () => {
     this.fetchUser();
     this.fetchTags();
     this.fetchMatchs();
   }
+
 
   render() {
     const { sorted, matchs } = this.state;
@@ -198,6 +207,12 @@ class Match extends Component {
               return <button onClick={(e) => { this.sort(value, e.target) }} className="waves-effect waves-light btn-small mr-5 mt-5 sortbtn">{locale.match.sort[value.key]}</button>
             })}
           </div>
+        </div>
+        <div className="row">
+          <label>Range</label>
+          <p class="range-field">
+            <input type="range" id="test5" min="0" max="100" />
+          </p>
         </div>
         <div className="row">
           {sorted.map(value => {

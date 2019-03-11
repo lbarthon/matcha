@@ -32,11 +32,11 @@ class Upload extends Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            if (json['error'])
-              notify('error', this.props.locales.idParser(json['error']));
-            else if (json['success']) {
+            if (json.error)
+              notify('error', this.props.locales.idParser(json.error));
+            else if (json.success) {
               this.getPictures();
-              notify('success', this.props.locales.idParser(json['success']));
+              notify('success', this.props.locales.idParser(json.success));
             }
           });
         } else console.error(new Error(response.statusText));
@@ -66,10 +66,10 @@ class Upload extends Component {
         .then(response => {
           if (response.ok) {
             response.json().then(json => {
-              if (json['error'])
-                notify('error', this.props.locales.idParser(json['error']));
-              else if (json['success'])
-                notify('success', this.props.locales.idParser(json['success']));
+              if (json.error)
+                notify('error', this.props.locales.idParser(json.error));
+              else if (json.success)
+                notify('success', this.props.locales.idParser(json.success));
             });
           } else console.error(new Error(response.statusText));
         })
@@ -93,11 +93,11 @@ class Upload extends Component {
         if (response.ok) {
           response.json().then(json => {
             console.log(json);
-            if (json['error'])
-              notify('error', this.props.locales.idParser(json['error']));
-            else if (json['success']) {
+            if (json.error)
+              notify('error', this.props.locales.idParser(json.error));
+            else if (json.success) {
               this.getPictures();
-              notify('success', this.props.locales.idParser(json['success']));
+              notify('success', this.props.locales.idParser(json.success));
             }
           });
         } else console.error(new Error(response.statusText));
@@ -112,10 +112,10 @@ class Upload extends Component {
     .then(response => {
       if (response.ok) {
         response.json().then(json => {
-          if (json['error'] == null && json['success'] !== this.state.pictures)
-            this.setState({ pictures: json['success'] });
-          else if (json['error'])
-            notify('error', this.props.locales.idParser(json['error']));
+          if (json.error == null && json.success !== this.state.pictures)
+            this.setState({ pictures: json.success });
+          else if (json.error)
+            notify('error', this.props.locales.idParser(json.error));
         });
       } else console.error(new Error(response.statusText));
     });

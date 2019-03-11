@@ -73,7 +73,7 @@ class Chat extends Component {
     const { id } = this.props.currentUser;
     const { socket } = this.props;
     const { message, room } = this.state;
-    const str = httpBuildQuery({message: message, roomId: room.id});
+      const str = httpBuildQuery({message: message, roomId: room.id, toId: room.user.id});
     fetch('/api/chat/message', {
       method: 'POST',
       headers: {

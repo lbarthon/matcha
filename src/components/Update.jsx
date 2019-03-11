@@ -54,7 +54,6 @@ class Update extends Component {
             notify('error', locales.idParser(json.error));
           } else if (json.success) {
             this.getTags();
-            notify('success', locales.idParser(json.success));
           }
         });
       } else console.error(new Error(response.statusText));

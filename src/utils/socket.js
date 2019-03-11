@@ -9,7 +9,13 @@ const SocketContext = React.createContext();
 class _SocketProvider extends React.Component {
 
   componentWillMount() {
-    socket.emit('join', {id: this.props.currentUser.id});
+    if (this.props.currentUser.logged)
+      socket.emit('join', {id: this.props.currentUser.id});
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentUser.logged)
+      socket.emit('join', {id: this.props.currentUser.id});
   }
 
   render() {

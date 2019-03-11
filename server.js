@@ -76,9 +76,6 @@ io.on('connection', socket => {
     let online = io.sockets.adapter.rooms[data.userId] !== undefined ? true : false;
     socket.emit('is_online', online);
   });
-  socket.on('notify', data => {
-    notify(data.toId, data.fromId, data.type);
-  });
 });
 
 app.use('/api', routes);

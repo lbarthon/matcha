@@ -4,7 +4,7 @@ const router = express.Router();
 const message = require('./message');
 
 router.post('/', (req, res) => {
-    message.create(req.body.roomId, req.body.message, req.session.uid)
+    message.create(req.body.roomId, req.body.message, req.session.uid, req.body.toId)
     .then(() => {
         res.status(200).json({ 'success' : true });
     })

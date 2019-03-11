@@ -1,6 +1,7 @@
 import React from 'react';
 import { withSocketHOC } from './socket';
 import { withLocalesHOC } from './locales';
+import { withCurrentUserHOC } from './currentUser';
 import { notify } from './alert';
 
 export const NotificationsContext = React.createContext({
@@ -39,13 +40,13 @@ export class _NotificationsProvider extends React.Component {
       if (notifications[i].read == 0) {
         let copy = notifications.slice();
         copy[i].read = 1;
+        this.setState({notifications: copy});
         fetch('/api/notification/read/' + id, {
           headers: {'CSRF-Token': localStorage.getItem('csrf')}
         }).then(response => {
           if (response.ok) {
             response.json().then(json => {
               if (json.success) {
-                this.setState({notifications: copy});
               } else
                 notify('error', this.props.locales.idParser(json.error));
             });
@@ -66,16 +67,29 @@ export class _NotificationsProvider extends React.Component {
       this.setState({count: i});
   }
 
-  componentWillMount() {
-    const { socket } = this.props
-    this.state.getNotifications();
-    socket.on('new_notification', () => {
-      this.state.getNotifications();
-    });
-  }
-
   componentWillUpdate() {
     this.countNotifications();
+  }
+
+  componentWillMount() {
+    const { socket } = this.props;
+    const { currentUser } = this.props;
+    if (currentUser.logged === true) {
+      this.state.getNotifications();
+      socket.on('new_notification', () => {
+        this.state.getNotifications();
+      });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { socket } = this.props;
+    if (nextProps.currentUser.logged === true) {
+      this.state.getNotifications();
+      socket.on('new_notification', () => {
+        this.state.getNotifications();
+      });
+    }
   }
 
   render() {
@@ -87,7 +101,7 @@ export class _NotificationsProvider extends React.Component {
   }
 }
 
-export const NotificationsProvider = withLocalesHOC(withSocketHOC(_NotificationsProvider));
+export const NotificationsProvider = withCurrentUserHOC(withLocalesHOC(withSocketHOC(_NotificationsProvider)));
 
 export const withNotificationsHOC = (Component) => {
   class HOC extends React.Component {
