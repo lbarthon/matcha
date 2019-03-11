@@ -5,11 +5,11 @@ const reports = require('./reports');
 
 router.use((req, res, next) => {
     if (req.session.username == undefined || req.session.uid == undefined) {
-        res.status(200).json({ 'error' : 'error_not_logged' });
+        res.status(200).json({ 'error' : 'alert.not_logged' });
     } else {
         userUtils.isLogged(req)
         .then(() => { next() })
-        .catch(() => { res.status(200).json({ 'error' : 'error_not_logged' }); });
+        .catch(() => { res.status(200).json({ 'error' : 'alert.not_logged' }); });
     }
 });
 

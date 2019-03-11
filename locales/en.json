@@ -47,7 +47,8 @@
     "update": "Update",
     "register": "Register",
     "login": "Login",
-    "upload": "Pictures"
+    "upload": "Pictures",
+    "profile" : "Profile"
   },
   "title": {
     "update": "Update your infos",
@@ -112,7 +113,7 @@
     "error_email_invalid": "Invalid email!",
     "error_unknown_email": "Unknown email!",
     "error_forbidden_access": "You can't access this page!",
-    "error_not_logged": "You must be logged to do this!",
+    "not_logged": "You must be logged to do this!",
     "picture_add_success": "Picture added succcessfully!",
     "picture_remove_success": "Picture deleted successfully!",
     "picture_set_main_error": "Error editing your picture",

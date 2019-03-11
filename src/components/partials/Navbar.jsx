@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withAllHOC } from '../../utils/allHOC';
 import M from 'materialize-css';
+import { notify } from '../../utils/alert';
 
 class Navbar extends Component {
 
   handleLogout = () => {
     const { getCurrentUser } = this.props.currentUser;
     fetch('/api/logout', {
-      headers: {'CSRF-Token' : this.props.currentUser.csrf}
+      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
     }).then(response => {
       if (response.ok) {
         getCurrentUser();
@@ -45,10 +46,6 @@ class Navbar extends Component {
   componentWillMount() {
     const { socket } = this.props;
     const { id } = this.props.currentUser;
-    socket.emit('join', {id: id});
-    socket.on('new_msg', data => {
-      console.log('Vous avez recu un nouveau message !', data);
-    });
   }
 
   componentDidMount() {
@@ -65,6 +62,7 @@ class Navbar extends Component {
         <ul id="dropdown1" class="dropdown-content">
           <li><Link to="/update">{locales.locale.nav.update}</Link></li>
           <li><Link to="/upload">{locales.locale.nav.upload}</Link></li>
+          <li><Link to={'/user/' + this.props.currentUser.id}>{locales.locale.nav.profile}</Link></li>
         </ul>
         <div className="navbar-fixed">
           <nav>

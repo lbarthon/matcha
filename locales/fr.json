@@ -58,7 +58,8 @@
     "update": "Informations",
     "register": "S'inscrire",
     "login": "Connexion",
-    "upload": "Photos"
+    "upload": "Photos",
+    "profile" : "Profil"
   },
   "title": {
     "update": "Mise a jour des informations",

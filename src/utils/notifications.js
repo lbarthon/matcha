@@ -1,5 +1,7 @@
 import React from 'react';
 import { withSocketHOC } from './socket';
+import { withLocalesHOC } from './locales';
+import { notify } from './alert';
 
 export const NotificationsContext = React.createContext({
   count: 0,
@@ -37,11 +39,19 @@ export class _NotificationsProvider extends React.Component {
       if (notifications[i].read == 0) {
         let copy = notifications.slice();
         copy[i].read = 1;
-        this.setState({
-          notifications: copy
+        fetch('/api/notification/read/' + id, {
+          headers: {'CSRF-Token': localStorage.getItem('csrf')}
+        }).then(response => {
+          if (response.ok) {
+            response.json().then(json => {
+              if (json.success) {
+                this.setState({notifications: copy});
+              } else
+                notify('error', this.props.locales.idParser(json.error));
+            });
+          } else (console.error(response.statusText))
         })
       }
-      //todo request set read
     }
   }
 
@@ -77,7 +87,7 @@ export class _NotificationsProvider extends React.Component {
   }
 }
 
-export const NotificationsProvider = withSocketHOC(_NotificationsProvider);
+export const NotificationsProvider = withLocalesHOC(withSocketHOC(_NotificationsProvider));
 
 export const withNotificationsHOC = (Component) => {
   class HOC extends React.Component {
