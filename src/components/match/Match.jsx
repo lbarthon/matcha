@@ -12,6 +12,7 @@ class Match extends Component {
     matchs: [],
     user: [],
     sorted: [],
+    limits: {},
     key: ''
   }
 
@@ -31,27 +32,10 @@ class Match extends Component {
       }
     },
     {
-      key: 'location',
+      key: 'distance',
       function: () => {
-        const deg2rad = (deg) => {
-          return deg * (Math.PI/180)
-        }
-
-        const getDistanceFromLatLon = (lat1,lon1,lat2,lon2) => {
-          var dLat = deg2rad(lat2 - lat1);
-          var dLon = deg2rad(lon2 - lon1);
-          var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-          return c;
-        }
-
-        var user_split = this.state.user.location.split(";");
-        var lat = user_split[0];
-        var lng = user_split[1];
-       return this.state.matchs.sort((a, b) => {
-          var a_split = a.location.split(";");
-          var b_split = b.location.split(";");
-          return getDistanceFromLatLon(lat, lng, a_split[0], a_split[1]) - getDistanceFromLatLon(lat, lng, b_split[0], b_split[1]);
+        return this.state.matchs.sort((a, b) => {
+          return a.distance - b.distance;
         })
       }
     },
@@ -74,25 +58,69 @@ class Match extends Component {
     {
       key: 'tags',
       function: () => {
-        const compare = arr => {
-          var userTags = this.state.user.tags;
-          var count = 0;
-          arr.forEach(elem => {
-            if (userTags.includes(elem)) {
-              count++;
-            }
-          });
-          return count;
-        }
-        return this.state.matchs.map(value => {
-          value.commonTags = compare(value.tags);
-          return value;
-        }).sort((a, b) => {
+        return this.state.matchs.sort((a, b) => {
           return b.commonTags - a.commonTags;
         })
       }
     }
   ]
+
+  /**
+   * Returns the number of tags in common with the logged user.
+   */
+  getCommonTags = (tags) => {
+    var userTags = this.state.user.tags;
+    var count = 0;
+    tags.forEach(elem => {
+      if (userTags.includes(elem)) {
+        count++;
+      }
+    });
+    return count;
+  }
+
+  /**
+   * Returns age of birthdate, whose format is DD/MM/YYYY
+   */
+  getAge = (birthdate) => {
+    let now = new Date();
+    let split = birthdate.split("/");
+    let years = now.getFullYear() - split[2];
+    if (split[1] >= now.getMonth() + 1) {
+      if (split[1] == now.getMonth() + 1) {
+        if (split[0] > now.getDate()) {
+          years--;
+        }
+      } else {
+        years--;
+      }
+    }
+    return years;
+  }
+
+  /**
+   * Degrees to radians
+   */
+  deg2rad = (deg) => {
+    return deg * (Math.PI / 180)
+  }
+
+  /**
+   * Distance from logged user lat lng and params latLon (array containing lat and lon)
+   */
+  getDistanceFromUser = (latLon) => {
+    var lat1 = latLon[0];
+    var lon1 = latLon[1];
+    var userSplit = this.state.user.location.split(";");
+    var lat2 = userSplit[0];
+    var lon2 = userSplit[1];
+
+    var dLat = this.deg2rad(lat2 - lat1);
+    var dLon = this.deg2rad(lon2 - lon1);
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return c * 6371;
+  }
 
   sort = (value, button) => {
     const { locale } = this.props.locales;
@@ -125,8 +153,13 @@ class Match extends Component {
           if (json.error) {
             notify('error', locales.idParser(json.error))
           } else {
-            this.setState({ matchs: json.success }, () => {
-              this.initSlider();
+            this.setState({
+              matchs: json.success.map(value => {
+                value.age = this.getAge(value.birthdate);
+                value.tags = this.getCommonTags(value.tags);
+                value.distance = this.getDistanceFromUser(value.location.split(";"));
+                return value;
+              })
             });
           }
         }).catch(console.error);
@@ -181,25 +214,33 @@ class Match extends Component {
     .catch(console.error);
   }
 
-  initSlider = () => {
-    let elems = document.querySelectorAll("input[type=range]");
-    M.Range.init(elems);
-
-    let slider = document.getElementById('test-slider');
-    noUiSlider.create(slider, {
-      start: [20, 80],
-      connect: true,
-      step: 1,
-      range: {
-        'min': 0,
-        'max': 100
-      },
-      format: wNumb({
-        decimals: 0
+  initSlider = (infos) => {
+    if (infos.key == 'default') return;
+    let slider = document.getElementById(infos.key + '-slider');
+    if (slider && !slider.noUiSlider) {
+      let min = this.state.matchs.reduce((min, p) => p[infos.key] < min ? p[infos.key] : min, this.state.matchs[0][infos.key]);
+      let max = this.state.matchs.reduce((max, p) => p[infos.key] > max ? p[infos.key] : max, this.state.matchs[0][infos.key]);
+      noUiSlider.create(slider, {
+        start: [min, max],
+        connect: true,
+        step: 1,
+        range: {
+          min: min,
+          max: max
+        },
+        format: wNumb({
+          decimals: 0
+        })
+      });
+      slider.noUiSlider.on('change', slider => {
+        let { limits } = this.state;
+        limits[infos.key] = {
+          min: slider[0],
+          max: slider[1]
+        }
+        this.setState({ limits: limits });
       })
-    });
-    elems = document.querySelectorAll("#test-slider");
-    //M.Slider.init(slider);
+    }
   }
 
   componentWillMount = () => {
@@ -208,11 +249,14 @@ class Match extends Component {
     this.fetchMatchs();
   }
 
+  componentDidUpdate = () => {
+    this.sorts.forEach(this.initSlider);
+  }
 
   render() {
-    const { sorted, matchs } = this.state;
+    const { sorted, matchs, limits } = this.state;
     const { locale } = this.props.locales;
-    if (matchs.length == 0) return null;
+    if (matchs.length === 0) return null;
     return (
       <div>
         <Map matchs={matchs} userLocation={this.state.user.location} />
@@ -223,13 +267,15 @@ class Match extends Component {
             })}
           </div>
         </div>
-        <div className="row">
-          <label>Range</label>
-          <div id="test-slider"></div>
-          <p class="range-field">
-            <input type="range" id="test5" min="0" max="100" />
-          </p>
-        </div>
+        {this.sorts.map(value => {
+          if (value.key == 'default') return null;
+          return (
+            <div className="row">
+              <label>{locale.match.sort[value.key]}</label>
+              <div id={value.key + "-slider"}></div>
+            </div>
+          )
+        })}
         <div className="row">
           {sorted.map(value => {
             return <MatchUser key={value.id} user={value} />

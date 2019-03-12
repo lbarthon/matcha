@@ -16,19 +16,14 @@ class Notifications extends Component {
     switch (notif.type) {
       case 'unmatch':
         return 'sentiment_dissatisfied';
-        break;
       case 'message':
         return 'chat';
-        break;
       case 'match':
         return 'people';
-        break;
       case 'like':
         return 'thumb_up';
-        break;
       case 'visit':
         return 'touch_app';
-        break;
     }
   }
 

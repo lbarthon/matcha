@@ -36,7 +36,7 @@
   "match": {
     "sort": {
       "default": "Default",
-      "location": "Distance",
+      "distance": "Distance",
       "age": "Age",
       "popularity": "Popularite",
       "tags": "Tags en commun"

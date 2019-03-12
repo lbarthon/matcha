@@ -96,7 +96,7 @@ class Update extends Component {
         this.setState({
           user: {
             ...this.state.user,
-            birthdate: [this.pad(date.getDate()), this.pad(date.getMonth()+1), date.getFullYear()].join('/')
+            birthdate: [this.pad(date.getDate()), this.pad(date.getMonth() + 1), date.getFullYear()].join('/')
           }
         });
       }

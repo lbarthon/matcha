@@ -62,7 +62,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 io.on('connection', socket => {
   let currentUserId;
   socket.on('disconnect', () => {
-    console.log(currentUserId);
     // requete qui update la derniere connexion ici
   });
   socket.on('join', data => {

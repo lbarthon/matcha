@@ -7,15 +7,14 @@ class MatchUser extends Component {
 
   render() {
     if (this.props.user === undefined) return null;
-    const { locale } = this.props.locales;
-    const { username, tags, description, birthdate, picture, id} = this.props.user;
+    const { username, age, picture, id} = this.props.user;
     return (
       <React.Fragment>
         <div className="col s4 m3">
           <Link to={'/user/' + id}>
             <div className="match-card z-depth-2" style={{backgroundImage: 'url("/pictures/user/' + picture + '")'}}>
               <span>{username}</span>
-              <small>{birthdate}</small>
+              <small>{age}</small>
             </div>
           </Link>
         </div>
