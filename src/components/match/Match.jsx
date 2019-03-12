@@ -3,7 +3,8 @@ import { notify } from '../../utils/alert';
 import { withAllHOC } from '../../utils/allHOC';
 import Map from './Map';
 import MatchUser from './MatchUser';
-import nouislider from 'nouislider';
+import noUiSlider from 'materialize-css/extras/noUiSlider/nouislider';
+import 'materialize-css/extras/noUiSlider/nouislider.css'
 
 class Match extends Component {
 
@@ -183,6 +184,22 @@ class Match extends Component {
   initSlider = () => {
     let elems = document.querySelectorAll("input[type=range]");
     M.Range.init(elems);
+
+    let slider = document.getElementById('test-slider');
+    noUiSlider.create(slider, {
+      start: [20, 80],
+      connect: true,
+      step: 1,
+      range: {
+        'min': 0,
+        'max': 100
+      },
+      format: wNumb({
+        decimals: 0
+      })
+    });
+    elems = document.querySelectorAll("#test-slider");
+    //M.Slider.init(slider);
   }
 
   componentWillMount = () => {
@@ -195,9 +212,7 @@ class Match extends Component {
   render() {
     const { sorted, matchs } = this.state;
     const { locale } = this.props.locales;
-
     if (matchs.length == 0) return null;
-
     return (
       <div>
         <Map matchs={matchs} userLocation={this.state.user.location} />
@@ -210,6 +225,7 @@ class Match extends Component {
         </div>
         <div className="row">
           <label>Range</label>
+          <div id="test-slider"></div>
           <p class="range-field">
             <input type="range" id="test5" min="0" max="100" />
           </p>
