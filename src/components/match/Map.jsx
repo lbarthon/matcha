@@ -16,9 +16,7 @@ export class MatchMap extends Component {
     markers: []
   };
 
-  componentDidMount = () => {
-    const { userLocation, matchs } = this.props;
-    
+  createMarkersFromUsers = (matchs) => {
     var mapped = matchs.map(value => {
       let latLng = value.location.split(";");
       return {
@@ -28,14 +26,19 @@ export class MatchMap extends Component {
         lng: latLng[1]
       };
     });
-    var markers = mapped.map(match => {
+    return mapped.map(match => {
       return (
         <Marker match={match}
           position={{ lat: match.lat, lng: match.lng }}
           onClick={this.onMarkerClick} />
       );
     });
-    this.setState({ markers: markers });
+  }
+
+  componentDidMount = () => {
+    const { userLocation, matchs } = this.props;
+    
+    this.setState({ markers: this.createMarkersFromUsers(matchs) });
     let latLng = userLocation.split(";");
     this.setState({
       userLocation: {
@@ -43,6 +46,12 @@ export class MatchMap extends Component {
         lng: latLng[1]
       }
     });
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.matchs.length != this.state.markers.length) {
+      this.setState({ markers: this.createMarkersFromUsers(nextProps.matchs) });
+    }
   }
 
   onMarkerClick = (props, marker, e) => {

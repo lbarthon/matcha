@@ -256,13 +256,31 @@ class Match extends Component {
   render() {
     const { sorted, matchs, limits } = this.state;
     const { locale } = this.props.locales;
+    
     if (matchs.length === 0) return null;
+    if (sorted.length === 0) {
+      this.setState({ sorted: this.sorts[0].function() });
+    }
+
+    var to_display = sorted.filter(value => {
+      for (let i = 0; i < this.sorts.length; i++) {
+        let key = this.sorts[i].key;
+        if (limits[key] && limits[key].min && limits[key].max) {
+          if (value[key] < limits[key].min || value[key] > limits[key].max) {
+            return false;
+          }
+        }
+      }
+      return true;
+    });
+
     return (
       <div>
-        <Map matchs={matchs} userLocation={this.state.user.location} />
+        <Map matchs={to_display} userLocation={this.state.user.location} />
         <div className="row">
           <div className="col s12">
             {this.sorts.map(value => {
+              if (value.key == 'default') return null;
               return <button onClick={(e) => { this.sort(value, e.target) }} className="waves-effect waves-light btn-small mr-5 mt-5 sortbtn">{locale.match.sort[value.key]}</button>
             })}
           </div>
@@ -277,7 +295,7 @@ class Match extends Component {
           )
         })}
         <div className="row">
-          {sorted.map(value => {
+          {to_display.map(value => {
             return <MatchUser key={value.id} user={value} />
           })}
         </div>
