@@ -92,7 +92,6 @@ class Upload extends Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            console.log(json);
             if (json.error)
               notify('error', this.props.locales.idParser(json.error));
             else if (json.success) {

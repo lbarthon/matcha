@@ -5,6 +5,8 @@
   "password": "Password",
   "repassword": "Password confirmation",
   "email" : "Email",
+  "send": "Send",
+  "cancel": "Cancel",
   "notification" : {
     "message" : "vous a envoye un message",
     "like" : "a like votre profile",
@@ -26,10 +28,16 @@
     "like" : "Like",
     "unlike" : "Unlike",
     "block" : "Block",
+    "unblock" : "Unblock",
     "report": "Report",
     "online": "Online",
     "last_connection": "Last connection",
+    "reason": "Reason of the report",
     "alert" : {
+      "block_success" : "You have successfully blocked this user",
+      "unblock_success" : "You have successfully unblocked this user",
+      "report_success" : "Thank you for your report",
+      "report_text" : "Please enter a reason",
       "notfound" : "User not found"
     }
   },

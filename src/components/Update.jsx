@@ -255,7 +255,7 @@ class Update extends Component {
         <div className="row">
           <div className="input-field col s12">
             <i className="material-icons prefix">cake</i>
-            <input name="birthdate" id="birthdate" type="text" class="datepicker"/>
+            <input name="birthdate" id="birthdate" type="text" className="datepicker"/>
             <label htmlFor="birthdate">{locale.register.birthdate}</label>
           </div>
         </div>

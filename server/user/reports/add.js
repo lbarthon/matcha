@@ -9,7 +9,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
  * Adds a report. Takes in body those params :
  * req.body.target = target id
  * req.body.text = report text
- * @param {*} req 
+ * @param {*} req
  */
 const add = req => {
     var infos = req.body;
@@ -19,7 +19,7 @@ const add = req => {
             if (infos.target == undefined || infos.target == '' || isNaN(infos.target)) {
                 reject(new Error("error_wrong_id"));
             } else if (infos.text == undefined || infos.text == '') {
-                reject(new Error("error_null_text"));
+                reject(new Error("user.alert.report_text"));
             } else {
                 conn.query("INSERT INTO reports (user_id, target_id, report) VALUES (?,?,?)", [uid, infos.target, infos.text], err => {
                     if (err) {

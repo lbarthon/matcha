@@ -13,11 +13,8 @@ class Navbar extends Component {
     }).then(response => {
       if (response.ok) {
         getCurrentUser();
-      } else {
-        throw Error(response.statusText);
-      }
-    })
-    .catch(error => { console.log(error); });
+      } else console.error(new Error(response.statusText));
+    });
   }
 
   initNavbar = () => {
@@ -59,7 +56,7 @@ class Navbar extends Component {
     const { notifs } = this.props;
     return (
       <header>
-        <ul id="dropdown1" class="dropdown-content">
+        <ul id="dropdown1" className="dropdown-content">
           <li><Link to="/update">{locales.locale.nav.update}</Link></li>
           <li><Link to="/upload">{locales.locale.nav.upload}</Link></li>
           <li><Link to={'/user/' + this.props.currentUser.id}>{locales.locale.nav.profile}</Link></li>
@@ -70,7 +67,7 @@ class Navbar extends Component {
               <Link to="/" className="brand-logo ml-10">Matcha</Link>
               <a href="#" data-target="sidenav" className="sidenav-trigger"><i className="material-icons">menu</i></a>
               <ul id="nav-mobile" className="right hide-on-med-and-down">
-                <li style={{display: logged ? 'block' : 'none' }}><a class="dropdown-trigger" data-target="dropdown1">{username}<i class="material-icons right">arrow_drop_down</i></a></li>
+                <li style={{display: logged ? 'block' : 'none' }}><a className="dropdown-trigger" data-target="dropdown1">{username}<i className="material-icons right">arrow_drop_down</i></a></li>
                 {logged === true &&
                   <React.Fragment>
                     <li><Link to="/match">Match</Link></li>

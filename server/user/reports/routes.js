@@ -26,7 +26,7 @@ router.get('/get', (req, res) => {
 router.post('/add', (req, res) => {
     reports.add(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'reports.add.success' });
+        res.status(200).json({ 'success' : 'user.alert.report_success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });

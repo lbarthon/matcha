@@ -5,6 +5,8 @@
   "password": "Mot de passe",
   "repassword": "Repetez votre mot de passe",
   "email" : "Email",
+  "send": "Envoyer",
+  "cancel": "Annuler",
   "notification" : {
     "message" : "vous a envoye un message",
     "like" : "a like votre profile",
@@ -26,10 +28,16 @@
     "like" : "J'aime",
     "unlike" : "Je n'aime plus",
     "block" : "Bloquer",
+    "unblock" : "Debloquer",
     "report": "Signaler",
     "online": "En ligne",
     "last_connection": "Derniere connexion",
+    "reason": "Raison du signalement",
     "alert" : {
+      "block_success" : "Vous avez bien bloque cet utilisateur",
+      "unblock_success" : "Vous avez bien debloque cet utilisateur",
+      "report_success" : "Merci d'avoir signale cet utilisateur nous allons analyser votre signalement (non)",
+      "report_text" : "Merci d'entrer une raison",
       "notfound" : "Cet utilisateur n'existe pas"
     }
   },

@@ -7,7 +7,6 @@ class ChatSide extends Component {
 
   initSidenav = () => {
     let elems = document.querySelectorAll('#chatside');
-    console.log(elems);
     let instances = M.Sidenav.init(elems, {
       edge: 'left',
       inDuration: 250
@@ -22,7 +21,7 @@ class ChatSide extends Component {
     const { locale } = this.props.locales;
     return (
       <React.Fragment>
-        <ul id="chatside" class="sidenav">
+        <ul id="chatside" className="sidenav">
           {this.props.rooms.map(room => {
             return (
               <li>

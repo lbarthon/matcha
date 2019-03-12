@@ -3,137 +3,58 @@ import { withAllHOC } from '../utils/allHOC';
 import { notify } from '../utils/alert';
 import '../css/user.css';
 import Map from './user/Map';
-import httpBuildQuery from 'http-build-query';
+import Actions from './user/Actions';
+import req from '../utils/req';
 
 class User extends Component {
 
   state = {
-    user : undefined,
+    user : {
+      id: undefined
+    },
     pictures: [],
     mainPic: {},
     tags: [],
-    liked: false,
     online: false
   }
 
   getUser = (id) => {
-    fetch('/api/user/' + id, {
-      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    req('/api/user/' + id)
+    .then(res => {
+      this.setState({ user: res }, () => {
+        document.title = this.state.user.username;
+      });
     })
-    .then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            this.setState({ user: json.success }, () => {
-              document.title = this.state.user.username;
-            });
-          } else if (json.error) {
-            notify('error', this.props.locales.idParser(json.error));
-          }
-        });
-      } else { console.error(new Error(response.statusText)); }
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
     })
   }
 
   getPictures = (id) => {
-    fetch('/api/pictures/get/' + id, {
-      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    req('/api/pictures/get/' + id)
+    .then(res => {
+      let pictures = res;
+      for (var i in pictures) {
+        if (pictures[i].main) {
+          this.setState({ mainPic: pictures[i] });
+          delete pictures[i];
+        }
+      }
+      this.setState({ pictures: pictures });
     })
-    .then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.error == null && json.success !== this.state.pictures) {
-            let pictures = json.success;
-            for (var i in pictures) {
-              if (pictures[i].main) {
-                this.setState({ mainPic: pictures[i] });
-                delete pictures[i];
-              }
-            }
-            this.setState({ pictures: pictures });
-          } else if (json.error) {
-            notify('error', this.props.locales.idParser(json.error));
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   getTags = (id) => {
-    const { locales } = this.props;
-    fetch('/api/tags/' + id, {
-      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            this.setState({tags: json.success});
-          } else {
-            notify('error', locales.idParser(json.error))
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
-  }
-
-  getLike = (id) => {
-    fetch('/api/likes/has_like/' + id, {
-      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success != undefined) {
-            if (json.success === true) {
-              this.setState({liked: true});
-            }
-          } else {
-            notify('error', this.props.locales.idParser(json.error));
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
-  }
-
-  handleLike = () => {
-    const str = httpBuildQuery({target : this.props.match.params.id});
-    fetch('/api/likes/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        'CSRF-Token' : localStorage.getItem('csrf')
-      },
-      body: str
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            this.setState({liked: true});
-          } else
-            notify('error', this.props.locales.idParser(json.error));
-        });
-      } else console.error(new Error(response.statusText));
-    });
-  }
-
-  handleUnlike = (id) => {
-    const str = httpBuildQuery({target : this.props.match.params.id});
-    fetch('/api/likes/remove', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        'CSRF-Token' : localStorage.getItem('csrf')
-      },
-      body: str
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            this.setState({liked: false});
-          } else
-            notify('error', this.props.locales.idParser(json.error));
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    req('/api/tags/' + id)
+    .then(res => {
+      this.setState({tags: res});
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   isOnline = (id) => {
@@ -145,27 +66,19 @@ class User extends Component {
     });
   }
 
-  handleBlock = () => {
-
-  }
-
-  handleReport = () => {
-
-  }
-
   getInfos = (id) => {
     this.setState({
-      user : undefined,
+      user : {
+        id: undefined
+      },
       pictures: [],
       mainPic: {},
       tags: [],
-      liked: false,
       online: false
     });
     this.getTags(id);
     this.getUser(id);
     this.getPictures(id);
-    this.getLike(id);
     this.isOnline(id);
   }
 
@@ -179,7 +92,7 @@ class User extends Component {
   }
 
   render() {
-    if (!this.state.user) return null;
+    if (!this.state.user.id) return null;
     const { locale } = this.props.locales;
     const { username, sex, description, location, firstname, lastname, wanted, birthdate} = this.state.user;
     return (
@@ -190,17 +103,10 @@ class User extends Component {
             <div className="picture picture-main" style={{backgroundImage: 'url("/pictures/user/' + this.state.mainPic.picture + '")'}}></div>
           </div>
         </div>
-        {this.props.match.params.id != this.props.currentUser.id &&
-          <div className="row">
-            {this.state.liked && <a className="waves-effect waves-light btn-small mt-5" onClick={this.handleUnlike}><i className="material-icons left">favorite</i>{locale.user.unlike}</a>}
-            {!this.state.liked && <a className="waves-effect waves-light btn-small mt-5" onClick={this.handleLike}><i className="material-icons left">favorite</i>{locale.user.like}</a>}
-            <a className="waves-effect waves-light btn-small red right ml-5 mt-5" onClick={this.handleBlock}><i className="material-icons left">block</i>{locale.user.block}</a>
-            <a className="waves-effect waves-light btn-small red right mt-5" onClick={this.handleReport}><i className="material-icons left">flag</i>{locale.user.report}</a>
-          </div>
-        }
+        <Actions id={this.state.user.id}/>
         {this.state.tags && <h6>Tags</h6>}
         {this.state.tags.map(tag => {
-          return (<div class="chip">{tag.tag}</div>);
+          return (<div className="chip">{tag.tag}</div>);
         })}
         <h6>Description</h6>
         <p>{description}</p>

@@ -16,7 +16,7 @@ router.use((req, res, next) => {
 router.post('/add', (req, res) => {
     blocked.add(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'blocked.add.success' });
+        res.status(200).json({ 'success' : 'user.alert.block_success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
@@ -26,7 +26,7 @@ router.post('/add', (req, res) => {
 router.post('/remove', (req, res) => {
     blocked.remove(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'blocked.remove.success' });
+        res.status(200).json({ 'success' : 'user.alert.unblock_success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });

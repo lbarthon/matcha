@@ -17,7 +17,6 @@ class Login extends Component {
   handleSubmit = (e) => {
     const { locales } = this.props;
     const { getCurrentUser } = this.props.currentUser;
-    console.log(getCurrentUser);
     const { history } = this.props;
     e.preventDefault();
     parseForm(this.state, strForm => {
@@ -41,11 +40,7 @@ class Login extends Component {
               });
             }
           });
-        } else { throw Error(response.statusText); }
-      })
-      .catch(error => {
-        // handle error
-        console.error(error);
+        } else console.error(new Error(response.statusText));
       });
     });
   }
