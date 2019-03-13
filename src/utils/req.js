@@ -19,10 +19,13 @@ const req = (url, body) => {
               resolve(json.success);
             } else if (json.error) {
               reject(json.error);
+            } else {
+              reject();
             }
           })
         } else {
           console.error(new Error(response.statusText));
+          reject();
         }
       });
     } else {
@@ -36,10 +39,13 @@ const req = (url, body) => {
               resolve(json.success);
             } else if (json.error) {
               reject(json.error);
+            } else {
+              reject();
             }
           })
         } else {
           console.error(new Error(response.statusText));
+          reject();
         }
       });
     }
