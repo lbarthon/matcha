@@ -8,7 +8,7 @@ const path = require('path');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const bodyParser = require('body-parser');
-const notify = require('./server/user/notification/notify')
+const userUtils = require('./server/user/utils');
 
 const prod = (process.env.PROD == "true" || false);
 const port = (process.env.PORT || 3000);
@@ -60,21 +60,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 io.on('connection', socket => {
-  let currentUserId;
-  socket.on('disconnect', () => {
-    // requete qui update la derniere connexion ici
-  });
-  socket.on('join', data => {
-    currentUserId = data.id;
-    socket.join(data.id);
-  });
-  socket.on('new_message', data => {
-    io.sockets.in(data.to).emit('new_message', {roomId: data.roomId});
-  });
-  socket.on('is_online', data => {
-    let online = io.sockets.adapter.rooms[data.userId] !== undefined ? true : false;
-    socket.emit('is_online', online);
-  });
+    let currentUserId;
+    socket.on('disconnect', () => {
+        userUtils.setLastLogged(currentUserId);
+    });
+    socket.on('join', data => {
+        currentUserId = data.id;
+        socket.join(data.id);
+    });
+    socket.on('new_message', data => {
+        io.sockets.in(data.to).emit('new_message', {roomId: data.roomId});
+    });
+    socket.on('is_online', data => {
+        let online = io.sockets.adapter.rooms[data.userId] !== undefined ? true : false;
+        socket.emit('is_online', online);
+    });
+    socket.on('logout', () => {
+        userUtils.setLastLogged(currentUserId);
+    });
 });
 
 app.use('/api', routes);

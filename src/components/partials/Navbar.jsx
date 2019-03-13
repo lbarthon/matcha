@@ -7,11 +7,13 @@ import { notify } from '../../utils/alert';
 class Navbar extends Component {
 
   handleLogout = () => {
-    const { getCurrentUser } = this.props.currentUser;
+    const { socket } = this.props;
+    const { getCurrentUser, id } = this.props.currentUser;
     fetch('/api/logout', {
       headers: {'CSRF-Token' : localStorage.getItem('csrf')}
     }).then(response => {
       if (response.ok) {
+        socket.emit('logout', {id: id});
         getCurrentUser();
       } else console.error(new Error(response.statusText));
     });

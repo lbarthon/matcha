@@ -157,6 +157,17 @@ const areInfosClean = (infos, table) => {
         }).catch(reject);
     });
 }
+/**
+ * Updates last_seen value for the specified uid.
+ * @param {int} uid 
+ */
+const setLastLogged = (uid) => {
+    if (conn && uid) {
+        var date = new Date();
+        var timestamp = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+        conn.query("UPDATE users SET last_seen=? WHERE id=?", [timestamp, uid]);
+    }
+}
 
 module.exports = {
     getIdFromUsername : getIdFromUsername,
@@ -164,5 +175,6 @@ module.exports = {
     isLogged          : isLogged,
     isAdmin           : isAdmin,
     getTableColumns   : getTableColumns,
-    areInfosClean     : areInfosClean
+    areInfosClean     : areInfosClean,
+    setLastLogged     : setLastLogged
 }

@@ -220,26 +220,33 @@ class Match extends Component {
     if (slider && !slider.noUiSlider) {
       let min = this.state.matchs.reduce((min, p) => p[infos.key] < min ? p[infos.key] : min, this.state.matchs[0][infos.key]);
       let max = this.state.matchs.reduce((max, p) => p[infos.key] > max ? p[infos.key] : max, this.state.matchs[0][infos.key]);
-      noUiSlider.create(slider, {
-        start: [min, max],
-        connect: true,
-        step: 1,
-        range: {
-          min: min,
-          max: max
-        },
-        format: wNumb({
-          decimals: 0
-        })
-      });
-      slider.noUiSlider.on('change', slider => {
-        let { limits } = this.state;
-        limits[infos.key] = {
-          min: slider[0],
-          max: slider[1]
-        }
-        this.setState({ limits: limits });
-      })
+      if (min == max) {
+        let elem = document.getElementById(infos.key);
+        if (elem) elem.remove();
+        let btn = document.getElementById(infos.key + '-btn');
+        if (btn) btn.remove();
+      } else {
+        noUiSlider.create(slider, {
+          start: [min, max],
+          connect: true,
+          step: 1,
+          range: {
+            min: min,
+            max: max
+          },
+          format: wNumb({
+            decimals: 0
+          })
+        });
+        slider.noUiSlider.on('change', slider => {
+          let { limits } = this.state;
+          limits[infos.key] = {
+            min: slider[0],
+            max: slider[1]
+          }
+          this.setState({ limits: limits });
+        });
+      }
     }
   }
 
@@ -281,14 +288,14 @@ class Match extends Component {
           <div className="col s12">
             {this.sorts.map(value => {
               if (value.key == 'default') return null;
-              return <button onClick={(e) => { this.sort(value, e.target) }} className="waves-effect waves-light btn-small mr-5 mt-5 sortbtn">{locale.match.sort[value.key]}</button>
+              return <button id={value.key + '-btn'} onClick={(e) => { this.sort(value, e.target) }} className="waves-effect waves-light btn-small mr-5 mt-5 sortbtn">{locale.match.sort[value.key]}</button>
             })}
           </div>
         </div>
         {this.sorts.map(value => {
           if (value.key == 'default') return null;
           return (
-            <div className="row">
+            <div id={value.key} className="row">
               <label>{locale.match.sort[value.key]}</label>
               <div id={value.key + "-slider"}></div>
             </div>
