@@ -20,6 +20,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
  */
 const register = req => {
     var infos = req.body;
+    let genders = ['male', 'female', 'bisexual'];
     utils.areInfosClean(infos, 'users');
     return new Promise((resolve, reject) => {
         if (conn) {
@@ -31,7 +32,7 @@ const register = req => {
                 reject(new Error("register.alert.password_null"));
             } else if (!String(infos.pwd).match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[^\w])(?=.{8,})/)) {
                 reject(new Error("register.alert.password_regex"));
-            } else if (infos.gender == '' || infos.lookingFor == '') {
+            } else if (!genders.includes(infos.gender) || infos.gender == 'bisexual' || !genders.includes(infos.lookingFor)) {
                 reject(new Error("register.alert.genders_null"));
             } else if (infos.repassword != infos.pwd) {
                 reject(new Error("register.alert.password_diff"));
@@ -39,7 +40,7 @@ const register = req => {
                 reject(new Error("register.alert.birthdate_null"));
             } else if (!String(infos.email).match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
                 reject(new Error("register.alert.email_invalid"));
-            } else if (!String(infos.location).match(/[\-\d\.]+\;[\-\d\.]+/)) {
+            } else if (!String(infos.location).match(/\-?[\d\.]+\;\-?[\d\.]+/)) {
                 reject(new Error("register.alert.location_invalid"));
             } else {
                 utils.getIdFromEmail(infos.email).then(() => {

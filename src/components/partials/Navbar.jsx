@@ -13,7 +13,7 @@ class Navbar extends Component {
       headers: {'CSRF-Token' : localStorage.getItem('csrf')}
     }).then(response => {
       if (response.ok) {
-        socket.emit('logout', {id: id});
+        socket.emit('logout');
         getCurrentUser();
       } else console.error(new Error(response.statusText));
     });
