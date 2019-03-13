@@ -1,4 +1,5 @@
 import React from 'react';
+import req from './req';
 
 export const CurrentUserContext = React.createContext({
   username: '',
@@ -14,28 +15,28 @@ export class CurrentUserProvider extends React.Component {
     id: undefined,
     logged: undefined,
     getCurrentUser: (callback) => {
-      fetch('/api/logged').then(response => {
-        if (response.ok) {
-          response.json().then(json => {
-            window.localStorage.setItem('csrf', json.success.csrf);
-            if (json.success.username !== undefined) {
-              if (this.state.logged !== true) {
-                this.setState({
-                  logged: true,
-                  username: json.success.username,
-                  id: json.success.uid,
-                });
-              }
-            } else {
-              if (this.state.logged !== false) {
-                this.setState({
-                  logged: false,
-                });
-              }
-            }
-          })
-        } else console.error(new Error(response.statusText));
-      });
+      req('/api/logged')
+      .then(res => {
+        window.localStorage.setItem('csrf', res.csrf);
+        if (res.username !== undefined) {
+          if (this.state.logged !== true) {
+            this.setState({
+              logged: true,
+              username: res.username,
+              id: res.uid,
+            });
+          }
+        } else {
+          if (this.state.logged !== false) {
+            this.setState({
+              logged: false,
+            });
+          }
+        }
+      })
+      .catch(err => {
+        notify('error', this.props.locales.idParser(err));
+      })
       if (callback) {
         callback();
       }

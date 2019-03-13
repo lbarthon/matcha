@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import fr from '../../locales/fr.json';
 import en from '../../locales/en.json';
 import { withCurrentUserHOC } from './currentUser';
+import req from './req';
 
-const locales = {
+export const locales = {
   fr: fr,
   en: en
 }
@@ -24,17 +25,10 @@ class _LocalesProvider extends Component {
     toggleLanguage : () => {
       let newLang = (this.state.text === 'fr') ? 'en' : 'fr';
       this.setState({ locale: locales[newLang], text: newLang});
-      fetch('/api/lang/set', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-          'CSRF-Token': localStorage.getItem('csrf')
-        },
-        body: "lang=" + newLang
-      })
+      req('/api/lang/set', {lang: newLang});
     },
     idParser : (str) => {
-      console.log(str);
+      console.log('erreur id :', str);
       let tab = str.split('.');
       let ret = this.state.locale;
       tab.forEach(value => {
@@ -45,19 +39,15 @@ class _LocalesProvider extends Component {
   }
 
   componentWillMount() {
-    fetch('/api/lang/get', {
-      headers: {'CSRF-Token': localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          this.setState({
-            locale: locales[json.lang],
-            text: json.lang,
-            loaded: true
-          });
-        });
-      }
-    });
+    req('/api/lang/get')
+    .then(res => {
+      console.log(res);
+      this.setState({
+        locale: locales[res],
+        text: res,
+        loaded: true
+      });
+    })
   }
 
   render() {

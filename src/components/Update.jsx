@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import parseForm from '../utils/parseForm';
 import { notify } from '../utils/alert';
 import { localeIdParser } from '../utils/locales';
 import { withAllHOC } from '../utils/allHOC';
 import M from 'materialize-css';
 import httpBuildQuery from 'http-build-query';
 import Map from './update/Map';
+import req from '../utils/req';
 
 class Update extends Component {
   state = {
@@ -39,45 +39,21 @@ class Update extends Component {
     const { locales } = this.props;
     e.preventDefault();
     // update tags
-    fetch('/api/tags/update', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        'CSRF-Token' : localStorage.getItem('csrf')
-      },
-      body: tags
+    req('/api/tags/update', tags)
+    .then(res => {
+      this.getTags();
     })
-    .then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.error) {
-            notify('error', locales.idParser(json.error));
-          } else if (json.success) {
-            this.getTags();
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
     // update user
-    fetch('/api/update', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        'CSRF-Token' : localStorage.getItem('csrf')
-      },
-      body: user
+    req('/api/update', user)
+    .then(res => {
+      notify('success', locales.idParser(res));
     })
-    .then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.error) {
-            notify('error', locales.idParser(json.error));
-          } else if (json.success) {
-            notify('success', locales.idParser(json.success));
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   // Padding for date
@@ -127,65 +103,44 @@ class Update extends Component {
   }
 
   getUser = () => {
-    const { locales } = this.props;
-    fetch('/api/user/current', {
-      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            const res = json.success;
-            this.setState({ user: res }, () => {
-              this.initDatepicker();
-              this.initSelect();
-            });
-          } else if (json.error) {
-            notify('error', locales.idParser(json.error));
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    req('api/user/current')
+    .then(res => {
+      this.setState({ user: res }, () => {
+        this.initDatepicker();
+        this.initSelect();
+      });
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   getTagsList = () => {
     const {locales} = this.props;
-    fetch('/api/tags/list', {
-      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            const res = json.success;
-            const obj = {};
-            res.map((tag, i) => { obj[tag.tag] = null; });
-            this.setState({tagsList: obj}, () => {
-              this.initTags();
-            });
-          } else {
-            notify('error', locales.idParser(json.error));
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    fetch('/api/tags/list')
+    .then(res => {
+      const obj = {};
+      res.map((tag, i) => { obj[tag.tag] = null; });
+      this.setState({tagsList: obj}, () => {
+        this.initTags();
+      });
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   getTags = () => {
     const {locales} = this.props;
-    fetch('/api/tags', {
-      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            this.setState({tags: json.success}, () => {
-              this.initTags();
-            });
-          } else {
-            notify('error', locales.idParser(json.error));
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    req('/api/tags')
+    .then(res => {
+      this.setState({tags: res}, () => {
+        this.initTags();
+      });
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   componentWillMount() {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withAllHOC } from '../utils/allHOC';
-import parseForm from '../utils/parseForm';
 import { notify } from '../utils/alert';
 
 class Upload extends Component {

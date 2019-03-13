@@ -60,7 +60,7 @@ const getIdFromEmail = email => {
  */
 const isLogged = (req, regen = false) => {
     return new Promise((resolve, reject) => {
-        if (regen) {
+        if (regen && req.session.csrf === undefined) {
             req.session.csrf = randomstring.generate(50);
             req.session.save();
         }
@@ -159,7 +159,7 @@ const areInfosClean = (infos, table) => {
 }
 /**
  * Updates last_seen value for the specified uid.
- * @param {int} uid 
+ * @param {int} uid
  */
 const setLastLogged = (uid) => {
     if (conn && uid) {

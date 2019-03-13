@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import parseForm from '../utils/parseForm';
 import { notify } from '../utils/alert';
 import { withAllHOC } from '../utils/allHOC';
+import req from '../utils/req';
 
 class Login extends Component {
 
@@ -19,30 +19,16 @@ class Login extends Component {
     const { getCurrentUser } = this.props.currentUser;
     const { history } = this.props;
     e.preventDefault();
-    parseForm(this.state, strForm => {
-      fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-          'CSRF-Token' : localStorage.getItem('csrf')
-        },
-        body: strForm
-      })
-      .then(response => {
-        if (response.ok) {
-          response.json().then(json => {
-            if (json.error) {
-              notify('error', locales.idParser(json.error));
-            } else if (json.success) {
-              getCurrentUser(() => {
-                history.push("/");
-                notify('success', locales.idParser(json.success));
-              });
-            }
-          });
-        } else console.error(new Error(response.statusText));
+    req('/api/login', this.state)
+    .then(res => {
+      getCurrentUser(() => {
+        history.push("/");
+        notify('success', locales.idParser(res));
       });
-    });
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   componentDidMount () {

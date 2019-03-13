@@ -6,6 +6,7 @@ import ChatSide from './chat/ChatSide'
 import '../css/chat.css'
 import { notify } from '../utils/alert';
 import httpBuildQuery from 'http-build-query';
+import req from '../utils/req';
 
 class Chat extends Component {
 
@@ -23,19 +24,14 @@ class Chat extends Component {
   }
 
   setRead = (roomId) => {
-    fetch('/api/chat/message/read/' + roomId, {
-      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            this.getRooms();
-          } else {
-            notify('error', this.props.locales.idParser(json.error));
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    req('/api/chat/message/read/' + roomId)
+    .then(res => {
+      // peut etre replace par setState
+      this.getRooms();
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   changeRoom = (roomId) => {
@@ -45,23 +41,17 @@ class Chat extends Component {
 
   getMessages = (roomId) => {
     this.state.rooms.map(room => { if (room.id == roomId) this.setState({room: room}) });
-    fetch('/api/chat/message/' + roomId, {
-      headers: {'CSRF-Token': localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            this.setState({messages: json.success}, () => {
-              let chat = document.querySelector('.window-chat-room-body');
-              chat.scrollTop = chat.scrollHeight;
-              this.setRead(roomId);
-            });
-          } else {
-            notify('error', this.props.locales.idParser(json.error));
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    req('/api/chat/message/' + roomId)
+    .then(res => {
+      this.setState({messages: res}, () => {
+        let chat = document.querySelector('.window-chat-room-body');
+        chat.scrollTop = chat.scrollHeight;
+        this.setRead(roomId);
+      });
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   onChange = e => {
@@ -73,66 +63,44 @@ class Chat extends Component {
     const { id } = this.props.currentUser;
     const { socket } = this.props;
     const { message, room } = this.state;
-      const str = httpBuildQuery({message: message, roomId: room.id, toId: room.user.id});
-    fetch('/api/chat/message', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        'CSRF-Token': localStorage.getItem('csrf')
-      },
-      body: str
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            socket.emit('new_message', {to: room.user.id, roomId: room.id});
-            this.getMessages(room.id);
-          } else if (json.error) {
-            notify('error', this.props.locales.idParser(json.error));
-          }
-        });
-      } else console.error(new Error(response.statusText));
+    req('/api/chat/message', {message: message, roomId: room.id, toId: room.user.id})
+    .then(res => {
+      socket.emit('new_message', {to: room.user.id, roomId: room.id});
+      this.getMessages(room.id);
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
     })
     document.querySelector('#message').value = '';
   }
 
   getRooms = () => {
     const { room, rooms } = this.state;
-    fetch('/api/chat/room/', {
-      headers: {'CSRF-Token': localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            this.setState({rooms: json.success}, () => {
-              if (this.state.rooms[0] && this.state.room.id === undefined)
-              this.getMessages(this.state.rooms[0].id);
-            });
-          } else {
-            notify('error', this.props.locales.idParser(json.error));
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    req('/api/chat/room')
+    .then(res => {
+      this.setState({rooms: res}, () => {
+        if (this.state.rooms[0] && this.state.room.id === undefined)
+        this.getMessages(this.state.rooms[0].id);
+      });
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   leaveRoom = (roomId) => {
-    fetch('/api/chat/room/leave/' + roomId, {
-      headers: {'CSRF-Token': localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.success) {
-            this.setState({room : {
-              ...this.state.room,
-              display: 0
-            }})
-          } else {
-            notify('error', this.props.locales.idParser(json.error));
-          }
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    req('/api/chat/roon/leave/' + roomId)
+    .then(res => {
+      this.setState({
+        room : {
+          ...this.state.room,
+          display: 0
+        }
+      });
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   componentWillMount() {

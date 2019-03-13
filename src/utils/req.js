@@ -15,7 +15,7 @@ const req = (url, body) => {
       }).then(response => {
         if (response.ok) {
           response.json().then(json => {
-            if (json.success) {
+            if (json.success !== undefined) {
               resolve(json.success);
             } else if (json.error) {
               reject(json.error);
@@ -35,7 +35,7 @@ const req = (url, body) => {
         if (response.ok) {
           response.json().then(json => {
             console.log(json);
-            if (json.success) {
+            if (json.success !== undefined) {
               resolve(json.success);
             } else if (json.error) {
               reject(json.error);

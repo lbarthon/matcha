@@ -33,7 +33,7 @@ class Notifications extends Component {
       <React.Fragment>
         {this.props.notifs.notifications.map(notif => {
           return (
-            <div className="notification" onMouseEnter={() => this.props.notifs.setAsRead(notif.id)}>
+            <div className="notification clearfix" onMouseEnter={() => this.props.notifs.setAsRead(notif.id)}>
               <i className="material-icons notification-icon blue white-text">
                 {this.getIcon(notif)}
                 {!notif.read && <div className="new-icon"></div>}

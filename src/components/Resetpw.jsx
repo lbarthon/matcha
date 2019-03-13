@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import parseForm from '../utils/parseForm';
 import { notify } from '../utils/alert';
 import { withAllHOC } from '../utils/allHOC';
+import req from '../utils/req';
 
 class Resetpw extends Component {
 
@@ -16,28 +16,12 @@ class Resetpw extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    parseForm(this.state, strForm => {
-      fetch("/api/reset/", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-          'CSRF-Token' : localStorage.getItem('csrf')
-        },
-        body: strForm
-      })
-      .then(response => {
-        if (response.ok) {
-          response.json().then(json => {
-            if (json.error) {
-              notify('error', locales.idParser(json.error));
-            } else {
-              notify('success', locales.idParser(json.success));
-            }
-          })
-        }
-      }).catch(() => {
-        // Handle error lmao
-      });
+    req('/api/reset', this.state)
+    .then(res => {
+      notify('success', locales.idParser(res));
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
     })
   }
 

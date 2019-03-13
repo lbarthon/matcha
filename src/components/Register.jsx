@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import parseForm from '../utils/parseForm';
 import { notify } from '../utils/alert';
 import { withLocalesHOC } from '../utils/locales';
 import M from 'materialize-css';
 import Map from './update/Map';
+import req from '../utils/req';
 
 class Register extends Component {
 
@@ -31,31 +31,14 @@ class Register extends Component {
 
   handleSubmit = e => {
     const { locales } = this.props;
-    //e.preventDefault();
-    parseForm(this.state, strForm => {
-      fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-          'CSRF-Token' : localStorage.getItem('csrf')
-        },
-        body: strForm
-      })
-      .then(response => {
-        if (response.ok) {
-          response.json().then(json => {
-            if (json['error']) {
-              notify('error', locales.idParser(json['error']));
-            } else if (json['success']) {
-              notify('success', locales.idParser(json['success']));
-            }
-          });
-        } else console.error(new Error(response.statusText));
-      })
-      .catch(() => {
-        // TO HANDLE
-      })
-    });
+    e.preventDefault();
+    req('/api/register', this.state)
+    .then(res => {
+      notify('success', locales.idParser(res));
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   // Padding for date
