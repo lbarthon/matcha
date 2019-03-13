@@ -87,9 +87,10 @@ class Update extends Component {
 
   initDatepicker = () => {
     let elems = document.querySelectorAll('.datepicker');
+    let dateSplit = this.state.user.birthdate.split("/");
     M.Datepicker.init(elems, {
       format: 'dd/mm/yyyy',
-      defaultDate : new Date(this.state.user.birthdate),
+      defaultDate : new Date(dateSplit[1] + "-" + dateSplit[0] + "-" + dateSplit[2]),
       setDefaultDate: true,
       autoClose: true,
       onSelect: date => {
