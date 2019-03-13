@@ -15,6 +15,8 @@ class MatchUser extends Component {
             <div className="match-card z-depth-2" style={{backgroundImage: 'url("/pictures/user/' + picture + '")'}}>
               <span>{username}</span>
               <small>{age}</small>
+              <p>{this.props.user.popularity}</p>
+              <p>{this.props.user.tags}</p>
             </div>
           </Link>
         </div>

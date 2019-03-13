@@ -20,13 +20,14 @@ const matchs = req => {
                     var user = result[0];
                     var sex = user.sex;
                     var wanted = user.wanted;
+                    var cond = wanted === 'bisexual' ? 1 : {sex: wanted};
                     conn.query("SELECT GROUP_CONCAT(tags.tag SEPARATOR '" + separator + "') AS tags, users.id, \
                         users.username, users.birthdate, users.location, pictures.picture FROM users \
                         INNER JOIN tags ON users.id = tags.user_id \
                         INNER JOIN pictures ON users.id = pictures.user_id AND pictures.main=1 \
                         LEFT JOIN blocked ON users.id = blocked.target_id \
-                        WHERE ? AND ? AND ? AND ? AND blocked.target_id IS NULL GROUP BY users.id",
-                        [{'users.confirmed': 1}, {'users.perm_level': 0}, {sex: wanted}, {wanted: sex}], (err, results) => {
+                        WHERE ? AND ? AND ? AND (? OR ?) AND blocked.target_id IS NULL GROUP BY users.id",
+                        [{'users.confirmed': 1}, {'users.perm_level': 0}, cond, {wanted: sex}, {wanted: 'Bisexual'}], (err, results) => {
                         if (err) {
                             reject(new Error("sql.alert.query"));
                         } else {

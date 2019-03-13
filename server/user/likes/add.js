@@ -5,7 +5,6 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
 /**
  * Function that adds a like.
  * Informations taken :
@@ -33,15 +32,16 @@ const add = req => {
                             if (err) {
                                 reject(new Error("sql.alert.query"));
                             } else {
-                                conn.query("SELECT COUNT(*) AS nbr FROM likes WHERE ? AND ?", [{user_id: infos.target}, {target_id: uid}], (err, results) => {
+                                conn.query("SELECT * FROM likes WHERE ? AND ?", [{user_id: infos.target}, {target_id: uid}], (err, results) => {
                                     if (err) {
                                         reject(new Error("sql.alert.query"));
                                     } else if (results.length == 1) {
                                         notify('match', uid, infos.target);
+                                        resolve();
                                     } else {
                                         notify('like', uid, infos.target);
+                                        resolve();
                                     }
-                                    resolve();
                                 })
                             }
                         })

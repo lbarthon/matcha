@@ -5,7 +5,6 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
 /**
  * Removes a like from an user.
  * Informations taken :
@@ -27,11 +26,13 @@ const remove = req => {
                         conn.query("SELECT * FROM likes WHERE ? AND ?", [{user_id: infos.target}, {target_id: uid}], (err, results) => {
                             if (err) {
                                 reject(new Error("sql.alert.query"));
-                            } else if (results.length == 1) {
-                                notify('unmatch', uid, infos.target);
+                            } else {
+                                if (results.length == 1) {
+                                    notify('unmatch', uid, infos.target);
+                                }
+                                resolve();
                             }
-                            resolve();
-                        })
+                        });
                     } else {
                         reject(new Error("likes.remove.absent"));
                     }

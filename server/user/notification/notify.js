@@ -1,6 +1,6 @@
 const emitter = require('../../emitter');
-var conn = null;
 const io = require('../../io').get();
+var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
@@ -19,9 +19,7 @@ const notify = (type, sender, reciever) => {
       conn.query('SELECT * FROM users WHERE id = ? OR id = ? LIMIT 2', [reciever, sender], (err, results_1) => {
         if (results_1.length == 2) {
           conn.query('INSERT INTO notifications (to_id, from_id, type) VALUES (?, ?, ?)', [reciever, sender, type], (err) => {
-            if (err)
-              console.log(err);
-            else {
+            if (!err) {
               io.sockets.in(reciever).emit('new_notification');
               if (type == 'match') {
                 conn.query('SELECT * FROM chat_rooms WHERE (id_user1 = ? AND id_user2 = ?) OR (id_user1 = ? AND id_user2 = ?)',

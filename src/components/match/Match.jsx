@@ -8,12 +8,31 @@ import 'materialize-css/extras/noUiSlider/nouislider.css'
 
 class Match extends Component {
 
+  constructor(props) {
+    super(props);
+    
+    window.onscroll = () => {
+      const { isLoading } = this.state;
+      if (isLoading) return;
+      if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+        this.setState({ isLoading: true }, () => {
+          this.setState({
+            length: this.state.length + 20,
+            isLoading: false
+          });
+        });
+      }
+    }
+  }
+
   state = {
     matchs: [],
     user: [],
     sorted: [],
     limits: {},
-    key: ''
+    key: '',
+    length: 20,
+    isLoading: false
   }
 
   sorts = [
@@ -59,7 +78,7 @@ class Match extends Component {
       key: 'tags',
       function: () => {
         return this.state.matchs.sort((a, b) => {
-          return b.commonTags - a.commonTags;
+          return b.tags - a.tags;
         })
       }
     }
@@ -128,14 +147,21 @@ class Match extends Component {
     if (icon && icon.parentElement.childNodes[0].data != locale.match.sort[value.key])
       icon.parentElement.removeChild(icon);
     if (value.key != this.state.key) {
-      this.setState({ sorted: value.function(), key: value.key }, () => {
+      this.setState({
+        sorted: value.function(),
+        key: value.key,
+        length: 20
+      }, () => {
         let newIcon = document.createElement('i');
         newIcon.className = 'material-icons left';
         newIcon.innerHTML = 'arrow_drop_down';
         button.appendChild(newIcon);
       });
     } else {
-      this.setState({ sorted: [...this.state.sorted].reverse()}, () => {
+      this.setState({
+        sorted: [...this.state.sorted].reverse(),
+        length: 20
+      }, () => {
         icon.innerHTML = (icon.innerHTML == 'arrow_drop_down' ? 'arrow_drop_up' : 'arrow_drop_down');
       });
     }
@@ -261,7 +287,7 @@ class Match extends Component {
   }
 
   render() {
-    const { sorted, matchs, limits } = this.state;
+    const { sorted, matchs, limits, length, user } = this.state;
     const { locale } = this.props.locales;
     
     if (matchs.length === 0) return null;
@@ -283,7 +309,7 @@ class Match extends Component {
 
     return (
       <div>
-        <Map matchs={to_display} userLocation={this.state.user.location} />
+        <Map length={length} matchs={to_display} userLocation={user.location} />
         <div className="row">
           <div className="col s12">
             {this.sorts.map(value => {
@@ -302,7 +328,8 @@ class Match extends Component {
           )
         })}
         <div className="row">
-          {to_display.map(value => {
+          {to_display.map((value, index) => {
+            if (index >= length) return null;
             return <MatchUser key={value.id} user={value} />
           })}
         </div>

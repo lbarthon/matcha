@@ -13,6 +13,7 @@ export class MatchMap extends Component {
         lat: undefined,
         lng: undefined
     },
+    length: undefined,
     markers: []
   };
 
@@ -26,7 +27,7 @@ export class MatchMap extends Component {
         lng: latLng[1]
       };
     });
-    return mapped.map(match => {
+    return mapped.map((match, index) => {
       return (
         <Marker match={match}
           position={{ lat: match.lat, lng: match.lng }}
@@ -36,9 +37,12 @@ export class MatchMap extends Component {
   }
 
   componentDidMount = () => {
-    const { userLocation, matchs } = this.props;
+    const { userLocation, matchs, length } = this.props;
     
-    this.setState({ markers: this.createMarkersFromUsers(matchs) });
+    this.setState({
+      markers: this.createMarkersFromUsers(matchs),
+      length: length
+    });
     let latLng = userLocation.split(";");
     this.setState({
       userLocation: {
@@ -49,9 +53,10 @@ export class MatchMap extends Component {
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (nextProps.matchs.length != this.state.markers.length) {
-      this.setState({ markers: this.createMarkersFromUsers(nextProps.matchs) });
-    }
+    this.setState({
+      markers: this.createMarkersFromUsers(nextProps.matchs),
+      length: nextProps.length
+    });
   }
 
   onMarkerClick = (props, marker, e) => {
@@ -66,9 +71,9 @@ export class MatchMap extends Component {
 
   render() {
     const { google } = this.props;
-    const { userLocation, markers } = this.state;
+    const { userLocation, markers, length } = this.state;
 
-    if (userLocation.lat == undefined || markers.length == 0) return null;
+    if (userLocation.lat === undefined || length === undefined || markers.length === 0) return null;
 
     return (
       <div style={{position: 'relative', height: '500px'}}>
@@ -77,7 +82,9 @@ export class MatchMap extends Component {
           zoom={6}>
 
           <Marker position={userLocation}/>
-          {markers}
+          {markers.map((value, index) => {
+            return index >= length ? null : value;
+          })}
           <InfoWindow marker={this.state.infoWindow.marker}
             visible={this.state.infoWindow.display}>
             <BrowserRouter>
