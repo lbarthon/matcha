@@ -4,13 +4,9 @@ import { withAllHOC } from '../utils/allHOC';
 import M from 'materialize-css';
 import '../css/notification.css'
 import { notify } from '../utils/alert';
+import dateFormat from 'dateformat';
 
 class Notifications extends Component {
-
-  getDate = (str) => {
-    let d = new Date(str);
-    return  d.getDate() + '/' + d.getMonth() + 1 + '/' +  d.getFullYear();
-  }
 
   getIcon = (notif) => {
     switch (notif.type) {
@@ -43,7 +39,7 @@ class Notifications extends Component {
                 {!notif.read && <div className="new-icon"></div>}
               </i>
               <span><Link to={'/user/' + notif.from_id}><b>{notif.username}</b></Link> {locale.notification[notif.type]}</span>
-              <em>{this.getDate(notif.create_time)}</em>
+              <em>{dateFormat(new Date(notif.create_time), 'd/mm/yyyy HH:MM')}</em>
             </div>
           );
         })}

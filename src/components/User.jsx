@@ -5,6 +5,7 @@ import '../css/user.css';
 import Map from './user/Map';
 import Actions from './user/Actions';
 import req from '../utils/req';
+import dateFormat from 'dateformat';
 
 class User extends Component {
 
@@ -15,7 +16,20 @@ class User extends Component {
     pictures: [],
     mainPic: {},
     tags: [],
-    online: false
+    online: false,
+    popularity: 0,
+    likeMe: false,
+    matchMe: false,
+  }
+
+  getPopularity = (id) => {
+    req('/api/likes/get/' + id)
+    .then(res => {
+      this.setState({popularity: Math.round(res)});
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
   }
 
   getUser = (id) => {
@@ -23,6 +37,13 @@ class User extends Component {
     .then(res => {
       this.setState({ user: res }, () => {
         document.title = this.state.user.username;
+        this.getPictures(id);
+        this.isOnline(id);
+        this.getPopularity(id);
+        this.getTags(id);
+        this.getMatchMe(id);
+        this.getLikeMe(id);
+        console.log(res);
       });
     })
     .catch(err => {
@@ -66,6 +87,30 @@ class User extends Component {
     });
   }
 
+  getLikeMe = (id) => {
+    req('/api/likes/has_like_reverse/' + id)
+    .then(res => {
+      if (res === true) {
+        this.setState({likeMe: true});
+      }
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
+  }
+
+  getMatchMe = (id) => {
+    req('/api/likes/match/' + id)
+    .then(res => {
+      if (res === true) {
+        this.setState({matchMe: true});
+      }
+    })
+    .catch(err => {
+      notify('error', this.props.locales.idParser(err));
+    })
+  }
+
   getInfos = (id) => {
     this.setState({
       user : {
@@ -76,10 +121,7 @@ class User extends Component {
       tags: [],
       online: false
     });
-    this.getTags(id);
     this.getUser(id);
-    this.getPictures(id);
-    this.isOnline(id);
   }
 
   componentWillMount() {
@@ -92,9 +134,9 @@ class User extends Component {
   }
 
   render() {
-    if (!this.state.user.id) return null;
+    if (this.state.user.id === undefined) return null;
     const { locale } = this.props.locales;
-    const { username, sex, description, location, firstname, lastname, wanted, birthdate} = this.state.user;
+    const { username, sex, description, location, firstname, lastname, wanted, birthdate, last_seen} = this.state.user;
     return (
       <React.Fragment>
         <h4 className="center">{username}</h4>
@@ -104,6 +146,10 @@ class User extends Component {
           </div>
         </div>
         <Actions id={this.state.user.id}/>
+        <div className="row">
+          {this.state.likeMe && <div><i className="material-icons blue-text" style={{verticalAlign:'sub'}}>favorite</i> This user likes you</div>}
+          {this.state.matchMe && <div><i className="material-icons amber-text" style={{verticalAlign:'sub'}}>star</i> This user match with you</div>}
+        </div>
         {this.state.tags && <h6>Tags</h6>}
         {this.state.tags.map(tag => {
           return (<div className="chip">{tag.tag}</div>);
@@ -120,7 +166,6 @@ class User extends Component {
             <span>{locale.lastname} </span>
             <b>{lastname}</b>
           </div>
-
           <div className="col s12 m6 mt-10">
             <span>{locale.register.gender} </span>
             <b>{locale.gender[sex.toLowerCase()]}</b>
@@ -135,7 +180,11 @@ class User extends Component {
           </div>
           <div className="col s12 m6 mt-10">
             <span>{locale.user.last_connection} </span>
-            <b>{this.state.online ? locale.user.online : 'offline'}</b>
+            <b>{this.state.online ? locale.user.online : dateFormat(new Date(last_seen), 'd/mm/yyyy HH:MM')}</b>
+          </div>
+          <div className="col s12 m6 mt-10">
+            <span>{locale.user.popularity} </span>
+            <b>{this.state.popularity}/10</b>
           </div>
         </div>
         <Map location={location} />

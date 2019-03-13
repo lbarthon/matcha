@@ -33,6 +33,7 @@
     "online": "Online",
     "last_connection": "Last connection",
     "reason": "Reason of the report",
+    "popularity": "Popularity",
     "alert" : {
       "block_success" : "You have successfully blocked this user",
       "unblock_success" : "You have successfully unblocked this user",

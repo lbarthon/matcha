@@ -43,8 +43,28 @@ router.get('/get/:id', (req, res) => {
     });
 });
 
+router.get('/match/:id', (req, res) => {
+    likes.match(req.session.uid, req.params.id)
+    .then(resolve => {
+        res.status(200).json({ 'success' : resolve });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+})
+
 router.get('/has_like/:id', (req, res) => {
     likes.has_like(req.session.uid, req.params.id)
+    .then(resolve => {
+        res.status(200).json({ 'success' : resolve });
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+})
+
+router.get('/has_like_reverse/:id', (req, res) => {
+    likes.has_like(req.params.id, req.session.uid)
     .then(resolve => {
         res.status(200).json({ 'success' : resolve });
     })

@@ -33,12 +33,13 @@
     "online": "En ligne",
     "last_connection": "Derniere connexion",
     "reason": "Raison du signalement",
+    "popularity": "Popularité",
     "alert" : {
-      "block_success" : "Vous avez bien bloque cet utilisateur",
-      "unblock_success" : "Vous avez bien debloque cet utilisateur",
-      "report_success" : "Merci d'avoir signale cet utilisateur nous allons analyser votre signalement (non)",
+      "block_success" : "Vous avez bien bloqué cet utilisateur",
+      "unblock_success" : "Vous avez bien debloqué cet utilisateur",
+      "report_success" : "Merci d'avoir signalé cet utilisateur nous allons analyser votre signalement (non)",
       "report_text" : "Merci d'entrer une raison",
-      "notfound" : "Cet utilisateur n'existe pas"
+      "notfound" : "Cet utilisateur n'éxiste pas"
     }
   },
   "match": {
