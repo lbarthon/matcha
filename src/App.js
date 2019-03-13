@@ -19,22 +19,26 @@ import Match from './components/match/Match';
 import './css/upload.css';
 import './css/alert.css';
 import './css/style.css';
+import { withRouter } from "react-router-dom";
 
 class App extends Component {
 
   componentWillMount() {
-    console.log('APP mount');
+    console.log('app_mount');
   }
 
   componentWillUpdate() {
-    this.props.currentUser.getCurrentUser();
-    console.log('APP update');
-    // effacer toutes les alerts au changement de page
-    // cleanAlerts();
+    console.log('app_update');
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      console.log("Route change!, reload user");
+      this.props.currentUser.getCurrentUser();
+    }
   }
 
   render() {
-    console.log('APP render');
     return (
       <React.Fragment>
         <Navbar />
@@ -59,4 +63,4 @@ class App extends Component {
   }
 }
 
-export default withAllHOC(App);
+export default withRouter(withAllHOC(App));

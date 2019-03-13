@@ -26,7 +26,6 @@ const req = (url, body) => {
         }
       });
     } else {
-      console.log('get');
       fetch(url, {
         headers: {'CSRF-Token': localStorage.getItem('csrf')}
       }).then(response => {

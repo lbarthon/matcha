@@ -3,6 +3,7 @@ import { withSocketHOC } from './socket';
 import { withLocalesHOC } from './locales';
 import { withCurrentUserHOC } from './currentUser';
 import { notify } from './alert';
+import req from './req';
 
 export const NotificationsContext = React.createContext({
   count: 0,
@@ -16,18 +17,14 @@ export class _NotificationsProvider extends React.Component {
     count: 0,
     notifications : [],
     getNotifications : () => {
-      fetch('/api/notification/get', {
-        headers: {'CSRF-Token': localStorage.getItem('csrf')}
-      }).then(response => {
-        if (response.ok) {
-          response.json().then(json => {
-            if (json.success) {
-              this.setState({notifications: json.success,});
-              this.countNotifications();
-            } else
-              notify('error', this.props.locales.idParser(json.error));
-          });
-        } else (console.error(response.statusText))
+      req('/api/notification/get')
+      .then(res => {
+        this.setState({notifications: res}, () => {
+          this.countNotifications();
+        });
+      })
+      .catch(err => {
+        notify('error', this.props.locales.idParser(err));
       })
     },
     setAsRead : (id) => {
@@ -41,16 +38,9 @@ export class _NotificationsProvider extends React.Component {
         let copy = notifications.slice();
         copy[i].read = 1;
         this.setState({notifications: copy});
-        fetch('/api/notification/read/' + id, {
-          headers: {'CSRF-Token': localStorage.getItem('csrf')}
-        }).then(response => {
-          if (response.ok) {
-            response.json().then(json => {
-              if (json.success) {
-              } else
-                notify('error', this.props.locales.idParser(json.error));
-            });
-          } else (console.error(response.statusText))
+        req('/api/notification/read/' + id)
+        .catch(err => {
+          notify('error', this.props.locales.idParser(err));
         })
       }
     }
