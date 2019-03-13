@@ -12,6 +12,8 @@ const read = (uid, notifId, callback) => {
                 err = 'sql.alert.query';
             return callback(err, results);
         })
+    } else {
+        callback('sql.alert.undefined');
     }
 }
 

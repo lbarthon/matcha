@@ -35,6 +35,8 @@ const notify = (type, sender, reciever) => {
           });
         }
       });
+    } else {
+        return 'sql.alert.undefined';
     }
 }
 

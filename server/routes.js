@@ -24,7 +24,7 @@ router.use((req, res, next) => {
         if (req.originalUrl == '/api/logged' || header_csrf == req.session.csrf) {
             // console.log('CSRF BON : ' + req.get('CSRF-Token'));
             next();
-        } else if (req.session.csrf != undefined) {
+        } else {
             res.status(404);
             // console.log('LI CSRF ILÉ PA BON SUR CETTE REQUÊTE : ' + req.get('CSRF-Token') + ' / ' + req.session.csrf);
             // next();
