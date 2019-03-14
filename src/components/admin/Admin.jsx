@@ -7,7 +7,26 @@ import Report from './Report';
 class Home extends Component {
 
   state = {
+    length: 20,
+    isLoading: false,
     reports: []
+  }
+
+  constructor(props) {
+    super(props);
+    
+    window.onscroll = () => {
+      const { isLoading } = this.state;
+      if (isLoading) return;
+      if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+        this.setState({ isLoading: true }, () => {
+          this.setState({
+            length: this.state.length + 20,
+            isLoading: false
+          });
+        });
+      }
+    }
   }
 
   fetchReports = () => {
@@ -30,11 +49,12 @@ class Home extends Component {
   }
 
   render() {
-    const { reports } = this.state;
+    const { reports, length } = this.state;
     return (
       <React.Fragment>
         <h4>Admin page pour mossieu {this.props.currentUser.username}</h4>
-        {reports.map(value => {
+        {reports.map((value, index) => {
+          if (index >= length) return null;
           return <Report report={value} onDelete={this.fetchReports} />
         })}
       </React.Fragment>

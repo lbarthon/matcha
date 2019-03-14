@@ -3,7 +3,6 @@ import { alert } from '../utils/alert';
 import { localeIdParser } from '../utils/locales';
 import { withAllHOC } from '../utils/allHOC';
 import M from 'materialize-css';
-import httpBuildQuery from 'http-build-query';
 import Map from './update/Map';
 import req from '../utils/req';
 

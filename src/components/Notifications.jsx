@@ -8,6 +8,28 @@ import dateFormat from 'dateformat';
 
 class Notifications extends Component {
 
+  state = {
+    length: 20,
+    isLoading: false
+  }
+
+  constructor(props) {
+    super(props);
+    
+    window.onscroll = () => {
+      const { isLoading } = this.state;
+      if (isLoading) return;
+      if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
+        this.setState({ isLoading: true }, () => {
+          this.setState({
+            length: this.state.length + 20,
+            isLoading: false
+          });
+        });
+      }
+    }
+  }
+
   getIcon = (notif) => {
     switch (notif.type) {
       case 'unmatch':
@@ -31,7 +53,8 @@ class Notifications extends Component {
     const { locale } = this.props.locales;
     return (
       <React.Fragment>
-        {this.props.notifs.notifications.map(notif => {
+        {this.props.notifs.notifications.map((notif, index) => {
+          if (index >= this.state.length) return null;
           return (
             <div className="notification clearfix" onMouseEnter={() => this.props.notifs.setAsRead(notif.id)}>
               <i className="material-icons notification-icon blue white-text">

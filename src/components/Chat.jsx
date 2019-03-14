@@ -5,7 +5,6 @@ import M from 'materialize-css';
 import ChatSide from './chat/ChatSide'
 import '../css/chat.css'
 import { alert } from '../utils/alert';
-import httpBuildQuery from 'http-build-query';
 import req from '../utils/req';
 
 class Chat extends Component {
