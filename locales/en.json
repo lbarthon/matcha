@@ -17,7 +17,10 @@
   "chat" : {
     "new" : "new",
     "room_select" : "Select a room",
-    "room_unactive" : "You or the other user has left this chat space"
+    "room_unactive" : "You or the other user has left this chat space",
+    "alert" : {
+      "message" : "You can't send a message here"
+    }
   },
   "gender" : {
     "male" : "Male",
@@ -39,7 +42,8 @@
       "unblock_success" : "You have successfully unblocked this user",
       "report_success" : "Thank you for your report",
       "report_text" : "Please enter a reason",
-      "notfound" : "User not found"
+      "notfound" : "User not found",
+      "is_banned" : "This user has been banned"
     }
   },
   "match": {
@@ -136,6 +140,7 @@
     "picture_error_write": "Error saving your picture!",
     "picture_error_insert": "Error saving your picture!",
     "picture_error_remove": "Error deleting your picture!",
-    "picture_error_remove_none": "Error deleting your picture! Does it belong to you?"
+    "picture_error_remove_none": "Error deleting your picture! Does it belong to you?",
+    "report_delete_success": "You have successfully deleted this report"
   }
 }

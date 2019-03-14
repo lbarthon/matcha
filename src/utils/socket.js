@@ -3,7 +3,13 @@ import io from 'socket.io-client';
 import { withCurrentUserHOC } from './currentUser'
 
 const host = window.location.host;
-const socket = io(host);
+let socket;
+try {
+  socket = io(host);
+} catch(err) {
+  console.log(err)
+}
+
 const SocketContext = React.createContext();
 
 socket.io.on('connect_error', function(err) {

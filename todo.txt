@@ -5,4 +5,4 @@ OK. => page /admin avec liste report
 x. => catch all promises (notify error 500 ?)
 x. => un user sans photo ne doit rien pouvoir faire
 x. => check tous les messages d'erreur et les mettre en locale
-x. => check si le message envoye dans /chat/message peut etre poste (room display = 1)
+OK. => check si le message envoye dans /chat/message peut etre poste (room display = 1)

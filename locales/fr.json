@@ -17,7 +17,10 @@
   "chat" : {
     "new" : "nouveau",
     "room_select" : "Selectionnez une salle",
-    "room_unactive" : "Vous ou l'autre utilisateur avez quitte cet espace de chat"
+    "room_unactive" : "Vous ou l'autre utilisateur avez quitte cet espace de chat",
+    "alert" : {
+      "message" : "Vous ne pouvez pas envoyer un message ici"
+    }
   },
   "gender" : {
     "male": "Homme",

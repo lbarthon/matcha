@@ -47,7 +47,7 @@ class Report extends Component {
     return (
       <React.Fragment>
         <div>
-            <p className="m-0 p-20-0 bb">
+            <p className="m-0 pt-15 pb-15 bb">
               <div>
                 <Link to={"/user/" + reported_id}><b>{reported}</b></Link> has been reported by <Link to={"/user/" + reporter_id}><b>{reporter}</b></Link>
                 <br/><br/><em>"{report}"</em>
