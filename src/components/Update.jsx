@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { notify } from '../utils/alert';
+import { alert } from '../utils/alert';
 import { localeIdParser } from '../utils/locales';
 import { withAllHOC } from '../utils/allHOC';
 import M from 'materialize-css';
@@ -44,15 +44,15 @@ class Update extends Component {
       this.getTags();
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
     // update user
     req('/api/update', user)
     .then(res => {
-      notify('success', locales.idParser(res));
+      alert('success', locales.idParser(res));
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -111,13 +111,13 @@ class Update extends Component {
       });
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
   getTagsList = () => {
     const {locales} = this.props;
-    fetch('/api/tags/list')
+    req('/api/tags/list')
     .then(res => {
       const obj = {};
       res.map((tag, i) => { obj[tag.tag] = null; });
@@ -126,7 +126,7 @@ class Update extends Component {
       });
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -139,7 +139,7 @@ class Update extends Component {
       });
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 

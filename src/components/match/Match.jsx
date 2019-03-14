@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { notify } from '../../utils/alert';
+import { alert } from '../../utils/alert';
 import { withAllHOC } from '../../utils/allHOC';
 import Map from './Map';
 import MatchUser from './MatchUser';
@@ -177,7 +177,7 @@ class Match extends Component {
       if (response.ok) {
         response.json().then(json => {
           if (json.error) {
-            notify('error', locales.idParser(json.error))
+            alert('error', locales.idParser(json.error))
           } else {
             this.setState({
               matchs: json.success.map(value => {
@@ -204,7 +204,7 @@ class Match extends Component {
       if (response.ok) {
         response.json().then(json => {
           if (json.error) {
-            notify('error', locales.idParser(json.error))
+            alert('error', locales.idParser(json.error))
           } else {
             this.setState({ user: json.success });
           }
@@ -224,7 +224,7 @@ class Match extends Component {
       if (response.ok) {
         response.json().then(json => {
           if (json.error) {
-            notify('error', locales.idParser(json.error))
+            alert('error', locales.idParser(json.error))
           } else {
             var tags = json.success.map(value => { return value.tag; });
             this.setState({

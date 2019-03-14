@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withAllHOC } from '../utils/allHOC';
-import { notify } from '../utils/alert';
+import { alert } from '../utils/alert';
 import '../css/user.css';
 import Map from './user/Map';
 import Actions from './user/Actions';
@@ -28,7 +28,7 @@ class User extends Component {
       this.setState({popularity: Math.round(res)});
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -47,7 +47,7 @@ class User extends Component {
       });
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -64,7 +64,7 @@ class User extends Component {
       this.setState({ pictures: pictures });
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -74,7 +74,7 @@ class User extends Component {
       this.setState({tags: res});
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -95,7 +95,7 @@ class User extends Component {
       }
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -107,7 +107,7 @@ class User extends Component {
       }
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { notify } from '../utils/alert';
+import { alert } from '../utils/alert';
 import { withAllHOC } from '../utils/allHOC';
 import req from '../utils/req';
 
@@ -23,11 +23,11 @@ class Login extends Component {
     .then(res => {
       getCurrentUser(() => {
         history.push("/");
-        notify('success', locales.idParser(res));
+        alert('success', locales.idParser(res));
       });
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 

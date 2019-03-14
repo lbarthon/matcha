@@ -2,7 +2,7 @@ import React from 'react';
 import { withSocketHOC } from './socket';
 import { withLocalesHOC } from './locales';
 import { withCurrentUserHOC } from './currentUser';
-import { notify } from './alert';
+import { alert } from './alert';
 import req from './req';
 
 export const NotificationsContext = React.createContext({
@@ -24,7 +24,7 @@ export class _NotificationsProvider extends React.Component {
         });
       })
       .catch(err => {
-        notify('error', this.props.locales.idParser(err));
+        alert('error', this.props.locales.idParser(err));
       })
     },
     setAsRead : (id) => {
@@ -40,7 +40,7 @@ export class _NotificationsProvider extends React.Component {
         this.setState({notifications: copy});
         req('/api/notification/read/' + id)
         .catch(err => {
-          notify('error', this.props.locales.idParser(err));
+          alert('error', this.props.locales.idParser(err));
         })
       }
     }

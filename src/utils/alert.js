@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export const notify = (type, text) => {
+export const alert = (type, text) => {
   let container = document.getElementById('alert-container');
   let div = document.createElement("div");
   container.appendChild(div);

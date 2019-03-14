@@ -17,7 +17,8 @@ export class CurrentUserProvider extends React.Component {
     getCurrentUser: (callback) => {
       req('/api/logged')
       .then(res => {
-        window.localStorage.setItem('csrf', res.csrf);
+        if (localStorage.getItem('csrf') != res.csrf)
+          localStorage.setItem('csrf', res.csrf);
         if (res.username !== undefined) {
           if (this.state.logged !== true) {
             this.setState({
@@ -35,7 +36,7 @@ export class CurrentUserProvider extends React.Component {
         }
       })
       .catch(err => {
-        notify('error', this.props.locales.idParser(err));
+        alert('error', this.props.locales.idParser(err));
       })
       if (callback) {
         callback();

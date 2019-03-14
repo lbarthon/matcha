@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withAllHOC } from '../utils/allHOC';
-import { notify } from '../utils/alert';
+import { alert } from '../utils/alert';
+import req from '../utils/req';
 
 class Upload extends Component {
 
@@ -32,10 +33,10 @@ class Upload extends Component {
         if (response.ok) {
           response.json().then(json => {
             if (json.error)
-              notify('error', this.props.locales.idParser(json.error));
+              alert('error', this.props.locales.idParser(json.error));
             else if (json.success) {
               this.getPictures();
-              notify('success', this.props.locales.idParser(json.success));
+              alert('success', this.props.locales.idParser(json.success));
             }
           });
         } else console.error(new Error(response.statusText));
@@ -53,54 +54,24 @@ class Upload extends Component {
     }
     fav.innerHTML = 'star';
     this.setState({ fav: favId }, () => {
-      parseForm({ id: this.state.fav }, strBody => {
-        fetch('/api/pictures/main/set', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-            'CSRF-Token' : localStorage.getItem('csrf')
-          },
-          body: strBody
-        })
-        .then(response => {
-          if (response.ok) {
-            response.json().then(json => {
-              if (json.error)
-                notify('error', this.props.locales.idParser(json.error));
-              else if (json.success)
-                notify('success', this.props.locales.idParser(json.success));
-            });
-          } else console.error(new Error(response.statusText));
-        })
-      });
+      req('/api/pictures/main/set', {id: this.state.fav})
+      .catch(err => {
+        alert('error', this.props.locales.idParser(res));
+      })
     });
   }
 
   handleRemove = (e) => {
     const id = e.target.parentNode.id;
     const div = e.target.parentNode;
-    parseForm({ id: id }, strBody => {
-      fetch('/api/pictures/remove', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-          'CSRF-Token' : localStorage.getItem('csrf')
-        },
-        body: strBody
-      })
-      .then(response => {
-        if (response.ok) {
-          response.json().then(json => {
-            if (json.error)
-              notify('error', this.props.locales.idParser(json.error));
-            else if (json.success) {
-              this.getPictures();
-              notify('success', this.props.locales.idParser(json.success));
-            }
-          });
-        } else console.error(new Error(response.statusText));
-      })
-    });
+    req('/api/pictures/remove', {id: id})
+    .then(res => {
+      this.getPictures();
+      alert('success', this.props.locales.idParser(res));
+    })
+    .catch(err => {
+      alert('error', this.props.locales.idParser(res));
+    })
   }
 
   getPictures = () => {
@@ -113,7 +84,7 @@ class Upload extends Component {
           if (json.error == null && json.success !== this.state.pictures)
             this.setState({ pictures: json.success });
           else if (json.error)
-            notify('error', this.props.locales.idParser(json.error));
+            alert('error', this.props.locales.idParser(json.error));
         });
       } else console.error(new Error(response.statusText));
     });

@@ -1,7 +1,8 @@
+OK. => afficher sur le profil d'un utilisateur si il like ou match l'user courant
 ?. => consultation : (user) liste des visites sur son profil et liste des personnes qui l'ont like
 x. => catch all promises (notify error 500 ?)
 x. => un user sans photo ne doit rien pouvoir faire
-x. => afficher sur le profil d'un utilisateur si il like ou match l'user courant
 x. => gerer le report et le block (ne plus afficher les utilisateurs bloques dans /match et ne plus generer de notif)
-x. => page admin avec liste report
-x. => Check tous les messages d'erreur et les mettre en locale
+x. => page /admin avec liste report
+x. => check tous les messages d'erreur et les mettre en locale
+x. => check si le message envoye dans /chat/message peut etre poste (display = 1)

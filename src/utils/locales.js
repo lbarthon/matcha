@@ -28,7 +28,7 @@ class _LocalesProvider extends Component {
       req('/api/lang/set', {lang: newLang});
     },
     idParser : (str) => {
-      console.log('erreur id :', str);
+      console.log('erreur =>', str);
       let tab = str.split('.');
       let ret = this.state.locale;
       tab.forEach(value => {

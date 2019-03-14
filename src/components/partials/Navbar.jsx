@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { withAllHOC } from '../../utils/allHOC';
 import M from 'materialize-css';
-import { notify } from '../../utils/alert';
+import { alert } from '../../utils/alert';
 
 class Navbar extends Component {
 

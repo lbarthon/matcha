@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withAllHOC } from '../../utils/allHOC';
-import { notify } from '../../utils/alert';
+import { alert } from '../../utils/alert';
 import req from '../../utils/req';
 import M from 'materialize-css';
 
@@ -19,7 +19,7 @@ class Actions extends React.Component {
       }
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -29,7 +29,7 @@ class Actions extends React.Component {
       this.setState({liked: true});
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     });
   }
 
@@ -39,7 +39,7 @@ class Actions extends React.Component {
       this.setState({liked: false});
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -50,29 +50,29 @@ class Actions extends React.Component {
         this.setState({blocked: true});
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
   handleBlock = () => {
     req('/api/blocked/add', {target : this.props.id})
     .then(res => {
-      notify('success', this.props.locales.idParser(res));
+      alert('success', this.props.locales.idParser(res));
       this.setState({blocked: true});
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
   handleUnblock = () => {
     req('/api/blocked/remove', {target : this.props.id})
     .then(res => {
-      notify('success', this.props.locales.idParser(res));
+      alert('success', this.props.locales.idParser(res));
       this.setState({blocked: false});
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -81,10 +81,10 @@ class Actions extends React.Component {
     let reason = document.querySelector('#reason').value;
     req('/api/report/add', {target: this.props.id, text: reason})
     .then(res => {
-      notify('success', this.props.locales.idParser(res));
+      alert('success', this.props.locales.idParser(res));
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 

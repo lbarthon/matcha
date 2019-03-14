@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { withAllHOC } from '../utils/allHOC';
 import M from 'materialize-css';
 import '../css/notification.css'
-import { notify } from '../utils/alert';
+import { alert } from '../utils/alert';
 import dateFormat from 'dateformat';
 
 class Notifications extends Component {

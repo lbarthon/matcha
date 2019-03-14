@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { notify } from '../utils/alert';
+import { alert } from '../utils/alert';
 import { withAllHOC } from '../utils/allHOC';
 import req from '../utils/req';
 
@@ -18,10 +18,10 @@ class Resetpw extends Component {
     e.preventDefault();
     req('/api/reset', this.state)
     .then(res => {
-      notify('success', locales.idParser(res));
+      alert('success', locales.idParser(res));
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 

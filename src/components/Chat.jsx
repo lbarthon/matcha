@@ -4,7 +4,7 @@ import { withAllHOC } from '../utils/allHOC';
 import M from 'materialize-css';
 import ChatSide from './chat/ChatSide'
 import '../css/chat.css'
-import { notify } from '../utils/alert';
+import { alert } from '../utils/alert';
 import httpBuildQuery from 'http-build-query';
 import req from '../utils/req';
 
@@ -30,7 +30,7 @@ class Chat extends Component {
       this.getRooms();
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -50,7 +50,7 @@ class Chat extends Component {
       });
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -69,7 +69,7 @@ class Chat extends Component {
       this.getMessages(room.id);
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
     document.querySelector('#message').value = '';
   }
@@ -84,7 +84,7 @@ class Chat extends Component {
       });
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
@@ -99,7 +99,7 @@ class Chat extends Component {
       });
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 

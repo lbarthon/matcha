@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { notify } from '../utils/alert';
+import { alert } from '../utils/alert';
 import { withLocalesHOC } from '../utils/locales';
 import M from 'materialize-css'
 

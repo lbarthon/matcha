@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { notify } from '../utils/alert';
+import { alert } from '../utils/alert';
 import { withLocalesHOC } from '../utils/locales';
 import M from 'materialize-css';
 import Map from './update/Map';
@@ -34,10 +34,10 @@ class Register extends Component {
     e.preventDefault();
     req('/api/register', this.state)
     .then(res => {
-      notify('success', locales.idParser(res));
+      alert('success', locales.idParser(res));
     })
     .catch(err => {
-      notify('error', this.props.locales.idParser(err));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
