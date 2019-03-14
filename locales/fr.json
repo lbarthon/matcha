@@ -69,7 +69,8 @@
     "register": "S'inscrire",
     "login": "Connexion",
     "upload": "Photos",
-    "profile" : "Profil"
+    "profile" : "Profil",
+    "admin" : "Administration"
   },
   "title": {
     "update": "Mise a jour des informations",
@@ -124,6 +125,10 @@
   },
   "upload": {
     "btn": "Sauvegarder"
+  },
+  "admin" : {
+    "delete": "Supprimer",
+    "ban": "Bannir"
   },
   "sql": {
     "alert": {

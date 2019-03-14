@@ -57,7 +57,8 @@
     "register": "Register",
     "login": "Login",
     "upload": "Pictures",
-    "profile" : "Profile"
+    "profile" : "Profile",
+    "admin" : "Administration"
   },
   "title": {
     "update": "Update your infos",
@@ -109,6 +110,10 @@
   },
   "upload": {
     "btn": "Save"
+  },
+  "admin" : {
+    "delete": "Delete",
+    "ban": "Ban"
   },
   "sql": {
     "alert": {

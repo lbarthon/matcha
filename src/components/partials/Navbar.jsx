@@ -54,7 +54,7 @@ class Navbar extends Component {
 
   render() {
     const { locales } = this.props;
-    const { logged, username } = this.props.currentUser;
+    const { logged, username, admin } = this.props.currentUser;
     const { notifs } = this.props;
     return (
       <header>
@@ -62,6 +62,7 @@ class Navbar extends Component {
           <li><Link to="/update">{locales.locale.nav.update}</Link></li>
           <li><Link to="/upload">{locales.locale.nav.upload}</Link></li>
           <li><Link to={'/user/' + this.props.currentUser.id}>{locales.locale.nav.profile}</Link></li>
+          {admin && <li><Link to="/admin">{locales.locale.nav.admin}</Link></li>}
         </ul>
         <div className="navbar-fixed">
           <nav>
@@ -105,6 +106,7 @@ class Navbar extends Component {
               <li><Link to="/match">Match</Link></li>
               <li><Link to="/update">{locales.locale.nav.update}</Link></li>
               <li><Link to="/upload">{locales.locale.nav.upload}</Link></li>
+              {admin && <li><Link to="/admin">{locales.locale.nav.admin}</Link></li>}
               <li><a onClick={this.handleLogout}>{locales.locale.nav.logout}</a></li>
             </React.Fragment>
           }

@@ -5,6 +5,7 @@ export const CurrentUserContext = React.createContext({
   username: '',
   id: undefined,
   logged: undefined,
+  admin: false,
   getCurrentUser: () => {}
 });
 
@@ -14,18 +15,19 @@ export class CurrentUserProvider extends React.Component {
     username: '',
     id: undefined,
     logged: undefined,
+    admin: false,
     getCurrentUser: (callback) => {
       req('/api/logged')
       .then(res => {
         if (localStorage.getItem('csrf') != res.csrf)
           localStorage.setItem('csrf', res.csrf);
         if (res.username !== undefined) {
-          if (this.state.logged !== true) {
+          if (this.state.logged !== true || this.state.username != res.username || this.state.admin != res.perm_level) {
             this.setState({
               logged: true,
               username: res.username,
               id: res.uid,
-              admin: res.perm_level == 1
+              admin: res.perm_level == 1 ? true : false
             });
           }
         } else if (this.state.logged !== false) {
