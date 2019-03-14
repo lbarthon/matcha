@@ -22,8 +22,12 @@ const get_infos_id = (id, visiter) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
                     } else if (result.length > 0) {
-                        delete result[0].pwd;
-                        resolve(result[0]);
+                        if (result[0].banned == 1) {
+                            reject(new Error("user.alert.is_banned"));
+                        } else {
+                            delete result[0].pwd;
+                            resolve(result[0]);
+                        }
                     } else {
                         reject(new Error("user.alert.notfound"));
                     }

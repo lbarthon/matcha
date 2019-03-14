@@ -16603,6 +16603,7 @@ CREATE TABLE `users` (
   `conf_link` varchar(255) DEFAULT NULL,
   `confirmed` tinyint(1) DEFAULT '0',
   `perm_level` tinyint(1) DEFAULT '0',
+  `banned` tinyint(1) DEFAULT '0',
   `last_seen` timestamp NULL DEFAULT NULL,
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP

@@ -36,7 +36,7 @@ router.post('/add', (req, res) => {
 router.post('/del', (req, res) => {
     reports.del(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'reports.delete.success' });
+        res.status(200).json({ 'success' : 'alert.report_delete_success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });

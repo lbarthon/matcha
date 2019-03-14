@@ -24,7 +24,7 @@ const login = req => {
                 } else if (infos.pwd == '') {
                     reject(new Error("register.alert.password_null"));
                 } else {
-                    conn.query("SELECT id, pwd, confirmed, perm_level FROM users WHERE username=?",
+                    conn.query("SELECT id, pwd, confirmed, perm_level, banned FROM users WHERE username=?",
                         [infos.username], (err, results) => {
                         if (err) {
                             reject(new Error("sql.alert.query"));
@@ -34,6 +34,8 @@ const login = req => {
                                 .then(res => {
                                     if (!res) {
                                         reject(new Error("login.alert.password_diff"));
+                                    } else if (results[0].banned == 1) {
+                                        reject(new Error("login.alert.user_banned"));
                                     } else if (results[0].confirmed == 0) {
                                         reject(new Error("login.alert.not_confirmed"));
                                     } else {

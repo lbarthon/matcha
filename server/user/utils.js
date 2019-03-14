@@ -7,7 +7,6 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
 /**
  * Returns uid of the username in param.
  * @param {string} username
@@ -15,12 +14,14 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 const getIdFromUsername = username => {
     return new Promise((resolve, reject) => {
         if (conn) {
-            conn.query("SELECT id FROM users WHERE username=?", [username], (err, results) => {
+            conn.query("SELECT id, banned FROM users WHERE username=?", [username], (err, results) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
                 } else {
                     if (results.length == 0) {
                         reject(new Error("error_unknown_user"));
+                    } else if (results[0].banned == 1) {
+                        reject(new Error("login.alert.user_banned"));
                     } else {
                         resolve(results[0].id);
                     }
@@ -38,12 +39,14 @@ const getIdFromUsername = username => {
 const getIdFromEmail = email => {
     return new Promise((resolve, reject) => {
         if (conn) {
-            conn.query("SELECT id FROM users WHERE email=?", [email], (err, results) => {
+            conn.query("SELECT id, banned FROM users WHERE email=?", [email], (err, results) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
                 } else {
                     if (results.length == 0) {
                         reject(new Error("error_unknown_email"));
+                    } else if (results[0].banned == 1) {
+                        reject(new Error("login.alert.user_banned"));
                     } else {
                         resolve(results[0].id);
                     }

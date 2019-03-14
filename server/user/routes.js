@@ -108,4 +108,18 @@ router.post('/reset/ask', (req, res) => {
     });
 });
 
+router.post('/ban', (req, res) => {
+    user.ban(req)
+    .then(ret => {
+        if (ret) {
+            res.status(200).json({ 'success' : 'alert.report_ban_success' });
+        } else {
+            res.status(200).json({ 'error' : 'alert.report_ban_already' });
+        }
+    })
+    .catch(err => {
+        res.status(200).json({ 'error' : err.message });
+    });
+})
+
 module.exports = router;

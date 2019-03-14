@@ -26,8 +26,8 @@ const matchs = req => {
                         INNER JOIN tags ON users.id = tags.user_id \
                         INNER JOIN pictures ON users.id = pictures.user_id AND pictures.main=1 \
                         LEFT JOIN blocked ON users.id = blocked.target_id \
-                        WHERE ? AND ? AND ? AND (? OR ?) AND blocked.target_id IS NULL GROUP BY users.id",
-                        [{'users.confirmed': 1}, {'users.perm_level': 0}, cond, {wanted: sex}, {wanted: 'bisexual'}], (err, results) => {
+                        WHERE ? AND ? AND ? AND (? OR ?) AND ? AND blocked.target_id IS NULL GROUP BY users.id",
+                        [{'users.confirmed': 1}, {'users.perm_level': 0}, cond, {wanted: sex}, {wanted: 'bisexual'}, {'users.banned': 0}], (err, results) => {
                         if (err) {
                             reject(new Error("sql.alert.query"));
                         } else {

@@ -33,13 +33,10 @@ class Update extends Component {
   }
 
   handleSubmit = e => {
-    let tags = {tags: this.state.tags}
-    tags = httpBuildQuery(tags);
-    const user = httpBuildQuery(this.state.user);
     const { locales } = this.props;
     e.preventDefault();
     // update tags
-    req('/api/tags/update', tags)
+    req('/api/tags/update', { tags: this.state.tags })
     .then(res => {
       this.getTags();
     })
@@ -47,7 +44,7 @@ class Update extends Component {
       alert('error', this.props.locales.idParser(err));
     })
     // update user
-    req('/api/update', user)
+    req('/api/update', this.state.user)
     .then(res => {
       alert('success', locales.idParser(res));
     })

@@ -4,7 +4,6 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
 /**
  * Adds array of tags in param.
  * @param {*} toAdd 
@@ -21,7 +20,6 @@ const add = toAdd => {
         }
     });
 }
-
 /**
  * Remove array of tags in param.
  * @param {*} toRemove 
@@ -38,7 +36,6 @@ const remove = toRemove => {
         }
     });
 }
-
 /**
  * Updates user's tags.
  * @param {*} req 

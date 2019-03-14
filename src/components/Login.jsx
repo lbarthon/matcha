@@ -27,7 +27,7 @@ class Login extends Component {
       });
     })
     .catch(err => {
-      alert('error', this.props.locales.idParser(err));
+      alert('error', locales.idParser(err));
     })
   }
 

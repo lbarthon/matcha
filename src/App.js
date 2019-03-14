@@ -17,7 +17,7 @@ import WindowChat from './components/partials/WindowChat';
 import Chat from './components/Chat';
 import NotFound from './components/NotFound';
 import Match from './components/match/Match';
-import Admin from './components/Admin';
+import Admin from './components/admin/Admin';
 import './css/upload.css';
 import './css/alert.css';
 import './css/style.css';

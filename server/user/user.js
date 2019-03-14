@@ -6,6 +6,7 @@ const utils = require('./utils');
 const reset_ask = require('./reset_ask');
 const get_infos = require('./get_infos');
 const confirm = require('./confirm');
+const ban = require('./ban');
 
 module.exports = {
     register     : register,
@@ -16,5 +17,6 @@ module.exports = {
     reset_ask    : reset_ask,
     get_infos    : get_infos.get_infos,
     get_infos_id : get_infos.get_infos_id,
-    confirm      : confirm
+    confirm      : confirm,
+    ban          : ban
 }
