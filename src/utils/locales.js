@@ -28,13 +28,17 @@ class _LocalesProvider extends Component {
       req('/api/lang/set', {lang: newLang});
     },
     idParser : (str) => {
-      console.log('erreur =>', str);
-      let tab = str.split('.');
-      let ret = this.state.locale;
-      tab.forEach(value => {
-        ret = ret[value];
-      });
-      return ret;
+      try {
+        let tab = str.split('.');
+        let ret = this.state.locale;
+        tab.forEach(value => {
+          ret = ret[value];
+        });
+        return ret;
+      } catch (err) {
+        console.log('erreur =>', str);
+        return "";
+      }
     }
   }
 
