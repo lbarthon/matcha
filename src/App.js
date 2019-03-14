@@ -4,6 +4,7 @@ import { AlertContainer, cleanAlerts } from './utils/alert';
 import { withAllHOC } from './utils/allHOC';
 import UnloggedRoute from './utils/route/UnloggedRoute';
 import PrivateRoute from './utils/route/PrivateRoute';
+import AdminRoute from './utils/route/AdminRoute';
 import Navbar from './components/partials/Navbar';
 import Home from './components/Home';
 import Register from './components/Register';
@@ -16,6 +17,7 @@ import WindowChat from './components/partials/WindowChat';
 import Chat from './components/Chat';
 import NotFound from './components/NotFound';
 import Match from './components/match/Match';
+import Admin from './components/Admin';
 import './css/upload.css';
 import './css/alert.css';
 import './css/style.css';
@@ -54,6 +56,7 @@ class App extends Component {
             <PrivateRoute path="/user/:id" component={User} />
             <PrivateRoute path="/notifications" component={Notifications} />
             <PrivateRoute path="/chat" component={Chat} />
+            <AdminRoute path="/admin" component={Admin} />
             <Route path='*' exact={true} component={NotFound} />
           </Switch>
         </div>

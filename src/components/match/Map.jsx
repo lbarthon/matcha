@@ -27,7 +27,7 @@ export class MatchMap extends Component {
         lng: latLng[1]
       };
     });
-    return mapped.map((match, index) => {
+    return mapped.map((match) => {
       return (
         <Marker match={match}
           position={{ lat: match.lat, lng: match.lng }}

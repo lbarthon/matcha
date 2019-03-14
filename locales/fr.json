@@ -75,7 +75,8 @@
     "register": "S'inscrire",
     "login": "Connexion",
     "upload": "Vos photos",
-    "home": "Accueil"
+    "home": "Accueil",
+    "admin": "Admin"
   },
   "login": {
     "btn": "Se connecter",

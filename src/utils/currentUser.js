@@ -25,22 +25,20 @@ export class CurrentUserProvider extends React.Component {
               logged: true,
               username: res.username,
               id: res.uid,
+              admin: res.perm_level == 1
             });
           }
-        } else {
-          if (this.state.logged !== false) {
-            this.setState({
-              logged: false,
-            });
-          }
+        } else if (this.state.logged !== false) {
+          this.setState({
+            logged: false
+          });
         }
+        if (callback) callback();
       })
       .catch(err => {
         alert('error', this.props.locales.idParser(err));
+        if (callback) callback();
       })
-      if (callback) {
-        callback();
-      }
     }
   }
 

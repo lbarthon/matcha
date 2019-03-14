@@ -22,12 +22,10 @@ router.use((req, res, next) => {
     } else {
         var header_csrf = req.get('CSRF-Token');
         if (req.originalUrl == '/api/logged' || header_csrf == req.session.csrf) {
-            console.log('CSRF BON : ' + req.get('CSRF-Token'));
             next();
         } else {
             res.status(404).end();
-            console.log('LI CSRF ILÉ PA BON SUR CETTE REQUÊTE : ' + req.get('CSRF-Token') + ' / ' + req.session.csrf);
-            // next();
+            console.log("Error while querying on "  + req.originalUrl + " : wrong CSRF. 404 sent.");
         }
     }
 });
