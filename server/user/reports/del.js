@@ -7,7 +7,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 /**
  * Take report id in req.body.id
- * @param {*} req 
+ * @param {*} req
  */
 const del = req => {
     var infos = req.body;
@@ -22,7 +22,7 @@ const del = req => {
                 }
             });
         })
-        .catch(() => reject(new Error("error_not_admin")));
+        .catch(() => reject(new Error("alert.not_admin")));
     });
 }
 

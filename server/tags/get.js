@@ -6,13 +6,13 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 /**
  * Returns all uid tags
- * @param {int} uid 
+ * @param {int} uid
  */
 const get = uid => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (uid == undefined || uid == '' || isNaN(uid)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("SELECT tag FROM tags WHERE ?", [{user_id: uid}], (err, results) => {
                     if (err) {

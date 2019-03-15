@@ -7,7 +7,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 /**
  * Returns all reports if user is admin
- * @param {*} req 
+ * @param {*} req
  */
 const get = req => {
     return new Promise((resolve, reject) => {
@@ -27,7 +27,7 @@ const get = req => {
                 }
             });
         })
-        .catch(() => reject(new Error("error_not_admin")));
+        .catch(() => reject(new Error("alert.not_admin")));
     });
 }
 

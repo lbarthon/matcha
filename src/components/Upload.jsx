@@ -55,6 +55,7 @@ class Upload extends Component {
     fav.innerHTML = 'star';
     this.setState({ fav: favId }, () => {
       req('/api/pictures/main/set', {id: this.state.fav})
+      .then()
       .catch(err => {
         alert('error', this.props.locales.idParser(res));
       })
@@ -70,24 +71,19 @@ class Upload extends Component {
       alert('success', this.props.locales.idParser(res));
     })
     .catch(err => {
-      alert('error', this.props.locales.idParser(res));
+      alert('error', this.props.locales.idParser(err));
     })
   }
 
   getPictures = () => {
-    fetch('/api/pictures/get', {
-      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
+    req('/api/pictures/get')
+    .then(res => {
+      if (res !== this.state.pictures)
+        this.setState({ pictures: res });
     })
-    .then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.error == null && json.success !== this.state.pictures)
-            this.setState({ pictures: json.success });
-          else if (json.error)
-            alert('error', this.props.locales.idParser(json.error));
-        });
-      } else console.error(new Error(response.statusText));
-    });
+    .catch(err => {
+      alert('error', this.props.locales.idParser(err));
+    })
   }
 
   componentWillMount() {

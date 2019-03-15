@@ -113,17 +113,45 @@
     }
   },
   "upload": {
-    "btn": "Save"
+    "btn": "Save",
+    "alert" : {
+      "add_success": "Picture added successfully",
+      "remove_success": "Picture deleted successfully",
+      "set_main": "Error during the set of your main picture",
+      "set_main_success": "This picture is now your main picture",
+      "write": "Error during the save of your picture",
+      "insert": "Error during the insertion of your picture",
+      "remove": "Error during the suppression of your picture",
+      "remove_main": "Error while deleting your picture, this is your main picture",
+      "wrong_user": "You can't delete this picture",
+      "no_file": "File not found"
+    }
   },
   "admin" : {
     "delete": "Delete",
-    "ban": "Ban"
+    "ban": "Ban",
+    "alert": {
+      "report_delete_success": "Report deleted successfully",
+      "report_ban_success": "User banned successfully",
+      "report_ban_already": "User already banned"
+    }
   },
   "sql": {
     "alert": {
       "query": "Error querying database!",
       "undefined": "Error connecting to database!",
       "table_undefined": "Unknown table !"
+    }
+  },
+  "confirm": {
+    "alert": {
+      "success": "Account confirmed successfully",
+      "link_invalid": "This link is not valid"
+    }
+  },
+  "resetpw": {
+    "alert": {
+      "success": "Your password has been reset"
     }
   },
   "alert": {
@@ -141,6 +169,8 @@
     "picture_error_insert": "Error saving your picture!",
     "picture_error_remove": "Error deleting your picture!",
     "picture_error_remove_none": "Error deleting your picture! Does it belong to you?",
-    "report_delete_success": "You have successfully deleted this report"
+    "report_delete_success": "You have successfully deleted this report",
+    "wrong_id": "Wrong id",
+    "email_unknow": "Email not found"
   }
 }

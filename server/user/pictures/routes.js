@@ -36,7 +36,7 @@ router.get('/get/:id', (req, res) => {
 router.post('/add', (req, res) => {
     pictures.add(req, res)
     .then(() => {
-        res.status(200).json({ 'success' : 'picture.add.success' });
+        res.status(200).json({ 'success' : 'upload.alert.add_success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
@@ -46,7 +46,7 @@ router.post('/add', (req, res) => {
 router.post('/remove', (req, res) => {
     pictures.remove(req.body, req.session.uid)
     .then(() => {
-        res.status(200).json({ 'success' : 'picture.remove.success' });
+        res.status(200).json({ 'success' : 'upload.alert.remove_success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });
@@ -56,7 +56,7 @@ router.post('/remove', (req, res) => {
 router.post('/main/set', (req, res) => {
     pictures.set_main(req.body, req.session.uid)
     .then(() => {
-        res.status(200).json({ 'success' : 'picture.set_main.success' });
+        res.status(200).json({ 'success' : 'upload.alert.set_main_success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });

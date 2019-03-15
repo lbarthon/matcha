@@ -7,14 +7,14 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 
 /**
  * Sets a picture as main picture
- * @param {*} infos 
- * @param {int} uid 
+ * @param {*} infos
+ * @param {int} uid
  */
 const set_main = (infos, uid) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.id == undefined || infos.id == '' || isNaN(infos.id)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("UPDATE pictures SET main=0 WHERE user_id=?", [uid], err => {
                     if (err) {
@@ -27,7 +27,7 @@ const set_main = (infos, uid) => {
                             } else if (result.affectedRows == 1) {
                                 resolve();
                             } else {
-                                reject(new Error("picture.set_main.error"));
+                                reject(new Error("upload.alert.set_main"));
                             }
                         });
                     }

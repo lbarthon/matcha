@@ -6,7 +6,7 @@ const timestamp = Date.now();
 
 /**
  * Shortens the name of the picture if it's greater than 200 chars, so it fits in the db.
- * @param {string} name 
+ * @param {string} name
  */
 const niceName = name => {
     var split = name.split(".");
@@ -31,8 +31,8 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 
 /**
  * Adds a picture to the session user profile.
- * @param {*} req 
- * @param {*} res 
+ * @param {*} req
+ * @param {*} res
  */
 const add = (req, res) => {
     return new Promise((resolve, reject) => {
@@ -40,10 +40,11 @@ const add = (req, res) => {
             upload(req, res, err => {
                 var file = req.file;
                 if (err) {
-                    reject(new Error("picture_error_write"))
+                    reject(new Error("upload.alert.write"))
                 } else if (!file) {
-                    reject(new Error("picture_add_no_file"));
+                    reject(new Error("upload.alert.no_file"));
                 } else {
+                  console.log(file);
                     var uid = req.session.uid;
                     var filename = "Picture-" + timestamp + '-' + niceName(file.originalname);
                     var main = 0;
@@ -67,7 +68,7 @@ const add = (req, res) => {
                 }
             });
         } else {
-            reject(new Error("error_sql_undefined"));
+            reject(new Error("sql.alert.undefined"));
         }
     });
 }

@@ -6,7 +6,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 /**
  * Function that confirms an user's account.
- * @param {*} req 
+ * @param {*} req
  */
 const confirm = req => {
     var infos = req.body;
@@ -18,7 +18,7 @@ const confirm = req => {
                 } else if (results.affectedRows == 1) {
                     resolve();
                 } else {
-                    reject(new Error("confirm_link_invalid"));
+                    reject(new Error("confirm.alert.link_invalid"));
                 }
             })
         } else {

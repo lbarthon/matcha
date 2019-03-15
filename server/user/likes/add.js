@@ -17,7 +17,7 @@ const add = req => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.target == undefined || infos.target == '' || isNaN(infos.target)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else if (infos.target == uid) {
                 reject(new Error("likes.add.yourself"));
             } else {

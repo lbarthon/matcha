@@ -18,7 +18,7 @@ const add = req => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.target == undefined || infos.target == '' || isNaN(infos.target)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("SELECT * FROM blocked WHERE ? AND ?",
                         [{target_id: infos.target}, {user_id: uid}], (err, results) => {

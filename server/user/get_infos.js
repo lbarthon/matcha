@@ -16,7 +16,7 @@ const get_infos_id = (id, visiter) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (id == undefined || id == '' || isNaN(id)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("SELECT * FROM users WHERE id=?", [id], (err, result) => {
                     if (err) {

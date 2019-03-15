@@ -46,7 +46,7 @@ const update = req => {
             var uid = req.session.uid;
             var tags = req.body.tags;
             if (uid == undefined || uid == '' || isNaN(uid)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else if (tags == undefined || tags.length == 0) {
                 reject(new Error("tag.update.undefined"));
             } else {

@@ -15,6 +15,7 @@ const req = (url, body) => {
       }).then(response => {
         if (response.ok) {
           response.json().then(json => {
+            console.log(json);
             if (json.success !== undefined) {
               resolve(json.success);
             } else if (json.error) {

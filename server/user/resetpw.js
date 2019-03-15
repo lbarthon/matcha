@@ -8,7 +8,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 /**
  * Function that resets an user's password.
- * @param {*} req 
+ * @param {*} req
  */
 const resetpw = req => {
     var infos = req.body;
@@ -36,7 +36,7 @@ const resetpw = req => {
                         }).catch(reject);
                     }
                 } else {
-                    reject(new Error("confirm_link_invalid"));
+                    reject(new Error("confirm.alert.link_invalid"));
                 }
             })
         } else {

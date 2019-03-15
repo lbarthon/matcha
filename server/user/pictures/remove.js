@@ -9,8 +9,8 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 
 /**
  * Removes one of uid's pictures.
- * @param {*} infos 
- * @param {int} uid 
+ * @param {*} infos
+ * @param {int} uid
  */
 const remove = (infos, uid) => {
     return new Promise((resolve, reject) => {
@@ -19,14 +19,14 @@ const remove = (infos, uid) => {
             .then(name => {
                 fs.unlink('./public/pictures/user/' + name , err => {
                     if (err) {
-                        reject(new Error("picture.error.remove"))
+                        reject(new Error("upload.alert.remove"))
                     } else {
                         conn.query("DELETE FROM pictures WHERE id=? AND user_id=? AND main=0",
                                 [infos.id, uid], (err, result) => {
                             if (err) {
                                 reject(new Error("sql.alert.query"));
                             } else if (result.affectedRows == 0) {
-                                reject(new Error("picture.error.remove.main"));
+                                reject(new Error("upload.alert.remove_main"));
                             } else {
                                 resolve();
                             }

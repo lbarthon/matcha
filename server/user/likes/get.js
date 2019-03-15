@@ -32,7 +32,7 @@ const get = uid => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (uid == undefined || uid == '' || isNaN(uid)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("SELECT target_id AS user, COUNT(*) AS count FROM likes GROUP BY target_id", (err, results) => {
                     if (err) {

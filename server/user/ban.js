@@ -13,7 +13,7 @@ const ban = req => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (id == undefined || id == '' || isNaN(id)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("UPDATE users SET banned=1 WHERE ?", [{id: id}], (err, results) => {
                     if (err) {

@@ -127,17 +127,45 @@
     }
   },
   "upload": {
-    "btn": "Sauvegarder"
+    "btn": "Sauvegarder",
+    "alert" : {
+      "add_success": "Photo ajoutée avec succès !",
+      "remove_success": "Photo supprimée avec succès !",
+      "set_main": "Erreur lors de la modification de votre photo",
+      "set_main_success": "Cette photo est désormais votre photo principale !",
+      "write": "Erreur lors de l'enregistrement de votre photo !",
+      "insert": "Erreur lors de l'insertion de la photo !",
+      "remove": "Erreur lors de la suppression de votre photo !",
+      "remove_main": "Erreur lors de la suppression, cette photo est votre photo principale",
+      "wrong_user": "Erreur lors de la suppression de votre photo. Vous appartient-elle ?",
+      "no_file": "Fichier non trouve"
+    }
   },
   "admin" : {
     "delete": "Supprimer",
-    "ban": "Bannir"
+    "ban": "Bannir",
+    "alert": {
+      "report_delete_success": "Report supprimé avec succès !",
+      "report_ban_success": "Utilisateur banni avec succès !",
+      "report_ban_already": "Utilisateur déjà banni !"
+    }
   },
   "sql": {
     "alert": {
       "query": "Erreur lors de la requête à la base de données !",
       "undefined": "Erreur lors de la connection à la base de données !",
-      "table_undefined": "Cette table n'existe pas !"
+      "table_undefined": "Cette table n'éxiste pas !"
+    }
+  },
+  "confirm": {
+    "alert": {
+      "success": "Vous avez bien verifié votre compte",
+      "link_invalid": "Ce lien n'est pas valide"
+    }
+  },
+  "resetpw": {
+    "alert": {
+      "success": "Votre mot de passe a bien été réinitialisé"
     }
   },
   "alert": {
@@ -147,21 +175,11 @@
     "error_user_not_logged": "Vous n'êtes pas connecté !",
     "error_user_not_found": "Cet utilisateur n'existe pas !",
     "error_no_picture": "Vous n'avez pas de photo !",
-    "error_wrong_id": "Erreur lors de la gestion des données !",
+    "wrong_id": "Erreur lors de la gestion des données !",
     "error_unknown_email": "Mail inconnu !",
     "forbidden_access": "Vous n'avez pas accès à cette page !",
     "not_logged": "Vous devez être connectés pour faire ça !",
     "reset_ask_success": "Le lien de réinitialisation vous sa étee envoyé par email !",
-    "report_delete_success": "Report supprimé avec succès !",
-    "report_ban_success": "Utilisateur banni avec succès !",
-    "report_ban_already": "Utilisateur déjà banni !",
-    "picture_add_success": "Photo ajoutée avec succès !",
-    "picture_remove_success": "Photo supprimée avec succès !",
-    "picture_set_main_error": "Erreur lors de la modification de votre photo",
-    "picture_set_main_success": "Cette photo est désormais votre photo principale !",
-    "picture_error_write": "Erreur lors de l'enregistrement de votre photo !",
-    "picture_error_insert": "Erreur lors de l'insertion de la photo !",
-    "picture_error_remove": "Erreur lors de la suppression de votre photo !",
-    "picture_error_remove_none": "Erreur lors de la suppression de votre photo. Vous appartient-elle?"
+    "email_unknow": "Email non trouve"
   }
 }

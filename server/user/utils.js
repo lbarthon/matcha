@@ -19,7 +19,7 @@ const getIdFromUsername = username => {
                     reject(new Error("sql.alert.query"));
                 } else {
                     if (results.length == 0) {
-                        reject(new Error("error_unknown_user"));
+                        reject(new Error("login.alert.user_unknow"));
                     } else if (results[0].banned == 1) {
                         reject(new Error("login.alert.user_banned"));
                     } else {
@@ -44,7 +44,7 @@ const getIdFromEmail = email => {
                     reject(new Error("sql.alert.query"));
                 } else {
                     if (results.length == 0) {
-                        reject(new Error("error_unknown_email"));
+                        reject(new Error("alert.email_unknow"));
                     } else if (results[0].banned == 1) {
                         reject(new Error("login.alert.user_banned"));
                     } else {

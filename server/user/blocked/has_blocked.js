@@ -14,7 +14,7 @@ const has_blocked = (uid, target) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (target == undefined || target == '' || isNaN(target)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("SELECT * FROM blocked WHERE ? AND ?",
                         [{user_id: uid}, {target_id: target}], (err, results) => {

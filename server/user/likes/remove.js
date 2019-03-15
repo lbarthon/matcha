@@ -17,7 +17,7 @@ const remove = req => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (infos.target == undefined || infos.target == '' || isNaN(infos.target)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("DELETE FROM likes WHERE ? AND ?", [{user_id: uid}, {target_id: infos.target}], (err, results) => {
                     if (err) {

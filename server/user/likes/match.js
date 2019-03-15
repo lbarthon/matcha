@@ -9,7 +9,7 @@ const match = (uid, target) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (target == undefined || target == '' || isNaN(target)) {
-                reject(new Error("error_wrong_id"));
+                reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("SELECT * FROM likes WHERE (? AND ?) OR (? AND ?)",
                         [{user_id: uid}, {target_id: target}, {user_id: target}, {target_id: uid}], (err, results) => {
