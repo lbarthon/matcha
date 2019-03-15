@@ -18,6 +18,7 @@ import Chat from './components/Chat';
 import NotFound from './components/NotFound';
 import Match from './components/match/Match';
 import Admin from './components/admin/Admin';
+import Resetpw from './components/Resetpw';
 import './css/upload.css';
 import './css/alert.css';
 import './css/style.css';
@@ -50,6 +51,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <UnloggedRoute path="/register" component={Register} />
             <UnloggedRoute path="/login" component={Login} />
+            <UnloggedRoute path="/resetpw/:link" component={Resetpw} />
             <PrivateRoute path="/match" component={Match} />
             <PrivateRoute path="/update" component={Update} />
             <PrivateRoute path="/upload" component={Upload} />

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { alert } from '../utils/alert';
 import { withAllHOC } from '../utils/allHOC';
 import req from '../utils/req';
+import AskReset from './login/AskReset';
 
 class Login extends Component {
 
@@ -39,21 +40,24 @@ class Login extends Component {
   render() {
     const {locale} = this.props.locales;
     return (
-      <form onSubmit={this.handleSubmit} className="col s12">
-        <div className="row">
-          <div className="input-field col s12">
-            <input name="username" id="username" type="text" className="validate" onChange={this.onChange} />
-            <label htmlFor="username">{locale.username}</label>
+      <React.Fragment>
+        <form onSubmit={this.handleSubmit} className="col s12">
+          <div className="row">
+            <div className="input-field col s12">
+              <input name="username" id="username" type="text" className="validate" onChange={this.onChange} />
+              <label htmlFor="username">{locale.username}</label>
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="input-field col s12">
-            <input name="pwd" id="pwd" type="password" className="validate" onChange={this.onChange} />
-            <label htmlFor="pwd">{locale.password}</label>
+          <div className="row">
+            <div className="input-field col s12">
+              <input name="pwd" id="pwd" type="password" className="validate" onChange={this.onChange} />
+              <label htmlFor="pwd">{locale.password}</label>
+            </div>
           </div>
-        </div>
-        <button className="btn waves-effect waves-light">{locale.login.btn}</button>
-      </form>
+          <button className="btn waves-effect waves-light">{locale.login.btn}</button>
+        </form>
+        <AskReset/>
+      </React.Fragment>
     );
   }
 }

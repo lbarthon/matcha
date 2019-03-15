@@ -100,6 +100,7 @@
       "username_took": "This username is already in use!",
       "password_null": "Your password can't be null!",
       "password_diff": "Both passwords differ!",
+      "email_invalid": "Invalid email",
       "email_took": "This email is already in use!",
       "genders_null": "Both genders can't be null!",
       "hash_error": "Error processing your password"

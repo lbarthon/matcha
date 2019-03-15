@@ -113,6 +113,7 @@
       "username_took": "Ce nom d'utilisateur est déjà utilisé !",
       "password_null": "Votre mot de passe ne peut pas être nul !",
       "password_diff": "Les deux mots de passe ne correspondent pas !",
+      "email_invalid": "Email invalide",
       "email_took": "Cet email est déjà utilisé !",
       "genders_null": "Les genres ne peuvent être nuls !",
       "hash_error": "Erreur lors de la gestion de votre mot de passe",

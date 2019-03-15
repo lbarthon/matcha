@@ -7,6 +7,7 @@ const reset_ask = require('./reset_ask');
 const get_infos = require('./get_infos');
 const confirm = require('./confirm');
 const ban = require('./ban');
+const resetpw = require('./resetpw');
 
 module.exports = {
     register     : register,
@@ -18,5 +19,6 @@ module.exports = {
     get_infos    : get_infos.get_infos,
     get_infos_id : get_infos.get_infos_id,
     confirm      : confirm,
-    ban          : ban
+    ban          : ban,
+    resetpw      : resetpw,
 }

@@ -6,8 +6,9 @@ import req from '../utils/req';
 class Resetpw extends Component {
 
   state = {
-    password: "",
-    repassword: ""
+    password: '',
+    repassword: '',
+    link: ''
   }
 
   onChange = e => {
@@ -25,7 +26,12 @@ class Resetpw extends Component {
     })
   }
 
+  componentWillMount() {
+    this.setState({link: this.props.match.params.link});
+  }
+
   render() {
+    if (this.state.link == '') return null;
     const {locale} = this.props.locales;
     return (
       <form onSubmit={this.handleSubmit} className="col s12">
