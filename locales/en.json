@@ -151,6 +151,8 @@
     }
   },
   "resetpw": {
+    "modal": "Forgot password?",
+    "title": "Ask reset link",
     "alert": {
       "success": "Your password has been reset"
     }

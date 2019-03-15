@@ -30,10 +30,10 @@ class AskReset extends Component {
     const { locale } = this.props.locales;
     return (
       <div className="mt-10">
-        <a href="" data-target="modal1" className="modal-trigger">Forgot password ?</a>
+        <a href="" data-target="modal1" className="modal-trigger">{locale.resetpw.modal}</a>
         <div id="modal1" className="modal">
           <div className="modal-content clearfix">
-            <h5>Ask reset link</h5>
+            <h5>{locale.resetpw.title}</h5>
             <div class="input-field">
               <input id="email" type="email" class="validate"/>
               <label for="email">{locale.email}</label>

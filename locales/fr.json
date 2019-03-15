@@ -165,6 +165,8 @@
     }
   },
   "resetpw": {
+    "modal": "Mot de passe oublié ?",
+    "title": "Demandez un lien de réinitialisation",
     "alert": {
       "success": "Votre mot de passe a bien été réinitialisé"
     }
