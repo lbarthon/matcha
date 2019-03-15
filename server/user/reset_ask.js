@@ -26,9 +26,9 @@ const reset_ask = req => {
             } else {
                 utils.getIdFromEmail(infos.email)
                 .then(uid => {
-                    var str = randomstring.generate(80);
+                    var conf_link = randomstring.generate(80);
                     conn.query("INSERT INTO resetpw (link, user_id) VALUES (?,?)",
-                            [str, uid], (err) => {
+                            [conf_link, uid], (err) => {
                         if (err) {
                             reject(new Error("sql.alert.query"));
                         } else {

@@ -19,7 +19,7 @@ class Resetpw extends Component {
     e.preventDefault();
     req('/api/reset', this.state)
     .then(res => {
-      alert('success', locales.idParser(res));
+      alert('success', this.props.locales.idParser(res));
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
