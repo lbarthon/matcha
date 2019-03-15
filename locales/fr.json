@@ -47,6 +47,9 @@
     }
   },
   "match": {
+    "alert": {
+      "load_error": "Erreur lors du chargement des utilisateurs."
+    },
     "sort": {
       "default": "Default",
       "distance": "Distance",

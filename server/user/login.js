@@ -42,9 +42,7 @@ const login = req => {
                                         resolve([infos.username, results[0].id, results[0].perm_level]);
                                     }
                                 })
-                                .catch(() => {
-                                    reject(new Error("hash_error"))
-                                });
+                                .catch(reject);
                             } else {
                                 reject(new Error("login.alert.user_unknow"));
                             }

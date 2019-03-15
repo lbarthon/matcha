@@ -47,6 +47,9 @@
     }
   },
   "match": {
+    "alert": {
+      "load_error": "Error loading users."
+    },
     "sort": {
       "default": "Default",
       "location": "Distance",
@@ -158,6 +161,7 @@
     }
   },
   "alert": {
+    "ajax_error": "Error loading the app.",
     "logout_success": "Logout successfully!",
     "logout_error": "Error logging out from your account",
     "error_email_invalid": "Invalid email!",

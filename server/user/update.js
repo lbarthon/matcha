@@ -16,12 +16,14 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 const updateCol = (col, value, uid) => {
     return new Promise((resolve, reject) => {
         if (col == "pwd") {
-            hash.create(value).then(hashed => {
+            hash.create(value)
+            .then(hashed => {
                 conn.query("UPDATE users SET ? WHERE id=?", [{[col]: hashed}, uid], (err) => {
                     if (err) reject(new Error("sql.alert.query"));
                     else resolve();
                 });
-            }).catch(reject);
+            })
+            .catch(reject);
         } else if (col != "repassword") {
             conn.query("UPDATE users SET ? WHERE id=?", [{[col]: value}, uid], (err) => {
                 if (err) reject(new Error("sql.alert.query"));
@@ -42,14 +44,18 @@ const checks = (filtered, uid) => {
                 if (id != uid) {
                     reject(new Error("register.alert.email_took"));
                 }
-            }).catch(() => {});
+            }).catch(() => {
+                reject(new Error("sql.alert.query"));
+            });
         }
         if (filtered['username'] != undefined) {
             await utils.getIdFromUsername(filtered['username']).then(id => {
                 if (id != uid) {
                     reject(new Error("register.alert.username_took"));
                 }
-            }).catch(() => {});
+            }).catch(() => {
+                reject(new Error("sql.alert.query"));
+            });
         }
         if (filtered['pwd'] != filtered['repassword']) {
             reject(new Error("register.alert.password_diff"));
@@ -93,7 +99,7 @@ const update = (req, uid) => {
                     Promise.all(promises)
                     .then(resolve)
                     .catch(reject);
-                }).catch(() => {});
+                }).catch(reject);
             })
             .catch(reject);
         } else {

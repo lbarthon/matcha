@@ -43,7 +43,11 @@ const matchs = req => {
                                     return value;
                                 });
                             });
-                            Promise.all(promises).then(resolve);
+                            Promise.all(promises)
+                            .then(resolve)
+                            .catch(() => {
+                                reject(new Error("match.alert.load_error"));
+                            });
                         }
                     })
                 }

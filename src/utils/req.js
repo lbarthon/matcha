@@ -21,13 +21,18 @@ const req = (url, body) => {
             } else if (json.error) {
               reject(json.error);
             } else {
-              reject();
+              reject("alert.ajax_error");
             }
+          }).catch(() => {
+            reject("alert.ajax_error")
           })
         } else {
           console.error(new Error(response.statusText));
-          reject();
+          reject("alert.ajax_error");
         }
+      })
+      .catch(() => {
+        reject("alert.ajax_error")
       });
     } else {
       fetch(url, {
@@ -41,13 +46,17 @@ const req = (url, body) => {
             } else if (json.error) {
               reject(json.error);
             } else {
-              reject();
+              reject("alert.ajax_error");
             }
+          }).catch(() => {
+            reject("alert.ajax_error")
           })
         } else {
           console.error(new Error(response.statusText));
-          reject();
+          reject("alert.ajax_error");
         }
+      }).catch(() => {
+        reject("alert.ajax_error")
       });
     }
   });

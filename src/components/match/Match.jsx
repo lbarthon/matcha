@@ -4,6 +4,7 @@ import { withAllHOC } from '../../utils/allHOC';
 import Map from './Map';
 import MatchUser from './MatchUser';
 import noUiSlider from 'materialize-css/extras/noUiSlider/nouislider';
+import req from '../../utils/req';
 import 'materialize-css/extras/noUiSlider/nouislider.css'
 
 class Match extends Component {
@@ -169,75 +170,49 @@ class Match extends Component {
 
   fetchMatchs = () => {
     const { locales } = this.props;
-    fetch("/api/matchs/", {
-      headers: {
-        'CSRF-Token' : localStorage.getItem('csrf')
-      }
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.error) {
-            alert('error', locales.idParser(json.error))
-          } else {
-            this.setState({
-              matchs: json.success.map(value => {
-                value.age = this.getAge(value.birthdate);
-                value.tags = this.getCommonTags(value.tags);
-                value.distance = this.getDistanceFromUser(value.location.split(";"));
-                return value;
-              })
-            });
-          }
-        }).catch(console.error);
-      }
+    req('/api/matchs')
+    .then(response => {
+      this.setState({
+        matchs: response.map(value => {
+          value.age = this.getAge(value.birthdate);
+          value.tags = this.getCommonTags(value.tags);
+          value.distance = this.getDistanceFromUser(value.location.split(";"));
+          return value;
+        })
+      });
     })
-    .catch(console.error);
+    .catch(err => {
+      alert('error', locales.idParser(err));
+    });
   }
 
   fetchUser = () => {
     const { locales } = this.props;
-    fetch("/api/user/current", {
-      headers: {
-        'CSRF-Token' : localStorage.getItem('csrf')
-      }
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.error) {
-            alert('error', locales.idParser(json.error))
-          } else {
-            this.setState({ user: json.success });
-          }
-        }).catch(console.error);
-      }
+    req('/api/user/current')
+    .then(response => {
+      this.setState({ user: response });
+      
     })
-    .catch(console.error);
+    .catch(err => {
+      alert('error', locales.idParser(err));
+    })
   }
 
   fetchTags = () => {
     const { locales } = this.props;
-    fetch("/api/tags/", {
-      headers: {
-        'CSRF-Token' : localStorage.getItem('csrf')
-      }
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(json => {
-          if (json.error) {
-            alert('error', locales.idParser(json.error))
-          } else {
-            var tags = json.success.map(value => { return value.tag; });
-            this.setState({
-              user: {
-                ...this.state.user,
-                tags: tags
-              }
-            });
-          }
-        }).catch(console.error);
-      }
+    req('/api/tags')
+    .then(response => {
+      var tags = response.map(value => { return value.tag; });
+      this.setState({
+        user: {
+          ...this.state.user,
+          tags: tags
+        }
+      });
     })
-    .catch(console.error);
+    .catch(err => {
+      alert('error', locales.idParser(err));
+    });
   }
 
   initSlider = (infos) => {
