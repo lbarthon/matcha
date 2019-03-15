@@ -37,7 +37,9 @@ const register = req => {
             } else if (infos.repassword != infos.pwd) {
                 reject(new Error("register.alert.password_diff"));
             } else if (infos.birthdate == '') {
-                reject(new Error("register.alert.birthdate_null"));
+                reject(new Error("register.alert.birthdate_err"));
+            } else if (utils.getAge(infos.birthdate) < 18) {
+                reject(new Error("alert.age_limit"));
             } else if (!String(infos.email).match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
                 reject(new Error("register.alert.email_invalid"));
             } else if (!String(infos.location).match(/\-?[\d\.]+\;\-?[\d\.]+/)) {

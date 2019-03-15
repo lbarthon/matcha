@@ -116,6 +116,7 @@
       "username_took": "Ce nom d'utilisateur est déjà utilisé !",
       "password_null": "Votre mot de passe ne peut pas être nul !",
       "password_diff": "Les deux mots de passe ne correspondent pas !",
+      "birthdate_err": "Votre date de naissance est invalide !",
       "email_invalid": "Email invalide",
       "email_took": "Cet email est déjà utilisé !",
       "genders_null": "Les genres ne peuvent être nuls !",

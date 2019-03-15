@@ -59,6 +59,8 @@ const checks = (filtered, uid) => {
         }
         if (filtered['pwd'] != filtered['repassword']) {
             reject(new Error("register.alert.password_diff"));
+        } else if (utils.getAge(infos.birthdate) < 18) {
+            reject(new Error("alert.age_limit"));
         } else if (filtered['pwd'] != undefined && !filtered['pwd'].match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[^\w])(?=.{8,})/)) {
             reject(new Error("register.alert.password_regex"));
         } else if (filtered['email'] != undefined && !filtered['email'].match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
@@ -71,7 +73,6 @@ const checks = (filtered, uid) => {
         }
     })
 };
-
 /**
  * Updates uid's infos.
  * @param {*} req 

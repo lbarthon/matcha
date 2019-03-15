@@ -171,6 +171,25 @@ const setLastLogged = (uid) => {
         conn.query("UPDATE users SET last_seen=? WHERE id=?", [timestamp, uid]);
     }
 }
+/**
+ * Returns age of a birthdate in params.
+ * @param {dd/mm/yyyy} birthdate 
+ */
+const getAge = (birthdate) => {
+    let now = new Date();
+    let split = birthdate.split("/");
+    let years = now.getFullYear() - split[2];
+    if (split[1] >= now.getMonth() + 1) {
+        if (split[1] == now.getMonth() + 1) {
+            if (split[0] > now.getDate()) {
+                years--;
+            }
+        } else {
+            years--;
+        }
+    }
+    return years;
+}
 
 module.exports = {
     getIdFromUsername : getIdFromUsername,
@@ -179,5 +198,6 @@ module.exports = {
     isAdmin           : isAdmin,
     getTableColumns   : getTableColumns,
     areInfosClean     : areInfosClean,
-    setLastLogged     : setLastLogged
+    setLastLogged     : setLastLogged,
+    getAge            : getAge
 }
