@@ -35,20 +35,20 @@ class Update extends Component {
     const { locales } = this.props;
     e.preventDefault();
     // update tags
-    req('/api/tags/update', { tags: this.state.tags })
-    .then(res => {
-      this.getTags();
-    })
-    .catch(err => {
-      alert('error', this.props.locales.idParser(err));
-    })
     // update user
     req('/api/update', this.state.user)
     .then(res => {
       alert('success', locales.idParser(res));
+      req('/api/tags/update', { tags: this.state.tags })
+      .then(res => {
+        this.getTags();
+      })
+      .catch(err => {
+        alert('error', locales.idParser(err));
+      })
     })
     .catch(err => {
-      alert('error', this.props.locales.idParser(err));
+      alert('error', locales.idParser(err));
     })
   }
 
@@ -99,7 +99,7 @@ class Update extends Component {
   }
 
   getUser = () => {
-    req('api/user/current')
+    req('/api/user/current')
     .then(res => {
       this.setState({ user: res }, () => {
         this.initDatepicker();
@@ -213,7 +213,7 @@ class Update extends Component {
         </div>
         <div className="row">
           <div className="input-field col s6">
-            <select name="gender" onChange={this.onChange}>
+            <select name="sex" onChange={this.onChange}>
               <option value="" disabled>{locale.register.select_gender}</option>
               <option value="male" selected={sex == 'male' ? true : false}>{locale.gender.male}</option>
               <option value="female" selected={sex == 'female' ? true : false}>{locale.gender.female}</option>

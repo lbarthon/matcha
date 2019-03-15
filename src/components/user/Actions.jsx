@@ -26,7 +26,9 @@ class Actions extends React.Component {
   handleLike = () => {
     req('/api/likes/add', {target: this.props.id})
     .then(res => {
-      this.setState({liked: true});
+      this.setState({liked: true}, () => {
+        this.props.toggleMatch();
+      });
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -36,7 +38,9 @@ class Actions extends React.Component {
   handleUnlike = (id) => {
     req('/api/likes/remove', {target : this.props.id})
     .then(res => {
-      this.setState({liked: false});
+      this.setState({liked: false}, () => {
+        this.props.toggleMatch();
+      });
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));

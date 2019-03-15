@@ -11,7 +11,7 @@ class Match extends Component {
 
   constructor(props) {
     super(props);
-    
+
     window.onscroll = () => {
       const { isLoading } = this.state;
       if (isLoading) return;
@@ -190,8 +190,9 @@ class Match extends Component {
     const { locales } = this.props;
     req('/api/user/current')
     .then(response => {
-      this.setState({ user: response });
-      
+      this.setState({ user: response }, () => {
+        this.fetchTags();
+      });
     })
     .catch(err => {
       alert('error', locales.idParser(err));
@@ -208,6 +209,8 @@ class Match extends Component {
           ...this.state.user,
           tags: tags
         }
+      }, () => {
+        this.fetchMatchs();
       });
     })
     .catch(err => {
@@ -253,8 +256,6 @@ class Match extends Component {
 
   componentWillMount = () => {
     this.fetchUser();
-    this.fetchTags();
-    this.fetchMatchs();
   }
 
   componentDidUpdate = () => {
@@ -264,7 +265,7 @@ class Match extends Component {
   render() {
     const { sorted, matchs, limits, length, user } = this.state;
     const { locale } = this.props.locales;
-    
+
     if (matchs.length === 0) return null;
     if (sorted.length === 0) {
       this.setState({ sorted: this.sorts[0].function() });

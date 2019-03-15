@@ -16,7 +16,7 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 /**
  * Function that registers a new user.
- * @param {req.body} infos 
+ * @param {req.body} infos
  */
 const register = req => {
     var infos = req.body;
@@ -24,6 +24,7 @@ const register = req => {
     utils.areInfosClean(infos, 'users');
     return new Promise((resolve, reject) => {
         if (conn) {
+            console.log(infos);
             if (infos.firstname == '' || infos.lastname == '') {
                 reject(new Error("register.alert.name_null"))
             } else if (infos.username == '') {
@@ -32,7 +33,7 @@ const register = req => {
                 reject(new Error("register.alert.password_null"));
             } else if (!String(infos.pwd).match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[\d])(?=.*[^\w])(?=.{8,})/)) {
                 reject(new Error("register.alert.password_regex"));
-            } else if (!genders.includes(infos.gender) || infos.gender == 'bisexual' || !genders.includes(infos.lookingFor)) {
+            } else if (!genders.includes(infos.sex) || infos.sex == 'bisexual' || !genders.includes(infos.wanted)) {
                 reject(new Error("register.alert.genders_null"));
             } else if (infos.repassword != infos.pwd) {
                 reject(new Error("register.alert.password_diff"));

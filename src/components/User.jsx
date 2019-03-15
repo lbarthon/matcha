@@ -124,6 +124,11 @@ class User extends Component {
     this.getUser(id);
   }
 
+  toggleMatch = () => {
+    if (this.state.likeMe == true)
+      this.setState({matchMe: !this.state.matchMe});
+  }
+
   componentWillMount() {
     this.getInfos(this.props.match.params.id);
   }
@@ -145,7 +150,7 @@ class User extends Component {
             <div className="picture picture-main" style={{backgroundImage: 'url("/pictures/user/' + this.state.mainPic.picture + '")'}}></div>
           </div>
         </div>
-        <Actions id={this.state.user.id}/>
+        <Actions id={this.state.user.id} toggleMatch={this.toggleMatch}/>
         <div className="row">
           {this.state.likeMe && <div><i className="material-icons blue-text" style={{verticalAlign:'sub'}}>favorite</i> This user likes you</div>}
           {this.state.matchMe && <div><i className="material-icons amber-text" style={{verticalAlign:'sub'}}>star</i> This user match with you</div>}

@@ -9,9 +9,9 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 /**
  * Function that update a specified column with value for the specific uid.
  * Called in loop lower in the code.
- * @param {string} col 
- * @param {*} value 
- * @param {int} uid 
+ * @param {string} col
+ * @param {*} value
+ * @param {int} uid
  */
 const updateCol = (col, value, uid) => {
     return new Promise((resolve, reject) => {
@@ -34,10 +34,10 @@ const updateCol = (col, value, uid) => {
 }
 /**
  * Some checks before the updates.
- * @param {*} filtered 
- * @param {int} uid 
+ * @param {*} filtered
+ * @param {int} uid
  */
-const checks = (filtered, uid) => {
+const checks = (filtered, uid, infos) => {
     return new Promise(async (resolve, reject) => {
         if (filtered['email'] != undefined) {
             await utils.getIdFromEmail(filtered['email']).then(id => {
@@ -45,7 +45,7 @@ const checks = (filtered, uid) => {
                     reject(new Error("register.alert.email_took"));
                 }
             }).catch(() => {
-                reject(new Error("sql.alert.query"));
+                //?
             });
         }
         if (filtered['username'] != undefined) {
@@ -54,7 +54,7 @@ const checks = (filtered, uid) => {
                     reject(new Error("register.alert.username_took"));
                 }
             }).catch(() => {
-                reject(new Error("sql.alert.query"));
+                //?
             });
         }
         if (filtered['pwd'] != filtered['repassword']) {
@@ -75,8 +75,8 @@ const checks = (filtered, uid) => {
 };
 /**
  * Updates uid's infos.
- * @param {*} req 
- * @param {int} uid 
+ * @param {*} req
+ * @param {int} uid
  */
 const update = (req, uid) => {
     return new Promise((resolve, reject) => {
@@ -88,13 +88,14 @@ const update = (req, uid) => {
                     filtered[key] = infos[key];
                 }
             }
-            checks(filtered, uid)
+            checks(filtered, uid, infos)
             .then(() => {
                 utils.areInfosClean(filtered, 'users')
                 .then(good => {
                     var promises = good.map(key => {
                         return updateCol(key ,filtered[key], uid);
                     });
+                    console.log(filtered['username']);
                     req.session.username = filtered['username'];
                     req.session.save();
                     Promise.all(promises)

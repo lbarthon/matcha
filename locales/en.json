@@ -81,7 +81,8 @@
       "success": "Logged successfully!",
       "user_unknow": "Unknown user!",
       "password_diff": "Wrong password!",
-      "already_logged" : "You are already connected!"
+      "already_logged" : "You are already connected!",
+      "not_confirmed": "You have not checked your email yet"
     }
   },
   "register": {

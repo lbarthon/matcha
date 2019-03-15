@@ -93,7 +93,8 @@
       "user_unknow": "Utilisateur inconnu !",
       "password_diff": "Mot de passe incorrect !",
       "already_logged": "Vous êtes déjà connecté !",
-      "user_banned": "Cet utilisateur est banni !"
+      "user_banned": "Cet utilisateur est banni !",
+      "not_confirmed": "Vous n'avez pas confirme votre addresse mail, regardez dans vos mails"
     }
   },
   "register": {

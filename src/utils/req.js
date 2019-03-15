@@ -15,7 +15,7 @@ const req = (url, body) => {
       }).then(response => {
         if (response.ok) {
           response.json().then(json => {
-            console.log(json);
+            console.log(url, json);
             if (json.success !== undefined) {
               resolve(json.success);
             } else if (json.error) {
@@ -40,7 +40,7 @@ const req = (url, body) => {
       }).then(response => {
         if (response.ok) {
           response.json().then(json => {
-            console.log(json);
+            console.log(url, json);
             if (json.success !== undefined) {
               resolve(json.success);
             } else if (json.error) {

@@ -14,7 +14,7 @@ class Register extends Component {
     location: '',
     birthdate: '',
     sex: '',
-    wanted: '',
+    wanted: 'bisexual',
     email: '',
     pwd: '',
     repassword: '',
@@ -126,17 +126,17 @@ class Register extends Component {
         <div className="row">
           <div className="input-field col s6">
             <select name="sex" onChange={this.onChange}>
-              <option defaultValue="" disabled selected>{locale.register.select_gender}</option>
-              <option defaultValue="male">{locale.gender.male}</option>
-              <option defaultValue="female">{locale.gender.female}</option>
+              <option value="" disabled selected>{locale.register.select_gender}</option>
+              <option value="male">{locale.gender.male}</option>
+              <option value="female">{locale.gender.female}</option>
             </select>
             <label>{locale.register.gender}</label>
           </div>
           <div className="input-field col s6">
             <select name="wanted" onChange={this.onChange}>
-              <option defaultValue="bisexual">{locale.gender.bisexual}</option>
-              <option defaultValue="male">{locale.gender.male}</option>
-              <option defaultValue="female">{locale.gender.female}</option>
+              <option value="bisexual">{locale.gender.bisexual}</option>
+              <option value="male">{locale.gender.male}</option>
+              <option value="female">{locale.gender.female}</option>
             </select>
             <label>{locale.register.lookingfor}</label>
           </div>
