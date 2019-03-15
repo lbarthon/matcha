@@ -1,8 +1,11 @@
 OK. => afficher sur le profil d'un utilisateur si il like ou match l'user courant
 OK. => gerer le report et le block (ne plus afficher les utilisateurs bloques dans /match et ne plus generer de notif)
 OK. => page /admin avec liste report
+OK. => check si le message envoye dans /chat/message peut etre poste (room display = 1)
+
 ?. => consultation : (user) liste des visites sur son profil et liste des personnes qui l'ont like
 x. => catch all promises (notify error 500 ?)
 x. => un user sans photo ne doit rien pouvoir faire
 x. => check tous les messages d'erreur et les mettre en locale
-OK. => check si le message envoye dans /chat/message peut etre poste (room display = 1)
+x. => check toutes les erreurs react en version prod (genre les keys, className etc)
+x. => tester et terminer reset et reset ask
