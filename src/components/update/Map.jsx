@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
+import req from '../../utils/req';
 
 export class UpdateMap extends Component {
   state = {
@@ -36,10 +37,7 @@ export class UpdateMap extends Component {
           this.updateProps();
         });
       }, () => {
-        // If he refuses position -> here
-        fetch("http://ip-api.com/json/", {
-          method: 'GET'
-        })
+        fetch("http://ip-api.com/json/")
         .then(response => {
           if (response.ok) {
             response.json().then(json => {

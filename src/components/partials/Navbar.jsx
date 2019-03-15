@@ -3,19 +3,21 @@ import { Link } from 'react-router-dom';
 import { withAllHOC } from '../../utils/allHOC';
 import M from 'materialize-css';
 import { alert } from '../../utils/alert';
+import req from '../../utils/req';
 
 class Navbar extends Component {
 
   handleLogout = () => {
     const { socket } = this.props;
     const { getCurrentUser, id } = this.props.currentUser;
-    fetch('/api/logout', {
-      headers: {'CSRF-Token' : localStorage.getItem('csrf')}
-    }).then(response => {
-      if (response.ok) {
-        socket.emit('logout');
-        getCurrentUser();
-      } else console.error(new Error(response.statusText));
+    req('/api/logout')
+    .then(response => {
+      socket.emit('logout');
+      getCurrentUser();
+      alert('success', this.props.locales.idParser(response));
+    })
+    .catch(err => {
+      alert('error', this.props.locales.idParser(err));
     });
   }
 
@@ -42,12 +44,12 @@ class Navbar extends Component {
       chat.style.display = 'none';
   }
 
-  componentWillMount() {
+  componentWillMount = () => {
     const { socket } = this.props;
     const { id } = this.props.currentUser;
   }
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.initNavbar();
     this.initDropdown();
   }

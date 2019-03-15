@@ -3,9 +3,10 @@ OK. => gerer le report et le block (ne plus afficher les utilisateurs bloques da
 OK. => page /admin avec liste report
 OK. => check si le message envoye dans /chat/message peut etre poste (room display = 1)
 OK. => tester et terminer reset et reset ask
+OK. => catch all promises (notify error "ajax-error" si pb (req.js))
+OK. => Tous les fetch changeables en req ont été changés en req
 
 ?. => consultation : (user) liste des visites sur son profil et liste des personnes qui l'ont like
-x. => catch all promises (notify error 500 ?)
 x. => un user sans photo ne doit rien pouvoir faire
 x. => check tous les messages d'erreur et les mettre en locale
 x. => check toutes les erreurs react en version prod (genre les keys, className etc)

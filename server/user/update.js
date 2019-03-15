@@ -78,7 +78,6 @@ const update = (req, uid) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             var infos = req.body;
-            console.log(infos);
             var filtered = [];
             for (let key in infos) {
                 if (infos[key] != null && infos[key] != '') {
@@ -92,9 +91,7 @@ const update = (req, uid) => {
                     var promises = good.map(key => {
                         return updateCol(key ,filtered[key], uid);
                     });
-                    console.log(req.session.username);
                     req.session.username = filtered['username'];
-                    console.log(req.session.username);
                     req.session.save();
                     Promise.all(promises)
                     .then(resolve)
