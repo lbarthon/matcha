@@ -63,6 +63,9 @@ const checks = (filtered, uid) => {
             reject(new Error("register.alert.password_regex"));
         } else if (filtered['email'] != undefined && !filtered['email'].match(/[\w]+\@[\w]+\.[\.\w]+/i)) {
             reject(new Error("register.alert.email_invalid"));
+        } else if (String(filtered['firstname']).length > 250 || String(filtered['lastname']).length > 250
+                || String(filtered['username']).length > 250 || String(filtered['email']).length > 250) {
+            reject(new Error("alert.string_too_long"));
         } else {
             resolve();
         }

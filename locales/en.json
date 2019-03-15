@@ -161,6 +161,8 @@
     }
   },
   "alert": {
+    "age_limit": "This website is exclusively for adults!",
+    "string_too_long": "One of the inputs is too long!",
     "ajax_error": "Error loading the app.",
     "logout_success": "Logout successfully!",
     "logout_error": "Error logging out from your account",

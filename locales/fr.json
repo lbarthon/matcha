@@ -175,6 +175,9 @@
     }
   },
   "alert": {
+    "age_limit": "Ce site est exclusivement réservé aux majeurs !",
+    "string_too_long": "Une des chaînes de caractères rentrée est trop longue !",
+    "ajax_error": "Erreur lors du chargement de l'application.",
     "logout_success": "Vous vous êtes bien déconnecté !",
     "logout_error": "Erreur lors de la déconnection",
     "error_email_invalid": "Votre mail n'est pas valide !",

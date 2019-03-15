@@ -42,6 +42,9 @@ const register = req => {
                 reject(new Error("register.alert.email_invalid"));
             } else if (!String(infos.location).match(/\-?[\d\.]+\;\-?[\d\.]+/)) {
                 reject(new Error("register.alert.location_invalid"));
+            } else if (String(infos.firstname).length > 250 || String(infos.lastname).length > 250
+                    || String(infos.username).length > 250 || String(infos.email).length > 250) {
+                reject(new Error("alert.string_too_long"));
             } else {
                 utils.getIdFromEmail(infos.email).then(() => {
                     reject(new Error("register.alert.email_took"));
