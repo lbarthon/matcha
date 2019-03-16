@@ -24,7 +24,7 @@ class ChatSide extends Component {
         <ul id="chatside" className="sidenav">
           {this.props.rooms.map(room => {
             return (
-              <li>
+              <li key={room.id}>
                 <a className="waves-effect" onClick={() => this.props.changeRoom(room.id)}>
                   {room.user.username}
                   {room.unread > 0 && <span className="new badge red" data-badge-caption={locale.chat.new}>{room.unread}</span>}

@@ -12,3 +12,4 @@ A verif. => check tous les messages d'erreur et les mettre en locale
 x. => un user sans photo ne doit rien pouvoir faire
 x. => check toutes les erreurs react en version prod (genre les keys, className etc)
 x. => faire 99999 checks sur tous les composants et requetes
+x. => check le warning dans Match.jsx (version prod)

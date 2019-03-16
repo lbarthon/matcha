@@ -122,7 +122,7 @@ class Actions extends React.Component {
                 <h5>{locale.user.report}</h5>
                 <div className="input-field">
                   <textarea id="reason" className="materialize-textarea"></textarea>
-                  <label for="reason">{locale.user.reason}</label>
+                  <label htmlFor="reason">{locale.user.reason}</label>
                 </div>
               </div>
               <div className="modal-footer">

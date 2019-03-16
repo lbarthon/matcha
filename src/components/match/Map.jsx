@@ -27,9 +27,9 @@ export class MatchMap extends Component {
         lng: latLng[1]
       };
     });
-    return mapped.map((match) => {
+    return mapped.map((match, i) => {
       return (
-        <Marker match={match}
+        <Marker key={i} match={match}
           position={{ lat: match.lat, lng: match.lng }}
           onClick={this.onMarkerClick} />
       );
@@ -38,7 +38,7 @@ export class MatchMap extends Component {
 
   componentDidMount = () => {
     const { userLocation, matchs, length } = this.props;
-    
+
     this.setState({
       markers: this.createMarkersFromUsers(matchs),
       length: length
@@ -82,8 +82,8 @@ export class MatchMap extends Component {
           zoom={6}>
 
           <Marker position={userLocation}/>
-          {markers.map((value, index) => {
-            return index >= length ? null : value;
+          {markers.map((value, i) => {
+            return i >= length ? null : value;
           })}
           <InfoWindow marker={this.state.infoWindow.marker}
             visible={this.state.infoWindow.display}>

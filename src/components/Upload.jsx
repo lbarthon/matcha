@@ -8,7 +8,8 @@ class Upload extends Component {
   state = {
     pictures: [],
     new_pic: '',
-    fav: ''
+    fav: '',
+    loaded: false
   }
 
   handleUpload = e => {
@@ -79,7 +80,7 @@ class Upload extends Component {
     req('/api/pictures/get')
     .then(res => {
       if (res !== this.state.pictures)
-        this.setState({ pictures: res });
+        this.setState({ pictures: res, loaded: true });
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -96,6 +97,7 @@ class Upload extends Component {
 
   render() {
     const { locale } = this.props.locales;
+    if (!this.state.loaded) return null;
     return (
       <React.Fragment>
         <div className="row">

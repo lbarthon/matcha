@@ -55,9 +55,9 @@ class Home extends Component {
       <React.Fragment>
         <h4>Admin page pour mossieu {this.props.currentUser.username}</h4>
         {reports.length == 0 && <p>{locale.admin.no_report}</p>}
-        {reports.map((value, index) => {
-          if (index >= length) return null;
-          return <Report report={value} onDelete={this.fetchReports} />
+        {reports.map((value, i) => {
+          if (i >= length) return null;
+          return <Report key={i} report={value} onDelete={this.fetchReports} />
         })}
       </React.Fragment>
     )

@@ -12,7 +12,7 @@ class NotFound extends Component {
   render() {
     const {locale} = this.props.locales;
     return (
-      <h6>404 NOT FOUND</h6>
+      <h3 className="center">404 NOT FOUND</h3>
     )
   }
 }

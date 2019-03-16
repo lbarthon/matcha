@@ -148,7 +148,7 @@ class Chat extends Component {
   componentDidMount() {
     document.title = 'Chat';
   }
-  
+
   render() {
     const { room, messages } = this.state;
     const { locale } = this.props.locales;
@@ -160,9 +160,9 @@ class Chat extends Component {
           {room.id && <i className="material-icons right" onClick={() => this.leaveRoom(room.id)}>exit_to_app</i>}
         </h6>
         <div className="window-chat-room-body">
-          {messages.map(message => {
+          {messages.map((message, i) => {
             return (
-              <React.Fragment>
+              <div key={i}>
                 {message.id_from == room.user.id &&
                   <div key={message.id} className="window-chat-msg clearfix">
                     <div className="window-chat-msg-pic" style={{backgroundImage: 'url("/pictures/user/' + room.user.pic + '")'}}></div>
@@ -174,7 +174,7 @@ class Chat extends Component {
                     <p>{message.message}</p>
                   </div>
                 }
-              </React.Fragment>
+              </div>
             )
           })}
         </div>
@@ -184,7 +184,7 @@ class Chat extends Component {
               <form onSubmit={this.handleSubmit}>
                 <div className="input-field">
                   <input name="message" id="message" type="text" className="validate" onChange={this.onChange}/>
-                  <label for="message">Message</label>
+                  <label htmlFor="message">Message</label>
                 </div>
               </form>
             </div>

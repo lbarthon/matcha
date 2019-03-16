@@ -44,7 +44,7 @@ class Match extends Component {
         var pop = this.sorts[3].function();
         var tag = this.sorts[4].function();
         return this.state.matchs.map(value => {
-          value.score = loc.indexOf(value) + pop.indexOf(value) + tag.indexOf(value);
+          value.score = loc.iOf(value) + pop.iOf(value) + tag.iOf(value);
           return value;
         }).sort((a, b) => {
           return a.score - b.score;
@@ -288,24 +288,24 @@ class Match extends Component {
         <Map length={length} matchs={to_display} userLocation={user.location} />
         <div className="row">
           <div className="col s12">
-            {this.sorts.map(value => {
+            {this.sorts.map((value, i) => {
               if (value.key == 'default') return null;
-              return <button id={value.key + '-btn'} onClick={(e) => { this.sort(value, e.target) }} className="waves-effect waves-light btn-small mr-5 mt-5 sortbtn">{locale.match.sort[value.key]}</button>
+              return <button key={i} id={value.key + '-btn'} onClick={(e) => { this.sort(value, e.target) }} className="waves-effect waves-light btn-small mr-5 mt-5 sortbtn">{locale.match.sort[value.key]}</button>
             })}
           </div>
         </div>
-        {this.sorts.map(value => {
+        {this.sorts.map((value, i) => {
           if (value.key == 'default') return null;
           return (
-            <div id={value.key} className="row">
+            <div key={i} id={value.key} className="row">
               <label>{locale.match.sort[value.key]}</label>
               <div id={value.key + "-slider"}></div>
             </div>
           )
         })}
         <div className="row">
-          {to_display.map((value, index) => {
-            if (index >= length) return null;
+          {to_display.map((value, i) => {
+            if (i >= length) return null;
             return <MatchUser key={value.id} user={value} />
           })}
         </div>

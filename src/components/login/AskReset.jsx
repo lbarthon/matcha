@@ -36,7 +36,7 @@ class AskReset extends Component {
             <h5>{locale.resetpw.title}</h5>
             <div class="input-field">
               <input id="email" type="email" class="validate"/>
-              <label for="email">{locale.email}</label>
+              <label htmlFor="email">{locale.email}</label>
             </div>
             <a className="modal-close waves-effect waves-light btn right ml-5 mt-5" onClick={this.handleAsk}>{locale.send}</a>
             <a className="modal-close waves-effect btn-flat right mt-5">{locale.cancel}</a>

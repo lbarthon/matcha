@@ -213,18 +213,17 @@ class Update extends Component {
         </div>
         <div className="row">
           <div className="input-field col s6">
-            <select name="sex" onChange={this.onChange}>
-              <option value="" disabled>{locale.register.select_gender}</option>
-              <option value="male" selected={sex == 'male' ? true : false}>{locale.gender.male}</option>
-              <option value="female" selected={sex == 'female' ? true : false}>{locale.gender.female}</option>
+            <select name="sex" onChange={this.onChange} defaultValue={sex}>
+              <option value="male" >{locale.gender.male}</option>
+              <option value="female">{locale.gender.female}</option>
             </select>
             <label>{locale.register.gender}</label>
           </div>
           <div className="input-field col s6">
-            <select name="wanted" onChange={this.onChange}>
-              <option value="bisexual" selected={wanted == 'bisexual' ? true : false}>{locale.gender.bisexual}</option>
-              <option value="male" selected={wanted == 'male' ? true : false}>{locale.gender.male}</option>
-              <option value="female" selected={wanted == 'female' ? true : false}>{locale.gender.female}</option>
+            <select name="wanted" onChange={this.onChange} defaultValue={wanted}>
+              <option value="bisexual">{locale.gender.bisexual}</option>
+              <option value="male">{locale.gender.male}</option>
+              <option value="female">{locale.gender.female}</option>
             </select>
             <label>{locale.register.lookingfor}</label>
           </div>

@@ -119,9 +119,13 @@ class User extends Component {
       pictures: [],
       mainPic: {},
       tags: [],
-      online: false
+      online: false,
+      popularity: 0,
+      likeMe: false,
+      matchMe: false
+    }, () => {
+      this.getUser(id);
     });
-    this.getUser(id);
   }
 
   toggleMatch = () => {
@@ -156,8 +160,8 @@ class User extends Component {
           {this.state.matchMe && <div><i className="material-icons amber-text" style={{verticalAlign:'sub'}}>star</i> This user match with you</div>}
         </div>
         {this.state.tags && <h6>Tags</h6>}
-        {this.state.tags.map(tag => {
-          return (<div className="chip">{tag.tag}</div>);
+        {this.state.tags.map((tag, i) => {
+          return (<div className="chip" key={i}>{tag.tag}</div>);
         })}
         <h6>Description</h6>
         <p>{description}</p>
@@ -194,9 +198,9 @@ class User extends Component {
         </div>
         <Map location={location} />
         {this.state.pictures.length > 1 ? <h6>More pics</h6> : ''}
-        {this.state.pictures.map(pic => {
+        {this.state.pictures.map((pic, i) => {
           return (
-            <div className="picture" style={{backgroundImage: 'url("/pictures/user/' + pic.picture + '")'}}></div>
+            <div key={i} className="picture" style={{backgroundImage: 'url("/pictures/user/' + pic.picture + '")'}}></div>
           );
         })}
       </React.Fragment>

@@ -15,7 +15,7 @@ class Notifications extends Component {
 
   constructor(props) {
     super(props);
-    
+
     window.onscroll = () => {
       const { isLoading } = this.state;
       if (isLoading) return;
@@ -53,10 +53,10 @@ class Notifications extends Component {
     const { locale } = this.props.locales;
     return (
       <React.Fragment>
-        {this.props.notifs.notifications.map((notif, index) => {
-          if (index >= this.state.length) return null;
+        {this.props.notifs.notifications.map((notif, i) => {
+          if (i >= this.state.length) return null;
           return (
-            <div className="notification clearfix" onMouseEnter={() => this.props.notifs.setAsRead(notif.id)}>
+            <div key={notif.id} className="notification clearfix" onMouseEnter={() => this.props.notifs.setAsRead(notif.id)}>
               <i className="material-icons notification-icon blue white-text">
                 {this.getIcon(notif)}
                 {!notif.read && <div className="new-icon"></div>}
