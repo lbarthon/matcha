@@ -17,9 +17,7 @@ const matchs = req => {
                 [uid], (err, result) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
-                } else if (result.length == 0
-                    || !result[0].description
-                    || !result[0].picture) {
+                } else if (result.length == 0 || !result[0].tags || !result[0].description || !result[0].picture) {
                     reject(new Error("alert.complete_profile"));
                 } else {
                     var user = result[0];
