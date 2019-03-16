@@ -43,6 +43,11 @@ class Chat extends Component {
     this.getMessages(roomId);
   }
 
+  scrollDown = () => {
+    let chat = document.querySelector('.window-chat-room-body');
+    chat.scrollTop = chat.scrollHeight;
+  }
+
   getMessages = (roomId) => {
     this.state.rooms.map(room => { if (room.id == roomId) this.setState({room: room}) });
     req('/api/chat/message/' + roomId)
@@ -91,10 +96,7 @@ class Chat extends Component {
     const { room, rooms } = this.state;
     req('/api/chat/room')
     .then(res => {
-      this.setState({rooms: res}, () => {
-        if (this.state.rooms[0] && this.state.room.id === undefined)
-        this.getMessages(this.state.rooms[0].id);
-      });
+      this.setState({rooms: res});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -102,9 +104,16 @@ class Chat extends Component {
   }
 
   leaveRoom = (roomId) => {
+    const { rooms } = this.state;
     req('/api/chat/room/leave/' + roomId)
     .then(res => {
+      let copy = rooms.slice();
+      copy.map(room => {
+        if (room.id == roomId)
+          room.display = 0;
+      });
       this.setState({
+        rooms: copy,
         room : {
           ...this.state.room,
           display: 0
@@ -114,11 +123,6 @@ class Chat extends Component {
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
     })
-  }
-
-  scrollDown = () => {
-    let chat = document.querySelector('.window-chat-room-body');
-    chat.scrollTop = chat.scrollHeight;
   }
 
   onNewMessage = () => {

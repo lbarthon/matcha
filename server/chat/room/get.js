@@ -18,7 +18,7 @@ const get = uid => {
                 LEFT JOIN chat_messages ON chat_messages.id_room = chat_rooms.id AND chat_messages.read = 0 AND chat_messages.id_from != ? \
                 WHERE ? OR ? \
                 GROUP BY chat_rooms.id \
-                ORDER BY unread',
+                ORDER BY display DESC, unread DESC, create_time DESC',
               [uid, {'chat_rooms.id_user1': uid}, {'chat_rooms.id_user2': uid}], (err, results) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
