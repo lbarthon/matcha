@@ -31,7 +31,7 @@ class Chat extends Component {
         if (room.id == roomId)
           room.unread = 0;
       });
-      this.setState({rooms: copy});
+      this.setStateCheck({rooms: copy});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -39,7 +39,7 @@ class Chat extends Component {
   }
 
   changeRoom = (roomId) => {
-    this.setState({messages: []});
+    this.setStateCheck({messages: []});
     this.getMessages(roomId);
   }
 
@@ -49,10 +49,10 @@ class Chat extends Component {
   }
 
   getMessages = (roomId) => {
-    this.state.rooms.map(room => { if (room.id == roomId) this.setState({room: room}) });
+    this.state.rooms.map(room => { if (room.id == roomId) this.setStateCheck({room: room}) });
     req('/api/chat/message/' + roomId)
     .then(res => {
-      this.setState({messages: res}, () => {
+      this.setStateCheck({messages: res}, () => {
         this.setRead(roomId);
         this.scrollDown();
       });
@@ -63,12 +63,12 @@ class Chat extends Component {
   }
 
   onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setStateCheck({ [e.target.name]: e.target.value });
   }
 
   addMessage = (fromId, message) => {
     let newMessage = {id_from: fromId, message: message}
-    this.setState({
+    this.setStateCheck({
       messages : [
         ...this.state.messages,
         newMessage
@@ -84,7 +84,7 @@ class Chat extends Component {
     req('/api/chat/message', {message: message, roomId: room.id, toId: room.user.id})
     .then(res => {
       this.addMessage(id, message);
-      this.setState({message: ''});
+      this.setStateCheck({message: ''});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -96,7 +96,7 @@ class Chat extends Component {
     const { room, rooms } = this.state;
     req('/api/chat/room')
     .then(res => {
-      this.setState({rooms: res});
+      this.setStateCheck({rooms: res});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -112,7 +112,7 @@ class Chat extends Component {
         if (room.id == roomId)
           room.display = 0;
       });
-      this.setState({
+      this.setStateCheck({
         rooms: copy,
         room : {
           ...this.state.room,
@@ -136,18 +136,30 @@ class Chat extends Component {
         if (room.id == data.roomId)
           room.unread += 1;
       });
-      this.setState({rooms: copy});
+      this.setStateCheck({rooms: copy});
     });
   }
 
   componentWillMount() {
+    document.title = 'Chat';
     this.getRooms();
     this.onNewMessage();
   }
 
-  componentDidMount() {
-    document.title = 'Chat';
+  _isMounted = false;
+  setStateCheck = (state, callback) => {
+    if (this._isMounted)
+      this.setState(state, callback);
   }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
 
   render() {
     const { room, messages } = this.state;

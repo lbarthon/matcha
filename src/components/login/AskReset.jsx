@@ -34,8 +34,8 @@ class AskReset extends Component {
         <div id="modal1" className="modal">
           <div className="modal-content clearfix">
             <h5>{locale.resetpw.title}</h5>
-            <div class="input-field">
-              <input id="email" type="email" class="validate"/>
+            <div className="input-field">
+              <input id="email" type="email" className="validate"/>
               <label htmlFor="email">{locale.email}</label>
             </div>
             <a className="modal-close waves-effect waves-light btn right ml-5 mt-5" onClick={this.handleAsk}>{locale.send}</a>

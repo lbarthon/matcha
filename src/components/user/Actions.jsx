@@ -15,7 +15,7 @@ class Actions extends React.Component {
     req('/api/likes/has_like/' + id)
     .then(res => {
       if (res === true) {
-        this.setState({liked: true});
+        this.setStateCheck({liked: true});
       }
     })
     .catch(err => {
@@ -26,7 +26,7 @@ class Actions extends React.Component {
   handleLike = () => {
     req('/api/likes/add', {target: this.props.id})
     .then(res => {
-      this.setState({liked: true}, () => {
+      this.setStateCheck({liked: true}, () => {
         this.props.toggleMatch();
       });
     })
@@ -38,7 +38,7 @@ class Actions extends React.Component {
   handleUnlike = (id) => {
     req('/api/likes/remove', {target : this.props.id})
     .then(res => {
-      this.setState({liked: false}, () => {
+      this.setStateCheck({liked: false}, () => {
         this.props.toggleMatch();
       });
     })
@@ -51,7 +51,7 @@ class Actions extends React.Component {
     req('/api/blocked/has_blocked/' + id)
     .then(res => {
       if (res === true)
-        this.setState({blocked: true});
+        this.setStateCheck({blocked: true});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -62,7 +62,7 @@ class Actions extends React.Component {
     req('/api/blocked/add', {target : this.props.id})
     .then(res => {
       alert('success', this.props.locales.idParser(res));
-      this.setState({blocked: true});
+      this.setStateCheck({blocked: true});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -73,7 +73,7 @@ class Actions extends React.Component {
     req('/api/blocked/remove', {target : this.props.id})
     .then(res => {
       alert('success', this.props.locales.idParser(res));
-      this.setState({blocked: false});
+      this.setStateCheck({blocked: false});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -98,12 +98,23 @@ class Actions extends React.Component {
   }
 
   componentWillMount() {
+    this._isMounted = true;
     this.getLike(this.props.id);
     this.getBlock(this.props.id);
   }
 
+  _isMounted = false;
+  setStateCheck = (state, callback) => {
+    if (this._isMounted)
+      this.setState(state, callback);
+  }
+
   componentDidMount() {
     this.initModal();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render () {

@@ -9,6 +9,8 @@ import 'materialize-css/extras/noUiSlider/nouislider.css'
 
 class Match extends Component {
 
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
@@ -16,8 +18,8 @@ class Match extends Component {
       const { isLoading } = this.state;
       if (isLoading) return;
       if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-        this.setState({ isLoading: true }, () => {
-          this.setState({
+        this.setStateCheck({ isLoading: true }, () => {
+          this.setStateCheck({
             length: this.state.length + 20,
             isLoading: false
           });
@@ -148,7 +150,7 @@ class Match extends Component {
     if (icon && icon.parentElement.childNodes[0].data != locale.match.sort[value.key])
       icon.parentElement.removeChild(icon);
     if (value.key != this.state.key) {
-      this.setState({
+      this.setStateCheck({
         sorted: value.function(),
         key: value.key,
         length: 20
@@ -159,7 +161,7 @@ class Match extends Component {
         button.appendChild(newIcon);
       });
     } else {
-      this.setState({
+      this.setStateCheck({
         sorted: [...this.state.sorted].reverse(),
         length: 20
       }, () => {
@@ -172,7 +174,7 @@ class Match extends Component {
     const { locales } = this.props;
     req('/api/matchs')
     .then(response => {
-      this.setState({
+      this.setStateCheck({
         matchs: response.map(value => {
           value.age = this.getAge(value.birthdate);
           value.tags = this.getCommonTags(value.tags);
@@ -190,7 +192,7 @@ class Match extends Component {
     const { locales } = this.props;
     req('/api/user/current')
     .then(response => {
-      this.setState({ user: response }, () => {
+      this.setStateCheck({ user: response }, () => {
         this.fetchTags();
       });
     })
@@ -204,7 +206,7 @@ class Match extends Component {
     req('/api/tags')
     .then(response => {
       var tags = response.map(value => { return value.tag; });
-      this.setState({
+      this.setStateCheck({
         user: {
           ...this.state.user,
           tags: tags
@@ -248,22 +250,33 @@ class Match extends Component {
             min: slider[0],
             max: slider[1]
           }
-          this.setState({ limits: limits });
+          this.setStateCheck({ limits: limits });
         });
       }
     }
   }
 
-  componentWillMount = () => {
-    this.fetchUser();
-  }
-
-  componentDidUpdate = () => {
+  componentDidUpdate() {
     this.sorts.forEach(this.initSlider);
   }
 
-  componentDidMount() {
+  componentWillMount() {
+    this.fetchUser();
     document.title = 'Match';
+  }
+
+  _isMounted = false;
+  setStateCheck = (state, callback) => {
+    if (this._isMounted)
+      this.setState(state, callback);
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
@@ -272,7 +285,7 @@ class Match extends Component {
 
     if (matchs.length === 0) return null;
     if (sorted.length === 0) {
-      this.setState({ sorted: this.sorts[0].function() });
+      this.setStateCheck({ sorted: this.sorts[0].function() });
     }
 
     var to_display = sorted.filter(value => {

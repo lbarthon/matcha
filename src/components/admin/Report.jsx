@@ -47,7 +47,7 @@ class Report extends Component {
     return (
       <React.Fragment>
         <div>
-            <p className="m-0 pt-15 pb-15 bb">
+            <div className="m-0 pt-15 pb-15 bb">
               <div>
                 <Link to={"/user/" + reported_id}><b>{reported}</b></Link> has been reported by <Link to={"/user/" + reporter_id}><b>{reporter}</b></Link>
                 <br/><br/><em>"{report}"</em>
@@ -56,7 +56,7 @@ class Report extends Component {
                 <button className="right mt-5 btn-small red waves-effect waves-light" onClick={this.handleBan}>{locale.admin.ban}</button>
                 <button className="right mr-5 mt-5 btn-small blue waves-effect waves-light" onClick={this.handleDelete}>{locale.admin.delete}</button>
               </div>
-            </p>
+            </div>
         </div>
       </React.Fragment>
     )

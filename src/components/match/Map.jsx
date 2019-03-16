@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link, BrowserRouter } from 'react-router-dom';
 import {GoogleApiWrapper, Map, Marker, InfoWindow} from "google-maps-react";
+import { withAllHOC } from '../../utils/allHOC';
 
 export class MatchMap extends Component {
   state = {
@@ -99,6 +100,6 @@ export class MatchMap extends Component {
   }
 }
 
-export default GoogleApiWrapper({
+export default withAllHOC(GoogleApiWrapper({
     apiKey: "AIzaSyCQwOn1Z6oev0SFXRHTxM9tKOqKi9pCMAU"
-})(MatchMap);
+})(MatchMap));

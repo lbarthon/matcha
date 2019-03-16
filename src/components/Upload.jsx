@@ -21,7 +21,7 @@ class Upload extends Component {
   handleFileChange = e => {
     const input = e.target;
     const formData = new FormData();
-    this.setState({ new_pic: input.files[0] }, () => {
+    this.setStateCheck({ new_pic: input.files[0] }, () => {
       formData.append('file', this.state.new_pic);
       fetch('/api/pictures/add', {
         method: 'POST',
@@ -54,7 +54,7 @@ class Upload extends Component {
       favs[i].innerHTML = 'star_border';
     }
     fav.innerHTML = 'star';
-    this.setState({ fav: favId }, () => {
+    this.setStateCheck({ fav: favId }, () => {
       req('/api/pictures/main/set', {id: this.state.fav})
       .then()
       .catch(err => {
@@ -80,7 +80,7 @@ class Upload extends Component {
     req('/api/pictures/get')
     .then(res => {
       if (res !== this.state.pictures)
-        this.setState({ pictures: res, loaded: true });
+        this.setStateCheck({ pictures: res, loaded: true });
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -88,11 +88,19 @@ class Upload extends Component {
   }
 
   componentWillMount() {
+    this._isMounted = true;
     this.getPictures();
+    document.title = this.props.locales.locale.title.upload;
   }
 
-  componentDidMount() {
-    document.title = this.props.locales.locale.title.upload;
+  _isMounted = false;
+  setStateCheck = (state, callback) => {
+    if (this._isMounted)
+      this.setState(state, callback);
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {

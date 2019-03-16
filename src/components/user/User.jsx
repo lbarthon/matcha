@@ -25,7 +25,7 @@ class User extends Component {
   getPopularity = (id) => {
     req('/api/likes/get/' + id)
     .then(res => {
-      this.setState({popularity: Math.round(res)});
+      this.setStateCheck({popularity: Math.round(res)});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -35,7 +35,7 @@ class User extends Component {
   getUser = (id) => {
     req('/api/user/' + id)
     .then(res => {
-      this.setState({ user: res }, () => {
+      this.setStateCheck({ user: res }, () => {
         document.title = this.state.user.username;
         this.getPictures(id);
         this.isOnline(id);
@@ -57,11 +57,11 @@ class User extends Component {
       let pictures = res;
       for (var i in pictures) {
         if (pictures[i].main) {
-          this.setState({ mainPic: pictures[i] });
+          this.setStateCheck({ mainPic: pictures[i] });
           delete pictures[i];
         }
       }
-      this.setState({ pictures: pictures });
+      this.setStateCheck({ pictures: pictures });
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -71,7 +71,7 @@ class User extends Component {
   getTags = (id) => {
     req('/api/tags/' + id)
     .then(res => {
-      this.setState({tags: res});
+      this.setStateCheck({tags: res});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -83,7 +83,7 @@ class User extends Component {
     socket.emit('is_online', {userId: id});
     socket.on('is_online', data => {
       if (this.state.online !== data)
-        this.setState({online: data});
+        this.setStateCheck({online: data});
     });
   }
 
@@ -91,7 +91,7 @@ class User extends Component {
     req('/api/likes/has_like_reverse/' + id)
     .then(res => {
       if (res === true) {
-        this.setState({likeMe: true});
+        this.setStateCheck({likeMe: true});
       }
     })
     .catch(err => {
@@ -103,7 +103,7 @@ class User extends Component {
     req('/api/likes/match/' + id)
     .then(res => {
       if (res === true) {
-        this.setState({matchMe: true});
+        this.setStateCheck({matchMe: true});
       }
     })
     .catch(err => {
@@ -112,7 +112,7 @@ class User extends Component {
   }
 
   getInfos = (id) => {
-    this.setState({
+    this.setStateCheck({
       user : {
         id: undefined
       },
@@ -130,16 +130,27 @@ class User extends Component {
 
   toggleMatch = () => {
     if (this.state.likeMe == true)
-      this.setState({matchMe: !this.state.matchMe});
+      this.setStateCheck({matchMe: !this.state.matchMe});
   }
 
   componentWillMount() {
+    this._isMounted = true;
     this.getInfos(this.props.match.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.match.params.id != nextProps.match.params.id)
       this.getInfos(nextProps.match.params.id);
+  }
+
+  _isMounted = false;
+  setStateCheck = (state, callback) => {
+    if (this._isMounted)
+      this.setState(state, callback);
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {

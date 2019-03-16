@@ -19,8 +19,8 @@ class Home extends Component {
       const { isLoading } = this.state;
       if (isLoading) return;
       if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-        this.setState({ isLoading: true }, () => {
-          this.setState({
+        this.setStateCheck({ isLoading: true }, () => {
+          this.setStateCheck({
             length: this.state.length + 20,
             isLoading: false
           });
@@ -32,20 +32,32 @@ class Home extends Component {
   fetchReports = () => {
     req('/api/report/get')
     .then(res => {
-      this.setState({ reports: res });
+      this.setStateCheck({ reports: res });
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
     });
   }
 
-  componentWillMount = () => {
+  componentWillMount() {
+    const { locale } = this.props.locales;
+    this._isMounted = true;
     this.fetchReports();
+    document.title = locale.title.admin;
   }
 
-  componentDidMount = () => {
-    const { locale } = this.props.locales;
-    document.title = locale.title.admin;
+  _isMounted = false;
+  setStateCheck = (state, callback) => {
+    if (this._isMounted)
+      this.setState(state, callback);
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
