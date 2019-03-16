@@ -3,7 +3,7 @@ import { alert } from '../utils/alert';
 import { withAllHOC } from '../utils/allHOC';
 import req from '../utils/req';
 
-class Resetpw extends Component {
+class Confirm extends Component {
 
   confirm = (link) => {
     req('/api/confirm', {link: link})
@@ -25,4 +25,4 @@ class Resetpw extends Component {
   }
 }
 
-export default withAllHOC(Resetpw);
+export default withAllHOC(Confirm);
