@@ -6,7 +6,9 @@ OK. => tester et terminer reset et reset ask
 OK. => catch all promises (notify error "ajax-error" si pb (req.js))
 OK. => Tous les fetch changeables en req ont été changés en req
 
+A verif. => check tous les messages d'erreur et les mettre en locale
+
 ?. => consultation : (user) liste des visites sur son profil et liste des personnes qui l'ont like
 x. => un user sans photo ne doit rien pouvoir faire
-x. => check tous les messages d'erreur et les mettre en locale
 x. => check toutes les erreurs react en version prod (genre les keys, className etc)
+x. => faire 99999 checks sur tous les composants et requetes
