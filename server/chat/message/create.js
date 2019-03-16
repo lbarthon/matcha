@@ -1,5 +1,6 @@
 const emitter = require('../../emitter');
 const notify = require('../../user/notification/notify');
+const io = require('../../io').get();
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
@@ -21,6 +22,7 @@ const create = (roomId, message, uid, toId) => {
                         if (err) {
                             reject(new Error("sql.alert.query"));
                         } else {
+                            io.sockets.in(toId).emit('new_message', {roomId: roomId, fromId: uid, msg: message});
                             notify('message', uid, toId);
                             resolve();
                         }

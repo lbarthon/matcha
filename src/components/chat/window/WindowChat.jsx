@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { withAllHOC } from '../../utils/allHOC';
+import { withAllHOC } from '../../../utils/allHOC';
 import M from 'materialize-css';
-import WindowChatSide from './chat/WindowChatSide'
-import '../../css/windowchat.css'
-import { alert } from '../../utils/alert';
-import req from '../../utils/req';
+import WindowChatSide from './WindowChatSide'
+import '../../../css/windowchat.css'
+import { alert } from '../../../utils/alert';
+import req from '../../../utils/req';
 
 class Chat extends Component {
 
@@ -23,10 +23,15 @@ class Chat extends Component {
   }
 
   setRead = (roomId) => {
+    const { rooms } = this.state;
     req('/api/chat/message/read/' + roomId)
     .then(res => {
-      // peut etre replace par setState
-      this.getRooms();
+      let copy = rooms.slice();
+      copy.map(room => {
+        if (room.id == roomId)
+          room.unread = 0;
+      });
+      this.setState({rooms: copy});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
@@ -43,9 +48,8 @@ class Chat extends Component {
     req('/api/chat/message/' + roomId)
     .then(res => {
       this.setState({messages: res}, () => {
-        let chat = document.querySelector('.window-chat-room-body');
-        chat.scrollTop = chat.scrollHeight;
         this.setRead(roomId);
+        this.scrollDown();
       });
     })
     .catch(err => {
@@ -57,6 +61,16 @@ class Chat extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  addMessage = (fromId, message) => {
+    let newMessage = {id_from: fromId, message: message}
+    this.setState({
+      messages : [
+        ...this.state.messages,
+        newMessage
+      ]
+    }, () => {this.scrollDown()})
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     const { id } = this.props.currentUser;
@@ -64,8 +78,7 @@ class Chat extends Component {
     const { message, room } = this.state;
     req('/api/chat/message', {message: message, roomId: room.id, toId: room.user.id})
     .then(res => {
-      socket.emit('new_message', {to: room.user.id, roomId: room.id});
-      this.getMessages(room.id);
+      this.addMessage(id, message);
       this.setState({message: ''});
     })
     .catch(err => {
@@ -103,20 +116,38 @@ class Chat extends Component {
     })
   }
 
-  componentWillMount() {
+  scrollDown = () => {
+    let chat = document.querySelector('.window-chat-room-body');
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  onNewMessage = () => {
     const { socket } = this.props;
-    this.getRooms();
     socket.on('new_message', (data) => {
+      const { rooms } = this.state;
       if (data.roomId == this.state.room.id)
-        this.getMessages(this.state.room.id);
-      this.getRooms();
-    })
+        this.addMessage(data.fromId, data.msg);
+      let copy = rooms.slice();
+      copy.map(room => {
+        if (room.id == data.roomId)
+          room.unread += 1;
+      });
+      this.setState({rooms: copy});
+    });
+  }
+
+  componentWillMount() {
+    this.getRooms();
+    this.onNewMessage();
+  }
+
+  componentDidMount() {
+    document.title = 'Chat';
   }
 
   render() {
     const { messages, room } = this.state;
-    const { locale } = this.props.locales
-    const window = this.props.window !== undefined;
+    const { locale } = this.props.locales;
     return (
       <div className="window-chat z-depth-2" style={{display: 'none'}}>
         <div className="window-chat-room">
@@ -131,7 +162,7 @@ class Chat extends Component {
               <React.Fragment>
                 {message.id_from == room.user.id &&
                   <div key={message.id} className="window-chat-msg clearfix">
-                    <img src={this.state.room.user.pic != null ? '/pictures/user/' + room.user.pic : '/pictures/user/default.jpg'}/>
+                    <div className="window-chat-msg-pic" style={{backgroundImage: 'url("/pictures/user/' + room.user.pic + '")'}}></div>
                     <p>{message.message}</p>
                   </div>
                 }

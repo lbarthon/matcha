@@ -64,12 +64,16 @@
   color: white !important;
 }
 
-.window-chat-msg > img {
-  height:30px;
-  width:30px;
+.window-chat-msg-pic {
+  height:32px;
+  width:32px;
   border-radius: 2px;
   margin-right:10px;
   float: left;
+  background-size: 100% auto;
+  background-color: #ddd;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .window-chat-msg > p {
   margin:0;
@@ -95,12 +99,17 @@
   cursor: pointer;
 }
 
-.window-chat-tab > .right > img {
+.window-chat-tab-pic {
   display: block;
+  width:32px;
   height:32px;
   border-radius:2px;
   border-radius:100%;
   float:right;
+  background-size: 100% auto;
+  background-color: #ddd;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .window-chat-tab > .right > b {

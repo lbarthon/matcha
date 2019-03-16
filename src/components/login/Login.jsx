@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { alert } from '../utils/alert';
-import { withAllHOC } from '../utils/allHOC';
-import req from '../utils/req';
-import AskReset from './login/AskReset';
+import { alert } from '../../utils/alert';
+import { withAllHOC } from '../../utils/allHOC';
+import req from '../../utils/req';
+import AskReset from './AskReset';
 
 class Login extends Component {
 

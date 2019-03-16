@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { withAllHOC } from '../utils/allHOC';
-import { alert } from '../utils/alert';
-import '../css/user.css';
-import Map from './user/Map';
-import Actions from './user/Actions';
-import req from '../utils/req';
+import { withAllHOC } from '../../utils/allHOC';
+import { alert } from '../../utils/alert';
+import '../../css/user.css';
+import Map from './Map';
+import Actions from './Actions';
+import req from '../../utils/req';
 import dateFormat from 'dateformat';
 
 class User extends Component {

@@ -26,7 +26,7 @@ class SideChat extends Component {
                 }
                 <div className="right">
                   <b>{room.user.username}</b>
-                  <img src={room.user.pic != null ? '/pictures/user/' + room.user.pic : '/pictures/user/default.jpg'}/>
+                  <div className="window-chat-tab-pic" style={{backgroundImage: 'url("/pictures/user/' + room.user.pic + '")'}}></div>
                 </div>
               </div>
             )

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { alert } from '../utils/alert';
-import { localeIdParser } from '../utils/locales';
-import { withAllHOC } from '../utils/allHOC';
+import { alert } from '../../utils/alert';
+import { localeIdParser } from '../../utils/locales';
+import { withAllHOC } from '../../utils/allHOC';
 import M from 'materialize-css';
-import Map from './update/Map';
-import req from '../utils/req';
+import Map from './Map';
+import req from '../../utils/req';
 
 class Update extends Component {
   state = {

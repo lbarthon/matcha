@@ -82,7 +82,7 @@ class Navbar extends Component {
                         {notifs.count != 0 && <div className="navbar-new">{notifs.count}</div>}
                       </Link>
                     </li>
-                    <li><a onClick={this.toggleChat}><i className="material-icons">chat_bubble_outline</i></a></li>
+                    <li><a onClick={this.toggleChat}><i className="material-icons">message</i></a></li>
                     <li><a onClick={this.handleLogout}>{locales.locale.nav.logout}</a></li>
                   </React.Fragment>
                 }
@@ -104,7 +104,7 @@ class Navbar extends Component {
               {notifs.count != 0 && <div className="navbar-new" style={{right: '20px'}}>{notifs.count}</div>}
               <i className="material-icons">notifications_none</i>
               Notifications</Link></li>
-              <li><Link to="/chat"><i className="material-icons">chat_bubble_outline</i>Chat</Link></li>
+              <li><Link to="/chat"><i className="material-icons">message</i>Chat</Link></li>
               <li><Link to="/match">Match</Link></li>
               <li><Link to="/update">{locales.locale.nav.update}</Link></li>
               <li><Link to="/upload">{locales.locale.nav.upload}</Link></li>
