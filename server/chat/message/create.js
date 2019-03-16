@@ -8,7 +8,9 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 
 const create = (roomId, message, uid, toId) => {
     return new Promise((resolve, reject) => {
-        if (conn) {
+        if (message === undefined || message == '')
+          reject(new Error('chat.alert.message_empty'));
+        else if (conn) {
             conn.query('SELECT * FROM chat_rooms WHERE id = ? AND ((id_user1 = ? AND id_user2 = ?) OR (id_user1 = ? AND id_user2 = ?)) AND display = 1',
             [roomId, uid, toId, toId, uid], (err, results) => {
                 if (results.length != 1) {

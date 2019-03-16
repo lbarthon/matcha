@@ -19,7 +19,8 @@
     "room_select" : "Selectionnez une salle",
     "room_unactive" : "Vous ou l'autre utilisateur avez quitte cet espace de chat",
     "alert" : {
-      "message" : "Vous ne pouvez pas envoyer un message ici"
+      "message" : "Vous ne pouvez pas envoyer un message ici",
+      "message_empty": "Vous ne pouvez pas envoyer de message vide"
     }
   },
   "gender" : {
@@ -150,6 +151,7 @@
   "admin" : {
     "delete": "Supprimer",
     "ban": "Bannir",
+    "no_report": "Il n'y a aucun signalement actuellement.",
     "alert": {
       "report_delete_success": "Report supprimé avec succès !",
       "report_ban_success": "Utilisateur banni avec succès !",

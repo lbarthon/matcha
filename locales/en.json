@@ -19,7 +19,8 @@
     "room_select" : "Select a room",
     "room_unactive" : "You or the other user has left this chat space",
     "alert" : {
-      "message" : "You can't send a message here"
+      "message" : "You can't send a message here",
+      "message_empty": "You can't send empty message"
     }
   },
   "gender" : {
@@ -136,6 +137,7 @@
   "admin" : {
     "delete": "Delete",
     "ban": "Ban",
+    "no_report": "There is no report actually.",
     "alert": {
       "report_delete_success": "Report deleted successfully",
       "report_ban_success": "User banned successfully",

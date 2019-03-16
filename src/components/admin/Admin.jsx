@@ -14,7 +14,7 @@ class Home extends Component {
 
   constructor(props) {
     super(props);
-    
+
     window.onscroll = () => {
       const { isLoading } = this.state;
       if (isLoading) return;
@@ -50,9 +50,11 @@ class Home extends Component {
 
   render() {
     const { reports, length } = this.state;
+    const { locale } = this.props.locales;
     return (
       <React.Fragment>
         <h4>Admin page pour mossieu {this.props.currentUser.username}</h4>
+        {reports.length == 0 && <p>{locale.admin.no_report}</p>}
         {reports.map((value, index) => {
           if (index >= length) return null;
           return <Report report={value} onDelete={this.fetchReports} />

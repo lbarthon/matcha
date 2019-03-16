@@ -66,6 +66,7 @@ class Chat extends Component {
     .then(res => {
       socket.emit('new_message', {to: room.user.id, roomId: room.id});
       this.getMessages(room.id);
+      this.setState({message: ''});
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));

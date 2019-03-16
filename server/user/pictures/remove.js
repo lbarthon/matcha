@@ -17,22 +17,22 @@ const remove = (infos, uid) => {
         if (conn) {
             utils.getPicNameFromId(infos.id, uid)
             .then(name => {
-                fs.unlink('./public/pictures/user/' + name , err => {
-                    if (err) {
-                        reject(new Error("upload.alert.remove"))
-                    } else {
-                        conn.query("DELETE FROM pictures WHERE id=? AND user_id=? AND main=0",
-                                [infos.id, uid], (err, result) => {
-                            if (err) {
-                                reject(new Error("sql.alert.query"));
-                            } else if (result.affectedRows == 0) {
-                                reject(new Error("upload.alert.remove_main"));
-                            } else {
+                    conn.query("DELETE FROM pictures WHERE id=? AND user_id=? AND main=0",
+                            [infos.id, uid], (err, result) => {
+                        if (err) {
+                            reject(new Error("sql.alert.query"));
+                        } else if (result.affectedRows == 0) {
+                            reject(new Error("upload.alert.remove_main"));
+                        } else {
+                            fs.unlink('./public/pictures/user/' + name, (err) => {
+                              if (err) {
+                                reject(new Error("upload.alert.remove"))
+                              } else {
                                 resolve();
-                            }
-                        });
-                    }
-                });
+                              }
+                            });
+                        }
+                    });
             })
             .catch(reject);
         } else {
