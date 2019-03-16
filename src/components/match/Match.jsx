@@ -262,6 +262,10 @@ class Match extends Component {
     this.sorts.forEach(this.initSlider);
   }
 
+  componentDidMount() {
+    document.title = 'Match';
+  }
+
   render() {
     const { sorted, matchs, limits, length, user } = this.state;
     const { locale } = this.props.locales;

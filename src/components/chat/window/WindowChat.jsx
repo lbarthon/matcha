@@ -145,10 +145,6 @@ class Chat extends Component {
     this.onNewMessage();
   }
 
-  componentDidMount() {
-    document.title = 'Chat';
-  }
-
   render() {
     const { messages, room } = this.state;
     const { locale } = this.props.locales;
