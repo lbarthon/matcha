@@ -8,11 +8,11 @@
   "send": "Send",
   "cancel": "Cancel",
   "notification" : {
-    "message" : "vous a envoye un message",
-    "like" : "a like votre profile",
-    "unmatch" : "ne match plus avec vous",
-    "visit" : "a visite votre profile",
-    "match" : "match avec vous ! retrouvez la/le dans votre espace de chat"
+    "message" : "sent a message to you",
+    "like" : "liked your profile",
+    "unmatch" : "does not match with you anymore",
+    "visit" : "visited your profile",
+    "match" : "now match with you, you can now chat each other"
   },
   "chat" : {
     "new" : "new",
