@@ -11,11 +11,16 @@ const matchs = req => {
     return new Promise((resolve, reject) => {
         if (conn) {
             var uid = req.session.uid;
-            conn.query("SELECT GROUP_CONCAT(tags.tag SEPARATOR '" + separator + "') AS tags, users.* \
-                FROM users INNER JOIN tags ON users.id = tags.user_id WHERE id=?",
+            conn.query("SELECT GROUP_CONCAT(tags.tag SEPARATOR '" + separator + "') AS tags, users.*, pictures.picture FROM users \
+                INNER JOIN tags ON users.id = tags.user_id \
+                INNER JOIN pictures ON users.id = pictures.user_id AND pictures.main=1 WHERE id=?",
                 [uid], (err, result) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
+                } else if (result.length == 0
+                    || !result[0].description
+                    || !result[0].picture) {
+                    reject(new Error("alert.complete_profile"));
                 } else {
                     var user = result[0];
                     var sex = user.sex;

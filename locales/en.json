@@ -166,6 +166,7 @@
   },
   "alert": {
     "age_limit": "This website is exclusively for adults!",
+    "complete_profile": "Your profile isn't complete! Do you have pictures ?",
     "string_too_long": "One of the inputs is too long!",
     "ajax_error": "Error loading the app.",
     "logout_success": "Logout successfully!",

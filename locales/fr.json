@@ -180,6 +180,7 @@
   },
   "alert": {
     "age_limit": "Ce site est exclusivement réservé aux majeurs !",
+    "complete_profile": "Votre profil n'est pas complet ! Avez vous une photo ?",
     "string_too_long": "Une des chaînes de caractères rentrée est trop longue !",
     "ajax_error": "Erreur lors du chargement de l'application.",
     "logout_success": "Vous vous êtes bien déconnecté !",
