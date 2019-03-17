@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
-import req from '../../utils/req';
+import { alert } from '../../utils/alert';
 
 export class UpdateMap extends Component {
   state = {
@@ -76,14 +76,17 @@ export class UpdateMap extends Component {
     const { latLng } = coord;
     const lat = latLng.lat();
     const lng = latLng.lng();
-    this.setState({
-      userLocation: {
-        lat: lat,
-        lng: lng
-      }
-    }, () => {
-      this.updateProps();
-    });
+    console.log("lat", lat, "lng", lng);
+    if (lat >= -85 && lat <= 85 && lng >= -180 && lng <= 180) {
+      this.setState({
+        userLocation: {
+          lat: lat,
+          lng: lng
+        }
+      }, () => {
+        this.updateProps();
+      });
+    }
   }
 
   render() {
