@@ -9,6 +9,10 @@ export const alert = (type, text) => {
     <Alert text={text} type={type}/>
     , div
   );
+  // After 5 secs, removes the alert if not yet removed.
+  setTimeout(() => {
+    if (div.innerHTML) fonduAndRemove(div);
+  }, 5000);
 }
 
 export const cleanAlerts = () => {
@@ -20,6 +24,24 @@ export const cleanAlerts = () => {
 
 export const AlertContainer = () => {
   return <div className="row"><div id="alert-container"></div></div>
+}
+
+const fonduAndRemove = elem => {
+  const exec = elem => {
+    let { style } = elem;
+    style.opacity -= .01;
+    if (style.opacity < 0) {
+      if (elem && elem.parentNode) {
+        elem.parentNode.removeChild(elem);
+      }
+    } else {
+      setTimeout(() => exec(elem), 4);
+    }
+  }
+  if (elem && elem.style) {
+    elem.style.opacity = 1;
+    exec(elem);
+  }
 }
 
 class Alert extends React.Component {
@@ -37,7 +59,7 @@ class Alert extends React.Component {
 
   remove = (e) => {
     let div = e.target.parentElement;
-    div.parentNode.removeChild(div);
+    fonduAndRemove(div);
   }
 
   render() {

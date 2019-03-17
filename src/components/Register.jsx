@@ -35,6 +35,7 @@ class Register extends Component {
     req('/api/register', this.state)
     .then(res => {
       alert('success', locales.idParser(res));
+      this.props.history.push('/login');
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));
