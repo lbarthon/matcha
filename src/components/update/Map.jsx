@@ -76,7 +76,6 @@ export class UpdateMap extends Component {
     const { latLng } = coord;
     const lat = latLng.lat();
     const lng = latLng.lng();
-    console.log("lat", lat, "lng", lng);
     if (lat >= -85 && lat <= 85 && lng >= -180 && lng <= 180) {
       this.setState({
         userLocation: {
