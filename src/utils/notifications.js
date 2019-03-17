@@ -41,7 +41,23 @@ export class _NotificationsProvider extends React.Component {
         req('/api/notification/read/' + id)
         .catch(err => {
           alert('error', this.props.locales.idParser(err));
+        });
+      }
+    },
+    readAll : () => {
+      if (this.state.count > 0) {
+        req('/api/notification/read/')
+        .then(res => {
+          console.log(res);
+          let copy = this.state.notifications.slice();
+          copy.map(notif => {
+            notif.read = 1;
+          });
+          this.setState({notifications: copy})
         })
+        .catch(err => {
+          alert('error', this.props.locales.idParser(err));
+        });
       }
     }
   }

@@ -12,7 +12,8 @@
     "like" : "liked your profile",
     "unmatch" : "does not match with you anymore",
     "visit" : "visited your profile",
-    "match" : "now match with you, you can now chat each other"
+    "match" : "now match with you, you can now chat each other",
+    "read_all": "Read all"
   },
   "chat" : {
     "new" : "new",
@@ -179,7 +180,7 @@
     "title": "Ask reset link",
     "alert": {
       "ask": {
-        "success": "A mail has been sent with instructions in order to reset your password!"        
+        "success": "A mail has been sent with instructions in order to reset your password!"
       },
       "success": "Your password has been reset"
     }

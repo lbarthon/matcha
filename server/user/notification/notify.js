@@ -8,9 +8,9 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 /**
  * Send a notification of type to the user.
  * Create_room makes the app create only one room when match (it created 2);
- * @param {string} type 
- * @param {int} sender 
- * @param {int} reciever 
+ * @param {string} type
+ * @param {int} sender
+ * @param {int} reciever
  * @param {boolean} create_room
  */
 const notify = (type, sender, reciever, create_room = false) => {
@@ -33,10 +33,15 @@ const notify = (type, sender, reciever, create_room = false) => {
                     if (err) return;
                     if (results.length == 0) {
                       if (create_room) {
-                        conn.query('INSERT INTO chat_rooms (id_user1, id_user2) VALUES (?, ?)', [reciever, sender]);
+                        conn.query('INSERT INTO chat_rooms (id_user1, id_user2) VALUES (?, ?)', [reciever, sender], (err, results) => {
+                          io.sockets.in(reciever).emit('new_room');
+                        });
                       }
                     } else if (results[0].display == 0) {
-                      conn.query('UPDATE chat_rooms SET display = 1 WHERE id = ?', [results[0].id]);
+                      io.sockets.in(reciever).emit('new_room');
+                      conn.query('UPDATE chat_rooms SET display = 1 WHERE id = ?', [results[0].id], (err, results) => {
+                        io.sockets.in(reciever).emit('new_room');
+                      });
                     }
                   });
                 }

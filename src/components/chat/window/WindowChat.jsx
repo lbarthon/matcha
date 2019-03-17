@@ -126,7 +126,7 @@ class Chat extends Component {
     })
   }
 
-  onNewMessage = () => {
+  onEvents = () => {
     const { socket } = this.props;
     socket.on('new_message', (data) => {
       const { rooms } = this.state;
@@ -139,11 +139,14 @@ class Chat extends Component {
       });
       this.setState({rooms: copy});
     });
+    socket.on('new_room', () => {
+      this.getRooms();
+    });
   }
 
   componentWillMount() {
     this.getRooms();
-    this.onNewMessage();
+    this.onEvents();
   }
 
   render() {

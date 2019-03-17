@@ -53,6 +53,9 @@ class Notifications extends Component {
     const { locale } = this.props.locales;
     return (
       <React.Fragment>
+        <div className="mt-10 mb-10">
+          <button className="btn waves-effect waves-light" onClick={this.props.notifs.readAll}>{locale.notification.read_all}</button>
+        </div>
         {this.props.notifs.notifications.map((notif, i) => {
           if (i >= this.state.length) return null;
           return (

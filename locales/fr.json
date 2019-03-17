@@ -12,7 +12,8 @@
     "like" : "a like votre profile",
     "unmatch" : "ne match plus avec vous",
     "visit" : "a visite votre profile",
-    "match" : "match avec vous ! retrouvez la/le dans votre espace de chat"
+    "match" : "match avec vous ! retrouvez la/le dans votre espace de chat",
+    "read_all": "Tout lire"
   },
   "chat" : {
     "new" : "nouveau",
@@ -179,7 +180,7 @@
     "title": "Demandez un lien de réinitialisation",
     "alert": {
       "ask": {
-        "success": "Un mail vous a été envoyé avec les informations pour réinitialiser votre mot de passe !"        
+        "success": "Un mail vous a été envoyé avec les informations pour réinitialiser votre mot de passe !"
       },
       "success": "Votre mot de passe a bien été réinitialisé"
     }
