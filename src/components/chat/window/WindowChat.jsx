@@ -125,8 +125,8 @@ class Chat extends Component {
       alert('error', this.props.locales.idParser(err));
     })
   }
-
-  onEvents = () => {
+  
+  initEvents = () => {
     const { socket } = this.props;
     socket.on('new_message', (data) => {
       const { rooms } = this.state;
@@ -146,7 +146,7 @@ class Chat extends Component {
 
   componentWillMount() {
     this.getRooms();
-    this.onEvents();
+    this.initEvents();
   }
 
   render() {

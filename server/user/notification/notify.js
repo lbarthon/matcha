@@ -31,17 +31,19 @@ const notify = (type, sender, reciever, create_room = false) => {
                   conn.query('SELECT * FROM chat_rooms WHERE (id_user1 = ? AND id_user2 = ?) OR (id_user1 = ? AND id_user2 = ?)',
                   [reciever, sender, sender, reciever], (err, results) => {
                     if (err) return;
-                    if (results.length == 0) {
-                      if (create_room) {
+                    if (create_room) {
+                      if (results.length == 0) {
                         conn.query('INSERT INTO chat_rooms (id_user1, id_user2) VALUES (?, ?)', [reciever, sender], (err, results) => {
                           io.sockets.in(reciever).emit('new_room');
+                          io.sockets.in(sender).emit('new_room');
+                        });
+                      } else if (results[0].display == 0) {
+                        io.sockets.in(reciever).emit('new_room');
+                        conn.query('UPDATE chat_rooms SET display = 1 WHERE id = ?', [results[0].id], (err, results) => {
+                          io.sockets.in(reciever).emit('new_room');
+                          io.sockets.in(sender).emit('new_room');
                         });
                       }
-                    } else if (results[0].display == 0) {
-                      io.sockets.in(reciever).emit('new_room');
-                      conn.query('UPDATE chat_rooms SET display = 1 WHERE id = ?', [results[0].id], (err, results) => {
-                        io.sockets.in(reciever).emit('new_room');
-                      });
                     }
                   });
                 }

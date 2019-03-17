@@ -13,6 +13,8 @@ export const NotificationsContext = React.createContext({
 
 export class _NotificationsProvider extends React.Component {
 
+  _events = false;
+
   state = {
     count: 0,
     notifications : [],
@@ -73,28 +75,32 @@ export class _NotificationsProvider extends React.Component {
       this.setState({count: i});
   }
 
-  componentWillUpdate() {
-    this.countNotifications();
-  }
-
-  componentWillMount() {
+  initEvents = () => {
     const { socket } = this.props;
-    const { currentUser } = this.props;
-    if (currentUser.logged === true) {
-      this.state.getNotifications();
+    if (this._events == false) {
+      this._events = true;
       socket.on('new_notification', () => {
         this.state.getNotifications();
       });
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { socket } = this.props;
-    if (nextProps.currentUser.logged === true) {
+  componentWillUpdate() {
+    this.countNotifications();
+  }
+
+  componentWillMount() {
+    const { currentUser } = this.props;
+    if (currentUser.logged === true) {
       this.state.getNotifications();
-      socket.on('new_notification', () => {
-        this.state.getNotifications();
-      });
+      this.initEvents();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentUser.logged == true && this.props.currentUser.logged == false) {
+      this.state.getNotifications();
+      this.initEvents();
     }
   }
 

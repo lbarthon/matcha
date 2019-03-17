@@ -126,7 +126,7 @@ class Chat extends Component {
     })
   }
 
-  onNewMessage = () => {
+  initEvents = () => {
     const { socket } = this.props;
     socket.on('new_message', (data) => {
       const { rooms } = this.state;
@@ -137,14 +137,17 @@ class Chat extends Component {
         if (room.id == data.roomId)
           room.unread += 1;
       });
-      this.setStateCheck({rooms: copy});
+      this.setState({rooms: copy});
+    });
+    socket.on('new_room', () => {
+      this.getRooms();
     });
   }
 
   componentWillMount() {
     document.title = 'Chat';
     this.getRooms();
-    this.onNewMessage();
+    this.initEvents();
   }
 
   _isMounted = false;
