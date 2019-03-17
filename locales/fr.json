@@ -145,7 +145,8 @@
       "remove": "Erreur lors de la suppression de votre photo !",
       "remove_main": "Erreur lors de la suppression, cette photo est votre photo principale",
       "wrong_user": "Erreur lors de la suppression de votre photo. Vous appartient-elle ?",
-      "no_file": "Fichier non trouve"
+      "no_file": "Fichier non trouvé",
+      "too_much": "Vous ne pouvez avoir que 5 photos !"
     }
   },
   "admin" : {

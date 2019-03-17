@@ -145,7 +145,8 @@
       "remove": "Error during the suppression of your picture",
       "remove_main": "Error while deleting your picture, this is your main picture",
       "wrong_user": "You can't delete this picture",
-      "no_file": "File not found"
+      "no_file": "File not found",
+      "too_much": "You can't have more than 5 pictures!"
     }
   },
   "admin" : {

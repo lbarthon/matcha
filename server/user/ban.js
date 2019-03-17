@@ -10,7 +10,6 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
  * @param {*} req 
  */
 const ban = req => {
-    let uid = req.session.uid;
     let id = req.body.id;
     return new Promise((resolve, reject) => {
         if (conn) {

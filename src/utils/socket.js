@@ -7,14 +7,10 @@ let socket;
 try {
   socket = io(host);
 } catch(err) {
-  console.log("Error connecting to server");
+  console.log("Error connecting to socket!");
 }
 
 const SocketContext = React.createContext();
-
-socket.io.on('connect_error', function(err) {
-  console.log('Error connecting to server');
-});
 
 class _SocketProvider extends React.Component {
 

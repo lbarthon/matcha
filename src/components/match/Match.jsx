@@ -181,6 +181,8 @@ class Match extends Component {
           value.distance = this.getDistanceFromUser(value.location.split(";"));
           return value;
         })
+      }, () => {
+        this.setStateCheck({ sorted: this.sorts[0].function() });
       });
     })
     .catch(err => {
@@ -265,7 +267,6 @@ class Match extends Component {
     document.title = 'Match';
   }
 
-  _isMounted = false;
   setStateCheck = (state, callback) => {
     if (this._isMounted)
       this.setState(state, callback);
@@ -283,10 +284,7 @@ class Match extends Component {
     const { sorted, matchs, limits, length, user } = this.state;
     const { locale } = this.props.locales;
 
-    if (matchs.length === 0) return null;
-    if (sorted.length === 0) {
-      this.setStateCheck({ sorted: this.sorts[0].function() });
-    }
+    if (sorted.length === 0 || matchs.length === 0) return null;
 
     var to_display = sorted.filter(value => {
       for (let i = 0; i < this.sorts.length; i++) {
