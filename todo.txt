@@ -6,11 +6,12 @@ OK. => tester et terminer reset et reset ask
 OK. => catch all promises (notify error "ajax-error" si pb (req.js))
 OK. => Tous les fetch changeables en req ont été changés en req
 OK. => un user sans photo ne doit rien pouvoir faire
-OK. => Masse checks faits côté serveur
+OK. => Masse checks faits côté serveur + doc
+OK. => Alerts qui remove tt seul + fondu
 
 A verif. => check tous les messages d'erreur et les mettre en locale
 
-?. => consultation : (user) liste des visites sur son profil et liste des personnes qui l'ont like
+?. => consultation : (user) liste des visites sur son profil et liste des personnes qui l'ont like -> J'pense les notifs ça suffit
 x. => check toutes les erreurs react en version prod (genre les keys, className etc)
 x. => faire 99999 checks sur tous les composants et requetes
 x. => check le warning dans Match.jsx (version prod)
