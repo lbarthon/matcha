@@ -24,7 +24,6 @@ const register = req => {
     utils.areInfosClean(infos, 'users');
     return new Promise((resolve, reject) => {
         if (conn) {
-            console.log(infos);
             if (infos.firstname == '' || infos.lastname == '') {
                 reject(new Error("register.alert.name_null"))
             } else if (infos.username == '') {

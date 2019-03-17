@@ -84,6 +84,7 @@ class Chat extends Component {
     req('/api/chat/message', {message: message, roomId: room.id, toId: room.user.id})
     .then(res => {
       this.addMessage(id, message);
+      this.setRead(room.id);
       this.setState({message: ''});
     })
     .catch(err => {
