@@ -101,7 +101,7 @@ router.get('/user/:id', (req, res) => {
 router.post('/reset/ask', (req, res) => {
     user.reset_ask(req)
     .then(() => {
-        res.status(200).json({ 'success' : 'resetpw.alert.success' });
+        res.status(200).json({ 'success' : 'resetpw.alert.ask.success' });
     })
     .catch(err => {
         res.status(200).json({ 'error' : err.message });

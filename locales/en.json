@@ -177,6 +177,9 @@
     "modal": "Forgot password?",
     "title": "Ask reset link",
     "alert": {
+      "ask": {
+        "success": "A mail has been sent with instructions in order to reset your password!"        
+      },
       "success": "Your password has been reset"
     }
   },

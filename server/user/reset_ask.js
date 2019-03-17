@@ -36,8 +36,8 @@ const reset_ask = req => {
                                 from: 'no-reply@barthonet.ovh',
                                 to: infos.email,
                                 subject: "Matcha - Password reset",
-                                text: "Hey, reset your password here !\n\n\t" + req.protocol + "://" + req.get('host') + "/reset/" + conf_link + " !\n\nSee you soon  on matcha!",
-                                html: "<p>Hey, reset your password here !<br><br>\t" + req.protocol + "://" + req.get('host') + "/reset/" + conf_link + " !<br><br>See you soon on matcha!</p>"
+                                text: "Hey, reset your password here !\n\n\t" + req.protocol + "://" + req.get('host') + "/resetpw/" + conf_link + " !\n\nSee you soon  on matcha!",
+                                html: "<p>Hey, reset your password here !<br><br><a href='" + req.protocol + "://" + req.get('host') + "/resetpw/" + conf_link + "'>Click me</a><br><br>See you soon on matcha!</p>"
                             };
                             transporter.sendMail(mailOptions)
                             resolve();

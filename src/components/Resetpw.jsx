@@ -20,6 +20,7 @@ class Resetpw extends Component {
     req('/api/reset', this.state)
     .then(res => {
       alert('success', this.props.locales.idParser(res));
+      this.props.history.push('/login');
     })
     .catch(err => {
       alert('error', this.props.locales.idParser(err));

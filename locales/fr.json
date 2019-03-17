@@ -177,6 +177,9 @@
     "modal": "Mot de passe oublié ?",
     "title": "Demandez un lien de réinitialisation",
     "alert": {
+      "ask": {
+        "success": "Un mail vous a été envoyé avec les informations pour réinitialiser votre mot de passe !"        
+      },
       "success": "Votre mot de passe a bien été réinitialisé"
     }
   },
