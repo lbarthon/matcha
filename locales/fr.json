@@ -105,8 +105,8 @@
     "month": "Mois",
     "year": "Annee",
     "gender": "Genre",
-    "lookingfor": "Interesse(e) par",
-    "tags": "Centres d'interet",
+    "lookingfor": "Interessé(e) par",
+    "tags": "Centres d'interêt",
     "about": "A propos de vous...",
     "btn": "S'inscrire",
     "select_gender": "Selectionner un genre",
@@ -164,7 +164,7 @@
     "alert": {
       "query": "Erreur lors de la requête à la base de données !",
       "undefined": "Erreur lors de la connection à la base de données !",
-      "table_undefined": "Cette table n'éxiste pas !"
+      "table_undefined": "Cette table n'existe pas !"
     }
   },
   "confirm": {
@@ -194,9 +194,7 @@
     "error_no_picture": "Vous n'avez pas de photo !",
     "wrong_id": "Erreur lors de la gestion des données !",
     "error_unknown_email": "Mail inconnu !",
-    "forbidden_access": "Vous n'avez pas accès à cette page !",
     "not_logged": "Vous devez être connectés pour faire ça !",
-    "reset_ask_success": "Le lien de réinitialisation vous sa étee envoyé par email !",
     "email_unknow": "Email non trouve"
   }
 }

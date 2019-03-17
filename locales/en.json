@@ -44,7 +44,7 @@
       "report_success" : "Thank you for your report",
       "report_text" : "Please enter a reason",
       "notfound" : "User not found",
-      "is_banned" : "This user has been banned"
+      "is_banned" : "This user is banned!"
     }
   },
   "match": {
@@ -56,7 +56,7 @@
       "distance": "Location",
       "age": "Age",
       "popularity": "Popularity",
-      "tags": "Tags in common"
+      "tags": "Common tags"
     }
   },
   "likes": {
@@ -94,6 +94,7 @@
       "user_unknow": "Unknown user!",
       "password_diff": "Wrong password!",
       "already_logged" : "You are already connected!",
+      "user_banned": "This user is banned!",
       "not_confirmed": "You have not checked your email yet"
     }
   },
@@ -113,6 +114,7 @@
       "success": "Account created successfully!",
       "password_regex": "Your password must contain a digit, an uppercase letter, a lowercase letter and a special character!",
       "username_null": "Your username can't be null!",
+      "name_null": "Both names can't be null!",
       "username_took": "This username is already in use!",
       "password_null": "Your password can't be null!",
       "password_diff": "Both passwords differ!",
@@ -120,14 +122,15 @@
       "email_invalid": "Invalid email",
       "email_took": "This email is already in use!",
       "genders_null": "Both genders can't be null!",
-      "hash_error": "Error processing your password"
+      "hash_error": "Error processing your password",
+      "location_invalid": "Your location isn't valid!"
     }
   },
   "update": {
     "btn": "Update",
     "newpassword": "New password",
     "alert": {
-      "success": "Informations updates successfully"
+      "success": "Informations updated successfully"
     }
   },
   "upload": {
@@ -186,19 +189,12 @@
     "logout_success": "Logout successfully!",
     "logout_error": "Error logging out from your account",
     "error_email_invalid": "Invalid email!",
+    "error_user_not_logged": "You aren't logged!",
+    "error_user_not_found": "Unknown user!",
+    "error_no_picture": "You have no picture!",
+    "wrong_id": "Error processing data!",
     "error_unknown_email": "Unknown email!",
-    "error_forbidden_access": "You can't access this page!",
     "not_logged": "You must be logged to do this!",
-    "picture_add_success": "Picture added succcessfully!",
-    "picture_remove_success": "Picture deleted successfully!",
-    "picture_set_main_error": "Error editing your picture",
-    "picture_set_main_success": "This picture is now you main picutre!",
-    "picture_error_write": "Error saving your picture!",
-    "picture_error_insert": "Error saving your picture!",
-    "picture_error_remove": "Error deleting your picture!",
-    "picture_error_remove_none": "Error deleting your picture! Does it belong to you?",
-    "report_delete_success": "You have successfully deleted this report",
-    "wrong_id": "Wrong id",
     "email_unknow": "Email not found"
   }
 }
