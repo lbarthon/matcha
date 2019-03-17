@@ -30,7 +30,6 @@ const connect_no_db = (callback, force) => {
     }
     callback(conn);
 }
-
 /**
  * Connect to the db
  * @param {*} callback 
@@ -54,7 +53,6 @@ const connect = (callback, force) => {
         });
     }
 }
-
 /**
  * Ends the database connection
  * @param {*} callback 

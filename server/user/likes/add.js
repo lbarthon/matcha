@@ -22,7 +22,7 @@ const add = req => {
                 reject(new Error("likes.add.yourself"));
             } else {
                 conn.query("SELECT * FROM likes WHERE ? AND ?",
-                        [{target_id: infos.target}, {user_id: uid}], (err, results) => {
+                    [{target_id: infos.target}, {user_id: uid}], (err, results) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
                     } else if (results.length > 0) {

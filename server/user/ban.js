@@ -1,4 +1,5 @@
 const emitter = require('../emitter');
+const utils = require('./utils');
 var conn = null;
 
 emitter.on('dbConnectEvent', (new_conn, err) => {
@@ -9,21 +10,26 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
  * @param {*} req 
  */
 const ban = req => {
+    let uid = req.session.uid;
     let id = req.body.id;
     return new Promise((resolve, reject) => {
         if (conn) {
             if (id == undefined || id == '' || isNaN(id)) {
                 reject(new Error("alert.wrong_id"));
             } else {
-                conn.query("UPDATE users SET banned=1 WHERE ?", [{id: id}], (err, results) => {
-                    if (err) {
-                        reject(new Error("sql.alert.query"));
-                    } else if (results.affectedRows == 1) {
-                        resolve(true);
-                    } else {
-                        resolve(false);
-                    }
+                utils.isAdmin(uid)
+                .then(() => {
+                    conn.query("UPDATE users SET banned=1 WHERE ?", [{id: id}], (err, results) => {
+                        if (err) {
+                            reject(new Error("sql.alert.query"));
+                        } else if (results.affectedRows == 1) {
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    })
                 })
+                .catch(reject);
             }
         } else {
             reject(new Error("sql.alert.undefined"));

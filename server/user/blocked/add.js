@@ -5,7 +5,6 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
 /**
  * Function that adds a like.
  * Informations taken :
@@ -21,7 +20,7 @@ const add = req => {
                 reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("SELECT * FROM blocked WHERE ? AND ?",
-                        [{target_id: infos.target}, {user_id: uid}], (err, results) => {
+                    [{target_id: infos.target}, {user_id: uid}], (err, results) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
                     } else if (results.length > 0) {

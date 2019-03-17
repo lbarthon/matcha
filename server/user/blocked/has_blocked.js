@@ -4,7 +4,6 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
 /**
  * Returns true or false if uid has blocked target.
  * @param {int} uid 
@@ -14,7 +13,7 @@ const has_blocked = (uid, target) => {
     return new Promise((resolve, reject) => {
         if (conn) {
             if (target == undefined || target == '' || isNaN(target)) {
-                reject(new Error("alert.wrong_id"));
+                reject(new Error("error_wrong_id"));
             } else {
                 conn.query("SELECT * FROM blocked WHERE ? AND ?",
                         [{user_id: uid}, {target_id: target}], (err, results) => {

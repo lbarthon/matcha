@@ -172,6 +172,32 @@ const setLastLogged = (uid) => {
     }
 }
 /**
+ * Resolves if user has completed his profile.
+ * @param {int} uid 
+ */
+const isComplete = (uid) => {
+    return new Promise((resolve, reject) => {
+        // Resolve in specific cases.
+        if (uid == undefined) resolve(null);
+        if (conn) {
+            conn.query("SELECT GROUP_CONCAT(tags.tag SEPARATOR ',') AS tags, pictures.picture, users.* FROM users \
+                INNER JOIN tags ON users.id = tags.user_id \
+                INNER JOIN pictures ON users.id = pictures.user_id AND pictures.main=1 \
+                WHERE users.id=?", [uid], (err, result) => {
+                if (err) {
+                    reject(new Error("sql.alert.query"));
+                } else if (result.length == 0 || !result[0].description || !result[0].tags || !result[0].picture) {
+                    reject(new Error("alert.complete_profile"));
+                } else {
+                    resolve(result[0]);
+                }
+            });
+        } else {
+            reject(new Error("sql.alert.undefined"));
+        }
+    });
+}
+/**
  * Returns age of a birthdate in params.
  * @param {dd/mm/yyyy} birthdate 
  */
@@ -199,5 +225,6 @@ module.exports = {
     getTableColumns   : getTableColumns,
     areInfosClean     : areInfosClean,
     setLastLogged     : setLastLogged,
+    isComplete        : isComplete,
     getAge            : getAge
 }

@@ -5,7 +5,6 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
 /**
  * Unbloque from an user.
  * Informations taken :

@@ -4,7 +4,6 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
 /**
  * Returns true or false if uid has liked target.
  * @param {int} uid 
@@ -17,7 +16,7 @@ const has_like = (uid, target) => {
                 reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("SELECT * FROM likes WHERE ? AND ?",
-                        [{user_id: uid}, {target_id: target}], (err, results) => {
+                    [{user_id: uid}, {target_id: target}], (err, results) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
                     } else if (results.length > 0) {

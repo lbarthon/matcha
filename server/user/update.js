@@ -44,18 +44,14 @@ const checks = (filtered, uid, infos) => {
                 if (id != uid) {
                     reject(new Error("register.alert.email_took"));
                 }
-            }).catch(() => {
-                //?
-            });
+            }).catch(() => {});
         }
         if (filtered['username'] != undefined) {
             await utils.getIdFromUsername(filtered['username']).then(id => {
                 if (id != uid) {
                     reject(new Error("register.alert.username_took"));
                 }
-            }).catch(() => {
-                //?
-            });
+            }).catch(() => {});
         }
         if (filtered['pwd'] != filtered['repassword']) {
             reject(new Error("register.alert.password_diff"));
@@ -95,7 +91,6 @@ const update = (req, uid) => {
                     var promises = good.map(key => {
                         return updateCol(key ,filtered[key], uid);
                     });
-                    console.log(filtered['username']);
                     req.session.username = filtered['username'];
                     req.session.save();
                     Promise.all(promises)

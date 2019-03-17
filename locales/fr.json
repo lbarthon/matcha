@@ -152,6 +152,8 @@
     "delete": "Supprimer",
     "ban": "Bannir",
     "no_report": "Il n'y a aucun signalement actuellement.",
+    "welcomemsg": "Hey %user% ! Voici la liste des signalements.",
+    "message": " a été signalé par ",
     "alert": {
       "report_delete_success": "Report supprimé avec succès !",
       "report_ban_success": "Utilisateur banni avec succès !",

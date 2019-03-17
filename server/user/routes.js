@@ -58,7 +58,7 @@ router.get('/logged', (req, res) => {
 });
 
 router.get('/user/current', (req, res) => {
-    user.get_infos(req)
+    user.get_infos(req.session.uid)
     .then((resolve) => {
         res.status(200).json({ 'success' : resolve });
     })
@@ -88,7 +88,7 @@ router.post('/reset', (req, res) => {
 });
 
 router.get('/user/:id', (req, res) => {
-    user.get_infos_id(req.params.id, req.session.uid)
+    user.get_infos(req.params.id, req.session.uid)
     .then((resolve) => {
         notify('visit', req.session.uid, req.params.id);
         res.status(200).json({ 'success' : resolve });

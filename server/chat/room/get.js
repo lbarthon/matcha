@@ -19,7 +19,7 @@ const get = uid => {
                 WHERE ? OR ? \
                 GROUP BY chat_rooms.id \
                 ORDER BY display DESC, unread DESC, create_time DESC',
-              [uid, {'chat_rooms.id_user1': uid}, {'chat_rooms.id_user2': uid}], (err, results) => {
+                [uid, {'chat_rooms.id_user1': uid}, {'chat_rooms.id_user2': uid}], (err, results) => {
                 if (err) {
                     reject(new Error("sql.alert.query"));
                 } else {

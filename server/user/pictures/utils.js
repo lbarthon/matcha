@@ -4,7 +4,6 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
 /**
  * Returns picture name from it's id.
  * Also checks that it belongs to uid.
@@ -18,7 +17,7 @@ const getPicNameFromId = (id, uid) => {
                 reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("SELECT user_id, picture AS name FROM pictures WHERE id=?",
-                        [id], (err, result) => {
+                    [id], (err, result) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
                     } else if (result.length == 1) {

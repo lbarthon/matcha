@@ -4,7 +4,10 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
+/**
+ * Returns the number of likes that the most liked user has.
+ * @param {*} results 
+ */
 const get_max_likes = (results) => {
     var max = 0;
     for (var index = 0; index < results.length; index++) {
@@ -14,7 +17,11 @@ const get_max_likes = (results) => {
     }
     return max;
 };
-
+/**
+ * Returns uid's likes.
+ * @param {*} results 
+ * @param {int} uid 
+ */
 const get_uid_likes = (results, uid) => {
     for (var index = 0; index < results.length; index++) {
         if (results[index]['user'] == uid) {
@@ -23,7 +30,6 @@ const get_uid_likes = (results, uid) => {
     }
     return 0;
 }
-
 /**
  * Returns the popularity of the uid taken in param.
  * @param {int} uid 

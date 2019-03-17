@@ -4,7 +4,12 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
+/**
+ * Marks a notification as read.
+ * @param {int} uid 
+ * @param {int} notifId 
+ * @param {function} callback 
+ */
 const read = (uid, notifId, callback) => {
     if (conn) {
         conn.query('UPDATE `notifications` SET `read` = 1 WHERE `id` = ? AND `to_id` = ? LIMIT 1', [notifId, uid], (err, results) => {

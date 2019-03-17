@@ -1,6 +1,9 @@
 const db_tools = require('./database');
 const fs = require('fs');
-
+/**
+ * Reads the sql dump and splits by ';'.
+ * Then, executes all queries.
+ */
 fs.readFile("./server/sql/dump.sql", (err, data) => {
     if (err) exit("Error reading file ./server/sql/dump.sql");
     var queries = String(data).split(";\n");
@@ -26,7 +29,10 @@ fs.readFile("./server/sql/dump.sql", (err, data) => {
         });
     }, true);
 });
-
+/**
+ * Exits program, writing error first.
+ * @param {String} msg 
+ */
 const exit = (msg) => {
     console.log("Process terminating.\n" + msg);
     process.exit(0);

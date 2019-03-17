@@ -7,9 +7,9 @@ emitter.on('dbConnectEvent', (new_conn, err) => {
 });
 /**
  * Send a notification of type to the user.
- * @param {int} reciever
- * @param {int} sender
- * @param {string} type
+ * @param {string} type 
+ * @param {int} sender 
+ * @param {int} reciever 
  */
 const notify = (type, sender, reciever) => {
     const types = ['message', 'like', 'visit', 'match', 'unmatch'];

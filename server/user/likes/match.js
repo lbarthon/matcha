@@ -4,7 +4,11 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
+/**
+ * Returns true if both users liked the other.
+ * @param {int} uid 
+ * @param {int} target 
+ */
 const match = (uid, target) => {
     return new Promise((resolve, reject) => {
         if (conn) {
@@ -12,7 +16,7 @@ const match = (uid, target) => {
                 reject(new Error("alert.wrong_id"));
             } else {
                 conn.query("SELECT * FROM likes WHERE (? AND ?) OR (? AND ?)",
-                        [{user_id: uid}, {target_id: target}, {user_id: target}, {target_id: uid}], (err, results) => {
+                    [{user_id: uid}, {target_id: target}, {user_id: target}, {target_id: uid}], (err, results) => {
                     if (err) {
                         reject(new Error("sql.alert.query"));
                     } else if (results.length == 2) {

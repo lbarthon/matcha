@@ -59,6 +59,17 @@
       "tags": "Tags in commun"
     }
   },
+  "likes": {
+    "add": {
+      "present": "You already liked this user!",
+      "success": "You now like this user.",
+      "yourself": "You can't like yourself!"
+    },
+    "remove": {
+      "absent": "Have you ever liked this user?",
+      "success": "You don't like this user anymore."
+    }
+  },
   "nav": {
     "logout": "Logout",
     "update": "Update",
@@ -138,6 +149,8 @@
     "delete": "Delete",
     "ban": "Ban",
     "no_report": "There is no report actually.",
+    "welcomemsg": "Hey %user%! This is the report list.",
+    "message": " has been reported by ",
     "alert": {
       "report_delete_success": "Report deleted successfully",
       "report_ban_success": "User banned successfully",

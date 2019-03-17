@@ -4,7 +4,11 @@ var conn = null;
 emitter.on('dbConnectEvent', (new_conn, err) => {
     if (!err) conn = new_conn;
 });
-
+/**
+ * Gets all user's notifications.
+ * @param {int} uid 
+ * @param {function} callback 
+ */
 const get = (uid, callback) => {
     if (conn) {
         conn.query('SELECT notifications.*, users.username AS username \

@@ -46,7 +46,7 @@ class Match extends Component {
         var pop = this.sorts[3].function();
         var tag = this.sorts[4].function();
         return this.state.matchs.map(value => {
-          value.score = loc.iOf(value) + pop.iOf(value) + tag.iOf(value);
+          value.score = loc.indexOf(value) + pop.indexOf(value) + tag.indexOf(value);
           return value;
         }).sort((a, b) => {
           return a.score - b.score;

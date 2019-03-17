@@ -49,7 +49,7 @@ class Report extends Component {
         <div>
             <div className="m-0 pt-15 pb-15 bb">
               <div>
-                <Link to={"/user/" + reported_id}><b>{reported}</b></Link> has been reported by <Link to={"/user/" + reporter_id}><b>{reporter}</b></Link>
+                <Link to={"/user/" + reported_id}><b>{reported}</b></Link>{locale.admin.message}<Link to={"/user/" + reporter_id}><b>{reporter}</b></Link>
                 <br/><br/><em>"{report}"</em>
               </div>
               <div className="clearfix">

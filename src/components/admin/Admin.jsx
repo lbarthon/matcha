@@ -65,7 +65,7 @@ class Home extends Component {
     const { locale } = this.props.locales;
     return (
       <React.Fragment>
-        <h4>Admin page pour mossieu {this.props.currentUser.username}</h4>
+        <h4>{locale.admin.welcomemsg.replace('%user%', this.props.currentUser.username)}</h4>
         {reports.length == 0 && <p>{locale.admin.no_report}</p>}
         {reports.map((value, i) => {
           if (i >= length) return null;
