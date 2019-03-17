@@ -17,7 +17,7 @@ const ban = req => {
             if (id == undefined || id == '' || isNaN(id)) {
                 reject(new Error("alert.wrong_id"));
             } else {
-                utils.isAdmin(uid)
+                utils.isAdmin(req)
                 .then(() => {
                     conn.query("UPDATE users SET banned=1 WHERE ?", [{id: id}], (err, results) => {
                         if (err) {
@@ -29,7 +29,7 @@ const ban = req => {
                         }
                     })
                 })
-                .catch(reject);
+                .catch(() => reject(new Error("alert.not_admin")));
             }
         } else {
             reject(new Error("sql.alert.undefined"));

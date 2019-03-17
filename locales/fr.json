@@ -90,7 +90,7 @@
   "login": {
     "btn": "Se connecter",
     "alert" : {
-      "success": "Connection réussie !",
+      "success": "Connexion réussie !",
       "user_unknow": "Utilisateur inconnu !",
       "password_diff": "Mot de passe incorrect !",
       "already_logged": "Vous êtes déjà connecté !",
@@ -182,6 +182,7 @@
   },
   "alert": {
     "age_limit": "Ce site est exclusivement réservé aux majeurs !",
+    "not_admin": "Vous ne pouvez pas faire ça !",
     "complete_profile": "Votre profil n'est pas complet ! Avez vous une photo ?",
     "string_too_long": "Une des chaînes de caractères rentrée est trop longue !",
     "ajax_error": "Erreur lors du chargement de l'application.",

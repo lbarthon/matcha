@@ -93,10 +93,8 @@ const isAdmin = req => {
             conn.query("SELECT perm_level FROM users WHERE ?", [{id: session.uid}], (err, results) => {
                 if (err) {
                     reject();
-                } else if (results.length == 1) {
-                    resolve();
                 } else {
-                    reject();
+                    resolve(results[0].perm_level == 1);
                 }
             });
         })
