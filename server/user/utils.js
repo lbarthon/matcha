@@ -212,7 +212,7 @@ const getAge = (birthdate) => {
             years--;
         }
     }
-    return years < 1900 ? 0 : years;
+    return split[2] < 1900 ? 0 : years;
 }
 
 module.exports = {
