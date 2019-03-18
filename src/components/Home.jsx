@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withAllHOC } from '../utils/allHOC';
 import Login from './login/Login';
+import User from './user/User';
 
 class Home extends Component {
 
@@ -13,7 +14,10 @@ class Home extends Component {
     return (
       <React.Fragment>
       {this.props.currentUser.logged &&
-        <h4>Bienvenue {this.props.currentUser.username}</h4>
+        <div>
+          <h2 className="center">{this.props.locales.locale.welcome}</h2>
+          <User match={{params: {id: this.props.currentUser.id }}}/>
+        </div>
       }
       {!this.props.currentUser.logged &&
         <Login />
