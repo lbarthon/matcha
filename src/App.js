@@ -27,14 +27,6 @@ import { withRouter } from "react-router-dom";
 
 class App extends Component {
 
-  componentWillMount() {
-    console.log('app_mount');
-  }
-
-  componentWillUpdate() {
-    console.log('app_update');
-  }
-
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       console.log("Route change!, reload user");

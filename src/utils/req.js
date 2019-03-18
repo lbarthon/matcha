@@ -3,7 +3,6 @@ import httpBuildQuery from 'http-build-query';
 const req = (url, body) => {
   return new Promise((resolve, reject) => {
     if (body) {
-      console.log('post');
       body = httpBuildQuery(body);
       fetch(url, {
         method: 'POST',
@@ -15,7 +14,6 @@ const req = (url, body) => {
       }).then(response => {
         if (response.ok) {
           response.json().then(json => {
-            console.log(url, json);
             if (json.success !== undefined) {
               resolve(json.success);
             } else if (json.error) {
@@ -27,7 +25,6 @@ const req = (url, body) => {
             reject("alert.ajax_error")
           })
         } else {
-          console.error(new Error(response.statusText));
           reject("alert.ajax_error");
         }
       })
@@ -40,7 +37,6 @@ const req = (url, body) => {
       }).then(response => {
         if (response.ok) {
           response.json().then(json => {
-            console.log(url, json);
             if (json.success !== undefined) {
               resolve(json.success);
             } else if (json.error) {
@@ -52,7 +48,6 @@ const req = (url, body) => {
             reject("alert.ajax_error")
           })
         } else {
-          console.error(new Error(response.statusText));
           reject("alert.ajax_error");
         }
       }).catch(() => {

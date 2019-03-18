@@ -33,14 +33,18 @@ class Upload extends Component {
       .then(response => {
         if (response.ok) {
           response.json().then(json => {
-            if (json.error)
+            if (json.error) {
               alert('error', this.props.locales.idParser(json.error));
-            else if (json.success) {
+            } else if (json.success) {
               this.getPictures();
               alert('success', this.props.locales.idParser(json.success));
+            } else {
+              alert('error', this.props.locales.idParser("alert.ajax_error"));
             }
-          });
-        } else console.error(new Error(response.statusText));
+          }).catch(() => alert('error', this.props.locales.idParser("alert.ajax_error")));
+        } else {
+          alert('error', this.props.locales.idParser("alert.ajax_error"));
+        }
       })
     });
   }

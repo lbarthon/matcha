@@ -43,7 +43,6 @@ class User extends Component {
         this.getTags(id);
         this.getMatchMe(id);
         this.getLikeMe(id);
-        console.log(res);
       });
     })
     .catch(err => {

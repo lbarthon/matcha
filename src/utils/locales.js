@@ -36,7 +36,6 @@ class _LocalesProvider extends Component {
         });
         return ret;
       } catch (err) {
-        console.log('erreur =>', str);
         return "";
       }
     }
@@ -45,7 +44,6 @@ class _LocalesProvider extends Component {
   componentWillMount() {
     req('/api/lang/get')
     .then(res => {
-      console.log(res);
       this.setState({
         locale: locales[res],
         text: res,

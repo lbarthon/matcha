@@ -50,7 +50,6 @@ export class _NotificationsProvider extends React.Component {
       if (this.state.count > 0) {
         req('/api/notification/read/')
         .then(res => {
-          console.log(res);
           let copy = this.state.notifications.slice();
           copy.map(notif => {
             notif.read = 1;
