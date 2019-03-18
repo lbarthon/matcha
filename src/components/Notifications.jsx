@@ -20,8 +20,8 @@ class Notifications extends Component {
       const { isLoading } = this.state;
       if (isLoading) return;
       if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight) {
-        this.setState({ isLoading: true }, () => {
-          this.setState({
+        this.setStateCheck({ isLoading: true }, () => {
+          this.setStateCheck({
             length: this.state.length + 20,
             isLoading: false
           });
@@ -45,8 +45,19 @@ class Notifications extends Component {
     }
   }
 
+  _isMounted = false;
+  setStateCheck = (state, callback) => {
+    if (this._isMounted)
+      this.setState(state, callback);
+  }
+
   componentDidMount() {
     document.title = 'Notifications';
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
