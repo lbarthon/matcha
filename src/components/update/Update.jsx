@@ -41,11 +41,12 @@ class Update extends Component {
     .then(res => {
       alert('success', locales.idParser(res));
       req('/api/tags/update', { tags: this.state.tags })
-      .then(res => {
+      .then(() => {
         this.getTags();
       })
       .catch(err => {
         alert('error', locales.idParser(err));
+        this.getTags();
       })
     })
     .catch(err => {

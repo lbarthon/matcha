@@ -48,7 +48,7 @@ const update = req => {
             if (uid == undefined || uid == '' || isNaN(uid)) {
                 reject(new Error("alert.wrong_id"));
             } else if (tags == undefined || tags.length == 0) {
-                reject(new Error("tag.update.undefined"));
+                reject(new Error("alert.tag_undefined"));
             } else {
                 conn.query("SELECT tag FROM tags WHERE ?", [{user_id: uid}], (err, results) => {
                     if (err) {

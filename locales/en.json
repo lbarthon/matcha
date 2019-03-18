@@ -186,6 +186,7 @@
     }
   },
   "alert": {
+    "tag_undefined": "You need to keep at least a tag!",
     "age_limit": "This website is exclusively for adults!",
     "not_admin": "You can't do that",
     "complete_profile": "Your profile isn't complete! Do you have pictures?",
