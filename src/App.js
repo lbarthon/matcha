@@ -61,4 +61,4 @@ class App extends Component {
   }
 }
 
-export default withRouter(withAllHOC(App));
+export default withAllHOC(withRouter(App));
