@@ -38,7 +38,6 @@ export class CurrentUserProvider extends React.Component {
         if (callback) callback();
       })
       .catch(err => {
-        alert('error', this.props.locales.idParser(err));
         if (callback) callback();
       })
     }

@@ -137,7 +137,7 @@ class Chat extends Component {
         if (room.id == data.roomId)
           room.unread += 1;
       });
-      this.setState({rooms: copy});
+      this.setStateCheck({rooms: copy});
     });
     socket.on('new_room', () => {
       this.getRooms();

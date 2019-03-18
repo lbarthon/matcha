@@ -23,7 +23,6 @@ class Login extends Component {
     req('/api/login', this.state)
     .then(res => {
       getCurrentUser(() => {
-        history.push("/");
         alert('success', locales.idParser(res));
       });
     })
