@@ -29,7 +29,6 @@ class App extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-      console.log("Route change!, reload user");
       this.props.currentUser.getCurrentUser();
     }
   }
