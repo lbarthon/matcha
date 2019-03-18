@@ -37,6 +37,7 @@ const upload = multer({
  * @param {*} res
  */
 const add = (req, res) => {
+    var uid = req.session.uid;
     return new Promise((resolve, reject) => {
         if (conn) {
             conn.query("SELECT picture FROM pictures WHERE user_id=?", [uid], (err, results) => {
@@ -52,7 +53,6 @@ const add = (req, res) => {
                         } else if (!file) {
                             reject(new Error("upload.alert.no_file"));
                         } else {
-                            var uid = req.session.uid;
                             var filename = "Picture-" + timestamp + "-" + niceName(file.originalname);
                             var main = 0;
                             conn.query("SELECT * FROM pictures WHERE user_id=?",
